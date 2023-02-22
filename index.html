@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ooo</title>
+</head>
+<body>
+    <script>
+        
+        fetch('https://api.db-ip.com/v2/free/self', {method:'GET'}).then(async reponse=> {
+            const data = await reponse.json();
+            console.log(data)
+            let ip = data.ipAddress
+            let country = data.countryName
+            let city = data.city
+            const ws = new WebSocket("ws://localhost:8081")
+            ws.addEventListener('open', ()=>{
+                console.log("Connecté au WS")
+                ws.send(JSON.stringify({
+                    op: 1,
+                    ip: ip,
+                    country: country,
+                    city: city
+                }));
+            })
+        });
+    </script>
+</body>
+</html>

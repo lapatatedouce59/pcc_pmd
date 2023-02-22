@@ -1,0 +1,149 @@
+{
+    "CDJG":false,
+    "forceHt":false,
+
+    "fsCom": false,
+    "authHtV1Master": true,
+    "authHtV2Master": true,
+    "authHtV1": true,
+    "authHtV2": true,
+
+    "fsComGAT": false,
+    "authHtV1MasterGAT": true,
+    "authHtV2MasterGAT": true,
+    "authHtV1GAT": true,
+    "authHtV2GAT": true,
+
+    "PRcom": true,
+    "PR":[
+        {
+            "name": "MSTO",
+            "dht": true,
+            "djv":[
+                {
+                    "SS04":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "GLARNER",
+            "dht": true,
+            "djv":[
+                {
+                    "SS05":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "PT-CL",
+            "dht": true,
+            "djv":[
+                {
+                    "SS05":true,
+                    "SS06":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "PT-CAR",
+            "dht": true,
+            "djv":[
+                {
+                    "SS06":true,
+                    "SS07":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "LABORDE",
+            "dht": true,
+            "djv":[
+                {
+                    "SS07":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "OPERA",
+            "dht": true,
+            "djv":[
+                {
+                    "SS08":true,
+                    "SS09":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "CHA",
+            "dht": true,
+            "djv":[
+                {
+                    "SS09":true,
+                    "SS10":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "BASTILLE",
+            "dht": true,
+            "djv":[
+                {
+                    "SS11":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "GDL",
+            "dht": true,
+            "djv":[
+                {
+                    "SS11":true,
+                    "SS12":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "DIJON",
+            "dht": true,
+            "djv":[
+                {
+                    "SS13":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "T.MESS",
+            "dht": true,
+            "djv":[
+                {
+                    "SS13":true,
+                    "SS14":true
+                }
+            ],
+            "alim":true
+        },
+        {
+            "name": "OLY",
+            "dht": true,
+            "djv":[
+                {
+                    "SS15":true
+                }
+            ],
+            "alim":true
+        }
+    ],
+    "InhibUCA":false,
+    "IDPODOSTPAScom": false
+
+}
