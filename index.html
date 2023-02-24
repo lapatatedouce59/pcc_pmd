@@ -5,17 +5,243 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ooo</title>
+    <style>
+        body{
+            margin: 0;
+        }
+
+        .voy{
+            color: white;
+            background-color: #8B8B8B;
+        }
+        .ok{
+            background-color: #00EF35;
+        }
+        .alarm{
+            background-color: #EF0000;
+        }
+    </style>
 </head>
 <body>
+    <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
+    <span id="voyGAT" class="voy">GAT</span>
+    <span id="voyABS" class="voy">ABS</span>
+    <span><button id="btnAG">AG</button></span>
+    <span><button id="btnAG2">rétablir</button></span>
+    <span> <input type="checkbox" id="comForceHT"> Forcage HT </span>
+    <br>
+    <span id="voyUCAV1" class="voy">UCA V1</span>
+    <span id="voyUCAV2" class="voy">UCA V2</span>
+    <span> <input type="checkbox" id="comAuthV1"> AUTHV1 </span>
+    <span> <input type="checkbox" id="comAuthV2"> AUTHV2 </span>
+    <span id="voyHTV1" class="voy">HT V1</span>
+    <span id="voyHTV2" class="voy">HT V2</span>
+    <span> <input type="checkbox" id="comFSLine"> COUPURE FS </span>
+    <span id="voyALC" class="voy">ALC</span>
+    <span id="voyFSV1" class="voy">FS V1</span>
+    <span id="voyFSV2" class="voy">FS V2</span>
+    <br>
+    <span id="voyUCAGAT" class="voy">UCA</span>
+    <span> <input type="checkbox" id="comAuthGAT"> AUTH </span>
+    <span id="voyHTGAT" class="voy">HT</span>
+    <span> <input type="checkbox" id="comFSGAT"> COUPURE FS </span>
+    <span id="voyFSGAT" class="voy">FS</span>
+    <br>
+    <span> <input type="checkbox" id="comArmPR"> Armt. PR </span>
+    <br>
+    <span id="voyCC" class="voy">CC</span>
+    <span id="voyPAL" class="voy">PAL</span>
+    <span id="voyAQU" class="voy">AQU</span>
+    <br>
+    <span> <input type="checkbox" id="comInhibUCA"> Inhib. UCA </span>
+    <br>
+    <span> <input type="checkbox" id="comIDPOTPAS"> IDPO tout PAS </span>
+    <br>
+    <h3>SS</h3>
+    <span id="voyAlimSS04" class="voy">ALIM</span>
+    <span id="voyDHTSS04" class="voy">DHT</span>
+    <span id="voyDISS04" class="voy">DI</span>
+    <select name="SS04" id="comStateSS04">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS04</span>
+    <br>
+    <span id="voyAlimSS05" class="voy">ALIM</span>
+    <span id="voyDHTSS05" class="voy">DHT</span>
+    <span id="voyDISS05" class="voy">DI</span>
+    <select name="SS04" id="comStateSS05">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS05</span>
+    <br>
+    <span id="voyAlimSS06" class="voy">ALIM</span>
+    <span id="voyDHTSS06" class="voy">DHT</span>
+    <span id="voyDISS06" class="voy">DI</span>
+    <select name="SS04" id="comStateSS06">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS06</span>
+    <br>
+    <span id="voyAlimSS07" class="voy">ALIM</span>
+    <span id="voyDHTSS07" class="voy">DHT</span>
+    <span id="voyDISS07" class="voy">DI</span>
+    <select name="SS04" id="comStateSS07">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS07</span>
+    <br>
+    <span id="voyAlimSS08" class="voy">ALIM</span>
+    <span id="voyDHTSS08" class="voy">DHT</span>
+    <span id="voyDISS08" class="voy">DI</span>
+    <select name="SS04" id="comStateSS08">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS08</span>
+    <br>
+    <span id="voyAlimSS09" class="voy">ALIM</span>
+    <span id="voyDHTSS09" class="voy">DHT</span>
+    <span id="voyDISS09" class="voy">DI</span>
+    <select name="SS04" id="comStateSS09">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS09</span>
+    <br>
+    <span id="voyAlimSS10" class="voy">ALIM</span>
+    <span id="voyDHTSS10" class="voy">DHT</span>
+    <span id="voyDISS10" class="voy">DI</span>
+    <select name="SS04" id="comStateSS10">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS10</span>
+    <br>
+    <span id="voyAlimSS11" class="voy">ALIM</span>
+    <span id="voyDHTSS11" class="voy">DHT</span>
+    <span id="voyDISS11" class="voy">DI</span>
+    <select name="SS04" id="comStateSS11">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS11</span>
+    <br>
+    <span id="voyAlimSS12" class="voy">ALIM</span>
+    <span id="voyDHTSS12" class="voy">DHT</span>
+    <span id="voyDISS12" class="voy">DI</span>
+    <select name="SS04" id="comStateSS12">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS12</span>
+    <br>
+    <span id="voyAlimSS13" class="voy">ALIM</span>
+    <span id="voyDHTSS13" class="voy">DHT</span>
+    <span id="voyDISS13" class="voy">DI</span>
+    <select name="SS04" id="comStateSS13">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS13</span>
+    <br>
+    <span id="voyAlimSS14" class="voy">ALIM</span>
+    <span id="voyDHTSS14" class="voy">DHT</span>
+    <span id="voyDISS14" class="voy">DI</span>
+    <select name="SS04" id="comStateSS14">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS14</span>
+    <br>
+    <span id="voyAlimSS15" class="voy">ALIM</span>
+    <span id="voyDHTSS15" class="voy">DHT</span>
+    <span id="voyDISS15" class="voy">DI</span>
+    <select name="SS04" id="comStateSS15">
+        <option value="0">0</option>
+        <option value="YES">OUI</option>
+        <option value="NON">NON</option>
+    </select> <span>SS15</span>
+    <br>
     <script>
-        
+
+        let voyGAT = document.getElementById('voyGAT')
+        let voyABS = document.getElementById('voyABS')
+        let voyUCAV1 = document.getElementById('voyUCAV1')
+        let voyUCAV2 = document.getElementById('voyUCAV2')
+        let voyHTV1 = document.getElementById('voyHTV1')
+        let voyHTV2 = document.getElementById('voyHTV2')
+        let voyALC = document.getElementById('voyALC')
+        let voyFSV1 = document.getElementById('voyFSV1')
+        let voyFSV2 = document.getElementById('voyFSV2')
+        let voyUCAGAT = document.getElementById('voyUCAGAT')
+        let voyHTGAT = document.getElementById('voyHTGAT')
+        let voyFSGAT = document.getElementById('voyFSGAT')
+        let voyCC = document.getElementById('voyCC')
+        let voyPAL = document.getElementById('voyPAL')
+        let voyAQU = document.getElementById('voyAQU')
+        let voyAlimSS04 = document.getElementById('voyAlimSS04')
+        let voyDHTSS04 = document.getElementById('voyDHTSS04')
+        let voyDISS04 = document.getElementById('voyDISS04')
+        let voyAlimSS05 = document.getElementById('voyAlimSS05')
+        let voyDHTSS05 = document.getElementById('voyDHTSS05')
+        let voyDISS05 = document.getElementById('voyDISS05')
+        let voyAlimSS06 = document.getElementById('voyAlimSS06')
+        let voyDHTSS06 = document.getElementById('voyDHTSS06')
+        let voyDISS06 = document.getElementById('voyDISS06')
+        let voyAlimSS07 = document.getElementById('voyAlimSS07')
+        let voyDHTSS07 = document.getElementById('voyDHTSS07')
+        let voyDISS07 = document.getElementById('voyDISS07')
+        let voyAlimSS08 = document.getElementById('voyAlimSS08')
+        let voyDHTSS08 = document.getElementById('voyDHTSS08')
+        let voyDISS08 = document.getElementById('voyDISS08')
+        let voyAlimSS09 = document.getElementById('voyAlimSS09')
+        let voyDHTSS09 = document.getElementById('voyDHTSS09')
+        let voyDISS09 = document.getElementById('voyDISS09')
+        let voyAlimSS10 = document.getElementById('voyAlimSS10')
+        let voyDHTSS10 = document.getElementById('voyDHTSS10')
+        let voyDISS10 = document.getElementById('voyDISS10')
+        let voyAlimSS11 = document.getElementById('voyAlimSS11')
+        let voyDHTSS11 = document.getElementById('voyDHTSS11')
+        let voyDISS11 = document.getElementById('voyDISS11')
+        let voyAlimSS12 = document.getElementById('voyAlimSS12')
+        let voyDHTSS12 = document.getElementById('voyDHTSS12')
+        let voyDISS12 = document.getElementById('voyDISS12')
+        let voyAlimSS13 = document.getElementById('voyAlimSS13')
+        let voyDHTSS13 = document.getElementById('voyDHTSS13')
+        let voyDISS13 = document.getElementById('voyDISS13')
+        let voyAlimSS14 = document.getElementById('voyAlimSS14')
+        let voyDHTSS14 = document.getElementById('voyDHTSS14')
+        let voyDISS14 = document.getElementById('voyDISS14')
+        let voyAlimSS15 = document.getElementById('voyAlimSS15')
+        let voyDHTSS15 = document.getElementById('voyDHTSS15')
+        let voyDISS15 = document.getElementById('voyDISS15')
+
+        let btnAG = document.getElementById('btnAG')
+        let btnAG2 = document.getElementById('btnAG2')
+
+        let comForceHT = document.getElementById('comForceHT')
+        let comAuthV1 = document.getElementById('comAuthV1')
+        let comAuthV2 = document.getElementById('comAuthV2')
+        let comFSLine = document.getElementById('comFSLine')
+        let comAuthGAT = document.getElementById('comAuthGAT')
+        let comFSGAT = document.getElementById('comFSGAT')
+        let comArmPR = document.getElementById('comArmPR')
+        let comInhibUCA = document.getElementById('comInhibUCA')
+        let comIDPOTPAS = document.getElementById('comIDPOTPAS')
+
+        let ws= false
+
         fetch('https://api.db-ip.com/v2/free/self', {method:'GET'}).then(async reponse=> {
             const data = await reponse.json();
             console.log(data)
             let ip = data.ipAddress
             let country = data.countryName
             let city = data.city
-            const ws = new WebSocket("ws://localhost:8081")
+            ws = new WebSocket("ws://localhost:8081")
             ws.addEventListener('open', ()=>{
                 console.log("Connecté au WS")
                 ws.send(JSON.stringify({
@@ -24,8 +250,74 @@
                     country: country,
                     city: city
                 }));
+
+            ws.addEventListener('message', msg =>{
+            let data = JSON.parse(msg.data);
+            console.log(data)
+            if(!data.op){
+                
+                for(let voy of document.getElementsByClassName('voy')){
+                    let elemid=voy.id
+                    console.log(data[elemid])
+                    if(data[elemid] === false){
+                        console.log("Voyant "+voy.id+" est faux")
+                        let elem = document.getElementById(elemid)
+                    } else
+                    if (data[elemid] === true){
+                        console.log('Voyant '+voy.id+' est vrai.')
+                        let elem = document.getElementById(elemid)
+                        elem.classList.toggle('ok')
+                    } else
+                    if (data[elemid] === 1){
+                        console.log('Voyant '+voy.id+' est en anomalie.')
+                        let elem = document.getElementById(elemid)
+                        elem.classList.toggle('alarm')
+                    }
+                }
+            }
+            
+            if(data.op===201){
+                let parsedJson = data.content
+                
+                for(let voy of document.getElementsByClassName('voy')){
+                    let elemid=voy.id
+                    console.log(parsedJson[elemid])
+                    if(parsedJson[elemid] === false){
+                        console.log("Voyant "+voy.id+" est faux")
+                        let elem = document.getElementById(elemid)
+                        elem.classList.remove('alarm','ok')
+                    } else
+                    if (parsedJson[elemid] === true){
+                        console.log('Voyant '+voy.id+' est vrai.')
+                        let elem = document.getElementById(elemid)
+                        elem.classList.remove('alarm')
+                        elem.classList.toggle('ok',true)
+                    } else
+                    if (parsedJson[elemid] === 1){
+                        console.log('Voyant '+voy.id+' est en anomalie.')
+                        let elem = document.getElementById(elemid)
+                        elem.classList.remove('ok')
+                        elem.classList.toggle('alarm',true)
+                    }
+                }
+            }
+        })
             })
         });
+
+        btnAG.addEventListener("click", ()=>{
+            ws.send(JSON.stringify({
+                op: 200,
+                execute: "AG"
+            }));
+        })
+
+        btnAG2.addEventListener("click", ()=>{
+            ws.send(JSON.stringify({
+                op: 200,
+                execute: "AGreset"
+            }));
+        })
     </script>
 </body>
 </html>

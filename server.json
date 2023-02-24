@@ -1,149 +1,159 @@
 {
-    "CDJG":false,
-    "forceHt":false,
-
-    "fsCom": false,
-    "authHtV1Master": true,
-    "authHtV2Master": true,
-    "authHtV1": true,
-    "authHtV2": true,
-
-    "fsComGAT": false,
-    "authHtV1MasterGAT": true,
-    "authHtV2MasterGAT": true,
-    "authHtV1GAT": true,
-    "authHtV2GAT": true,
-
-    "PRcom": true,
-    "PR":[
+  "forceHt": false,
+  "voyUCAV1": true,
+  "voyUCAV2": true,
+  "voyHTV1": true,
+  "voyHTV2": true,
+  "voyALC": true,
+  "voyFSV1": true,
+  "voyFSV2": true,
+  "voyFSGAT": true,
+  "voyUCAGAT": true,
+  "voyHTGAT": true,
+  "voyCC": false,
+  "voyPAL": false,
+  "voyAQU": false,
+  "voyGAT": true,
+  "voyABS": true,
+  "PRcom": true,
+  "PR": [
+    {
+      "name": "MSTO",
+      "voyDHTSS04": true,
+      "djv": [
         {
-            "name": "MSTO",
-            "dht": true,
-            "djv":[
-                {
-                    "SS04":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "GLARNER",
-            "dht": true,
-            "djv":[
-                {
-                    "SS05":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "PT-CL",
-            "dht": true,
-            "djv":[
-                {
-                    "SS05":true,
-                    "SS06":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "PT-CAR",
-            "dht": true,
-            "djv":[
-                {
-                    "SS06":true,
-                    "SS07":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "LABORDE",
-            "dht": true,
-            "djv":[
-                {
-                    "SS07":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "OPERA",
-            "dht": true,
-            "djv":[
-                {
-                    "SS08":true,
-                    "SS09":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "CHA",
-            "dht": true,
-            "djv":[
-                {
-                    "SS09":true,
-                    "SS10":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "BASTILLE",
-            "dht": true,
-            "djv":[
-                {
-                    "SS11":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "GDL",
-            "dht": true,
-            "djv":[
-                {
-                    "SS11":true,
-                    "SS12":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "DIJON",
-            "dht": true,
-            "djv":[
-                {
-                    "SS13":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "T.MESS",
-            "dht": true,
-            "djv":[
-                {
-                    "SS13":true,
-                    "SS14":true
-                }
-            ],
-            "alim":true
-        },
-        {
-            "name": "OLY",
-            "dht": true,
-            "djv":[
-                {
-                    "SS15":true
-                }
-            ],
-            "alim":true
+          "SS04": true
         }
-    ],
-    "InhibUCA":false,
-    "IDPODOSTPAScom": false
-
+      ],
+      "voyAlimSS04": true,
+      "voyDISS04": false
+    },
+    {
+      "name": "GLARNER",
+      "voyDHTSS05": true,
+      "djv": [
+        {
+          "SS05": true
+        }
+      ],
+      "voyAlimSS05": true,
+      "voyDISS05": false
+    },
+    {
+      "name": "PT-CL",
+      "voyDHTSS06": true,
+      "djv": [
+        {
+          "SS05": true,
+          "SS06": true
+        }
+      ],
+      "voyAlimSS06": true,
+      "voyDISS06": false
+    },
+    {
+      "name": "PT-CAR",
+      "voyDHTSS07": true,
+      "djv": [
+        {
+          "SS06": true,
+          "SS07": true
+        }
+      ],
+      "voyAlimSS07": true,
+      "voyDISS07": false
+    },
+    {
+      "name": "LABORDE",
+      "voyDHTSS08": true,
+      "djv": [
+        {
+          "SS07": true
+        }
+      ],
+      "voyAlimSS08": true,
+      "voyDISS08": false
+    },
+    {
+      "name": "OPERA",
+      "voyDHTSS09": true,
+      "djv": [
+        {
+          "SS08": true,
+          "SS09": true
+        }
+      ],
+      "voyAlimSS09": true,
+      "voyDISS09": false
+    },
+    {
+      "name": "CHA",
+      "voyDHTSS10": true,
+      "djv": [
+        {
+          "SS09": true,
+          "SS10": true
+        }
+      ],
+      "voyAlimSS10": true,
+      "voyDISS10": false
+    },
+    {
+      "name": "BASTILLE",
+      "voyDHTSS11": true,
+      "djv": [
+        {
+          "SS11": true
+        }
+      ],
+      "voyAlimSS11": true,
+      "voyDISS11": false
+    },
+    {
+      "name": "GDL",
+      "voyDHTSS12": true,
+      "djv": [
+        {
+          "SS11": true,
+          "SS12": true
+        }
+      ],
+      "voyAlimSS12": true,
+      "voyDISS12": false
+    },
+    {
+      "name": "DIJON",
+      "voyDHTSS13": true,
+      "djv": [
+        {
+          "SS13": true
+        }
+      ],
+      "voyAlimSS13": true,
+      "voyDISS13": false
+    },
+    {
+      "name": "T.MESS",
+      "voyDHTSS14": true,
+      "djv": [
+        {
+          "SS13": true,
+          "SS14": true
+        }
+      ],
+      "voyAlimSS14": true,
+      "voyDISS14": false
+    },
+    {
+      "name": "OLY",
+      "voyDHTSS15": true,
+      "djv": [
+        {
+          "SS15": true
+        }
+      ],
+      "voyAlimSS15": true,
+      "voyDISS15": false
+    }
+  ]
 }
