@@ -24,6 +24,8 @@
 </head>
 <body>
     <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
+    <span><button id="btnACQU">ACQUITTER</button></span>
+    <br>
     <span id="voyGAT" class="voy">GAT</span>
     <span id="voyABS" class="voy">ABS</span>
     <span><button id="btnAG">AG</button></span>
@@ -220,6 +222,7 @@
         let voyDHTSS15 = document.getElementById('voyDHTSS15')
         let voyDISS15 = document.getElementById('voyDISS15')
 
+        let btnACQU = document.getElementById('btnACQU')
         let btnAG = document.getElementById('btnAG')
         let btnAG2 = document.getElementById('btnAG2')
 
@@ -234,6 +237,8 @@
         let comIDPOTPAS = document.getElementById('comIDPOTPAS')
 
         let ws= false
+
+        const blinkIntervalId = new Map()
 
         fetch('https://api.db-ip.com/v2/free/self', {method:'GET'}).then(async reponse=> {
             const data = await reponse.json();
@@ -281,23 +286,37 @@
                 
                 for(let voy of document.getElementsByClassName('voy')){
                     let elemid=voy.id
-                    console.log(parsedJson[elemid])
+                    //console.log(parsedJson[elemid])
                     if(parsedJson[elemid] === false){
-                        console.log("Voyant "+voy.id+" est faux")
+                        //console.log("Voyant "+voy.id+" est faux")
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('alarm','ok')
+                        clearInterval(blinkIntervalId.get(elemid))
                     } else
                     if (parsedJson[elemid] === true){
-                        console.log('Voyant '+voy.id+' est vrai.')
+                        //console.log('Voyant '+voy.id+' est vrai.')
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('alarm')
                         elem.classList.toggle('ok',true)
+                        clearInterval(blinkIntervalId.get(elemid))
                     } else
                     if (parsedJson[elemid] === 1){
+                        //console.log('Voyant '+voy.id+' est en défaut.')
+                        let elem = document.getElementById(elemid)
+                        elem.classList.remove('ok')
+                        elem.classList.remove('alarm')
+                        elem.classList.toggle('alarm',true)
+                        console.log(blinkIntervalId.get(elemid))
+                        clearInterval(blinkIntervalId.get(elemid))
+                    } else
+                    if (parsedJson[elemid] === 2){
                         console.log('Voyant '+voy.id+' est en anomalie.')
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('ok')
-                        elem.classList.toggle('alarm',true)
+                        blinkIntervalId.set(elemid, setInterval(async function(){
+                            elem.classList.toggle('alarm')
+                        }, 500))
+                        console.log(blinkIntervalId.get(elemid))
                     }
                 }
             }
@@ -318,6 +337,21 @@
                 execute: "AGreset"
             }));
         })
+
+        btnACQU.addEventListener("click", ()=>{
+            ws.send(JSON.stringify({
+                op: 200,
+                execute: "LINE-ACQU"
+            }));
+        })
+
+
+        function sleep(ms) {
+            return new Promise((resolve) => {
+            setTimeout(resolve, ms);
+        });
+        }
+
     </script>
 </body>
 </html>

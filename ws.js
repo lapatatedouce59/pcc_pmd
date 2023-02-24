@@ -10,6 +10,14 @@ const clients = new Map();
 wss.on('connection', (ws) => {
     logger.client(true)
 
+    function apiSave(){
+        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+        ws.send(JSON.stringify({
+            op: 201,
+            content: pccApi
+        }));
+    }
+
     ws.on('message', msg => {
         let data
         try{
@@ -30,19 +38,15 @@ wss.on('connection', (ws) => {
                 logger.message('income',JSON.stringify(data))
                 switch(data.execute){
                     case 'AG':
-                        pccApi.voyGAT=1
-                        pccApi.voyABS=1
-                        pccApi.voyHTV1=1
-                        pccApi.voyHTV2=1
-                        pccApi.voyFSV1=1
-                        pccApi.voyFSV2=1
-                        pccApi.voyHTGAT=1
-                        pccApi.voyFSGAT=1
-                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                        ws.send(JSON.stringify({
-                            op: 201,
-                            content: pccApi
-                        }));
+                        pccApi.voyGAT=2
+                        pccApi.voyABS=2
+                        pccApi.voyHTV1=2
+                        pccApi.voyHTV2=2
+                        pccApi.voyFSV1=2
+                        pccApi.voyFSV2=2
+                        pccApi.voyHTGAT=2
+                        pccApi.voyFSGAT=2
+                        apiSave();
                         break;
                     case 'AGreset':
                         pccApi.voyABS=true
@@ -53,12 +57,20 @@ wss.on('connection', (ws) => {
                         pccApi.voyFSV2=true
                         pccApi.voyHTGAT=true
                         pccApi.voyFSGAT=true
-                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                        ws.send(JSON.stringify({
-                            op: 201,
-                            content: pccApi
-                        }));
+                        apiSave();
                         break;
+                    case 'LINE-ACQU':
+                        if (pccApi.voyGAT===2) pccApi.voyGAT=1
+                        if (pccApi.voyABS===2) pccApi.voyABS=1
+                        if (pccApi.voyHTV1===2) pccApi.voyHTV1=1
+                        if (pccApi.voyHTV2===2) pccApi.voyHTV2=1
+                        if (pccApi.voyFSV1===2) pccApi.voyFSV1=1
+                        if (pccApi.voyFSV2===2) pccApi.voyFSV2=1
+                        if (pccApi.voyHTGAT===2) pccApi.voyHTGAT=1
+                        if (pccApi.voyFSGAT===2) pccApi.voyFSGAT=1
+                        apiSave();
+                        break;
+
                 }
         }
     })
