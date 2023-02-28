@@ -12,11 +12,20 @@ wss.on('connection', (ws) => {
 
     function apiSave(){
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-        ws.send(JSON.stringify({
-            op: 201,
+
+        wss.broadcast(JSON.stringify({
+            op: 300,
             content: pccApi
-        }));
+        }))
+        logger.message('broadcast','NEW SERVER DATA => REFRESH')
+        //ws.send();
     }
+
+    wss.broadcast = function broadcast(msg) {
+        wss.clients.forEach(function each(client) {
+            client.send(msg);
+        });
+    };
 
     ws.on('message', msg => {
         let data
@@ -26,6 +35,8 @@ wss.on('connection', (ws) => {
             logger.error(error)
         }
         op = data.op;
+
+        if(op==='300') return;
         
         switch(op){
             case 1 :
@@ -38,6 +49,8 @@ wss.on('connection', (ws) => {
                 logger.message('income',JSON.stringify(data))
                 switch(data.execute){
                     case 'AG':
+                        pccApi.comAG=true
+                        console.log(pccApi.comAG)
                         pccApi.voyGAT=2
                         pccApi.voyABS=2
                         pccApi.voyHTV1=2
@@ -46,15 +59,22 @@ wss.on('connection', (ws) => {
                         pccApi.voyFSV2=2
                         pccApi.voyHTGAT=2
                         pccApi.voyFSGAT=2
+                        
                         apiSave();
                         break;
                     case 'AGreset':
+                        pccApi.comAG=false
+                        console.log(pccApi.comAG)
                         pccApi.voyABS=true
                         pccApi.voyGAT=true
-                        pccApi.voyHTV1=true
+                        if(pccApi.comHTV1){
+                            pccApi.voyHTV1=true
+                        }
                         pccApi.voyHTV2=true
-                        pccApi.voyFSV1=true
-                        pccApi.voyFSV2=true
+                        if(!(pccApi.comFSCUT)){
+                            pccApi.voyFSV1=true
+                            pccApi.voyFSV2=true
+                        }
                         pccApi.voyHTGAT=true
                         pccApi.voyFSGAT=true
                         apiSave();
@@ -70,8 +90,55 @@ wss.on('connection', (ws) => {
                         if (pccApi.voyFSGAT===2) pccApi.voyFSGAT=1
                         apiSave();
                         break;
-
                 }
+                break;
+            case 202 :
+                logger.message('income',JSON.stringify(data))
+                switch(data.execute){
+                    case 'FS-LINE-COM':
+                        if(data.state===false){
+                            pccApi.comFSCUT=false
+                            if(pccApi.comAG===false){
+                                console.log('OK')
+                                console.log(pccApi.comAG)
+                                pccApi.voyFSV1=true
+                                pccApi.voyFSV2=true
+                            }
+                        } else if(data.state===true){
+                            pccApi.comFSCUT=true
+                            pccApi.voyFSV1=2
+                            pccApi.voyFSV2=2
+                        }
+                        break;
+                    case 'HTAUT1-COM':
+                        if(data.state===false){
+                            pccApi.comHTV1=false
+                            if(pccApi.comAG===false){
+                                pccApi.voyHTV1=2
+                            }
+                        } else if(data.state===true){
+                            pccApi.comHTV1=true
+                            if(pccApi.comAG===false){
+                                pccApi.voyHTV1=true
+                            }
+                        }
+                        break;
+                    case 'IDPO-COM':
+                        if(data.state===false){
+                            pccApi.comIDPO=false
+                        } else if(data.state===true){
+                            pccApi.comIDPO=true
+                        }
+                        break;
+                    case 'UCAINHIB-COM':
+                        if(data.state===false){
+                            pccApi.comInhibUCA=false
+                        } else if(data.state===true){
+                            pccApi.comInhibUCA=true
+                        }
+                        break;
+                }
+                apiSave()
         }
     })
 

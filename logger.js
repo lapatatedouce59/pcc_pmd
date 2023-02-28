@@ -20,6 +20,8 @@ exports.message = function (type,data){
             return console.log('\x1b[37m[\x1b[32mINCOMING MESSAGE\x1b[37m] '+data);
         case 'outcome':
             return console.log('\x1b[37m[\x1b[35mOUTCOMING MESSAGE\x1b[37m] '+data);
+        case 'broadcast':
+            return console.log('\x1b[37m[\x1b[35mBROADCAST\x1b[37m] '+data);
     }
 }
 

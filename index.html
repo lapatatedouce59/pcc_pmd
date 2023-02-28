@@ -34,8 +34,8 @@
     <br>
     <span id="voyUCAV1" class="voy">UCA V1</span>
     <span id="voyUCAV2" class="voy">UCA V2</span>
-    <span> <input type="checkbox" id="comAuthV1"> AUTHV1 </span>
-    <span> <input type="checkbox" id="comAuthV2"> AUTHV2 </span>
+    <span> <input type="checkbox" id="comAuthV1" checked> AUTHV1 </span>
+    <span> <input type="checkbox" id="comAuthV2" checked> AUTHV2 </span>
     <span id="voyHTV1" class="voy">HT V1</span>
     <span id="voyHTV2" class="voy">HT V2</span>
     <span> <input type="checkbox" id="comFSLine"> COUPURE FS </span>
@@ -44,12 +44,12 @@
     <span id="voyFSV2" class="voy">FS V2</span>
     <br>
     <span id="voyUCAGAT" class="voy">UCA</span>
-    <span> <input type="checkbox" id="comAuthGAT"> AUTH </span>
+    <span> <input type="checkbox" id="comAuthGAT" checked> AUTH </span>
     <span id="voyHTGAT" class="voy">HT</span>
     <span> <input type="checkbox" id="comFSGAT"> COUPURE FS </span>
     <span id="voyFSGAT" class="voy">FS</span>
     <br>
-    <span> <input type="checkbox" id="comArmPR"> Armt. PR </span>
+    <span> <input type="checkbox" id="comArmPR" checked> Armt. PR </span>
     <br>
     <span id="voyCC" class="voy">CC</span>
     <span id="voyPAL" class="voy">PAL</span>
@@ -168,7 +168,7 @@
         <option value="NON">NON</option>
     </select> <span>SS15</span>
     <br>
-    <script>
+    <script type="module">
 
         let voyGAT = document.getElementById('voyGAT')
         let voyABS = document.getElementById('voyABS')
@@ -236,9 +236,18 @@
         let comInhibUCA = document.getElementById('comInhibUCA')
         let comIDPOTPAS = document.getElementById('comIDPOTPAS')
 
+        sm.registerSound("bip", './src/pltp/snds/bip.mp3');
+
         let ws= false
 
         const blinkIntervalId = new Map()
+
+        let beepIntervalId = false
+
+        let alreadyBeep = false
+
+        import sm from './sm.js'
+        sm.init()
 
         fetch('https://api.db-ip.com/v2/free/self', {method:'GET'}).then(async reponse=> {
             const data = await reponse.json();
@@ -267,58 +276,159 @@
                     if(data[elemid] === false){
                         console.log("Voyant "+voy.id+" est faux")
                         let elem = document.getElementById(elemid)
+                        clearInterval(blinkIntervalId.get(elemid))
+                        blinkIntervalId.delete(elemid)
+                        clearInterval(beepIntervalId)
                     } else
                     if (data[elemid] === true){
                         console.log('Voyant '+voy.id+' est vrai.')
                         let elem = document.getElementById(elemid)
                         elem.classList.toggle('ok')
+                        clearInterval(blinkIntervalId.get(elemid))
+                        blinkIntervalId.delete(elemid)
+                        clearInterval(beepIntervalId)
                     } else
                     if (data[elemid] === 1){
                         console.log('Voyant '+voy.id+' est en anomalie.')
                         let elem = document.getElementById(elemid)
                         elem.classList.toggle('alarm')
+                        clearInterval(blinkIntervalId.get(elemid))
+                        blinkIntervalId.delete(elemid)
+                        clearInterval(beepIntervalId)
+                    }else
+                    if (data[elemid] === 2){
+                        console.log('Voyant '+voy.id+' est en anomalie.')
+                        let elem = document.getElementById(elemid)
+                        elem.classList.remove('ok')
+                        elem.classList.toggle('alarm')
+                        blinkIntervalId.set(elemid, setInterval(async function(){
+                            elem.classList.toggle('alarm')
+                        }, 500))
+                        console.log(blinkIntervalId.get(elemid))
+                        console.log(blinkIntervalId.size)
                     }
+
+                    //TODO voyants alims
+                    /*if((voy.id).includes('SS')){
+                        for(let i = 0; i <=11; i++){
+                            console.log(data.PR[i].voyAlimSS04)
+                        }
+                        for(const elem of data.PR){
+                            console.log(elem.voy)
+                        }
+                    }
+                    if(data.PR[elemid] === false){
+                        console.log("Voyant "+voy.id+" est faux")
+                        let elem = document.getElementById(elemid)
+                        clearInterval(blinkIntervalId.get(elemid))
+                        blinkIntervalId.delete(elemid)
+                        clearInterval(beepIntervalId)
+                    } else
+                    if (data[elemid] === true){
+                        console.log('Voyant '+voy.id+' est vrai.')
+                        let elem = document.getElementById(elemid)
+                        elem.classList.toggle('ok')
+                        clearInterval(blinkIntervalId.get(elemid))
+                        blinkIntervalId.delete(elemid)
+                        clearInterval(beepIntervalId)
+                    } else
+                    if (data[elemid] === 1){
+                        console.log('Voyant '+voy.id+' est en anomalie.')
+                        let elem = document.getElementById(elemid)
+                        elem.classList.toggle('alarm')
+                        clearInterval(blinkIntervalId.get(elemid))
+                        blinkIntervalId.delete(elemid)
+                        clearInterval(beepIntervalId)
+                    }else
+                    if (data[elemid] === 2){
+                        console.log('Voyant '+voy.id+' est en anomalie.')
+                        let elem = document.getElementById(elemid)
+                        elem.classList.remove('ok')
+                        elem.classList.toggle('alarm')
+                        blinkIntervalId.set(elemid, setInterval(async function(){
+                            elem.classList.toggle('alarm')
+                        }, 500))
+                        console.log(blinkIntervalId.get(elemid))
+                        console.log(blinkIntervalId.size)
+                    }*/
+                }
+                
+
+                if(blinkIntervalId.size >= 1){
+                    sm.playSound('bip',0.5)
+                    beepIntervalId = setInterval(async () =>{
+                            sm.playSound('bip',0.5)
+                            console.log('bip')
+                            //sm.stopFreq(2959)
+                        }, 1000)
+                } else {
+                    sm.stopSound('bip')
                 }
             }
             
-            if(data.op===201){
+            if(data.op===300){
+
                 let parsedJson = data.content
                 
                 for(let voy of document.getElementsByClassName('voy')){
                     let elemid=voy.id
                     //console.log(parsedJson[elemid])
                     if(parsedJson[elemid] === false){
-                        //console.log("Voyant "+voy.id+" est faux")
+                        console.log("Voyant "+voy.id+" est faux")
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('alarm','ok')
                         clearInterval(blinkIntervalId.get(elemid))
+                        blinkIntervalId.delete(elemid)
+                        clearInterval(beepIntervalId)
                     } else
                     if (parsedJson[elemid] === true){
-                        //console.log('Voyant '+voy.id+' est vrai.')
+                        console.log('Voyant '+voy.id+' est vrai.')
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('alarm')
                         elem.classList.toggle('ok',true)
                         clearInterval(blinkIntervalId.get(elemid))
+                        blinkIntervalId.delete(elemid)
+                        clearInterval(beepIntervalId)
                     } else
                     if (parsedJson[elemid] === 1){
-                        //console.log('Voyant '+voy.id+' est en défaut.')
+                        console.log('Voyant '+voy.id+' est en défaut.')
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('ok')
                         elem.classList.remove('alarm')
                         elem.classList.toggle('alarm',true)
                         console.log(blinkIntervalId.get(elemid))
                         clearInterval(blinkIntervalId.get(elemid))
+                        blinkIntervalId.delete(elemid)
+                        clearInterval(beepIntervalId)
+
                     } else
-                    if (parsedJson[elemid] === 2){
+                    if (parsedJson[elemid] === 2 && !(blinkIntervalId.get(elemid))){
                         console.log('Voyant '+voy.id+' est en anomalie.')
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('ok')
+                        elem.classList.toggle('alarm')
                         blinkIntervalId.set(elemid, setInterval(async function(){
                             elem.classList.toggle('alarm')
                         }, 500))
                         console.log(blinkIntervalId.get(elemid))
+                        console.log(blinkIntervalId.size)
+
                     }
+                    
                 }
+                //if(alreadyBeep===false){
+                    if(blinkIntervalId.size >= 1){
+                        sm.playSound('bip',0.5)
+                        beepIntervalId = setInterval(async () =>{
+                            sm.playSound('bip',0.5)
+                            console.log('bip')
+                            //sm.stopFreq(2959)
+                        }, 1000)
+                    } else {
+                        sm.stopSound('bip')
+                    }
+                //}
+                
             }
         })
             })
@@ -343,6 +453,74 @@
                 op: 200,
                 execute: "LINE-ACQU"
             }));
+        })
+
+        comFSLine.addEventListener("input", ()=>{
+            if(comFSLine.checked === true){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "FS-LINE-COM",
+                state: true
+            }));
+            } else
+            if(comFSLine.checked === false){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "FS-LINE-COM",
+                state: false
+            }));
+        }
+        })
+
+        comIDPOTPAS.addEventListener("input", ()=>{
+            if(comIDPOTPAS.checked === true){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "IDPO-COM",
+                state: true
+            }));
+            } else
+            if(comIDPOTPAS.checked === false){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "IDPO-COM",
+                state: false
+            }));
+        }
+        })
+
+        comInhibUCA.addEventListener("input", ()=>{
+            if(comInhibUCA.checked === true){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "UCAINHIB-COM",
+                state: true
+            }));
+            } else
+            if(comInhibUCA.checked === false){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "UCAINHIB-COM",
+                state: false
+            }));
+        }
+        })
+
+        comAuthV1.addEventListener("input", ()=>{
+            if(comAuthV1.checked === true){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "HTAUT1-COM",
+                state: true
+            }));
+            } else
+            if(comAuthV1.checked === false){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "HTAUT1-COM",
+                state: false
+            }));
+        }
         })
 
 
