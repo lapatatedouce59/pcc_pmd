@@ -62,21 +62,31 @@ wss.on('connection', (ws) => {
                         
                         apiSave();
                         break;
-                    case 'AGreset':
+                    case 'AGreset': //TODO Empecher que la fs se rétablisse quand la coupure est cochée (comme fait avec la ht)
                         pccApi.comAG=false
                         console.log(pccApi.comAG)
-                        pccApi.voyABS=true
-                        pccApi.voyGAT=true
-                        if(pccApi.comHTV1){
+                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
+                            pccApi.voyABS=true
+                        }
+                        if((pccApi.comAuthGAT) && !(pccApi.comFSGAT)){
+                            pccApi.voyGAT=true
+                        }
+                        if(pccApi.comAuthV1){
                             pccApi.voyHTV1=true
                         }
-                        pccApi.voyHTV2=true
-                        if(!(pccApi.comFSCUT)){
+                        if(pccApi.comAuthV2){
+                            pccApi.voyHTV2=true
+                        }
+                        if(!(pccApi.comFSLine)){
                             pccApi.voyFSV1=true
                             pccApi.voyFSV2=true
                         }
-                        pccApi.voyHTGAT=true
-                        pccApi.voyFSGAT=true
+                        if(!(pccApi.comFSGAT)){
+                            pccApi.voyFSGAT=true
+                        }
+                        if(pccApi.comAuthGAT){
+                            pccApi.voyHTGAT=true
+                        }
                         apiSave();
                         break;
                     case 'LINE-ACQU':
@@ -97,7 +107,7 @@ wss.on('connection', (ws) => {
                 switch(data.execute){
                     case 'FS-LINE-COM':
                         if(data.state===false){
-                            pccApi.comFSCUT=false
+                            pccApi.comFSLine=false
                             if(pccApi.comAG===false){
                                 console.log('OK')
                                 console.log(pccApi.comAG)
@@ -105,29 +115,121 @@ wss.on('connection', (ws) => {
                                 pccApi.voyFSV2=true
                             }
                         } else if(data.state===true){
-                            pccApi.comFSCUT=true
+                            pccApi.comFSLine=true
                             pccApi.voyFSV1=2
                             pccApi.voyFSV2=2
+                        }
+                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
+                            pccApi.voyABS=true
+                        } else {
+                            pccApi.voyABS=2
+                        }
+                        break;
+                    case 'FS-GAT-COM':
+                        if(data.state===false){
+                            pccApi.comFSGAT=false
+                            if(pccApi.comAG===false){
+                                console.log('OK')
+                                console.log(pccApi.comAG)
+                                pccApi.voyFSGAT=true
+                            }
+                        } else if(data.state===true){
+                            pccApi.comFSGAT=true
+                            pccApi.voyFSGAT=2
+                        }
+                        if((pccApi.comAuthGAT) && !(pccApi.comFSGAT)){
+                            pccApi.voyGAT=true
+                        } else {
+                            pccApi.voyGAT=2
                         }
                         break;
                     case 'HTAUT1-COM':
                         if(data.state===false){
-                            pccApi.comHTV1=false
-                            if(pccApi.comAG===false){
+                            pccApi.comAuthV1=false
+                            if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHTV1=2
                             }
                         } else if(data.state===true){
-                            pccApi.comHTV1=true
-                            if(pccApi.comAG===false){
+                            pccApi.comAuthV1=true
+                            if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHTV1=true
                             }
+                        }
+                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
+                            pccApi.voyABS=true
+                        } else {
+                            pccApi.voyABS=2
+                        }
+                        break;
+                    case 'HTAUT2-COM':
+                        if(data.state===false){
+                            pccApi.comAuthV2=false
+                            if(pccApi.comAG===false || pccApi.comForceHT===true){
+                                pccApi.voyHTV2=2
+                            }
+                        } else if(data.state===true){
+                            pccApi.comAuthV2=true
+                            if(pccApi.comAG===false || pccApi.comForceHT===true){
+                                pccApi.voyHTV2=true
+                            }
+                        }
+                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
+                            pccApi.voyABS=true
+                        } else {
+                            pccApi.voyABS=2
+                        }
+                        break;
+                    case 'HTAUTGAT-COM':
+                        if(data.state===false){
+                            pccApi.comAuthGAT=false
+                            if(pccApi.comAG===false || pccApi.comForceHT===true){
+                                pccApi.voyHTGAT=2
+                            }
+                        } else if(data.state===true){
+                            pccApi.comAuthGAT=true
+                            if(pccApi.comAG===false || pccApi.comForceHT===true){
+                                pccApi.voyHTGAT=true
+                            }
+                        }
+                        if((pccApi.comAuthGAT) && !(pccApi.comFSGAT)){
+                            pccApi.voyGAT=true
+                        } else {
+                            pccApi.voyGAT=2
+                        }
+                        break;
+
+                    case 'FORCEHT-COM':
+                        if(data.state===false){
+                            pccApi.comForceHT=false
+                            if(pccApi.comAG===true){
+                                pccApi.voyHTV1=2
+                                pccApi.voyHTV2=2
+                                pccApi.voyHTGAT=2
+                            }
+                        } else if(data.state===true){
+                            pccApi.comForceHT=true
+                            if(pccApi.comAG===true){
+                                pccApi.voyHTV1=true
+                                pccApi.voyHTV2=true
+                                pccApi.voyHTGAT=true
+                            }
+                        }
+                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
+                            pccApi.voyABS=true
+                        } else {
+                            pccApi.voyABS=2
+                        }
+                        if((pccApi.comAuthGAT) && !(pccApi.comFSGAT)){
+                            pccApi.voyGAT=true
+                        } else {
+                            pccApi.voyGAT=2
                         }
                         break;
                     case 'IDPO-COM':
                         if(data.state===false){
-                            pccApi.comIDPO=false
+                            pccApi.comIDPOTPAS=false
                         } else if(data.state===true){
-                            pccApi.comIDPO=true
+                            pccApi.comIDPOTPAS=true
                         }
                         break;
                     case 'UCAINHIB-COM':

@@ -30,34 +30,34 @@
     <span id="voyABS" class="voy">ABS</span>
     <span><button id="btnAG">AG</button></span>
     <span><button id="btnAG2">rétablir</button></span>
-    <span> <input type="checkbox" id="comForceHT"> Forcage HT </span>
+    <span> <input type="checkbox" id="comForceHT" class="com"> Forcage HT </span>
     <br>
     <span id="voyUCAV1" class="voy">UCA V1</span>
     <span id="voyUCAV2" class="voy">UCA V2</span>
-    <span> <input type="checkbox" id="comAuthV1" checked> AUTHV1 </span>
-    <span> <input type="checkbox" id="comAuthV2" checked> AUTHV2 </span>
+    <span> <input type="checkbox" id="comAuthV1" checked class="com"> AUTHV1 </span>
+    <span> <input type="checkbox" id="comAuthV2" checked class="com"> AUTHV2 </span>
     <span id="voyHTV1" class="voy">HT V1</span>
     <span id="voyHTV2" class="voy">HT V2</span>
-    <span> <input type="checkbox" id="comFSLine"> COUPURE FS </span>
+    <span> <input type="checkbox" id="comFSLine" class="com"> COUPURE FS </span>
     <span id="voyALC" class="voy">ALC</span>
     <span id="voyFSV1" class="voy">FS V1</span>
     <span id="voyFSV2" class="voy">FS V2</span>
     <br>
     <span id="voyUCAGAT" class="voy">UCA</span>
-    <span> <input type="checkbox" id="comAuthGAT" checked> AUTH </span>
+    <span> <input type="checkbox" id="comAuthGAT" class="com" checked> AUTH </span>
     <span id="voyHTGAT" class="voy">HT</span>
-    <span> <input type="checkbox" id="comFSGAT"> COUPURE FS </span>
+    <span> <input type="checkbox" id="comFSGAT" class="com"> COUPURE FS </span>
     <span id="voyFSGAT" class="voy">FS</span>
     <br>
-    <span> <input type="checkbox" id="comArmPR" checked> Armt. PR </span>
+    <span> <input type="checkbox" id="comArmPR" class="com" checked> Armt. PR </span>
     <br>
     <span id="voyCC" class="voy">CC</span>
     <span id="voyPAL" class="voy">PAL</span>
     <span id="voyAQU" class="voy">AQU</span>
     <br>
-    <span> <input type="checkbox" id="comInhibUCA"> Inhib. UCA </span>
+    <span> <input type="checkbox" id="comInhibUCA" class="com"> Inhib. UCA </span>
     <br>
-    <span> <input type="checkbox" id="comIDPOTPAS"> IDPO tout PAS </span>
+    <span> <input type="checkbox" id="comIDPOTPAS" class="com"> IDPO tout PAS </span>
     <br>
     <h3>SS</h3>
     <span id="voyAlimSS04" class="voy">ALIM</span>
@@ -272,16 +272,15 @@
                 
                 for(let voy of document.getElementsByClassName('voy')){
                     let elemid=voy.id
-                    console.log(data[elemid])
                     if(data[elemid] === false){
-                        console.log("Voyant "+voy.id+" est faux")
+                        //console.log("Voyant "+voy.id+" est faux")
                         let elem = document.getElementById(elemid)
                         clearInterval(blinkIntervalId.get(elemid))
                         blinkIntervalId.delete(elemid)
                         clearInterval(beepIntervalId)
                     } else
                     if (data[elemid] === true){
-                        console.log('Voyant '+voy.id+' est vrai.')
+                        //console.log('Voyant '+voy.id+' est vrai.')
                         let elem = document.getElementById(elemid)
                         elem.classList.toggle('ok')
                         clearInterval(blinkIntervalId.get(elemid))
@@ -289,7 +288,7 @@
                         clearInterval(beepIntervalId)
                     } else
                     if (data[elemid] === 1){
-                        console.log('Voyant '+voy.id+' est en anomalie.')
+                        //console.log('Voyant '+voy.id+' est en anomalie.')
                         let elem = document.getElementById(elemid)
                         elem.classList.toggle('alarm')
                         clearInterval(blinkIntervalId.get(elemid))
@@ -297,7 +296,7 @@
                         clearInterval(beepIntervalId)
                     }else
                     if (data[elemid] === 2){
-                        console.log('Voyant '+voy.id+' est en anomalie.')
+                        //console.log('Voyant '+voy.id+' est en anomalie.')
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('ok')
                         elem.classList.toggle('alarm')
@@ -306,6 +305,20 @@
                         }, 500))
                         console.log(blinkIntervalId.get(elemid))
                         console.log(blinkIntervalId.size)
+                    }
+
+                    for(let com of document.getElementsByClassName('com')){
+                        let elemid=com.id
+                        let elem = document.getElementById(elemid)
+                        console.log(data[elemid])
+                        if(data[elemid] === false){
+                            console.log("Commutateur "+com.id+" est faux")
+                            elem.checked=false
+                        } else
+                        if (data[elemid] === true){
+                            console.log('Commutateur '+com.id+' est vrai.')
+                            elem.checked=true
+                        }
                     }
 
                     //TODO voyants alims
@@ -415,6 +428,12 @@
 
                     }
                     
+                }//TODO synchro des coms
+                for(let com of document.getElementsByClassName('com')){
+                    let elemid=com.id
+                    let elem = document.getElementById(elemid)
+                    console.log("Commutateur "+com.id+" est "+parsedJson[elemid])
+                    com.checked=parsedJson[elemid]
                 }
                 //if(alreadyBeep===false){
                     if(blinkIntervalId.size >= 1){
@@ -428,8 +447,7 @@
                         sm.stopSound('bip')
                     }
                 //}
-                
-            }
+                }
         })
             })
         });
@@ -467,6 +485,23 @@
                 ws.send(JSON.stringify({
                 op: 202,
                 execute: "FS-LINE-COM",
+                state: false
+            }));
+        }
+        })
+
+        comFSGAT.addEventListener("input", ()=>{
+            if(comFSGAT.checked === true){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "FS-GAT-COM",
+                state: true
+            }));
+            } else
+            if(comFSGAT.checked === false){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "FS-GAT-COM",
                 state: false
             }));
         }
@@ -518,6 +553,57 @@
                 ws.send(JSON.stringify({
                 op: 202,
                 execute: "HTAUT1-COM",
+                state: false
+            }));
+        }
+        })
+
+        comAuthV2.addEventListener("input", ()=>{
+            if(comAuthV2.checked === true){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "HTAUT2-COM",
+                state: true
+            }));
+            } else
+            if(comAuthV2.checked === false){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "HTAUT2-COM",
+                state: false
+            }));
+        }
+        })
+
+        comAuthGAT.addEventListener("input", ()=>{
+            if(comAuthGAT.checked === true){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "HTAUTGAT-COM",
+                state: true
+            }));
+            } else
+            if(comAuthGAT.checked === false){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "HTAUTGAT-COM",
+                state: false
+            }));
+        }
+        })
+
+        comForceHT.addEventListener("input", ()=>{
+            if(comForceHT.checked === true){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "FORCEHT-COM",
+                state: true
+            }));
+            } else
+            if(comForceHT.checked === false){
+                ws.send(JSON.stringify({
+                op: 202,
+                execute: "FORCEHT-COM",
                 state: false
             }));
         }

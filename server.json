@@ -1,5 +1,5 @@
 {
-  "forceHt": false,
+  "comForceHT": false,
   "voyUCAV1": true,
   "voyUCAV2": true,
   "voyHTV1": true,
@@ -15,7 +15,7 @@
   "voyAQU": false,
   "voyGAT": true,
   "voyABS": true,
-  "PRcom": true,
+  "comArmPR": true,
   "PR": [
     {
       "name": "MSTO",
@@ -156,10 +156,13 @@
       "voyDI": false
     }
   ],
-  "comFSCUT": false,
+  "comFSLine": false,
+  "comFSGAT": false,
   "comAG": false,
-  "comIDPO": false,
+  "comIDPOTPAS": false,
   "comInhibUCA": false,
-  "comHTV1": true,
-  "comHTV2": false
+  "comAuthV1": true,
+  "comAuthV2": true,
+  "comAuthGAT": true,
+  "comHTV1": true
 }
