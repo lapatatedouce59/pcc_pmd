@@ -15,145 +15,141 @@
   "voyAQU": false,
   "voyGAT": true,
   "voyABS": true,
-  "comArmPR": true,
-  "PR": [
+  "comArmPR": false,
+  "SS": [
     {
-      "name": "MSTO",
-      "voyDHTSS04": true,
-      "djv": [
-        {
-          "SS04": true
-        }
-      ],
+      "voyDHTSS04": 1,
       "voyAlimSS04": true,
       "voyDISS04": false
     },
     {
-      "name": "GLARNER",
-      "voyDHTSS05": true,
-      "djv": [
-        {
-          "SS05": true
-        }
-      ],
+      "voyDHTSS05": 1,
       "voyAlimSS05": true,
       "voyDISS05": false
     },
     {
+      "voyDHTSS06": 1,
+      "voyAlimSS06": true,
+      "voyDISS06": false
+    },
+    {
+      "voyDHTSS07": 1,
+      "voyAlimSS07": true,
+      "voyDISS07": false
+    },
+    {
+      "voyDHTSS08": 1,
+      "voyAlimSS08": true,
+      "voyDISS08": false
+    },
+    {
+      "voyDHTSS09": 1,
+      "voyAlimSS09": true,
+      "voyDISS09": false
+    },
+    {
+      "voyDHTSS10": 1,
+      "voyAlimSS10": true,
+      "voyDISS10": false
+    },
+    {
+      "voyDHTSS11": 1,
+      "voyAlimSS11": true,
+      "voyDISS11": false
+    },
+    {
+      "voyDHTSS12": 1,
+      "voyAlimSS12": true,
+      "voyDISS12": false
+    },
+    {
+      "voyDHTSS13": 1,
+      "voyAlimSS13": true,
+      "voyDISS13": false
+    },
+    {
+      "voyDHTSS14": 1,
+      "voyAlimSS14": true,
+      "voyDISS14": false
+    },
+    {
+      "voyDHTSS15": 1,
+      "voyAlimSS15": true,
+      "voyDISS15": false
+    }
+  ],
+  "PR": [
+    {
+      "name": "MSTO",
+      "AlimMSTO": true,
+      "DHTMSTO": true,
+      "DIMSTO": false
+    },
+    {
+      "name": "GLARNER",
+      "AlimGLARNER": true,
+      "DHTGLARNER": true,
+      "DIGLARNER": false
+    },
+    {
       "name": "PT-CL",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS05": true,
-          "SS06": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimPT-CL": true,
+      "DHTPT-CL": true,
+      "DIPT-CL": false
     },
     {
       "name": "PT-CAR",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS06": true,
-          "SS07": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimPT-CAR": true,
+      "DHTPT-CAR": true,
+      "DIPT-CAR": false
     },
     {
       "name": "LABORDE",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS07": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimLABORDE": true,
+      "DHTLABORDE": true,
+      "DILABORDE": false
     },
     {
       "name": "OPERA",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS08": true,
-          "SS09": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimOPERA": true,
+      "DHTOPERA": true,
+      "DIOPERA": false
     },
     {
       "name": "CHA",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS09": true,
-          "SS10": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimCHA": true,
+      "DHTCHA": true,
+      "DICHA": false
     },
     {
       "name": "BASTILLE",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS11": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimBASTILLE": true,
+      "DHTBASTILLE": true,
+      "DIBASTILLE": false
     },
     {
       "name": "GDL",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS11": true,
-          "SS12": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimGDL": true,
+      "DHTGDL": true,
+      "DIGDL": false
     },
     {
       "name": "DIJON",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS13": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimDIJON": true,
+      "DHTDIJON": true,
+      "DIDIJON": false
     },
     {
       "name": "T.MESS",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS13": true,
-          "SS14": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimT.MESS": true,
+      "DHTT.MESS": true,
+      "DIT.MESS": false
     },
     {
       "name": "OLY",
-      "voyDHT": true,
-      "djv": [
-        {
-          "SS15": true
-        }
-      ],
-      "voyAlim": true,
-      "voyDI": false
+      "AlimOLY": true,
+      "DHTOLY": true,
+      "DIOLY": false
     }
   ],
   "comFSLine": false,
@@ -164,5 +160,10 @@
   "comAuthV1": true,
   "comAuthV2": true,
   "comAuthGAT": true,
-  "comHTV1": true
+  "comHTV1": true,
+  "trains": [
+    {
+      "name": "0114"
+    }
+  ]
 }

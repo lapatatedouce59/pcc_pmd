@@ -255,7 +255,7 @@
             let ip = data.ipAddress
             let country = data.countryName
             let city = data.city
-            ws = new WebSocket("ws://localhost:8081")
+            ws = new WebSocket("ws://78.113.18.255:8081")
             ws.addEventListener('open', ()=>{
                 console.log("Connecté au WS")
                 ws.send(JSON.stringify({
@@ -269,6 +269,8 @@
             let data = JSON.parse(msg.data);
             console.log(data)
             if(!data.op){
+                let iteration=0
+                let count=0
                 
                 for(let voy of document.getElementsByClassName('voy')){
                     let elemid=voy.id
@@ -307,30 +309,63 @@
                         console.log(blinkIntervalId.size)
                     }
 
-                    for(let com of document.getElementsByClassName('com')){
-                        let elemid=com.id
-                        let elem = document.getElementById(elemid)
-                        console.log(data[elemid])
-                        if(data[elemid] === false){
-                            console.log("Commutateur "+com.id+" est faux")
-                            elem.checked=false
+                    if(elemid.includes('SS')){
+                        console.log(elemid)
+                        console.log(data.SS[count])
+                        console.log(data.SS[count][elemid])
+                        if(data.SS[count][elemid] === false){
+                            console.log("Voyant "+voy.id+" est faux")
+                            let elem = document.getElementById(elemid)
+                            clearInterval(blinkIntervalId.get(elemid))
+                            blinkIntervalId.delete(elemid)
+                            clearInterval(beepIntervalId)
                         } else
-                        if (data[elemid] === true){
-                            console.log('Commutateur '+com.id+' est vrai.')
-                            elem.checked=true
+                        if (data.SS[count][elemid] === true){
+                            console.log('Voyant '+voy.id+' est vrai.')
+                            let elem = document.getElementById(elemid)
+                            elem.classList.toggle('ok')
+                            clearInterval(blinkIntervalId.get(elemid))
+                            blinkIntervalId.delete(elemid)
+                            clearInterval(beepIntervalId)
+                        } else
+                        if (data.SS[count][elemid] === 1){
+                            //console.log('Voyant '+voy.id+' est en anomalie.')
+                            let elem = document.getElementById(elemid)
+                            elem.classList.toggle('alarm')
+                            clearInterval(blinkIntervalId.get(elemid))
+                            blinkIntervalId.delete(elemid)
+                            clearInterval(beepIntervalId)
+                        }else
+                        if (data.SS[count][elemid] === 2){
+                        //console.log('Voyant '+voy.id+' est en anomalie.')
+                            let elem = document.getElementById(elemid)
+                            elem.classList.remove('ok')
+                            elem.classList.toggle('alarm')
+                            blinkIntervalId.set(elemid, setInterval(async function(){
+                            elem.classList.toggle('alarm')
+                        }, 500))
+                        console.log(blinkIntervalId.get(elemid))
+                        console.log(blinkIntervalId.size)
                         }
+                        iteration++
+                        if(iteration===3){count++; iteration=0}
                     }
+                }
 
-                    //TODO voyants alims
-                    /*if((voy.id).includes('SS')){
-                        for(let i = 0; i <=11; i++){
-                            console.log(data.PR[i].voyAlimSS04)
-                        }
-                        for(const elem of data.PR){
-                            console.log(elem.voy)
-                        }
+                for(let com of document.getElementsByClassName('com')){
+                    let elemid=com.id
+                    let elem = document.getElementById(elemid)
+                    if(data[elemid] === false){
+                        console.log("Commutateur "+com.id+" est faux")
+                        elem.checked=false
+                    } else
+                    if (data[elemid] === true){
+                        console.log('Commutateur '+com.id+' est vrai.')
+                        elem.checked=true
                     }
-                    if(data.PR[elemid] === false){
+                }
+
+                    /*if(data.PR[elemid] === false){
                         console.log("Voyant "+voy.id+" est faux")
                         let elem = document.getElementById(elemid)
                         clearInterval(blinkIntervalId.get(elemid))
@@ -364,7 +399,7 @@
                         console.log(blinkIntervalId.get(elemid))
                         console.log(blinkIntervalId.size)
                     }*/
-                }
+                
                 
 
                 if(blinkIntervalId.size >= 1){
@@ -382,10 +417,14 @@
             if(data.op===300){
 
                 let parsedJson = data.content
+                let iteration=0
+                let count=0
                 
                 for(let voy of document.getElementsByClassName('voy')){
                     let elemid=voy.id
                     //console.log(parsedJson[elemid])
+
+                    //-> VOYANTS NORMAUX
                     if(parsedJson[elemid] === false){
                         console.log("Voyant "+voy.id+" est faux")
                         let elem = document.getElementById(elemid)
@@ -425,7 +464,53 @@
                         }, 500))
                         console.log(blinkIntervalId.get(elemid))
                         console.log(blinkIntervalId.size)
-
+                    }
+                    //-> VOYANTS SS
+                    if(elemid.includes('SS')){
+                        //console.log(elemid)
+                        //console.log(parsedJson.SS[count])
+                        //console.log(parsedJson.SS[count][elemid])
+                        if(parsedJson.SS[count][elemid] === false){
+                            console.log("Voyant "+voy.id+" est faux")
+                            let elem = document.getElementById(elemid)
+                            elem.classList.remove('ok')
+                            elem.classList.remove('alarm')
+                            clearInterval(blinkIntervalId.get(elemid))
+                            blinkIntervalId.delete(elemid)
+                            clearInterval(beepIntervalId)
+                        } else
+                        if (parsedJson.SS[count][elemid] === true){
+                            console.log('Voyant '+voy.id+' est vrai.')
+                            let elem = document.getElementById(elemid)
+                            elem.classList.remove('alarm')
+                            elem.classList.toggle('ok',true)
+                            clearInterval(blinkIntervalId.get(elemid))
+                            blinkIntervalId.delete(elemid)
+                            clearInterval(beepIntervalId)
+                        } else
+                        if (parsedJson.SS[count][elemid] === 1){
+                            //console.log('Voyant '+voy.id+' est en anomalie.')
+                            let elem = document.getElementById(elemid)
+                            elem.classList.remove('ok')
+                            elem.classList.toggle('alarm',true)
+                            clearInterval(blinkIntervalId.get(elemid))
+                            blinkIntervalId.delete(elemid)
+                            clearInterval(beepIntervalId)
+                        }else
+                        if (parsedJson.SS[count][elemid] === 2){
+                        //console.log('Voyant '+voy.id+' est en anomalie.')
+                            let elem = document.getElementById(elemid)
+                            elem.classList.remove('ok')
+                            elem.classList.toggle('alarm',true)
+                            blinkIntervalId.set(elemid, setInterval(async function(){
+                            elem.classList.toggle('alarm')
+                        }, 500))
+                        console.log(blinkIntervalId.get(elemid))
+                        console.log(blinkIntervalId.size)
+                        }
+                        
+                        iteration++
+                        if(iteration===3){count++; iteration=0}
                     }
                     
                 }//TODO synchro des coms
@@ -607,6 +692,15 @@
                 state: false
             }));
         }
+        })
+
+        comArmPR.addEventListener("input", ()=>{
+            if(comArmPR.checked === true){
+                ws.send(JSON.stringify( {op: 202, execute: "ARMPR-COM", state: true} ));
+            } else
+            if(comArmPR.checked === false){
+                ws.send(JSON.stringify( {op: 202, execute: "ARMPR-COM", state: false} ));
+            }
         })
 
 

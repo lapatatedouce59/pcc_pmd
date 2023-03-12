@@ -62,7 +62,7 @@ wss.on('connection', (ws) => {
                         
                         apiSave();
                         break;
-                    case 'AGreset': //TODO Empecher que la fs se rétablisse quand la coupure est cochée (comme fait avec la ht)
+                    case 'AGreset':
                         pccApi.comAG=false
                         console.log(pccApi.comAG)
                         if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
@@ -90,14 +90,52 @@ wss.on('connection', (ws) => {
                         apiSave();
                         break;
                     case 'LINE-ACQU':
-                        if (pccApi.voyGAT===2) pccApi.voyGAT=1
-                        if (pccApi.voyABS===2) pccApi.voyABS=1
-                        if (pccApi.voyHTV1===2) pccApi.voyHTV1=1
-                        if (pccApi.voyHTV2===2) pccApi.voyHTV2=1
-                        if (pccApi.voyFSV1===2) pccApi.voyFSV1=1
-                        if (pccApi.voyFSV2===2) pccApi.voyFSV2=1
-                        if (pccApi.voyHTGAT===2) pccApi.voyHTGAT=1
-                        if (pccApi.voyFSGAT===2) pccApi.voyFSGAT=1
+                        if (pccApi.voyGAT===2) pccApi.voyGAT=1;
+                        if (pccApi.voyABS===2) pccApi.voyABS=1;
+                        if (pccApi.voyHTV1===2) pccApi.voyHTV1=1;
+                        if (pccApi.voyHTV2===2) pccApi.voyHTV2=1;
+                        if (pccApi.voyFSV1===2) pccApi.voyFSV1=1;
+                        if (pccApi.voyFSV2===2) pccApi.voyFSV2=1;
+                        if (pccApi.voyHTGAT===2) pccApi.voyHTGAT=1;
+                        if (pccApi.voyFSGAT===2) pccApi.voyFSGAT=1;
+                        //VOYANTS SS
+                        console.log(pccApi.SS[0].voyDHTSS04)
+                        if (pccApi.SS[0].voyAlimSS04===2) pccApi.SS[0].voyAlimSS04=1;
+                        if (pccApi.SS[0].voyDHTSS04===2) pccApi.SS[0].voyDHTSS04=1;
+                        if (pccApi.SS[0].voyDISS04===2) pccApi.SS[0].voyDISS04=1;
+                        if (pccApi.SS[1].voyAlimSS05===2) pccApi.SS[1].voyAlimSS05=1;
+                        if (pccApi.SS[1].voyDHTSS05===2) pccApi.SS[1].voyDHTSS05=1;
+                        if (pccApi.SS[1].voyDISS05===2) pccApi.SS[1].voyDISS05=1;
+                        if (pccApi.SS[2].voyAlimSS06===2) pccApi.SS[2].voyAlimSS06=1;
+                        if (pccApi.SS[2].voyDHTSS06===2) pccApi.SS[2].voyDHTSS06=1;
+                        if (pccApi.SS[2].voyDISS06===2) pccApi.SS[2].voyDISS06=1;
+                        if (pccApi.SS[3].voyAlimSS07===2) pccApi.SS[3].voyAlimSS07=1;
+                        if (pccApi.SS[3].voyDHTSS07===2) pccApi.SS[3].voyDHTSS07=1;
+                        if (pccApi.SS[3].voyDISS07===2) pccApi.SS[3].voyDISS07=1;
+                        if (pccApi.SS[4].voyAlimSS08===2) pccApi.SS[4].voyAlimSS08=1;
+                        if (pccApi.SS[4].voyDHTSS08===2) pccApi.SS[4].voyDHTSS08=1;
+                        if (pccApi.SS[4].voyDISS08===2) pccApi.SS[4].voyDISS08=1;
+                        if (pccApi.SS[5].voyAlimSS09===2) pccApi.SS[5].voyAlimSS09=1;
+                        if (pccApi.SS[5].voyDHTSS09===2) pccApi.SS[5].voyDHTSS09=1;
+                        if (pccApi.SS[5].voyDISS09===2) pccApi.SS[5].voyDISS09=1;
+                        if (pccApi.SS[6].voyAlimSS10===2) pccApi.SS[6].voyAlimSS10=1;
+                        if (pccApi.SS[6].voyDHTSS10===2) pccApi.SS[6].voyDHTSS10=1;
+                        if (pccApi.SS[6].voyDISS10===2) pccApi.SS[6].voyDISS10=1;
+                        if (pccApi.SS[7].voyAlimSS11===2) pccApi.SS[7].voyAlimSS11=1;
+                        if (pccApi.SS[7].voyDHTSS11===2) pccApi.SS[7].voyDHTSS11=1;
+                        if (pccApi.SS[7].voyDISS11===2) pccApi.SS[7].voyDISS11=1;
+                        if (pccApi.SS[8].voyAlimSS12===2) pccApi.SS[8].voyAlimSS12=1;
+                        if (pccApi.SS[8].voyDHTSS12===2) pccApi.SS[8].voyDHTSS12=1;
+                        if (pccApi.SS[8].voyDISS12===2) pccApi.SS[8].voyDISS12=1;
+                        if (pccApi.SS[9].voyAlimSS13===2) pccApi.SS[9].voyAlimSS13=1;
+                        if (pccApi.SS[9].voyDHTSS13===2) pccApi.SS[9].voyDHTSS13=1;
+                        if (pccApi.SS[9].voyDISS13===2) pccApi.SS[9].voyDISS13=1;
+                        if (pccApi.SS[10].voyAlimSS14===2) pccApi.SS[10].voyAlimSS14=1;
+                        if (pccApi.SS[10].voyDHTSS14===2) pccApi.SS[10].voyDHTSS14=1;
+                        if (pccApi.SS[10].voyDISS14===2) pccApi.SS[10].voyDISS14=1;
+                        if (pccApi.SS[11].voyAlimSS15===2) pccApi.SS[11].voyAlimSS15=1;
+                        if (pccApi.SS[11].voyDHTSS15===2) pccApi.SS[11].voyDHTSS15=1;
+                        if (pccApi.SS[11].voyDISS15===2) pccApi.SS[11].voyDISS15=1;
                         apiSave();
                         break;
                 }
@@ -237,6 +275,37 @@ wss.on('connection', (ws) => {
                             pccApi.comInhibUCA=false
                         } else if(data.state===true){
                             pccApi.comInhibUCA=true
+                        }
+                        break;
+                    case 'ARMPR-COM':
+                        if(data.state===false){
+                            pccApi.comArmPR=false
+                            pccApi.SS[0].voyDHTSS04=2;
+                            pccApi.SS[1].voyDHTSS05=2;
+                            pccApi.SS[2].voyDHTSS06=2;
+                            pccApi.SS[3].voyDHTSS07=2;
+                            pccApi.SS[4].voyDHTSS08=2;
+                            pccApi.SS[5].voyDHTSS09=2;
+                            pccApi.SS[6].voyDHTSS10=2;
+                            pccApi.SS[7].voyDHTSS11=2;
+                            pccApi.SS[8].voyDHTSS12=2;
+                            pccApi.SS[9].voyDHTSS13=2;
+                            pccApi.SS[10].voyDHTSS14=2;
+                            pccApi.SS[11].voyDHTSS15=2;
+                        } else if(data.state===true){
+                            pccApi.comArmPR=true
+                            pccApi.SS[0].voyDHTSS04=true;
+                            pccApi.SS[1].voyDHTSS05=true;
+                            pccApi.SS[2].voyDHTSS06=true;
+                            pccApi.SS[3].voyDHTSS07=true;
+                            pccApi.SS[4].voyDHTSS08=true;
+                            pccApi.SS[5].voyDHTSS09=true;
+                            pccApi.SS[6].voyDHTSS10=true;
+                            pccApi.SS[7].voyDHTSS11=true;
+                            pccApi.SS[8].voyDHTSS12=true;
+                            pccApi.SS[9].voyDHTSS13=true;
+                            pccApi.SS[10].voyDHTSS14=true;
+                            pccApi.SS[11].voyDHTSS15=true;
                         }
                         break;
                 }
