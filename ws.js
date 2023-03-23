@@ -1,9 +1,15 @@
+console.log('[@] WebSocket init')
 const WebSocket = require('ws');
 const wss = new WebSocket.Server({ port: 8081 });
+console.log('[V] WebSocket init on port 8081')
+console.log('[@] Library init')
 const logger = require('./logger')
 const fs = require('fs')
+console.log('[V] Library init logger and fs')
 
+console.log('[@] Server Api init')
 const pccApi=require('./server.json')
+console.log('[V] Server Api init')
 
 const clients = new Map();
 

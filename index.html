@@ -20,6 +20,11 @@
         .alarm{
             background-color: #EF0000;
         }
+        .tco{
+            background-color: #1C1C1C;
+            height: calc(1730px/4);
+            width: calc(7203px/4);
+        }
     </style>
 </head>
 <body>
@@ -168,6 +173,15 @@
         <option value="NON">NON</option>
     </select> <span>SS15</span>
     <br>
+    <div class="tco">
+        <div class="ligne">
+            <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object>
+        </div>
+        <button id="forward">AVANCER</button>
+        <button id="downward">RECULER</button>
+        <input type="text" id="trainAffect" placeholder="train">
+        <button id="experiment">EXPERIENCE</button>
+    </div>
     <script type="module">
 
         let voyGAT = document.getElementById('voyGAT')
@@ -236,6 +250,28 @@
         let comInhibUCA = document.getElementById('comInhibUCA')
         let comIDPOTPAS = document.getElementById('comIDPOTPAS')
 
+        let trainAffect = document.getElementById('trainAffect')
+        let btnForward = document.getElementById('forward')
+        let btnDownward = document.getElementById('downward')
+        let btnExp = document.getElementById('experiment')
+
+        let cantons = false
+        
+        let S1 = document.getElementById('s1svg')
+        S1.addEventListener('load', ()=>{
+            let s1svgDoc = S1.contentDocument;
+            cantons = {
+            1: s1svgDoc.getElementById('1'),
+            2: s1svgDoc.getElementById('2'),
+            3: s1svgDoc.getElementById('3'),
+            4: s1svgDoc.getElementById('4'),
+            5: s1svgDoc.getElementById('5'),
+            6: s1svgDoc.getElementById('6'),
+            7: s1svgDoc.getElementById('7')
+            }
+        })
+
+
         sm.registerSound("bip", './src/pltp/snds/bip.mp3');
 
         let ws= false
@@ -249,12 +285,13 @@
         import sm from './sm.js'
         sm.init()
 
+        let data = false
+
         fetch('https://api.db-ip.com/v2/free/self', {method:'GET'}).then(async reponse=> {
-            const data = await reponse.json();
-            console.log(data)
-            let ip = data.ipAddress
-            let country = data.countryName
-            let city = data.city
+            const ipdata = await reponse.json();
+            let ip = ipdata.ipAddress
+            let country = ipdata.countryName
+            let city = ipdata.city
             ws = new WebSocket("ws://78.113.18.255:8081")
             ws.addEventListener('open', ()=>{
                 console.log("Connecté au WS")
@@ -266,7 +303,7 @@
                 }));
 
             ws.addEventListener('message', msg =>{
-            let data = JSON.parse(msg.data);
+            data = JSON.parse(msg.data);
             console.log(data)
             if(!data.op){
                 let iteration=0
@@ -411,6 +448,18 @@
                         }, 1000)
                 } else {
                     sm.stopSound('bip')
+                }
+
+                for (let _CANTON_ in cantons){
+                    _CANTON_ --
+                    console.log('[❔] ARRAY['+_CANTON_+']')
+                    //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
+                    if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){
+                        console.log('[👉] canton '+(_CANTON_+1)+' occupé')
+                        console.log(cantons[_CANTON_+1])
+                        let CTARGET = cantons[_CANTON_+1]
+                        CTARGET.style.fill='#E1A712'
+                    }
                 }
             }
             
@@ -702,6 +751,24 @@
                 ws.send(JSON.stringify( {op: 202, execute: "ARMPR-COM", state: false} ));
             }
         })
+
+
+
+        btnForward.addEventListener('click', ()=>{
+            let trainAffectTxt = trainAffect.value;
+            if(!trainAffectTxt) return console.log('VIDE');
+            let TTARGET = parseInt(trainAffectTxt)
+            if(isNaN(TTARGET)) return console.log('"'+trainAffectTxt +'" PAS DIGIT');
+            console.log(TTARGET)
+            //TODO FAIRE AVANCER LE TRAIN
+        })
+
+        btnExp.addEventListener('click', ()=>{
+            console.log('EXP')
+            console.log(data.SEC[0].cantons[0].trains)
+            console.log(cantons[1])
+        })
+
 
 
         function sleep(ms) {

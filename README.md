@@ -1,5 +1,5 @@
 # PCC PMD
-<img src="https://img.shields.io/badge/version-alpha%202-informational?style=plastic"> <br>
+<img src="https://img.shields.io/badge/version-alpha%203-informational?style=plastic"> <br>
 ### PCC 2nd génération pour Paris Metro Driver <br>
 <a href="https://github.com/lapatatedouce59/pcc_pmd/commits/master"><img src="https://img.shields.io/github/last-commit/lapatatedouce59/pcc_pmd?style=plastic"></a> <a href="https://github.com/lapatatedouce59/pcc_pmd/issues"><img src="https://img.shields.io/github/issues-raw/lapatatedouce59/pcc_pmd?style=plastic"></a> <a href="https://github.com/lapatatedouce59/pcc_pmd/pulls"><img src="https://img.shields.io/github/issues-pr-raw/lapatatedouce59/pcc_pmd?style=plastic"></a> <br>
 
