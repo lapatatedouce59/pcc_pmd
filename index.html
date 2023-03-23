@@ -255,6 +255,8 @@
         let btnDownward = document.getElementById('downward')
         let btnExp = document.getElementById('experiment')
 
+        let canton_train = new Map()
+
         let cantons = false
         
         let S1 = document.getElementById('s1svg')
@@ -292,7 +294,8 @@
             let ip = ipdata.ipAddress
             let country = ipdata.countryName
             let city = ipdata.city
-            ws = new WebSocket("ws://78.113.18.255:8081")
+            ws = new WebSocket("ws://localhost:8081")
+            
             ws.addEventListener('open', ()=>{
                 console.log("Connecté au WS")
                 ws.send(JSON.stringify({
@@ -451,14 +454,19 @@
                 }
 
                 for (let _CANTON_ in cantons){
-                    _CANTON_ --
+                    _CANTON_ --;
                     console.log('[❔] ARRAY['+_CANTON_+']')
                     //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
                     if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){
                         console.log('[👉] canton '+(_CANTON_+1)+' occupé')
                         console.log(cantons[_CANTON_+1])
                         let CTARGET = cantons[_CANTON_+1]
-                        CTARGET.style.fill='#E1A712'
+                        CTARGET.style.fill='#E1A712';
+                        for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
+                            console.log(data.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
+                            let tid = data.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
+                            canton_train.set(_TRAIN_, _CANTON_)
+                        }
                     }
                 }
             }
@@ -760,13 +768,20 @@
             let TTARGET = parseInt(trainAffectTxt)
             if(isNaN(TTARGET)) return console.log('"'+trainAffectTxt +'" PAS DIGIT');
             console.log(TTARGET)
+            console.log(TTARGET.toString())
+
+            console.log('Train d\'identifiant '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name)
+
+            ws.send(JSON.stringify( {op: 400, sens: "FORWARD", train: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name, canton: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid} ));
+            console.log('ordre d\'avancer du train '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name+' au canton '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid+' envoyé au WS.')
             //TODO FAIRE AVANCER LE TRAIN
         })
 
         btnExp.addEventListener('click', ()=>{
             console.log('EXP')
-            console.log(data.SEC[0].cantons[0].trains)
             console.log(cantons[1])
+            console.log(canton_train.get('0'))
+            console.log(canton_train)
         })
 
 
