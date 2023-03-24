@@ -755,10 +755,17 @@
             console.log(TTARGET)
             console.log(TTARGET.toString())
 
-            console.log('Train d\'identifiant '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name)
+
+            if(verifyExistingTrain(TTARGET)){
+                console.log('bon bah on ordonne au serveur d\'avancer')
+            }
+
+
+
+            /*console.log('Train d\'identifiant '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name)
 
             ws.send(JSON.stringify( {op: 400, sens: "FORWARD", train: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name, canton: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid, trainIndex: canton_train.get(TTARGET-1)} ));
-            console.log('ordre d\'avancer du train '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name+' au canton '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid+' d\'index '+parseInt(canton_train.get((TTARGET-1).toString()))+' envoyé au WS.')
+            console.log('ordre d\'avancer du train '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name+' au canton '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid+' d\'index '+parseInt(canton_train.get((TTARGET-1).toString()))+' envoyé au WS.')*/
             //TODO FAIRE AVANCER LE TRAIN
         })
 
@@ -792,7 +799,7 @@
                         for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
                             console.log(data.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
                             let tid = data.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
-                            canton_train.set(_TRAIN_, _CANTON_)
+                            //canton_train.set(_TRAIN_, _CANTON_)
                             console.log('_TRAIN_ '+_TRAIN_+" _CANTON_ "+_CANTON_)
 
                             fresponse.trains.push( {
@@ -805,6 +812,23 @@
                     }
                 }
             return JSON.stringify(fresponse)
+        }
+
+        function verifyExistingTrain(id){
+            console.log('-------IL EXISTE????---------')
+            console.log('ON CHERCHE LE N° '+id)
+            let idArray = []
+            let trains = JSON.parse(getCantonsInfo())
+            console.log(trains.trains)
+            for (let train in trains.trains){
+                let _TID_ = trains.trains[train].trainId; //en gros on récupère l'id de chaque train existant
+                console.log(_TID_)
+                idArray.push(JSON.parse(_TID_))
+            }
+            console.log(idArray)
+            if(!(idArray.includes(id))){return false}
+            console.log('ALLELUYA IL EXISTE')
+            return true;
         }
 
     </script>
