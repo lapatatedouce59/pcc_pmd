@@ -453,22 +453,7 @@
                     sm.stopSound('bip')
                 }
 
-                for (let _CANTON_ in cantons){
-                    _CANTON_ --;
-                    console.log('[❔] ARRAY['+_CANTON_+']')
-                    //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
-                    if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){
-                        console.log('[👉] canton '+(_CANTON_+1)+' occupé')
-                        console.log(cantons[_CANTON_+1])
-                        let CTARGET = cantons[_CANTON_+1]
-                        CTARGET.style.fill='#E1A712';
-                        for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
-                            console.log(data.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
-                            let tid = data.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
-                            canton_train.set(_TRAIN_, _CANTON_)
-                        }
-                    }
-                }
+                getCantonsInfo();
             }
             
             if(data.op===300){
@@ -772,16 +757,17 @@
 
             console.log('Train d\'identifiant '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name)
 
-            ws.send(JSON.stringify( {op: 400, sens: "FORWARD", train: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name, canton: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid} ));
-            console.log('ordre d\'avancer du train '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name+' au canton '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid+' envoyé au WS.')
+            ws.send(JSON.stringify( {op: 400, sens: "FORWARD", train: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name, canton: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid, trainIndex: canton_train.get(TTARGET-1)} ));
+            console.log('ordre d\'avancer du train '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name+' au canton '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid+' d\'index '+parseInt(canton_train.get((TTARGET-1).toString()))+' envoyé au WS.')
             //TODO FAIRE AVANCER LE TRAIN
         })
 
         btnExp.addEventListener('click', ()=>{
             console.log('EXP')
-            console.log(cantons[1])
-            console.log(canton_train.get('0'))
-            console.log(canton_train)
+            /*console.log(cantons[1])
+            console.log(canton_train.get('1'))
+            console.log(canton_train)*/
+            console.log(JSON.parse(getCantonsInfo()))
         })
 
 
@@ -790,6 +776,35 @@
             return new Promise((resolve) => {
             setTimeout(resolve, ms);
         });
+        }
+
+        function getCantonsInfo(){
+            let fresponse={ trains: [] }
+            for (let _CANTON_ in cantons){
+                    _CANTON_ --;
+                    console.log('[❔] ARRAY['+_CANTON_+']')
+                    //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
+                    if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){
+                        console.log('[👉] canton '+(_CANTON_+1)+' occupé')
+                        console.log(cantons[_CANTON_+1])
+                        let CTARGET = cantons[_CANTON_+1]
+                        CTARGET.style.fill='#E1A712';
+                        for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
+                            console.log(data.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
+                            let tid = data.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
+                            canton_train.set(_TRAIN_, _CANTON_)
+                            console.log('_TRAIN_ '+_TRAIN_+" _CANTON_ "+_CANTON_)
+
+                            fresponse.trains.push( {
+                                cantonId: data.SEC[0].cantons[_CANTON_].cid,
+                                cantonIndex: _CANTON_,
+                                trainId: tid,
+                                trainIndex: _TRAIN_
+                            } )
+                        }
+                    }
+                }
+            return JSON.stringify(fresponse)
         }
 
     </script>
