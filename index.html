@@ -747,11 +747,10 @@
 
         btnForward.addEventListener('click', ()=>{
             let trainAffectTxt = trainAffect.value;
-            if(!trainAffectTxt) return console.log('VIDE');
+
+            if(!isDigit(trainAffectTxt)) return;
+
             let TTARGET = parseInt(trainAffectTxt)
-            if(isNaN(TTARGET)) return console.log('"'+trainAffectTxt +'" PAS DIGIT');
-            console.log(TTARGET)
-            console.log(TTARGET.toString())
 
 
             if(verifyExistingTrain(TTARGET)){
@@ -759,14 +758,20 @@
                 ws.send(JSON.stringify( {op: 400, sens: "FORWARD", train: TTARGET} ))
                 console.log('Ordre 400 pour le train '+TTARGET)
             }
+        })
+        btnDownward.addEventListener('click', ()=> {
+            let trainAffectTxt = trainAffect.value;
+
+            if(!isDigit(trainAffectTxt)) return;
+
+            let TTARGET = parseInt(trainAffectTxt)
 
 
-
-            /*console.log('Train d\'identifiant '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name)
-
-            ws.send(JSON.stringify( {op: 400, sens: "FORWARD", train: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name, canton: data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid, trainIndex: canton_train.get(TTARGET-1)} ));
-            console.log('ordre d\'avancer du train '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].trains[TTARGET-1].name+' au canton '+data.SEC[0].cantons[canton_train.get((TTARGET-1).toString())].cid+' d\'index '+parseInt(canton_train.get((TTARGET-1).toString()))+' envoyé au WS.')*/
-            //TODO FAIRE AVANCER LE TRAIN
+            if(verifyExistingTrain(TTARGET)){
+                console.log('bon bah on ordonne au serveur de reculer')
+                ws.send(JSON.stringify( {op: 400, sens: "BEHIND", train: TTARGET} ))
+                console.log('Ordre 400 pour le train '+TTARGET)
+            }
         })
 
         btnExp.addEventListener('click', ()=>{
@@ -842,44 +847,12 @@
                                 console.log(cantons[_CANTON_+1][bits])
                                 cantons[_CANTON_+1][bits].style.fill='#66D264'
                             }
-                        }//TODO faire pareil si c'est occupé
-                    }
-                }
-            return JSON.stringify(fresponse)
-        }
-
-        function getCantonsInfoR(){
-            let fresponse={ trains: [] }
-            for (let _CANTON_ in cantons){
-                    _CANTON_ --;
-                    console.log('[❔] ARRAY['+_CANTON_+']')
-                    //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
-                    if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){
-                        console.log('[👉] canton '+(_CANTON_+1)+' occupé')
-                        console.log(cantons[_CANTON_+1])
-                        let CTARGET = cantons[_CANTON_+1]
-                        CTARGET.style.fill='#E1A712';
-                        for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
-                            console.log(data.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
-                            let tid = data.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
-                            //canton_train.set(_TRAIN_, _CANTON_)
-                            console.log('_TRAIN_ '+_TRAIN_+" _CANTON_ "+_CANTON_)
-
-                            fresponse.trains.push( {
-                                cantonId: data.SEC[0].cantons[_CANTON_].cid,
-                                cantonIndex: _CANTON_,
-                                trainId: tid,
-                                trainIndex: _TRAIN_
-                            } )
                         }
-                    } else {
-                        console.log('[🚫] canton '+(_CANTON_+1)+' libre')
-                        let CTARGET = cantons[_CANTON_+1]
-                        CTARGET.style.fill='#707070';
                     }
                 }
             return JSON.stringify(fresponse)
         }
+
 
         function verifyExistingTrain(id){
             console.log('-------IL EXISTE????---------')
@@ -895,6 +868,14 @@
             console.log(idArray)
             if(!(idArray.includes(id))){return false}
             console.log('ALLELUYA IL EXISTE')
+            return true;
+        }
+
+        function isDigit(n){
+            if(!n) return false; //en gros c'est vide
+            let TTARGET = parseInt(n)
+            if(isNaN(TTARGET)) return false; //en gros c'est pas digit, c'est une lettre
+            console.log(TTARGET)
             return true;
         }
 

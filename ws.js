@@ -338,6 +338,24 @@ wss.on('connection', (ws) => {
                     pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
                     console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
                     apiSave()
+                } else if(data.sens === 'BEHIND'){
+                    let train = JSON.parse(getCantonsInfo(data.train))
+                    console.log(train)
+                    let _cantonIndex = parseFloat(train.cantonIndex)
+                    let _trainIndex = parseFloat(train.trainIndex)
+                    console.log(_cantonIndex +' et '+ _trainIndex)
+                    console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
+                    console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex-1].cid)
+                    //pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                    //console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
+                    pccApi.SEC[0].cantons[_cantonIndex-1].trains.push( {
+                        tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                        name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                    } )
+                    console.log(pccApi.SEC[0].cantons[_cantonIndex-1].trains[_trainIndex])
+                    pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                    console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                    apiSave()
                 }
                 break;
         }
