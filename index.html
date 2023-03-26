@@ -255,8 +255,6 @@
         let btnDownward = document.getElementById('downward')
         let btnExp = document.getElementById('experiment')
 
-        let canton_train = new Map()
-
         let cantons = false
         
         let S1 = document.getElementById('s1svg')
@@ -805,8 +803,19 @@
                     if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){
                         console.log('[👉] canton '+(_CANTON_+1)+' occupé')
                         console.log(cantons[_CANTON_+1])
-                        let CTARGET = cantons[_CANTON_+1]
-                        CTARGET.style.fill='#E1A712';
+                        if(typeof cantons[_CANTON_+1].length ==='undefined'){
+                            console.log((_CANTON_+1)+ ' est un canton simple')
+                            console.log('[🚫] canton '+(_CANTON_+1)+' libre')
+                            let CTARGET = cantons[_CANTON_+1]
+                            CTARGET.style.fill='#E1A712';
+                        } else {
+                            console.log((_CANTON_+1)+ ' est une aiguille')
+                            console.log('[🚫] aiguille '+(_CANTON_+1)+' libre')
+                            for(let bits in cantons[_CANTON_+1]){
+                                console.log(cantons[_CANTON_+1][bits])
+                                cantons[_CANTON_+1][bits].style.fill='#E1A712'
+                            }
+                        }
                         for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
                             console.log(data.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
                             let tid = data.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
@@ -821,9 +830,19 @@
                             } )
                         }
                     } else {
-                        console.log('[🚫] canton '+(_CANTON_+1)+' libre')
-                        let CTARGET = cantons[_CANTON_+1]
-                        CTARGET.style.fill='#707070';
+                        if(typeof cantons[_CANTON_+1].length ==='undefined'){
+                            console.log((_CANTON_+1)+ ' est un canton simple')
+                            console.log('[🚫] canton '+(_CANTON_+1)+' libre')
+                            let CTARGET = cantons[_CANTON_+1]
+                            CTARGET.style.fill='#707070';
+                        } else {
+                            console.log((_CANTON_+1)+ ' est une aiguille')
+                            console.log('[🚫] aiguille '+(_CANTON_+1)+' libre')
+                            for(let bits in cantons[_CANTON_+1]){
+                                console.log(cantons[_CANTON_+1][bits])
+                                cantons[_CANTON_+1][bits].style.fill='#66D264'
+                            }
+                        }//TODO faire pareil si c'est occupé
                     }
                 }
             return JSON.stringify(fresponse)
