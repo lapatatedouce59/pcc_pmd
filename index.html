@@ -265,11 +265,9 @@
             cantons = {
             1: s1svgDoc.getElementById('1'),
             2: s1svgDoc.getElementById('2'),
-            3: s1svgDoc.getElementById('3'),
-            4: s1svgDoc.getElementById('4'),
-            5: s1svgDoc.getElementById('5'),
-            6: s1svgDoc.getElementById('6'),
-            7: s1svgDoc.getElementById('7')
+            3: [s1svgDoc.getElementById('3'),s1svgDoc.getElementById('4'),s1svgDoc.getElementById('5')],
+            4: s1svgDoc.getElementById('6'),
+            5: s1svgDoc.getElementById('7')
             }
         })
 
@@ -459,6 +457,7 @@
             if(data.op===300){
 
                 let parsedJson = data.content
+                data=parsedJson
                 let iteration=0
                 let count=0
                 
@@ -467,7 +466,7 @@
                     //console.log(parsedJson[elemid])
 
                     //-> VOYANTS NORMAUX
-                    if(parsedJson[elemid] === false){
+                    if(data[elemid] === false){
                         console.log("Voyant "+voy.id+" est faux")
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('alarm','ok')
@@ -475,7 +474,7 @@
                         blinkIntervalId.delete(elemid)
                         clearInterval(beepIntervalId)
                     } else
-                    if (parsedJson[elemid] === true){
+                    if (data[elemid] === true){
                         console.log('Voyant '+voy.id+' est vrai.')
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('alarm')
@@ -484,7 +483,7 @@
                         blinkIntervalId.delete(elemid)
                         clearInterval(beepIntervalId)
                     } else
-                    if (parsedJson[elemid] === 1){
+                    if (data[elemid] === 1){
                         console.log('Voyant '+voy.id+' est en défaut.')
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('ok')
@@ -496,7 +495,7 @@
                         clearInterval(beepIntervalId)
 
                     } else
-                    if (parsedJson[elemid] === 2 && !(blinkIntervalId.get(elemid))){
+                    if (data[elemid] === 2 && !(blinkIntervalId.get(elemid))){
                         console.log('Voyant '+voy.id+' est en anomalie.')
                         let elem = document.getElementById(elemid)
                         elem.classList.remove('ok')
@@ -510,9 +509,9 @@
                     //-> VOYANTS SS
                     if(elemid.includes('SS')){
                         //console.log(elemid)
-                        //console.log(parsedJson.SS[count])
-                        //console.log(parsedJson.SS[count][elemid])
-                        if(parsedJson.SS[count][elemid] === false){
+                        //console.log(data.SS[count])
+                        //console.log(data.SS[count][elemid])
+                        if(data.SS[count][elemid] === false){
                             console.log("Voyant "+voy.id+" est faux")
                             let elem = document.getElementById(elemid)
                             elem.classList.remove('ok')
@@ -521,7 +520,7 @@
                             blinkIntervalId.delete(elemid)
                             clearInterval(beepIntervalId)
                         } else
-                        if (parsedJson.SS[count][elemid] === true){
+                        if (data.SS[count][elemid] === true){
                             console.log('Voyant '+voy.id+' est vrai.')
                             let elem = document.getElementById(elemid)
                             elem.classList.remove('alarm')
@@ -530,7 +529,7 @@
                             blinkIntervalId.delete(elemid)
                             clearInterval(beepIntervalId)
                         } else
-                        if (parsedJson.SS[count][elemid] === 1){
+                        if (data.SS[count][elemid] === 1){
                             //console.log('Voyant '+voy.id+' est en anomalie.')
                             let elem = document.getElementById(elemid)
                             elem.classList.remove('ok')
@@ -539,7 +538,7 @@
                             blinkIntervalId.delete(elemid)
                             clearInterval(beepIntervalId)
                         }else
-                        if (parsedJson.SS[count][elemid] === 2){
+                        if (data.SS[count][elemid] === 2){
                         //console.log('Voyant '+voy.id+' est en anomalie.')
                             let elem = document.getElementById(elemid)
                             elem.classList.remove('ok')
@@ -559,8 +558,8 @@
                 for(let com of document.getElementsByClassName('com')){
                     let elemid=com.id
                     let elem = document.getElementById(elemid)
-                    console.log("Commutateur "+com.id+" est "+parsedJson[elemid])
-                    com.checked=parsedJson[elemid]
+                    console.log("Commutateur "+com.id+" est "+data[elemid])
+                    com.checked=data[elemid]
                 }
                 //if(alreadyBeep===false){
                     if(blinkIntervalId.size >= 1){
@@ -574,6 +573,7 @@
                         sm.stopSound('bip')
                     }
                 //}
+                getCantonsInfo();
                 }
         })
             })
@@ -776,7 +776,16 @@
             /*console.log(cantons[1])
             console.log(canton_train.get('1'))
             console.log(canton_train)*/
-            console.log(JSON.parse(getCantonsInfo()))
+            //console.log(JSON.parse(getCantonsInfo()))
+            console.log(cantons[2].length)
+            console.log(cantons[3].length)
+            for (let _CANTON_ in cantons){
+                if(typeof cantons[_CANTON_].length ==='undefined'){
+                    console.log((_CANTON_)+ ' est un canton simple')
+                } else {
+                    console.log(_CANTON_+ ' est une aiguille')
+                }
+            }
         })
 
 
@@ -811,6 +820,43 @@
                                 trainIndex: _TRAIN_
                             } )
                         }
+                    } else {
+                        console.log('[🚫] canton '+(_CANTON_+1)+' libre')
+                        let CTARGET = cantons[_CANTON_+1]
+                        CTARGET.style.fill='#707070';
+                    }
+                }
+            return JSON.stringify(fresponse)
+        }
+
+        function getCantonsInfoR(){
+            let fresponse={ trains: [] }
+            for (let _CANTON_ in cantons){
+                    _CANTON_ --;
+                    console.log('[❔] ARRAY['+_CANTON_+']')
+                    //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
+                    if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){
+                        console.log('[👉] canton '+(_CANTON_+1)+' occupé')
+                        console.log(cantons[_CANTON_+1])
+                        let CTARGET = cantons[_CANTON_+1]
+                        CTARGET.style.fill='#E1A712';
+                        for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
+                            console.log(data.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
+                            let tid = data.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
+                            //canton_train.set(_TRAIN_, _CANTON_)
+                            console.log('_TRAIN_ '+_TRAIN_+" _CANTON_ "+_CANTON_)
+
+                            fresponse.trains.push( {
+                                cantonId: data.SEC[0].cantons[_CANTON_].cid,
+                                cantonIndex: _CANTON_,
+                                trainId: tid,
+                                trainIndex: _TRAIN_
+                            } )
+                        }
+                    } else {
+                        console.log('[🚫] canton '+(_CANTON_+1)+' libre')
+                        let CTARGET = cantons[_CANTON_+1]
+                        CTARGET.style.fill='#707070';
                     }
                 }
             return JSON.stringify(fresponse)

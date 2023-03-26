@@ -169,15 +169,14 @@
           "cid": "c1101",
           "trains": [
             {
-            "tid": "1",
-            "name": "Correntin"
+              "tid": "1",
+              "name": "Correntin"
             }
           ]
         },
         {
           "cid": "c1201",
-          "trains": [
-          ]
+          "trains": []
         },
         {
           "cid": "c1301",
@@ -199,7 +198,8 @@
         {
           "cid": "c2201",
           "position": "V",
-          "trains": []
+          "trains": [
+          ]
         },
         {
           "cid": "c2301",
