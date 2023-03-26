@@ -171,10 +171,6 @@
             {
               "tid": "1",
               "name": "Correntin"
-            },
-            {
-              "tid": "5",
-              "name": "Obélix"
             }
           ]
         },
@@ -182,7 +178,7 @@
           "cid": "c1201",
           "trains": [
             {
-              "tid": "3",
+              "tid": "5",
               "name": "Léo"
             }
           ]

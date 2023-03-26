@@ -758,6 +758,8 @@
 
             if(verifyExistingTrain(TTARGET)){
                 console.log('bon bah on ordonne au serveur d\'avancer')
+                ws.send(JSON.stringify( {op: 400, sens: "FORWARD", train: TTARGET} ))
+                console.log('Ordre 400 pour le train '+TTARGET)
             }
 
 

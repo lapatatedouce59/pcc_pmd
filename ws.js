@@ -316,6 +316,15 @@ wss.on('connection', (ws) => {
                         break;
                 }
                 apiSave()
+                break;
+                case 400:
+                    logger.message('income',JSON.stringify(data))
+
+                    if(data.sens === 'FORWARD'){
+                        let train = getCantonsInfo(data.train)
+                        console.log(JSON.parse(train))
+                    }
+                    break;
         }
     })
 
@@ -324,3 +333,38 @@ wss.on('connection', (ws) => {
     })
 })
 
+function getCantonsInfo(id){
+    let fresponse={ trains: [] }
+    for (let _CANTON_ in pccApi.SEC[0].cantons){
+            console.log('[❔] ARRAY['+_CANTON_+']')
+            //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
+            if(pccApi.SEC[0].cantons[_CANTON_].trains.length >= 1){
+                console.log('[👉] canton '+(_CANTON_+1)+' occupé')
+                for(let _TRAIN_ in pccApi.SEC[0].cantons[_CANTON_].trains){
+                    console.log(pccApi.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
+                    let tid = pccApi.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
+                    //canton_train.set(_TRAIN_, _CANTON_)
+                    console.log('_TRAIN_ '+_TRAIN_+" _CANTON_ "+_CANTON_)
+
+                    fresponse.trains.push( {
+                        cantonId: pccApi.SEC[0].cantons[_CANTON_].cid,
+                        cantonIndex: _CANTON_,
+                        trainId: tid,
+                        trainIndex: _TRAIN_
+                    } )
+                }
+            }
+        }
+    if (id){
+        console.log(fresponse.trains)
+        for (let rame in fresponse.trains){
+            let NtrainId=parseFloat(fresponse.trains[rame].trainId)
+            /*if (NtrainId===id){
+                console.log('ok')
+            }*/
+            //console.log(fresponse.trains[rame])
+            if (NtrainId===id) return JSON.stringify(fresponse.trains[rame]);
+            return false;
+        }
+    } else return JSON.stringify(fresponse)
+}
