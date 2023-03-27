@@ -322,11 +322,11 @@ wss.on('connection', (ws) => {
 
                 if(data.sens === 'FORWARD'){
                     let train = JSON.parse(getCantonsInfo(data.train))
-                    console.log(train)
-                    let _cantonIndex = parseFloat(train.cantonIndex)
+                    console.log(train)                                                    //! RETURN FALSE
+                    let _cantonIndex = parseFloat(train.cantonIndex)   
                     let _trainIndex = parseFloat(train.trainIndex)
-                    console.log(_cantonIndex +' et '+ _trainIndex)
-                    console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
+                    console.log(_cantonIndex +' et '+ _trainIndex)                        //! RETURN NAN ET NAN
+                    console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])  //! CRASH ICI
                     console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex+1].cid)
                     //pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
                     //console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
@@ -399,5 +399,5 @@ function getCantonsInfo(id){
             if (NtrainId===id) return JSON.stringify(fresponse.trains[rame]);
             return false;
         }
-    } else return JSON.stringify(fresponse)
+    } else return JSON.stringify(fresponse) //!!! CRASH DU WS QUAND 2 RAMES: LA 2EME RAME EST IMMOBILE ET CREE UN CRASH
 }

@@ -265,7 +265,12 @@
             2: s1svgDoc.getElementById('2'),
             3: [s1svgDoc.getElementById('3'),s1svgDoc.getElementById('4'),s1svgDoc.getElementById('5')],
             4: s1svgDoc.getElementById('6'),
-            5: s1svgDoc.getElementById('7')
+            5: s1svgDoc.getElementById('7'),
+            6: s1svgDoc.getElementById('8'),
+            7: s1svgDoc.getElementById('9'),
+            8: [s1svgDoc.getElementById('10'),s1svgDoc.getElementById('11'),s1svgDoc.getElementById('12')],
+            9: s1svgDoc.getElementById('13'),
+            10: s1svgDoc.getElementById('14')
             }
         })
 
@@ -781,7 +786,7 @@
             console.log(canton_train)*/
             //console.log(JSON.parse(getCantonsInfo()))
             console.log(cantons[2].length)
-            console.log(cantons[3].length)
+            console.log(cantons[6].length)
             for (let _CANTON_ in cantons){
                 if(typeof cantons[_CANTON_].length ==='undefined'){
                     console.log((_CANTON_)+ ' est un canton simple')
@@ -810,12 +815,12 @@
                         console.log(cantons[_CANTON_+1])
                         if(typeof cantons[_CANTON_+1].length ==='undefined'){
                             console.log((_CANTON_+1)+ ' est un canton simple')
-                            console.log('[🚫] canton '+(_CANTON_+1)+' libre')
+                            console.log('[🚫] canton '+(_CANTON_+1)+' occupé')
                             let CTARGET = cantons[_CANTON_+1]
                             CTARGET.style.fill='#E1A712';
                         } else {
                             console.log((_CANTON_+1)+ ' est une aiguille')
-                            console.log('[🚫] aiguille '+(_CANTON_+1)+' libre')
+                            console.log('[🚫] aiguille '+(_CANTON_+1)+' occupé')
                             for(let bits in cantons[_CANTON_+1]){
                                 console.log(cantons[_CANTON_+1][bits])
                                 cantons[_CANTON_+1][bits].style.fill='#E1A712'

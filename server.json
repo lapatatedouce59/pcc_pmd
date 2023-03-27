@@ -181,7 +181,12 @@
         {
           "cid": "c1301",
           "position": "V",
-          "trains": []
+          "trains": [
+            {
+              "tid": "3",
+              "name": "Léo"
+            }
+          ]
         },
         {
           "cid": "c1401",
