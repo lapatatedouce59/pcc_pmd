@@ -322,11 +322,11 @@ wss.on('connection', (ws) => {
 
                 if(data.sens === 'FORWARD'){
                     let train = JSON.parse(getCantonsInfo(data.train))
-                    console.log(train)
-                    let _cantonIndex = parseFloat(train.cantonIndex)
+                    console.log(train)                                                    //! RETURN FALSE
+                    let _cantonIndex = parseFloat(train.cantonIndex)   
                     let _trainIndex = parseFloat(train.trainIndex)
-                    console.log(_cantonIndex +' et '+ _trainIndex)
-                    console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
+                    console.log(_cantonIndex +' et '+ _trainIndex)                        //! RETURN NAN ET NAN
+                    console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])  //! CRASH ICI
                     console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex+1].cid)
                     //pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
                     //console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
@@ -366,9 +366,14 @@ wss.on('connection', (ws) => {
     })
 })
 
+/**
+ * Cherche sur quel canton se trouve le train passé en paramètre
+ * @param id l'ID du train
+ */ 
 function getCantonsInfo(id){
     let fresponse={ trains: [] }
     for (let _CANTON_ in pccApi.SEC[0].cantons){
+        _CANTON_ = parseInt(_CANTON_);
             console.log('[❔] ARRAY['+_CANTON_+']')
             //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
             if(pccApi.SEC[0].cantons[_CANTON_].trains.length >= 1){
@@ -390,14 +395,9 @@ function getCantonsInfo(id){
         }
     if (id){
         console.log(fresponse.trains)
-        for (let rame in fresponse.trains){
-            let NtrainId=parseFloat(fresponse.trains[rame].trainId)
-            /*if (NtrainId===id){
-                console.log('ok')
-            }*/
-            //console.log(fresponse.trains[rame])
-            if (NtrainId===id) return JSON.stringify(fresponse.trains[rame]);
-            return false;
+        for(let rame of fresponse.trains){
+            if(rame.trainId == id) return JSON.stringify(rame);
         }
-    } else return JSON.stringify(fresponse)
+        return false;
+    } else return JSON.stringify(fresponse) //!!! CRASH DU WS QUAND 2 RAMES: LA 2EME RAME EST IMMOBILE ET CREE UN CRASH
 }

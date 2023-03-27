@@ -1,6 +1,5 @@
 <svg width="408" height="138" viewBox="0 0 408 138" fill="none" xmlns="http://www.w3.org/2000/svg" id="SECTION1">
                 <g clip-path="url(#clip0_549_1496)">
-                <rect width="50" height="18" fill="#707070" id="2501"/>
                 <rect width="50" height="18" transform="matrix(1 0 0 -1 0 138)" fill="#707070" name="1101" id="1"/>
                 <rect width="50" height="18" transform="matrix(1 0 0 -1 52 138)" fill="#707070" name="1201" id="2"/>
                 <rect width="25" height="18" transform="matrix(1 0 0 -1 104 138)" fill="#707070" name="1301A" id="3"/>
@@ -8,12 +7,14 @@
                 <rect width="25" height="18" transform="matrix(1 0 0 -1 204 138)" fill="#707070" name="1301C" id="5"/>
                 <rect width="75" height="18" transform="matrix(1 0 0 -1 231 138)" fill="#707070" name="1401" id="6"/>
                 <rect x="308" y="120" width="100" height="18" fill="#707070" name="1501" id="7"/>
-                <rect x="308" width="100" height="18" fill="#707070" name="2101"/>
-                <rect x="231" width="75" height="18" fill="#707070" name="2201"/>
-                <rect x="104" width="25" height="18" fill="#707070" name="2301A"/>
-                <rect x="129" width="75" height="18" fill="#66D264" name="2301B"/>
-                <rect x="204" width="25" height="18" fill="#707070" name="2301C"/>
-                <rect x="52" width="50" height="18" fill="#707070" name="2401"/>
+                <rect x="308" width="100" height="18" fill="#707070" name="2101" id="8"/>
+                <rect x="231" width="75" height="18" fill="#707070" name="2201" id="9"/>
+                <rect x="104" width="25" height="18" fill="#707070" name="2301A" id="10"/>
+                <rect x="129" width="75" height="18" fill="#66D264" name="2301B" id="11"/>
+                <rect x="204" width="25" height="18" fill="#707070" name="2301C" id="12"/>
+                <rect x="52" width="50" height="18" fill="#707070" name="2401" id="13"/>
+                <rect width="50" height="18" fill="#707070" name="2401" id="14"/>
+
                 <path d="M157.5 43L129 18V0L175 43H157.5Z" fill="#707070" name="2301A1"/>
                 <path d="M175.5 43L204 18V0L158 43H175.5Z" fill="#707070" name="2301A2"/>
                 <path d="M175.5 95L204 120V138L158 95H175.5Z" fill="#707070" name="1301A1"/>
