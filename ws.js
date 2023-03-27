@@ -366,9 +366,14 @@ wss.on('connection', (ws) => {
     })
 })
 
+/**
+ * Cherche sur quel canton se trouve le train passé en paramètre
+ * @param id l'ID du train
+ */ 
 function getCantonsInfo(id){
     let fresponse={ trains: [] }
     for (let _CANTON_ in pccApi.SEC[0].cantons){
+        _CANTON_ = parseInt(_CANTON_);
             console.log('[❔] ARRAY['+_CANTON_+']')
             //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
             if(pccApi.SEC[0].cantons[_CANTON_].trains.length >= 1){
@@ -390,14 +395,9 @@ function getCantonsInfo(id){
         }
     if (id){
         console.log(fresponse.trains)
-        for (let rame in fresponse.trains){
-            let NtrainId=parseFloat(fresponse.trains[rame].trainId)
-            /*if (NtrainId===id){
-                console.log('ok')
-            }*/
-            //console.log(fresponse.trains[rame])
-            if (NtrainId===id) return JSON.stringify(fresponse.trains[rame]);
-            return false;
+        for(let rame of fresponse.trains){
+            if(rame.trainId == id) return JSON.stringify(rame);
         }
+        return false;
     } else return JSON.stringify(fresponse) //!!! CRASH DU WS QUAND 2 RAMES: LA 2EME RAME EST IMMOBILE ET CREE UN CRASH
 }
