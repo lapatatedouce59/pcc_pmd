@@ -181,6 +181,9 @@
         <button id="downward">RECULER</button>
         <input type="text" id="trainAffect" placeholder="train">
         <button id="experiment">EXPERIENCE</button>
+        <br>
+        <input type="text" id="commandInput" placeholder="commande">
+        <button id="sendCmd">SEND</button>
     </div>
     <script type="module">
 
@@ -254,6 +257,8 @@
         let btnForward = document.getElementById('forward')
         let btnDownward = document.getElementById('downward')
         let btnExp = document.getElementById('experiment')
+        let btnSend = document.getElementById('sendCmd')
+        let commandInput = document.getElementById('commandInput')
 
         let cantons = false
         
@@ -270,7 +275,14 @@
             7: s1svgDoc.getElementById('9'),
             8: [s1svgDoc.getElementById('10'),s1svgDoc.getElementById('11'),s1svgDoc.getElementById('12')],
             9: s1svgDoc.getElementById('13'),
-            10: s1svgDoc.getElementById('14')
+            10: s1svgDoc.getElementById('14'),
+            aiguilles: [
+                {
+                    id: 'C1',
+                    state: 'n', //n pour neutral, a1 ou a2
+                    dir: 0
+                }
+            ]
             }
         })
 
@@ -807,54 +819,56 @@
         function getCantonsInfo(){
             let fresponse={ trains: [] }
             for (let _CANTON_ in cantons){
-                    _CANTON_ --;
-                    console.log('[❔] ARRAY['+_CANTON_+']')
-                    //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
-                    if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){
-                        console.log('[👉] canton '+(_CANTON_+1)+' occupé')
-                        console.log(cantons[_CANTON_+1])
-                        if(typeof cantons[_CANTON_+1].length ==='undefined'){
-                            console.log((_CANTON_+1)+ ' est un canton simple')
-                            console.log('[🚫] canton '+(_CANTON_+1)+' occupé')
-                            let CTARGET = cantons[_CANTON_+1]
-                            CTARGET.style.fill='#E1A712';
-                        } else {
-                            console.log((_CANTON_+1)+ ' est une aiguille')
-                            console.log('[🚫] aiguille '+(_CANTON_+1)+' occupé')
-                            for(let bits in cantons[_CANTON_+1]){
-                                console.log(cantons[_CANTON_+1][bits])
-                                cantons[_CANTON_+1][bits].style.fill='#E1A712'
-                            }
-                        }
-                        for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
-                            console.log(data.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
-                            let tid = data.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
-                            //canton_train.set(_TRAIN_, _CANTON_)
-                            console.log('_TRAIN_ '+_TRAIN_+" _CANTON_ "+_CANTON_)
-
-                            fresponse.trains.push( {
-                                cantonId: data.SEC[0].cantons[_CANTON_].cid,
-                                cantonIndex: _CANTON_,
-                                trainId: tid,
-                                trainIndex: _TRAIN_
-                            } )
-                        }
+                console.log(_CANTON_)
+                if(_CANTON_==='aiguilles') continue;
+                _CANTON_ --;
+                console.log('[❔] ARRAY['+_CANTON_+']')
+                //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
+                if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){
+                    console.log('[👉] canton '+(_CANTON_+1)+' occupé')
+                    console.log(cantons[_CANTON_+1])
+                    if(typeof cantons[_CANTON_+1].length ==='undefined'){
+                        console.log((_CANTON_+1)+ ' est un canton simple')
+                        console.log('[🚫] canton '+(_CANTON_+1)+' occupé')
+                        let CTARGET = cantons[_CANTON_+1]
+                        CTARGET.style.fill='#E1A712';
                     } else {
-                        if(typeof cantons[_CANTON_+1].length ==='undefined'){
-                            console.log((_CANTON_+1)+ ' est un canton simple')
-                            console.log('[🚫] canton '+(_CANTON_+1)+' libre')
-                            let CTARGET = cantons[_CANTON_+1]
-                            CTARGET.style.fill='#707070';
-                        } else {
-                            console.log((_CANTON_+1)+ ' est une aiguille')
-                            console.log('[🚫] aiguille '+(_CANTON_+1)+' libre')
-                            for(let bits in cantons[_CANTON_+1]){
-                                console.log(cantons[_CANTON_+1][bits])
-                                cantons[_CANTON_+1][bits].style.fill='#66D264'
-                            }
+                        console.log((_CANTON_+1)+ ' est une aiguille')
+                        console.log('[🚫] aiguille '+(_CANTON_+1)+' occupé')
+                        for(let bits in cantons[_CANTON_+1]){
+                            console.log(cantons[_CANTON_+1][bits])
+                            cantons[_CANTON_+1][bits].style.fill='#E1A712'
+                        }
+                    }
+                    for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
+                        console.log(data.SEC[0].cantons[_CANTON_].trains[_TRAIN_]);
+                        let tid = data.SEC[0].cantons[_CANTON_].trains[_TRAIN_].tid;
+                        //canton_train.set(_TRAIN_, _CANTON_)
+                        console.log('_TRAIN_ '+_TRAIN_+" _CANTON_ "+_CANTON_)
+
+                        fresponse.trains.push( {
+                            cantonId: data.SEC[0].cantons[_CANTON_].cid,
+                            cantonIndex: _CANTON_,
+                            trainId: tid,
+                            trainIndex: _TRAIN_
+                        } )
+                    }
+                } else {
+                    if(typeof cantons[_CANTON_+1].length ==='undefined'){
+                        console.log((_CANTON_+1)+ ' est un canton simple')
+                        console.log('[🚫] canton '+(_CANTON_+1)+' libre')
+                        let CTARGET = cantons[_CANTON_+1]
+                        CTARGET.style.fill='#707070';
+                    } else {
+                        console.log((_CANTON_+1)+ ' est une aiguille')
+                        console.log('[🚫] aiguille '+(_CANTON_+1)+' libre')
+                        for(let bits in cantons[_CANTON_+1]){
+                            console.log(cantons[_CANTON_+1][bits])
+                            cantons[_CANTON_+1][bits].style.fill='#66D264'
                         }
                     }
                 }
+            }
             return JSON.stringify(fresponse)
         }
 
@@ -863,7 +877,7 @@
             console.log('-------IL EXISTE????---------')
             console.log('ON CHERCHE LE N° '+id)
             let idArray = []
-            let trains = JSON.parse(getCantonsInfo())
+            let trains = JSON.parse(getCantonsInfo()) //ça foire ici
             console.log(trains.trains)
             for (let train in trains.trains){
                 let _TID_ = trains.trains[train].trainId; //en gros on récupère l'id de chaque train existant
