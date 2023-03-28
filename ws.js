@@ -362,13 +362,77 @@ wss.on('connection', (ws) => {
                 logger.message('income',JSON.stringify(data))
                 let args = data.cmd
                 let cmd = args[0]
-                let cfrom = args[1]
-                let cto = args[2]
-                if(!((cfrom)||(cto))){
+
+                let cmdargs = args
+                args.shift()
+
+                console.log(cmdargs)
+
+                let aiguilles = []
+
+
+                if(!((cmdargs[0])||(cmdargs[1]))){
                     console.log('aucun canton renseigné')
                     return;
                 }
-                console.log('commande '+cmd+' de '+cfrom+' vers '+cto)
+                console.log('commande '+cmd)
+                for (let _CANTON_ of pccApi.SEC[0].cantons){
+                    if(_CANTON_.hasOwnProperty('position')){
+                        let index = pccApi.SEC[0].cantons.findIndex(obj => {
+                            return obj.cid===_CANTON_.cid
+                        })
+                        aiguilles.push({c:_CANTON_, index:index})
+                    }
+                }
+                console.log(aiguilles)
+
+                if(cmd==="SET"){                        
+                    if(cmdargs.length<2||cmdargs.length>2)   return;
+                    if(cmdargs[0]==='1201' && cmdargs[1]==='2201'){
+                        console.log('ITI A2 SENS 1 TRIGGER')
+
+                        pccApi.SEC[0].cantons[aiguilles[0].index].position='a2';
+                        pccApi.SEC[0].cantons[aiguilles[0].index].dir='up';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].position='a2';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].dir='up';
+
+                    } else
+                    if(cmdargs[0]==='2201' && cmdargs[1]==='1201'){
+                        console.log('ITI A2 SENS 2 TRIGGER')
+
+                        pccApi.SEC[0].cantons[aiguilles[0].index].position='a2';
+                        pccApi.SEC[0].cantons[aiguilles[0].index].dir='down';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].position='a2';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].dir='down';
+
+                    } else
+                    if(cmdargs[0]==='2401' && cmdargs[1]==='1401'){
+                        console.log('ITI A1 SENS 1 TRIGGER')
+
+                        pccApi.SEC[0].cantons[aiguilles[0].index].position='a1';
+                        pccApi.SEC[0].cantons[aiguilles[0].index].dir='down';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].position='a1';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].dir='down';
+
+                    } else
+                    if(cmdargs[0]==='1401' && cmdargs[1]==='2401'){
+                        console.log('ITI A1 SENS 2 TRIGGER')
+
+                        pccApi.SEC[0].cantons[aiguilles[0].index].position='a1';
+                        pccApi.SEC[0].cantons[aiguilles[0].index].dir='up';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].position='a1';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].dir='up';
+
+                    } else
+                    if(cmdargs[0]==='A' && cmdargs[1]==='R'){ //commande de reset
+                        console.log('ITI A RESET')
+                        pccApi.SEC[0].cantons[aiguilles[0].index].position='r';
+                        pccApi.SEC[0].cantons[aiguilles[0].index].dir='r';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].position='r';
+                        pccApi.SEC[0].cantons[aiguilles[1].index].dir='r';
+                    }
+                    apiSave()
+                }
 
         }
     })
