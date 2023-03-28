@@ -358,6 +358,18 @@ wss.on('connection', (ws) => {
                     apiSave()
                 }
                 break;
+            case 500:
+                logger.message('income',JSON.stringify(data))
+                let args = data.cmd
+                let cmd = args[0]
+                let cfrom = args[1]
+                let cto = args[2]
+                if(!((cfrom)||(cto))){
+                    console.log('aucun canton renseigné')
+                    return;
+                }
+                console.log('commande '+cmd+' de '+cfrom+' vers '+cto)
+
         }
     })
 
