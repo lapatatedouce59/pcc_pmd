@@ -808,6 +808,12 @@
             }
         })
 
+        btnSend.addEventListener('click', ()=>{
+            let args = commandInput.value.split(" ")
+            if(!(args[0]==='SET'||'REM')) return;
+            ws.send(JSON.stringify( {op: 500, cmd: args} ))
+        })
+
 
 
         function sleep(ms) {
