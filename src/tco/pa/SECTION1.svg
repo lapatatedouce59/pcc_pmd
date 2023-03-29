@@ -15,12 +15,12 @@
                 <rect x="52" width="50" height="18" fill="#707070" name="2401" id="13"/>
                 <rect width="50" height="18" fill="#707070" name="2401" id="14"/>
 
-                <path d="M157.5 43L129 18V0L175 43H157.5Z" fill="#707070" name="2301A1"/>
-                <path d="M175.5 43L204 18V0L158 43H175.5Z" fill="#707070" name="2301A2"/>
-                <path d="M175.5 95L204 120V138L158 95H175.5Z" fill="#707070" name="1301A1"/>
-                <path d="M157.5 95L129 120V138L175 95H157.5Z" fill="#707070" name="1301A2"/>
-                <rect x="157.5" y="95" width="25" height="18" transform="rotate(-90 157.5 95)" fill="#707070" name="C1BOT"/>
-                <rect x="157.5" y="68" width="25" height="18" transform="rotate(-90 157.5 68)" fill="#707070" name="C1TOP"/>
+                <path d="M157.5 43L129 18V0L175 43H157.5Z" fill="#707070" name="2301A1" id="17"/>
+                <path d="M175.5 43L204 18V0L158 43H175.5Z" fill="#707070" name="2301A2" id="18"/>
+                <path d="M175.5 95L204 120V138L158 95H175.5Z" fill="#707070" name="1301A1" id="15"/>
+                <path d="M157.5 95L129 120V138L175 95H157.5Z" fill="#707070" name="1301A2" id="16"/>
+                <rect x="157.5" y="95" width="25" height="18" transform="rotate(-90 157.5 95)" fill="#707070" name="C1BOT" id="19"/>
+                <rect x="157.5" y="68" width="25" height="18" transform="rotate(-90 157.5 68)" fill="#707070" name="C1TOP" id="20"/>
                 <path d="M139.459 62.4444H147.541V68H139.459V62.4444Z" fill="#707070" name="C1MA"/>
                 <path d="M143.5 43L150.5 62.4444H136.5L143.5 43Z" fill="#707070" name="C1MB"/>
                 <path d="M139.459 75.5556H147.541V70H139.459V75.5556Z" fill="#707070" name="C1DA"/>
