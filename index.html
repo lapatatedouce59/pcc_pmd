@@ -825,6 +825,7 @@
         }
 
         function getCantonsInfo(){
+            clearAllCantons();
             let fresponse={ trains: [] }
             for (let _CANTON_ in cantons){
                 console.log(_CANTON_)
@@ -858,9 +859,10 @@
                                 cantons[_CANTON_+1][bits].style.fill='#E1A712';
                             }
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a1'){
-                            clearAllCantons(_CANTON_, '1301a1')
+                            //clearAllCantons(_CANTON_, 'a1')
                             switch(data.SEC[0].cantons[_CANTON_].cid){
                                 case 'c1301':
+                                    clearAllCantons(_CANTON_)
                                     for(let bits in cantons.aiguilles[0].a1c1301){
                                         console.log(cantons.aiguilles[0].a1c1301[bits])
                                         cantons.aiguilles[0].a1c1301[bits].style.fill='#E1A712';
@@ -874,9 +876,10 @@
                                     break;
                             }
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a2'){
-                            clearAllCantons(_CANTON_, '1301a2')
+                            //clearAllCantons(_CANTON_, 'a2')
                             switch(data.SEC[0].cantons[_CANTON_].cid){
                                 case 'c1301':
+                                    clearAllCantons(_CANTON_)
                                     for(let bits in cantons.aiguilles[0].a2c1301){
                                         console.log(cantons.aiguilles[0].a2c1301[bits])
                                         cantons.aiguilles[0].a2c1301[bits].style.fill='#E1A712';
@@ -924,10 +927,12 @@
                                 cantons[_CANTON_+1][bits].style.fill='#66D264';
                             }
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a1'){
+                            clearAllCantons(_CANTON_,'deleteCenter')
                             console.log(data.SEC[0].cantons[_CANTON_].cid+' en aiguille a1')
-                            clearAllCantons(_CANTON_, '1301a1')
+                            //clearAllCantons(_CANTON_, 'a1')
                             switch(data.SEC[0].cantons[_CANTON_].cid){
                                 case 'c1301':
+                                    clearAllCantons(_CANTON_)
                                     console.log(data.SEC[0].cantons[_CANTON_].cid+' démarre son itération de peinture pour c1301 a1')
                                     for(let bits in cantons.aiguilles[0].a1c1301){
                                         console.log(cantons.aiguilles[0].a1c1301[bits])
@@ -943,10 +948,12 @@
                                     break;
                             }
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a2'){
+                            clearAllCantons(_CANTON_,'deleteCenter')
                             console.log(data.SEC[0].cantons[_CANTON_].cid+' en aiguille a2')
-                            clearAllCantons(_CANTON_, '1301a2')
+                            //clearAllCantons(_CANTON_, 'a2')
                             switch(data.SEC[0].cantons[_CANTON_].cid){
                                 case 'c1301':
+                                    clearAllCantons(_CANTON_)
                                     console.log(data.SEC[0].cantons[_CANTON_].cid+' démarre son itération de peinture pour c1301 a2')
                                     for(let bits in cantons.aiguilles[0].a2c1301){
                                         console.log(cantons.aiguilles[0].a2c1301[bits])
@@ -999,11 +1006,13 @@
         * @param _CANTON_ il faut fournir l'iteration _canton_
         * @param exeption une aiguille qui ne sera pas reset
         */ 
-        function clearAllCantons(_CANTON_, exeption){
-            if(!(exeption)){
+        function clearAllCantons(_CANTON_, mode){
+            if(!(mode)){
+                console.log('ordre d\'effacement avec it '+_CANTON_)
                 for(let bits in cantons[_CANTON_+1]){
                     //console.log(cantons[_CANTON_+1][bits])
                     cantons[_CANTON_+1][bits].style.fill='#707070';
+                    console.log('effacage de '+ (_CANTON_+1))
                 }
                 for(let bits in cantons.aiguilles[0].a1c1301){
                     //console.log(cantons.aiguilles[0].a1c1301[bits])
@@ -1022,40 +1031,35 @@
                     cantons.aiguilles[0].a2c2301[bits].style.fill='#707070'
                 }
             } else {
-                if(exeption==='1301a1'){
-                    for(let bits in cantons[_CANTON_+1]){
-                        //console.log(cantons[_CANTON_+1][bits])
-                        cantons[_CANTON_+1][bits].style.fill='#707070';
+                if(mode==='deleteCenter'){
+                    for(let bits in cantons[3]){
+                        cantons[3][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
                     }
-                    for(let bits in cantons.aiguilles[0].a1c2301){
-                        //console.log(cantons.aiguilles[0].a1c2301[bits])
-                        cantons.aiguilles[0].a1c2301[bits].style.fill='#707070'
+
+                    for(let bits in cantons[8]){
+                        cantons[8][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
                     }
-                    for(let bits in cantons.aiguilles[0].a2c2301){
+                    /*for(let bits in cantons.aiguilles[0].a2c2301){
                     //console.log(cantons.aiguilles[0].a2c2301[bits])
-                    cantons.aiguilles[0].a2c2301[bits].style.fill='#707070'
+                    cantons.aiguilles[0].a2c2301[bits].style.fill='#707070' //supression des couleurs de l'aiguille 2 voie 2
                     }
                     for(let bits in cantons.aiguilles[0].a1c1301){
                         //console.log(cantons.aiguilles[0].a1c1301[bits])
-                        cantons.aiguilles[0].a1c1301[bits].style.fill='#707070'
+                        cantons.aiguilles[0].a1c1301[bits].style.fill='#707070' //supression des couleurs de l'aiguille 2 voie 1
                     }
-                } else if (exeption==='1301a2'){
-                    for(let bits in cantons[_CANTON_+1]){
-                        //console.log(cantons[_CANTON_+1][bits])
-                        cantons[_CANTON_+1][bits].style.fill='#707070';
-                    }
-                    for(let bits in cantons.aiguilles[0].a2c2301){
-                        //console.log(cantons.aiguilles[0].a1c2301[bits])
-                        cantons.aiguilles[0].a1c2301[bits].style.fill='#707070'
+                } else if (mode==='a2'){                                                                                                  // ____________________
+                    for(let bits in cantons[_CANTON_+1]){                                                                                 //|  CODE INNUTILISE  |
+                        //console.log(cantons[_CANTON_+1][bits])                                                                          //^^^^^^^^^^^^^^^^^^^^
+                        cantons[_CANTON_+1][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
                     }
                     for(let bits in cantons.aiguilles[0].a1c2301){
                     //console.log(cantons.aiguilles[0].a2c2301[bits])
-                    cantons.aiguilles[0].a1c2301[bits].style.fill='#707070'
+                    cantons.aiguilles[0].a1c2301[bits].style.fill='#707070' //supression des couleurs de l'aiguille 1 voie 2
                     }
                     for(let bits in cantons.aiguilles[0].a1c1301){
                         //console.log(cantons.aiguilles[0].a1c1301[bits])
-                        cantons.aiguilles[0].a1c1301[bits].style.fill='#707070'
-                    }
+                        cantons.aiguilles[0].a1c1301[bits].style.fill='#707070' //supression des couleurs de l'aiguille 1 voie 1
+                    }*/
 
                 }
             }

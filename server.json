@@ -171,18 +171,18 @@
         },
         {
           "cid": "c1201",
-          "trains": []
-        },
-        {
-          "cid": "c1301",
-          "position": "a2",
-          "dir": "up",
           "trains": [
             {
               "tid": "1",
               "name": "Correntin"
             }
           ]
+        },
+        {
+          "cid": "c1301",
+          "position": "a2",
+          "dir": "up",
+          "trains": []
         },
         {
           "cid": "c1401",
@@ -194,16 +194,16 @@
         },
         {
           "cid": "c2101",
+          "trains": []
+        },
+        {
+          "cid": "c2201",
           "trains": [
             {
               "tid": "3",
               "name": "Léo"
             }
           ]
-        },
-        {
-          "cid": "c2201",
-          "trains": []
         },
         {
           "cid": "c2301",
