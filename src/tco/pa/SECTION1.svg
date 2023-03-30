@@ -3,14 +3,14 @@
                 <rect width="50" height="18" transform="matrix(1 0 0 -1 0 138)" fill="#707070" name="1101" id="1"/>
                 <rect width="50" height="18" transform="matrix(1 0 0 -1 52 138)" fill="#707070" name="1201" id="2"/>
                 <rect width="25" height="18" transform="matrix(1 0 0 -1 104 138)" fill="#707070" name="1301A" id="3"/>
-                <rect width="75" height="18" transform="matrix(1 0 0 -1 129 138)" fill="#66D264" name="1301B" id="4"/>
+                <rect width="75" height="18" transform="matrix(1 0 0 -1 129 138)" fill="#707070" name="1301B" id="4"/>
                 <rect width="25" height="18" transform="matrix(1 0 0 -1 204 138)" fill="#707070" name="1301C" id="5"/>
                 <rect width="75" height="18" transform="matrix(1 0 0 -1 231 138)" fill="#707070" name="1401" id="6"/>
                 <rect x="308" y="120" width="100" height="18" fill="#707070" name="1501" id="7"/>
                 <rect x="308" width="100" height="18" fill="#707070" name="2101" id="8"/>
                 <rect x="231" width="75" height="18" fill="#707070" name="2201" id="9"/>
                 <rect x="104" width="25" height="18" fill="#707070" name="2301A" id="10"/>
-                <rect x="129" width="75" height="18" fill="#66D264" name="2301B" id="11"/>
+                <rect x="129" width="75" height="18" fill="#707070" name="2301B" id="11"/>
                 <rect x="204" width="25" height="18" fill="#707070" name="2301C" id="12"/>
                 <rect x="52" width="50" height="18" fill="#707070" name="2401" id="13"/>
                 <rect width="50" height="18" fill="#707070" name="2401" id="14"/>
