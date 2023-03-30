@@ -279,8 +279,10 @@
             aiguilles: [
                 {
                     id: 'C1',
-                    a1: [s1svgDoc.getElementById('15'),s1svgDoc.getElementById('17'),s1svgDoc.getElementById('19'),s1svgDoc.getElementById('20')],
-                    a2: [s1svgDoc.getElementById('16'),s1svgDoc.getElementById('18'),s1svgDoc.getElementById('19'),s1svgDoc.getElementById('20')]
+                    a1c1301: [s1svgDoc.getElementById('15'),s1svgDoc.getElementById('19')],
+                    a1c2301: [s1svgDoc.getElementById('17'),s1svgDoc.getElementById('20')],
+                    a2c1301: [s1svgDoc.getElementById('16'),s1svgDoc.getElementById('19')],
+                    a2c2301: [s1svgDoc.getElementById('18'),s1svgDoc.getElementById('20')]
                 }
             ]
             }
@@ -848,37 +850,46 @@
                             cantons[_CANTON_+1][bits].style.fill='#E1A712'
                         }*/
 
-                        function clearAllCantons(){
-                            for(let bits in cantons[_CANTON_+1]){
-                                cantons[_CANTON_+1][bits].style.fill='#707070';
-                            }
-                            for(let bits in cantons.aiguilles[0].a1){
-                                cantons.aiguilles[0].a1[bits].style.fill='#707070'
-                            }
-                            for(let bits in cantons.aiguilles[0].a2){
-                                cantons.aiguilles[0].a2[bits].style.fill='#707070'
-                            }
-                        }
 
                         if(data.SEC[0].cantons[_CANTON_].position==='r'){
-                            clearAllCantons()
+                            clearAllCantons(_CANTON_)
                             for(let bits in cantons[_CANTON_+1]){
                                 console.log(cantons[_CANTON_+1][bits])
                                 cantons[_CANTON_+1][bits].style.fill='#E1A712';
                             }
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a1'){
-                            clearAllCantons()
-                            for(let bits in cantons.aiguilles[0].a1){
-                                console.log(cantons.aiguilles[0].a1[bits])
-                                cantons.aiguilles[0].a1[bits].style.fill='#E1A712'
+                            clearAllCantons(_CANTON_, '1301a1')
+                            switch(data.SEC[0].cantons[_CANTON_].cid){
+                                case 'c1301':
+                                    for(let bits in cantons.aiguilles[0].a1c1301){
+                                        console.log(cantons.aiguilles[0].a1c1301[bits])
+                                        cantons.aiguilles[0].a1c1301[bits].style.fill='#E1A712';
+                                    }
+                                    break;
+                                case 'c2301':
+                                    for(let bits in cantons.aiguilles[0].a1c2301){
+                                        console.log(cantons.aiguilles[0].a1c2301[bits])
+                                        cantons.aiguilles[0].a1c2301[bits].style.fill='#E1A712';
+                                    }
+                                    break;
                             }
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a2'){
-                            clearAllCantons()
-                            for(let bits in cantons.aiguilles[0].a2){
-                                console.log(cantons.aiguilles[0].a2[bits])
-                                cantons.aiguilles[0].a2[bits].style.fill='#E1A712'
+                            clearAllCantons(_CANTON_, '1301a2')
+                            switch(data.SEC[0].cantons[_CANTON_].cid){
+                                case 'c1301':
+                                    for(let bits in cantons.aiguilles[0].a2c1301){
+                                        console.log(cantons.aiguilles[0].a2c1301[bits])
+                                        cantons.aiguilles[0].a2c1301[bits].style.fill='#E1A712';
+                                    }
+                                    break;
+                                case 'c2301':
+                                    for(let bits in cantons.aiguilles[0].a2c2301){
+                                        console.log(cantons.aiguilles[0].a2c2301[bits])
+                                        cantons.aiguilles[0].a2c2301[bits].style.fill='#E1A712';
+                                    }
+                                    break;
                             }
-                        }
+                        } 
                     }
 
                     for(let _TRAIN_ in data.SEC[0].cantons[_CANTON_].trains){
@@ -905,38 +916,50 @@
                         console.log('[🚫] aiguille '+(_CANTON_+1)+' libre')
                         console.log(data.SEC[0].cantons[_CANTON_])
 
-                        function clearAllCantons(){
-                            for(let bits in cantons[_CANTON_+1]){
-                                console.log(cantons[_CANTON_+1][bits])
-                                cantons[_CANTON_+1][bits].style.fill='#707070';
-                            }
-                            for(let bits in cantons.aiguilles[0].a1){
-                                console.log(cantons.aiguilles[0].a1[bits])
-                                cantons.aiguilles[0].a1[bits].style.fill='#707070'
-                            }
-                            for(let bits in cantons.aiguilles[0].a2){
-                                console.log(cantons.aiguilles[0].a2[bits])
-                                cantons.aiguilles[0].a2[bits].style.fill='#707070'
-                            }
-                        }
-
                         if(data.SEC[0].cantons[_CANTON_].position==='r'){
-                            clearAllCantons()
+                            console.log(data.SEC[0].cantons[_CANTON_].cid+' en neutre')
+                            clearAllCantons(_CANTON_)
                             for(let bits in cantons[_CANTON_+1]){
                                 console.log(cantons[_CANTON_+1][bits])
                                 cantons[_CANTON_+1][bits].style.fill='#66D264';
                             }
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a1'){
-                            clearAllCantons()
-                            for(let bits in cantons.aiguilles[0].a1){
-                                console.log(cantons.aiguilles[0].a1[bits])
-                                cantons.aiguilles[0].a1[bits].style.fill='#66D264'
+                            console.log(data.SEC[0].cantons[_CANTON_].cid+' en aiguille a1')
+                            clearAllCantons(_CANTON_, '1301a1')
+                            switch(data.SEC[0].cantons[_CANTON_].cid){
+                                case 'c1301':
+                                    console.log(data.SEC[0].cantons[_CANTON_].cid+' démarre son itération de peinture pour c1301 a1')
+                                    for(let bits in cantons.aiguilles[0].a1c1301){
+                                        console.log(cantons.aiguilles[0].a1c1301[bits])
+                                        cantons.aiguilles[0].a1c1301[bits].style.fill='#66D264';
+                                    }
+                                    break;
+                                case 'c2301':
+                                    console.log(data.SEC[0].cantons[_CANTON_].cid+' démarre son itération de peinture pour c2301 a1')
+                                    for(let bits in cantons.aiguilles[0].a1c2301){
+                                        console.log(cantons.aiguilles[0].a1c2301[bits])
+                                        cantons.aiguilles[0].a1c2301[bits].style.fill='#66D264';
+                                    }
+                                    break;
                             }
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a2'){
-                            clearAllCantons()
-                            for(let bits in cantons.aiguilles[0].a2){
-                                console.log(cantons.aiguilles[0].a2[bits])
-                                cantons.aiguilles[0].a2[bits].style.fill='#66D264'
+                            console.log(data.SEC[0].cantons[_CANTON_].cid+' en aiguille a2')
+                            clearAllCantons(_CANTON_, '1301a2')
+                            switch(data.SEC[0].cantons[_CANTON_].cid){
+                                case 'c1301':
+                                    console.log(data.SEC[0].cantons[_CANTON_].cid+' démarre son itération de peinture pour c1301 a2')
+                                    for(let bits in cantons.aiguilles[0].a2c1301){
+                                        console.log(cantons.aiguilles[0].a2c1301[bits])
+                                        cantons.aiguilles[0].a2c1301[bits].style.fill='#66D264';
+                                    }
+                                    break;
+                                case 'c2301':
+                                    console.log(data.SEC[0].cantons[_CANTON_].cid+' démarre son itération de peinture pour c2301 a2')
+                                    for(let bits in cantons.aiguilles[0].a2c2301){
+                                        console.log(cantons.aiguilles[0].a2c2301[bits])
+                                        cantons.aiguilles[0].a2c2301[bits].style.fill='#66D264';
+                                    }
+                                    break;
                             }
                         } 
                     }
@@ -969,6 +992,74 @@
             if(isNaN(TTARGET)) return false; //en gros c'est pas digit, c'est une lettre
             console.log(TTARGET)
             return true;
+        }
+
+        /**
+        * Peint tout les cantons d'aiguille en gris afin de les reset
+        * @param _CANTON_ il faut fournir l'iteration _canton_
+        * @param exeption une aiguille qui ne sera pas reset
+        */ 
+        function clearAllCantons(_CANTON_, exeption){
+            if(!(exeption)){
+                for(let bits in cantons[_CANTON_+1]){
+                    //console.log(cantons[_CANTON_+1][bits])
+                    cantons[_CANTON_+1][bits].style.fill='#707070';
+                }
+                for(let bits in cantons.aiguilles[0].a1c1301){
+                    //console.log(cantons.aiguilles[0].a1c1301[bits])
+                    cantons.aiguilles[0].a1c1301[bits].style.fill='#707070'
+                }
+                for(let bits in cantons.aiguilles[0].a1c2301){
+                    //console.log(cantons.aiguilles[0].a1c2301[bits])
+                    cantons.aiguilles[0].a1c2301[bits].style.fill='#707070'
+                }
+                for(let bits in cantons.aiguilles[0].a2c1301){
+                    //console.log(cantons.aiguilles[0].a2c1301[bits])
+                    cantons.aiguilles[0].a2c1301[bits].style.fill='#707070'
+                }
+                for(let bits in cantons.aiguilles[0].a2c2301){
+                    //console.log(cantons.aiguilles[0].a2c2301[bits])
+                    cantons.aiguilles[0].a2c2301[bits].style.fill='#707070'
+                }
+            } else {
+                if(exeption==='1301a1'){
+                    for(let bits in cantons[_CANTON_+1]){
+                        //console.log(cantons[_CANTON_+1][bits])
+                        cantons[_CANTON_+1][bits].style.fill='#707070';
+                    }
+                    for(let bits in cantons.aiguilles[0].a1c2301){
+                        //console.log(cantons.aiguilles[0].a1c2301[bits])
+                        cantons.aiguilles[0].a1c2301[bits].style.fill='#707070'
+                    }
+                    for(let bits in cantons.aiguilles[0].a2c2301){
+                    //console.log(cantons.aiguilles[0].a2c2301[bits])
+                    cantons.aiguilles[0].a2c2301[bits].style.fill='#707070'
+                    }
+                    for(let bits in cantons.aiguilles[0].a1c1301){
+                        //console.log(cantons.aiguilles[0].a1c1301[bits])
+                        cantons.aiguilles[0].a1c1301[bits].style.fill='#707070'
+                    }
+                } else if (exeption==='1301a2'){
+                    for(let bits in cantons[_CANTON_+1]){
+                        //console.log(cantons[_CANTON_+1][bits])
+                        cantons[_CANTON_+1][bits].style.fill='#707070';
+                    }
+                    for(let bits in cantons.aiguilles[0].a2c2301){
+                        //console.log(cantons.aiguilles[0].a1c2301[bits])
+                        cantons.aiguilles[0].a1c2301[bits].style.fill='#707070'
+                    }
+                    for(let bits in cantons.aiguilles[0].a1c2301){
+                    //console.log(cantons.aiguilles[0].a2c2301[bits])
+                    cantons.aiguilles[0].a1c2301[bits].style.fill='#707070'
+                    }
+                    for(let bits in cantons.aiguilles[0].a1c1301){
+                        //console.log(cantons.aiguilles[0].a1c1301[bits])
+                        cantons.aiguilles[0].a1c1301[bits].style.fill='#707070'
+                    }
+
+                }
+            }
+            
         }
 
     </script>
