@@ -842,9 +842,42 @@
                     } else {
                         console.log((_CANTON_+1)+ ' est une aiguille')
                         console.log('[🚫] aiguille '+(_CANTON_+1)+' occupé')
-                        for(let bits in cantons[_CANTON_+1]){
+
+                        /*for(let bits in cantons[_CANTON_+1]){
                             console.log(cantons[_CANTON_+1][bits])
                             cantons[_CANTON_+1][bits].style.fill='#E1A712'
+                        }*/
+
+                        function clearAllCantons(){
+                            for(let bits in cantons[_CANTON_+1]){
+                                cantons[_CANTON_+1][bits].style.fill='#707070';
+                            }
+                            for(let bits in cantons.aiguilles[0].a1){
+                                cantons.aiguilles[0].a1[bits].style.fill='#707070'
+                            }
+                            for(let bits in cantons.aiguilles[0].a2){
+                                cantons.aiguilles[0].a2[bits].style.fill='#707070'
+                            }
+                        }
+
+                        if(data.SEC[0].cantons[_CANTON_].position==='r'){
+                            clearAllCantons()
+                            for(let bits in cantons[_CANTON_+1]){
+                                console.log(cantons[_CANTON_+1][bits])
+                                cantons[_CANTON_+1][bits].style.fill='#E1A712';
+                            }
+                        } else if (data.SEC[0].cantons[_CANTON_].position==='a1'){
+                            clearAllCantons()
+                            for(let bits in cantons.aiguilles[0].a1){
+                                console.log(cantons.aiguilles[0].a1[bits])
+                                cantons.aiguilles[0].a1[bits].style.fill='#E1A712'
+                            }
+                        } else if (data.SEC[0].cantons[_CANTON_].position==='a2'){
+                            clearAllCantons()
+                            for(let bits in cantons.aiguilles[0].a2){
+                                console.log(cantons.aiguilles[0].a2[bits])
+                                cantons.aiguilles[0].a2[bits].style.fill='#E1A712'
+                            }
                         }
                     }
 

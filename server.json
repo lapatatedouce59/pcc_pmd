@@ -167,12 +167,7 @@
       "cantons": [
         {
           "cid": "c1101",
-          "trains": [
-            {
-              "tid": "1",
-              "name": "Correntin"
-            }
-          ]
+          "trains": []
         },
         {
           "cid": "c1201",
@@ -182,7 +177,12 @@
           "cid": "c1301",
           "position": "a2",
           "dir": "up",
-          "trains": []
+          "trains": [
+            {
+              "tid": "1",
+              "name": "Correntin"
+            }
+          ]
         },
         {
           "cid": "c1401",
