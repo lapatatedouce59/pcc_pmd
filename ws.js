@@ -350,6 +350,21 @@ wss.on('connection', (ws) => {
                         console.log('Canton aiguille')
                         if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="up"){
                             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[7].cid)
+                            pccApi.SEC[0].cantons[7].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log('Déplacement effectué')
+                        } else
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="up"){
+                            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[6].cid)
+                            pccApi.SEC[0].cantons[6].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log('Déplacement effectué')
                         }
                     }
                     
