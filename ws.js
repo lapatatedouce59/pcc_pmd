@@ -1,15 +1,21 @@
-console.log('[@] WebSocket init')
-const WebSocket = require('ws');
-const wss = new WebSocket.Server({ port: 8081 });
-console.log('[V] WebSocket init on port 8081')
 console.log('[@] Library init')
 const logger = require('./logger')
 const fs = require('fs')
+const https = require('https')
 console.log('[V] Library init logger and fs')
+console.log('[@] WebSocket init')
+const {WebSocket, WebSocketServer} = require('ws');
+const wss = new WebSocket.Server({ port: 8081 });
+/*const server = https.createServer({
+    cert: fs.readFileSync('/etc/letsencrypt/live/patate.ddns.net/fullchain.pem'),
+    key: fs.readFileSync('/etc/letsencrypt/live/patate.ddns.net/privkey.pem')
+})
 
+const wss = new WebSocketServer({server});*/
+
+console.log('[V] WebSocket init on port 8081')
 console.log('[@] Server Api init')
 const pccApi=require('./server.json');
-const { type } = require('os');
 console.log('[V] Server Api init')
 
 const clients = new Map();
