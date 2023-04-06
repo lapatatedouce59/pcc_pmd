@@ -173,12 +173,14 @@
         <option value="NON">NON</option>
     </select> <span>SS15</span>
     <br>
+    
     <div class="tco">
+        <h2 style="color:white;">Jvous jure le premier qui envoie un train hors section et qui fait crash le ws je le dégomme</h2>
         <div class="ligne">
             <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object>
         </div>
-        <button id="forward">AVANCER</button>
-        <button id="downward">RECULER</button>
+        <button id="forward">S1</button>
+        <button id="downward">S2</button>
         <input type="text" id="trainAffect" placeholder="train">
         <button id="experiment">EXPERIENCE</button>
         <br>
@@ -774,7 +776,7 @@
 
             if(verifyExistingTrain(TTARGET)){
                 console.log('bon bah on ordonne au serveur d\'avancer')
-                ws.send(JSON.stringify( {op: 400, sens: "FORWARD", train: TTARGET} ))
+                ws.send(JSON.stringify( {op: 400, sens: 1, train: TTARGET} ))
                 console.log('Ordre 400 pour le train '+TTARGET)
             }
         })
@@ -788,7 +790,7 @@
 
             if(verifyExistingTrain(TTARGET)){
                 console.log('bon bah on ordonne au serveur de reculer')
-                ws.send(JSON.stringify( {op: 400, sens: "BEHIND", train: TTARGET} ))
+                ws.send(JSON.stringify( {op: 400, sens: 2, train: TTARGET} ))
                 console.log('Ordre 400 pour le train '+TTARGET)
             }
         })

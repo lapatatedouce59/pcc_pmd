@@ -327,25 +327,36 @@ wss.on('connection', (ws) => {
             case 400:
                 logger.message('income',JSON.stringify(data))
 
-                if(data.sens === 'FORWARD'){
+                if(data.sens === 1){
                     let train = JSON.parse(getCantonsInfo(data.train))
                     console.log(train)                                                    
                     let _cantonIndex = parseFloat(train.cantonIndex)   
                     let _trainIndex = parseFloat(train.trainIndex)
                     console.log(_cantonIndex +' et '+ _trainIndex)                        
                     console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
-                    if(typeof pccApi.SEC[0].cantons[_cantonIndex].position==='undefined'){
+                    if(typeof pccApi.SEC[0].cantons[_cantonIndex].position==='undefined'){  //ON REGARDE SI C'EST UN CANTON OU UNE AIGUILLE
                         console.log('Canton simple')
-                        console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex+1].cid)
-                        //pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
-                        //console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
-                        pccApi.SEC[0].cantons[_cantonIndex+1].trains.push( {
-                            tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
-                            name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
-                        } )
-                        console.log(pccApi.SEC[0].cantons[_cantonIndex+1].trains[_trainIndex])
-                        pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
-                        console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c1")){       //ON REGARDE SI IL EST VOIE 1 OU 2 (la progression sera differente)
+                            console.log('TRAIN VOIE 1 -> PROGRESSION CANTON +1')
+                            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex+1].cid)
+                            pccApi.SEC[0].cantons[_cantonIndex+1].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            console.log(pccApi.SEC[0].cantons[_cantonIndex+1].trains[_trainIndex])
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                        } else if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c2")){ 
+                            console.log('TRAIN VOIE 2 -> PROGRESSION CANTON -1')
+                            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex-1].cid)
+                            pccApi.SEC[0].cantons[_cantonIndex-1].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            console.log(pccApi.SEC[0].cantons[_cantonIndex-1].trains[_trainIndex])
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                        }
                     } else {
                         console.log('Canton aiguille')
                         if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="up"){
@@ -365,27 +376,106 @@ wss.on('connection', (ws) => {
                             } )
                             pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
                             console.log('Déplacement effectué')
+                        } else {   //CONSIDERE COMME UN CANTON SIMPLE PUISQUE AUCUN ITI
+                            console.log('Canton simple')
+                            if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c1")){       //ON REGARDE SI IL EST VOIE 1 OU 2 (la progression sera differente)
+                                console.log('TRAIN VOIE 1 -> PROGRESSION CANTON +1')
+                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex+1].cid)
+                                pccApi.SEC[0].cantons[_cantonIndex+1].trains.push( {
+                                    tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                    name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                                } )
+                                console.log(pccApi.SEC[0].cantons[_cantonIndex+1].trains[_trainIndex])
+                                pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                                console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                            } else if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c2")){ 
+                                console.log('TRAIN VOIE 2 -> PROGRESSION CANTON -1')
+                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex-1].cid)
+                                pccApi.SEC[0].cantons[_cantonIndex-1].trains.push( {
+                                    tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                    name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                                } )
+                                console.log(pccApi.SEC[0].cantons[_cantonIndex-1].trains[_trainIndex])
+                                pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                                console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                            }
                         }
                     }
-                    
                     apiSave()
-                } else if(data.sens === 'BEHIND'){
+                } else if(data.sens === 2){
                     let train = JSON.parse(getCantonsInfo(data.train))
-                    console.log(train)
-                    let _cantonIndex = parseFloat(train.cantonIndex)
+                    console.log(train)                                                    
+                    let _cantonIndex = parseFloat(train.cantonIndex)   
                     let _trainIndex = parseFloat(train.trainIndex)
-                    console.log(_cantonIndex +' et '+ _trainIndex)
+                    console.log(_cantonIndex +' et '+ _trainIndex)                        
                     console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
-                    console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex-1].cid)
-                    //pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
-                    //console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
-                    pccApi.SEC[0].cantons[_cantonIndex-1].trains.push( {
-                        tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
-                        name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
-                    } )
-                    console.log(pccApi.SEC[0].cantons[_cantonIndex-1].trains[_trainIndex])
-                    pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
-                    console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                    if(typeof pccApi.SEC[0].cantons[_cantonIndex].position==='undefined'){  //ON REGARDE SI C'EST UN CANTON OU UNE AIGUILLE
+                        console.log('Canton simple')
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c1")){       //ON REGARDE SI IL EST VOIE 1 OU 2 (la progression sera differente)
+                            console.log('TRAIN VOIE 1 -> PROGRESSION CANTON -1')
+                            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex-1].cid)
+                            pccApi.SEC[0].cantons[_cantonIndex-1].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            console.log(pccApi.SEC[0].cantons[_cantonIndex-1].trains[_trainIndex])
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                        } else if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c2")){ 
+                            console.log('TRAIN VOIE 2 -> PROGRESSION CANTON +1')
+                            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex+1].cid)
+                            pccApi.SEC[0].cantons[_cantonIndex+1].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            console.log(pccApi.SEC[0].cantons[_cantonIndex+1].trains[_trainIndex])
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                        }
+                    } else {
+                        console.log('Canton aiguille')
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="down"){
+                            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[2].cid)
+                            pccApi.SEC[0].cantons[2].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log('Déplacement effectué')
+                        } else
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="down"){
+                            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[1].cid)
+                            pccApi.SEC[0].cantons[1].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log('Déplacement effectué')
+                        } else { //SI PAS DE DIRECTION C CONSIDERE COMME UN CANTON SIMPLE
+                            console.log('Canton simple')
+                            if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c1")){       //ON REGARDE SI IL EST VOIE 1 OU 2 (la progression sera differente)
+                                console.log('TRAIN VOIE 1 -> PROGRESSION CANTON -1')
+                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex-1].cid)
+                                pccApi.SEC[0].cantons[_cantonIndex-1].trains.push( {
+                                    tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                    name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                                } )
+                                console.log(pccApi.SEC[0].cantons[_cantonIndex-1].trains[_trainIndex])
+                                pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                                console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                            } else if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c2")){ 
+                                console.log('TRAIN VOIE 2 -> PROGRESSION CANTON +1')
+                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex+1].cid)
+                                pccApi.SEC[0].cantons[_cantonIndex+1].trains.push( {
+                                    tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                    name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                                } )
+                                console.log(pccApi.SEC[0].cantons[_cantonIndex+1].trains[_trainIndex])
+                                pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                                console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
+                            }
+                        }
+                    }
                     apiSave()
                 }
                 break;
