@@ -5,7 +5,7 @@
 
 Développement du Poste de Contrôles Centralisés de Paris Metro Driver, 2ème génération. <br>
 Pour des raisons de confidentialité, uniquement certaines ressources sont dévoilées.<br>
-Aucune page de test disponible pour le moment, à voir dans le futur.
+[Page de test publique](https://pmdapp.fr/tools/pccBeta). 
 La documentation arrivera bientôt.
 
 # Instalation et utilisation
