@@ -325,6 +325,20 @@ wss.on('connection', (ws) => {
                 apiSave()
                 break;
             case 400:
+                class Aiguille {
+                    constructor(cantonPath){
+                        this.cantonPath=cantonPath
+                    }
+                    get dir(){
+                        let aigDir = this.cantonPath.dir
+                        if(aigDir) return aigDir;
+                        return false;
+                    }
+                }
+
+                let a1301 = new Aiguille(pccApi.SEC[0].cantons[2])
+                let a2301 = new Aiguille(pccApi.SEC[0].cantons[7])
+
                 logger.message('income',JSON.stringify(data))
 
                 if(data.sens === 1){
@@ -358,8 +372,10 @@ wss.on('connection', (ws) => {
                             console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex]) //doit return "undefined" (puisque indexistant)
                         }
                     } else {
+
+
                         console.log('Canton aiguille')
-                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="up"){
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[0].cantons[_cantonIndex].dir==="up" && pccApi.SEC[0].cantons[_cantonIndex].position==="a2"){
                             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[7].cid)
                             pccApi.SEC[0].cantons[7].trains.push( {
                                 tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -368,7 +384,7 @@ wss.on('connection', (ws) => {
                             pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
                             console.log('Déplacement effectué')
                         } else
-                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="up"){
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="up" && pccApi.SEC[0].cantons[_cantonIndex].position==="a2"){
                             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[6].cid)
                             pccApi.SEC[0].cantons[6].trains.push( {
                                 tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -376,8 +392,20 @@ wss.on('connection', (ws) => {
                             } )
                             pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
                             console.log('Déplacement effectué')
-                        } else {   //CONSIDERE COMME UN CANTON SIMPLE PUISQUE AUCUN ITI
-                            console.log('Canton simple')
+                        }else
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="down" && pccApi.SEC[0].cantons[_cantonIndex].position==="a1"){
+                            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[2].cid)
+                            pccApi.SEC[0].cantons[2].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log('Déplacement effectué')
+                        }
+
+
+                        else {   //CONSIDERE COMME UN CANTON SIMPLE PUISQUE AUCUN ITI
+                            console.log('Canton Aiguille sans iti valide')
                             if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c1")){       //ON REGARDE SI IL EST VOIE 1 OU 2 (la progression sera differente)
                                 console.log('TRAIN VOIE 1 -> PROGRESSION CANTON +1')
                                 console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[_cantonIndex+1].cid)
@@ -404,11 +432,13 @@ wss.on('connection', (ws) => {
                     apiSave()
                 } else if(data.sens === 2){
                     let train = JSON.parse(getCantonsInfo(data.train))
-                    console.log(train)                                                    
+                    console.log(train)
                     let _cantonIndex = parseFloat(train.cantonIndex)   
                     let _trainIndex = parseFloat(train.trainIndex)
                     console.log(_cantonIndex +' et '+ _trainIndex)                        
                     console.log(pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex])
+                    if(!(pccApi.SEC[0].cantons[_cantonIndex+1])) return;
+                    if(!(pccApi.SEC[0].cantons[_cantonIndex-1])) return;
                     if(typeof pccApi.SEC[0].cantons[_cantonIndex].position==='undefined'){  //ON REGARDE SI C'EST UN CANTON OU UNE AIGUILLE
                         console.log('Canton simple')
                         if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c1")){       //ON REGARDE SI IL EST VOIE 1 OU 2 (la progression sera differente)
@@ -434,7 +464,7 @@ wss.on('connection', (ws) => {
                         }
                     } else {
                         console.log('Canton aiguille')
-                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="down"){
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="down" && pccApi.SEC[0].cantons[_cantonIndex].position=="a2"){
                             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[2].cid)
                             pccApi.SEC[0].cantons[2].trains.push( {
                                 tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -443,7 +473,7 @@ wss.on('connection', (ws) => {
                             pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
                             console.log('Déplacement effectué')
                         } else
-                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="down"){
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="down" && pccApi.SEC[0].cantons[_cantonIndex].position=="a2"){
                             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[1].cid)
                             pccApi.SEC[0].cantons[1].trains.push( {
                                 tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -451,7 +481,18 @@ wss.on('connection', (ws) => {
                             } )
                             pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
                             console.log('Déplacement effectué')
-                        } else { //SI PAS DE DIRECTION C CONSIDERE COMME UN CANTON SIMPLE
+                        } else
+                        if(pccApi.SEC[0].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[0].cantons[_cantonIndex].dir=="up" && pccApi.SEC[0].cantons[_cantonIndex].position==="a1"){
+                            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[0].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[0].cantons[7].cid)
+                            pccApi.SEC[0].cantons[7].trains.push( {
+                                tid: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].tid,
+                                name: pccApi.SEC[0].cantons[_cantonIndex].trains[_trainIndex].name
+                            } )
+                            pccApi.SEC[0].cantons[_cantonIndex].trains.pop();
+                            console.log('Déplacement effectué')
+                        } 
+                        
+                        else { //SI PAS DE DIRECTION C CONSIDERE COMME UN CANTON SIMPLE
                             console.log('Canton simple')
                             if(pccApi.SEC[0].cantons[_cantonIndex].cid.startsWith("c1")){       //ON REGARDE SI IL EST VOIE 1 OU 2 (la progression sera differente)
                                 console.log('TRAIN VOIE 1 -> PROGRESSION CANTON -1')
