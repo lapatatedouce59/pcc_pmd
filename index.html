@@ -180,14 +180,15 @@
         <div class="ligne">
             <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object>
         </div>
-        <button id="forward">S1</button>
-        <button id="downward">S2</button>
-        <input type="text" id="trainAffect" placeholder="train">
-        <button id="experiment">EXPERIENCE</button>
-        <br>
-        <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
-        <button id="sendCmd">SEND</button>
     </div>
+    <button id="forward">S1</button>
+    <button id="downward">S2</button>
+    <input type="text" id="trainAffect" placeholder="train">
+    <button id="experiment">EXPERIENCE</button>
+    <br>
+    <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
+    <button id="sendCmd">SEND</button>
+    <h2>Repos et page de test <span><a href="https://github.com/lapatatedouce59/pcc_pmd">ici</a></span></h2>
     <script type="module">
 
         let voyGAT = document.getElementById('voyGAT')
@@ -291,7 +292,13 @@
             arrows: [
                 [s1svgDoc.getElementById('21'),s1svgDoc.getElementById('22')],
                 [s1svgDoc.getElementById('23'),s1svgDoc.getElementById('24')]
-            ]
+            ],
+            lights: {
+                'S1C1':s1svgDoc.getElementById('S1C1'),
+                'S2C1':s1svgDoc.getElementById('S2C1'),
+                'S3C1':s1svgDoc.getElementById('S3C1')
+            }
+            
             }
             getCantonsInfo()
         }
@@ -838,6 +845,7 @@
                 console.log(_CANTON_)
                 if(_CANTON_==='aiguilles') continue;
                 if(_CANTON_==='arrows') continue;
+                if(_CANTON_==='lights') continue;
                 _CANTON_ --;
                 console.log('[❔] ARRAY['+_CANTON_+']')
                 //fill des fleches de dir
@@ -958,6 +966,9 @@
                                 console.log(cantons[_CANTON_+1][bits])
                                 cantons[_CANTON_+1][bits].style.fill='#66D264';
                             }
+                            cantons.lights.S1C1.setAttribute('href', '../V1S1_GREEN.png')
+                            cantons.lights.S2C1.setAttribute('href', '../V2S2_GREEN.png')
+                            cantons.lights.S3C1.setAttribute('href', '../V1S1_RED.png')
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a1'){
                             clearAllCantons(_CANTON_,'deleteCenter')
                             console.log(data.SEC[0].cantons[_CANTON_].cid+' en aiguille a1')
@@ -979,6 +990,18 @@
                                     }
                                     break;
                             }
+                            switch(data.SEC[0].cantons[_CANTON_].dir){
+                                case 'up':
+                                    cantons.lights.S1C1.setAttribute('href', '../V1S1_RED.png')
+                                    cantons.lights.S2C1.setAttribute('href', '../V2S2_RED.png')
+                                    cantons.lights.S3C1.setAttribute('href', '../V1S1_RED.png')
+                                    break;
+                                case 'down':
+                                    cantons.lights.S1C1.setAttribute('href', '../V1S1_RED.png')
+                                    cantons.lights.S2C1.setAttribute('href', '../V2S2_RED.png')
+                                    cantons.lights.S3C1.setAttribute('href', '../V1S1_GREEN.png')
+                            }
+                            
                         } else if (data.SEC[0].cantons[_CANTON_].position==='a2'){
                             clearAllCantons(_CANTON_,'deleteCenter')
                             console.log(data.SEC[0].cantons[_CANTON_].cid+' en aiguille a2')
@@ -999,6 +1022,17 @@
                                         cantons.aiguilles[0].a2c2301[bits].style.fill='#66D264';
                                     }
                                     break;
+                            }
+                            switch(data.SEC[0].cantons[_CANTON_].dir){
+                                case 'up':
+                                    cantons.lights.S1C1.setAttribute('href', '../V1S1_GREEN.png')
+                                    cantons.lights.S2C1.setAttribute('href', '../V2S2_RED.png')
+                                    cantons.lights.S3C1.setAttribute('href', '../V1S1_RED.png')
+                                    break;
+                                case 'down':
+                                    cantons.lights.S1C1.setAttribute('href', '../V1S1_RED.png')
+                                    cantons.lights.S2C1.setAttribute('href', '../V2S2_GREEN.png')
+                                    cantons.lights.S3C1.setAttribute('href', '../V1S1_RED.png')
                             }
                         } 
                     }

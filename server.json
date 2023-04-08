@@ -175,25 +175,12 @@
         },
         {
           "cid": "c1301",
-          "position": "a2",
-          "dir": "up",
+          "position": "r",
+          "dir": "r",
           "trains": []
         },
         {
           "cid": "c1401",
-          "trains": [
-            {
-              "tid": "1",
-              "name": "Correntin"
-            }
-          ]
-        },
-        {
-          "cid": "c1501",
-          "trains": []
-        },
-        {
-          "cid": "c2101",
           "trains": [
             {
               "tid": "3",
@@ -202,13 +189,26 @@
           ]
         },
         {
+          "cid": "c1501",
+          "trains": [
+            {
+              "tid": "1",
+              "name": "Correntin"
+            }
+          ]
+        },
+        {
+          "cid": "c2101",
+          "trains": []
+        },
+        {
           "cid": "c2201",
           "trains": []
         },
         {
           "cid": "c2301",
-          "position": "a2",
-          "dir": "up",
+          "position": "r",
+          "dir": "r",
           "trains": []
         },
         {
