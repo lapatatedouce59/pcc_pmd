@@ -293,7 +293,9 @@
                 [s1svgDoc.getElementById('23'),s1svgDoc.getElementById('24')]
             ]
             }
-        })
+            getCantonsInfo()
+        }
+        )
 
 
         sm.registerSound("bip", './src/pltp/snds/bip.mp3');
@@ -474,8 +476,6 @@
                 } else {
                     sm.stopSound('bip')
                 }
-
-                getCantonsInfo();
             }
             
             if(data.op===300){
