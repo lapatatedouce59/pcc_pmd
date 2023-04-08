@@ -175,8 +175,8 @@
         },
         {
           "cid": "c1301",
-          "position": "a1",
-          "dir": "down",
+          "position": "a2",
+          "dir": "up",
           "trains": []
         },
         {
@@ -207,8 +207,8 @@
         },
         {
           "cid": "c2301",
-          "position": "a1",
-          "dir": "down",
+          "position": "a2",
+          "dir": "up",
           "trains": []
         },
         {

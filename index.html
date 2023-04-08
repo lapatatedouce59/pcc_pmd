@@ -287,6 +287,10 @@
                     a2c1301: [s1svgDoc.getElementById('16'),s1svgDoc.getElementById('19')],
                     a2c2301: [s1svgDoc.getElementById('18'),s1svgDoc.getElementById('20')]
                 }
+            ],
+            arrows: [
+                [s1svgDoc.getElementById('21'),s1svgDoc.getElementById('22')],
+                [s1svgDoc.getElementById('23'),s1svgDoc.getElementById('24')]
             ]
             }
         })
@@ -833,8 +837,33 @@
             for (let _CANTON_ in cantons){
                 console.log(_CANTON_)
                 if(_CANTON_==='aiguilles') continue;
+                if(_CANTON_==='arrows') continue;
                 _CANTON_ --;
                 console.log('[❔] ARRAY['+_CANTON_+']')
+                //fill des fleches de dir
+                let dir = data.SEC[0].cantons[2].dir;
+                if(dir==='up'){
+                    for (let bits in cantons.arrows[0]){
+                        cantons.arrows[0][bits].style.fill='#66D264';
+                    }
+                    for (let bits in cantons.arrows[1]){
+                        cantons.arrows[1][bits].style.fill='#707070';
+                    }
+                } else if(dir==='down'){
+                    for (let bits in cantons.arrows[1]){
+                        cantons.arrows[1][bits].style.fill='#66D264';
+                    }
+                    for (let bits in cantons.arrows[0]){
+                        cantons.arrows[0][bits].style.fill='#707070';
+                    }
+                } else {
+                    for (let bits in cantons.arrows[0]){
+                        cantons.arrows[0][bits].style.fill='#707070';
+                    }
+                    for (let bits in cantons.arrows[1]){
+                        cantons.arrows[1][bits].style.fill='#707070';
+                    }
+                }
                 //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
                 if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){ //CANTON OCCUPE
                     console.log('[👉] canton '+(_CANTON_+1)+' occupé')
