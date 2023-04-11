@@ -26,6 +26,7 @@
             width: calc(7203px/4);
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
     <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
@@ -185,6 +186,7 @@
     <button id="downward">S2</button>
     <input type="text" id="trainAffect" placeholder="train">
     <button id="experiment">EXPERIENCE</button>
+    <button id="reload">RELOAD (en cas de non-load)</button>
     <br>
     <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
     <button id="sendCmd">SEND</button>
@@ -263,6 +265,7 @@
         let btnExp = document.getElementById('experiment')
         let btnSend = document.getElementById('sendCmd')
         let commandInput = document.getElementById('commandInput')
+        let btnReload = document.getElementById('reload')
 
         let cantons = false
         
@@ -297,6 +300,9 @@
                 'S1C1':s1svgDoc.getElementById('S1C1'),
                 'S2C1':s1svgDoc.getElementById('S2C1'),
                 'S3C1':s1svgDoc.getElementById('S3C1')
+            },
+            screens: {
+                '2201':[s1svgDoc.getElementById('sc2201'), s1svgDoc.getElementById('txtSc2201')]
             }
             
             }
@@ -830,6 +836,10 @@
             ws.send(JSON.stringify( {op: 500, cmd: args} ))
         })
 
+        btnReload.addEventListener('click', ()=>{
+            getCantonsInfo()
+        })
+
 
 
         function sleep(ms) {
@@ -846,6 +856,7 @@
                 if(_CANTON_==='aiguilles') continue;
                 if(_CANTON_==='arrows') continue;
                 if(_CANTON_==='lights') continue;
+                if(_CANTON_==='screens') continue;
                 _CANTON_ --;
                 console.log('[❔] ARRAY['+_CANTON_+']')
                 //fill des fleches de dir
