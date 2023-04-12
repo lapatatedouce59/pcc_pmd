@@ -190,12 +190,7 @@
         },
         {
           "cid": "c1501",
-          "trains": [
-            {
-              "tid": "1",
-              "name": "Correntin"
-            }
-          ]
+          "trains": []
         },
         {
           "cid": "c2101",
@@ -203,7 +198,12 @@
         },
         {
           "cid": "c2201",
-          "trains": []
+          "trains": [
+            {
+              "tid": "1",
+              "name": "Correntin"
+            }
+          ]
         },
         {
           "cid": "c2301",

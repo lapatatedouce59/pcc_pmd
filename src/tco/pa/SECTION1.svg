@@ -52,6 +52,10 @@
 
                 <rect x="232.5" y="-31" width="72" height="27" fill="#3C0A0A" stroke="#363636" stroke-width="3" id="sc2201"/>
                 <text class="rame" x="262" y="-11" id="txtSc2201">1</text>
+
+                <rect x="232.5" y="142" width="72" height="27" fill="#0000" stroke="#363636" stroke-width="3" id="sc1401"/>
+                <text class="rame" x="262" y="162" id="txtSc1401"></text>
+
                 <rect x="218" y="50" width="101" height="36" fill="#3A3A3A"/>
                 <text class="station" x="243" y="65">Mairie de</text>
                 <text class="station" x="237" y="80">Saint-Ouen</text>

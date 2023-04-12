@@ -302,7 +302,8 @@
                 'S3C1':s1svgDoc.getElementById('S3C1')
             },
             screens: {
-                '2201':[s1svgDoc.getElementById('sc2201'), s1svgDoc.getElementById('txtSc2201')]
+                '2201':[s1svgDoc.getElementById('sc2201'), s1svgDoc.getElementById('txtSc2201')],
+                '1401':[s1svgDoc.getElementById('sc1401'), s1svgDoc.getElementById('txtSc1401')]
             }
             
             }
@@ -884,6 +885,27 @@
                     }
                 }
                 //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
+                if(data.SEC[0].cantons[_CANTON_].cid==='c2201'){
+                    if(data.SEC[0].cantons[_CANTON_].trains.length >=1){
+                        cantons.screens['2201'][1].textContent=data.SEC[0].cantons[_CANTON_].trains[0].tid
+                        cantons.screens['2201'][0].style.fill='#3C0A0A'
+                    }
+                    else {
+                        cantons.screens['2201'][1].textContent=''
+                        cantons.screens['2201'][0].style.fill='#000000'
+                    }
+                }
+                
+                if(data.SEC[0].cantons[_CANTON_].cid==='c1401'){
+                    if(data.SEC[0].cantons[_CANTON_].trains.length >=1){
+                        cantons.screens['1401'][1].textContent=data.SEC[0].cantons[_CANTON_].trains[0].tid
+                        cantons.screens['1401'][0].style.fill='#3C0A0A'
+                    }
+                    else {
+                        cantons.screens['1401'][1].textContent=''
+                        cantons.screens['1401'][0].style.fill='#000000'
+                    }
+                }
                 if(data.SEC[0].cantons[_CANTON_].trains.length >= 1){ //CANTON OCCUPE
                     console.log('[👉] canton '+(_CANTON_+1)+' occupé')
                     console.log(cantons[_CANTON_+1])
@@ -893,6 +915,12 @@
                         console.log('[🚫] canton '+(_CANTON_+1)+' occupé')
                         let CTARGET = cantons[_CANTON_+1]
                         CTARGET.style.fill='#E1A712';
+
+
+                        console.log(cantons.screens)
+                        
+
+                        
                     } else {
                         console.log((_CANTON_+1)+ ' est une aiguille')
                         console.log('[🚫] aiguille '+(_CANTON_+1)+' occupé')
