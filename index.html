@@ -175,10 +175,10 @@
     </select> <span>SS15</span>
     <br>
     
+        <h2 style="color:rgb(0, 0, 0);">Jvous jure le premier qui envoie un train hors section et qui fait crash le ws je le dégomme</h2>
+        <h2 style="color:rgb(0, 0, 0);"><- S2 S1-></h2>
     <div class="tco">
-        <h2 style="color:white;">Jvous jure le premier qui envoie un train hors section et qui fait crash le ws je le dégomme</h2>
-        <h2 style="color:white;"><- S2 S1-></h2>
-        <div class="ligne">
+        <div class="ligne" style="height: 800px;">
             <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object>
         </div>
     </div>
@@ -304,6 +304,14 @@
             screens: {
                 '2201':[s1svgDoc.getElementById('sc2201'), s1svgDoc.getElementById('txtSc2201')],
                 '1401':[s1svgDoc.getElementById('sc1401'), s1svgDoc.getElementById('txtSc1401')]
+            },
+            voys: {
+                'NOR':s1svgDoc.getElementById('voyC1Nor'),
+                'A1Dev':s1svgDoc.getElementById('voyC1A1Dev'),
+                'A2Dev':s1svgDoc.getElementById('voyC1A2Dev'),
+                'GAR':s1svgDoc.getElementById('voyC1Gar'),
+                'INSR':s1svgDoc.getElementById('voyC1Insr'),
+                'AUTO':s1svgDoc.getElementById('voyC1Auto')
             }
             
             }
@@ -858,6 +866,7 @@
                 if(_CANTON_==='arrows') continue;
                 if(_CANTON_==='lights') continue;
                 if(_CANTON_==='screens') continue;
+                if(_CANTON_==='voys') continue;
                 _CANTON_ --;
                 console.log('[❔] ARRAY['+_CANTON_+']')
                 //fill des fleches de dir
@@ -883,6 +892,19 @@
                     for (let bits in cantons.arrows[1]){
                         cantons.arrows[1][bits].style.fill='#707070';
                     }
+                }
+                if (data.SEC[0].cantons[_CANTON_].position==='r'){
+                    cantons.voys['NOR'].setAttribute('href', '../ON.png');
+                    cantons.voys['A1Dev'].setAttribute('href', '../OFF.png')
+                    cantons.voys['A2Dev'].setAttribute('href', '../OFF.png')
+                } else if (data.SEC[0].cantons[_CANTON_].position==='a1'){
+                    cantons.voys['NOR'].setAttribute('href', '../OFF.png');
+                    cantons.voys['A1Dev'].setAttribute('href', '../ON.png')
+                    cantons.voys['A2Dev'].setAttribute('href', '../OFF.png')
+                } else if (data.SEC[0].cantons[_CANTON_].position==='a2'){
+                    cantons.voys['NOR'].setAttribute('href', '../OFF.png');
+                    cantons.voys['A1Dev'].setAttribute('href', '../OFF.png')
+                    cantons.voys['A2Dev'].setAttribute('href', '../ON.png')
                 }
                 //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
                 if(data.SEC[0].cantons[_CANTON_].cid==='c2201'){
