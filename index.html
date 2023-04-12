@@ -179,7 +179,7 @@
         <h2 style="color:rgb(0, 0, 0);"><- S2 S1-></h2>
     <div class="tco">
         <div class="ligne" style="height: 800px;">
-            <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object>
+            <span><object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object></span><span><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep"></object></span><span><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg"></object></span>
         </div>
     </div>
     <button id="forward">S1</button>
@@ -316,8 +316,56 @@
             
             }
             getCantonsInfo()
-        }
-        )
+        })
+
+        let S2 = document.getElementById('s2svg')
+        S2.addEventListener('load', ()=>{
+            let s1svgDoc = S1.contentDocument;
+            cantons = {
+            1: s1svgDoc.getElementById('1'),
+            2: s1svgDoc.getElementById('2'),
+            3: [s1svgDoc.getElementById('3'),s1svgDoc.getElementById('4'),s1svgDoc.getElementById('5')],
+            4: s1svgDoc.getElementById('6'),
+            5: s1svgDoc.getElementById('7'),
+            6: s1svgDoc.getElementById('8'),
+            7: s1svgDoc.getElementById('9'),
+            8: [s1svgDoc.getElementById('10'),s1svgDoc.getElementById('11'),s1svgDoc.getElementById('12')],
+            9: s1svgDoc.getElementById('13'),
+            10: s1svgDoc.getElementById('14'),
+            aiguilles: [
+                {
+                    id: 'C1',
+                    a1c1301: [s1svgDoc.getElementById('15'),s1svgDoc.getElementById('19')],
+                    a1c2301: [s1svgDoc.getElementById('17'),s1svgDoc.getElementById('20')],
+                    a2c1301: [s1svgDoc.getElementById('16'),s1svgDoc.getElementById('19')],
+                    a2c2301: [s1svgDoc.getElementById('18'),s1svgDoc.getElementById('20')]
+                }
+            ],
+            arrows: [
+                [s1svgDoc.getElementById('21'),s1svgDoc.getElementById('22')],
+                [s1svgDoc.getElementById('23'),s1svgDoc.getElementById('24')]
+            ],
+            lights: {
+                'S1C1':s1svgDoc.getElementById('S1C1'),
+                'S2C1':s1svgDoc.getElementById('S2C1'),
+                'S3C1':s1svgDoc.getElementById('S3C1')
+            },
+            screens: {
+                '2201':[s1svgDoc.getElementById('sc2201'), s1svgDoc.getElementById('txtSc2201')],
+                '1401':[s1svgDoc.getElementById('sc1401'), s1svgDoc.getElementById('txtSc1401')]
+            },
+            voys: {
+                'NOR':s1svgDoc.getElementById('voyC1Nor'),
+                'A1Dev':s1svgDoc.getElementById('voyC1A1Dev'),
+                'A2Dev':s1svgDoc.getElementById('voyC1A2Dev'),
+                'GAR':s1svgDoc.getElementById('voyC1Gar'),
+                'INSR':s1svgDoc.getElementById('voyC1Insr'),
+                'AUTO':s1svgDoc.getElementById('voyC1Auto')
+            }
+            
+            }
+            getCantonsInfo()
+        })
 
 
         sm.registerSound("bip", './src/pltp/snds/bip.mp3');
