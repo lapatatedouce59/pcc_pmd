@@ -32,6 +32,11 @@
                 <image x= "206" y="-27" href="../V2S2_GREEN.png" height="25" width="25" id="S2C1"/>
                 <image x= "213" y="-47" href="../S2C1.png" height="25" width="18" id="eS3C1"/>
 
+                <image x= "308" y="140" href="../V1S1_GREEN.png" height="25" width="25" id="S1C2"/>
+                <image x= "308" y="160" href="../S1C2.png" height="25" width="18" id="eS1C2"/>
+                <image x= "335" y="140" href="../V1S1_GREEN.png" height="25" width="25" id="S3C2"/>
+                <image x= "335" y="160" href="../S3C2.png" height="25" width="18" id="eS3C2"/>
+
                 <image x= "180" y="55" href="../C1.png" height="25" width="18" id="eC1"/>
 
                 <rect width="75" height="18" transform="matrix(1 0 0 -1 129 138)" fill="#707070" name="1301B" id="4"/>
@@ -57,11 +62,11 @@
                 <path d="M139.459 75.5556H147.541V70H139.459V75.5556Z" fill="#707070" name="C1DA" id="23"/>
                 <path d="M143.5 95L150.5 75.5556H136.5L143.5 95Z" fill="#707070" name="C1DB" id="24"/>
 
-                <rect x="232.5" y="-31" width="72" height="27" fill="#3C0A0A" stroke="#363636" stroke-width="3" id="sc2201"/>
-                <text class="rame" x="262" y="-11" id="txtSc2201">1</text>
+                <rect x="232.5" y="-31" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc2201"/>
+                <text class="rame" x="262" y="-11" id="txtSc2201">TEST</text>
 
-                <rect x="232.5" y="142" width="72" height="27" fill="#0000" stroke="#363636" stroke-width="3" id="sc1401"/>
-                <text class="rame" x="262" y="162" id="txtSc1401"></text>
+                <rect x="232.5" y="142" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc1401"/>
+                <text class="rame" x="262" y="162" id="txtSc1401">TEST</text>
 
                 <rect x="218" y="50" width="101" height="36" fill="#3A3A3A"/>
                 <text class="station" x="243" y="65">Mairie de</text>

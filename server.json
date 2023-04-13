@@ -171,7 +171,12 @@
         },
         {
           "cid": "c1201",
-          "trains": []
+          "trains": [
+            {
+              "tid": "1",
+              "name": "Correntin"
+            }
+          ]
         },
         {
           "cid": "c1301",
@@ -183,8 +188,8 @@
           "cid": "c1401",
           "trains": [
             {
-              "tid": "1",
-              "name": "Correntin"
+              "tid": "3",
+              "name": "Léo"
             }
           ]
         },
@@ -198,12 +203,7 @@
         },
         {
           "cid": "c2201",
-          "trains": [
-            {
-              "tid": "3",
-              "name": "Léo"
-            }
-          ]
+          "trains": []
         },
         {
           "cid": "c2301",
@@ -222,7 +222,7 @@
       ]
     },
     {
-      "id": "1",
+      "id": "2",
       "cantons": [
         {
           "cid": "c1102",
@@ -270,6 +270,14 @@
           "cid": "c2402",
           "position": "r",
           "dir": "r",
+          "trains": []
+        },
+        {
+          "cid": "cPAG1",
+          "trains": []
+        },
+        {
+          "cid": "cA2PAG",
           "trains": []
         }
       ]
