@@ -3,5 +3,8 @@
     "http": "^0.0.1-security",
     "https": "^1.0.0",
     "ws": "^8.12.1"
+  },
+  "scripts": {
+    "ws": "node --inspect ws.js"
   }
 }

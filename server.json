@@ -171,12 +171,7 @@
         },
         {
           "cid": "c1201",
-          "trains": [
-            {
-              "tid": "1",
-              "name": "Correntin"
-            }
-          ]
+          "trains": []
         },
         {
           "cid": "c1301",
@@ -186,12 +181,7 @@
         },
         {
           "cid": "c1401",
-          "trains": [
-            {
-              "tid": "3",
-              "name": "Léo"
-            }
-          ]
+          "trains": []
         },
         {
           "cid": "c1501",
@@ -244,8 +234,8 @@
           "cid": "c1402",
           "trains": [
             {
-              "tid": "1",
-              "name": "Correntin"
+              "tid": "2",
+              "name": "Jean Marc"
             }
           ]
         },
@@ -255,12 +245,7 @@
         },
         {
           "cid": "c2202",
-          "trains": [
-            {
-              "tid": "3",
-              "name": "Léo"
-            }
-          ]
+          "trains": []
         },
         {
           "cid": "c2302",
@@ -270,7 +255,12 @@
           "cid": "c2402",
           "position": "r",
           "dir": "r",
-          "trains": []
+          "trains": [
+            {
+              "tid": "3",
+              "name": "Léo"
+            }
+          ]
         },
         {
           "cid": "cPAG1",

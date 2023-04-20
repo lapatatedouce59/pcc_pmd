@@ -20,50 +20,50 @@
         fill: #000000;
     }
 </style>
-<rect width="25" height="18" transform="matrix(1 0 0 -1 0 138)" fill="#707070" name="1102A"/>
-<rect width="75" height="18" transform="matrix(1 0 0 -1 25 138)" fill="#66D264" name="1102B"/>
-<rect width="25" height="18" transform="matrix(1 0 0 -1 100 138)" fill="#707070" name="1102C"/>
-<rect width="25" height="18" transform="matrix(1 0 0 -1 127 138)" fill="#707070" name="1202A"/>
-<rect width="75" height="18" transform="matrix(1 0 0 -1 152 138)" fill="#66D264" name="1202B"/>
-<rect width="25" height="18" transform="matrix(1 0 0 -1 227 138)" fill="#707070" name="1202C"/>
-<rect width="75" height="18" transform="matrix(1 0 0 -1 254 138)" fill="#707070" name="1302"/>
-<rect x="331" y="120" width="100" height="18" fill="#707070" name="1402"/>
-<rect x="331" width="100" height="18" fill="#707070" name="2102"/>
-<rect x="254" width="75" height="18" fill="#707070" name="2202"/>
-<rect x="127" width="125" height="18" fill="#707070" name="2302"/>
-<rect width="25" height="18" fill="#707070" name="2402A"/>
-<rect x="25" width="75" height="18" fill="#66D264" name="2402B"/>
-<rect x="100" width="25" height="18" fill="#707070" name="2402C"/>
-<rect width="75" height="18" transform="matrix(1 0 0 -1 254 258)" fill="#707070" name="PAG1"/>
+<rect width="25" height="18" transform="matrix(1 0 0 -1 0 138)" fill="#707070" name="1102A" id="1"/>
+<rect width="75" height="18" transform="matrix(1 0 0 -1 25 138)" fill="#66D264" name="1102B" id="2"/>
+<rect width="25" height="18" transform="matrix(1 0 0 -1 100 138)" fill="#707070" name="1102C" id="3"/>
+<rect width="25" height="18" transform="matrix(1 0 0 -1 127 138)" fill="#707070" name="1202A" id="4"/>
+<rect width="75" height="18" transform="matrix(1 0 0 -1 152 138)" fill="#66D264" name="1202B" id="5"/>
+<rect width="25" height="18" transform="matrix(1 0 0 -1 227 138)" fill="#707070" name="1202C" id="6"/>
+<rect width="75" height="18" transform="matrix(1 0 0 -1 254 138)" fill="#707070" name="1302" id="7"/>
+<rect x="331" y="120" width="100" height="18" fill="#707070" name="1402" id="8"/>
+<rect x="331" width="100" height="18" fill="#707070" name="2102" id="9"/>
+<rect x="254" width="75" height="18" fill="#707070" name="2202" id="10"/>
+<rect x="127" width="125" height="18" fill="#707070" name="2302" id="11"/>
+<rect width="25" height="18" fill="#707070" name="2402A" id="12"/>
+<rect x="25" width="75" height="18" fill="#66D264" name="2402B" id="13"/>
+<rect x="100" width="25" height="18" fill="#707070" name="2402C" id="14"/>
+<rect width="75" height="18" transform="matrix(1 0 0 -1 254 258)" fill="#707070" name="PAG1" id="15"/>
 
-<path d="M71.5 95L100 120V138L53.5 95H71.5Z" fill="#707070" name="1102A1"/>
-<path d="M53.5 43L25 18L25 0L71.5 43H53.5Z" fill="#707070" name="2402A1"/>
-<path d="M180.5 163L152 138V120L198.5 163H180.5Z" fill="#707070" name="1202A2"/>
-<path d="M198.5 215L227 240V258L180.5 215H198.5Z" fill="#707070" name="PAGA2"/>
-<rect width="25" height="18" transform="matrix(1 0 0 -1 227 258)" fill="#707070" name="A2E"/>
+<path d="M71.5 95L100 120V138L53.5 95H71.5Z" fill="#707070" name="1102A1" id="16"/>
+<path d="M53.5 43L25 18L25 0L71.5 43H53.5Z" fill="#707070" name="2402A1" id="17"/>
+<path d="M180.5 163L152 138V120L198.5 163H180.5Z" fill="#707070" name="1202A2" id="18"/>
+<path d="M198.5 215L227 240V258L180.5 215H198.5Z" fill="#707070" name="PAGA2" id="19"/>
+<rect width="25" height="18" transform="matrix(1 0 0 -1 227 258)" fill="#707070" name="A2E" id="20"/>
 
-<rect x="53.5" y="95" width="25" height="18" transform="rotate(-90 53.5 95)" fill="#707070" name="A1BOT"/>
-<rect x="180.5" y="215" width="25" height="18" transform="rotate(-90 180.5 215)" fill="#707070" name="A2BOT"/>
-<rect x="53.5" y="68" width="25" height="18" transform="rotate(-90 53.5 68)" fill="#707070" name="A1TOP"/>
-<rect x="180.5" y="188" width="25" height="18" transform="rotate(-90 180.5 188)" fill="#707070" name="A2TOP"/>
+<rect x="53.5" y="95" width="25" height="18" transform="rotate(-90 53.5 95)" fill="#707070" name="A1BOT" id="21"/>
+<rect x="180.5" y="215" width="25" height="18" transform="rotate(-90 180.5 215)" fill="#707070" name="A2BOT" id="22"/>
+<rect x="53.5" y="68" width="25" height="18" transform="rotate(-90 53.5 68)" fill="#707070" name="A1TOP" id="23"/>
+<rect x="180.5" y="188" width="25" height="18" transform="rotate(-90 180.5 188)" fill="#707070" name="A2TOP" id="24"/>
 
-<path d="M35.4585 62.4444H43.5415V68H35.4585V62.4444Z" fill="#707070" name="A1MA"/>
-<path d="M39.5 43L46.5 62.4444H32.5L39.5 43Z" fill="#707070" name="A1MB"/>
-<path d="M162.459 182.444H170.541V188H162.459V182.444Z" fill="#707070" name="A2MA"/>
-<path d="M166.5 163L173.5 182.444H159.5L166.5 163Z" fill="#707070" name="A2MB"/>
-<path d="M35.4585 75.5556H43.5415V70H35.4585V75.5556Z" fill="#707070" name="A1DA"/>
-<path d="M39.5 95L46.5 75.5556H32.5L39.5 95Z" fill="#707070" name="A1DB"/>
-<path d="M162.459 195.556H170.541V190H162.459V195.556Z" fill="#707070" name="A2DB"/>
-<path d="M166.5 215L173.5 195.556H159.5L166.5 215Z" fill="#707070" name="A2DB"/>
+<path d="M35.4585 62.4444H43.5415V68H35.4585V62.4444Z" fill="#707070" name="A1MA" id="25"/>
+<path d="M39.5 43L46.5 62.4444H32.5L39.5 43Z" fill="#707070" name="A1MB" id="26"/>
+<path d="M162.459 182.444H170.541V188H162.459V182.444Z" fill="#707070" name="A2MA" id="27"/>
+<path d="M166.5 163L173.5 182.444H159.5L166.5 163Z" fill="#707070" name="A2MB" id="28"/>
+<path d="M35.4585 75.5556H43.5415V70H35.4585V75.5556Z" fill="#707070" name="A1DA" id="29"/>
+<path d="M39.5 95L46.5 75.5556H32.5L39.5 95Z" fill="#707070" name="A1DB" id="30"/>
+<path d="M162.459 195.556H170.541V190H162.459V195.556Z" fill="#707070" name="A2DB" id="31"/>
+<path d="M166.5 215L173.5 195.556H159.5L166.5 215Z" fill="#707070" name="A2DB" id="32"/>
 
-<rect x="255.5" y="-31" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc2201"/>
-<text class="rame" x="286" y="-11" id="txtSc2201">X</text>
+<rect x="255.5" y="-31" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc2202"/>
+<text class="rame" x="286" y="-11" id="txtSc2202">X</text>
 
-<rect x="255.5" y="142" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc1401"/>
-<text class="rame" x="286" y="162" id="txtSc1401">X</text>
+<rect x="255.5" y="142" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc1302"/>
+<text class="rame" x="286" y="162" id="txtSc1302">X</text>
 
-<rect x="255.5" y="208" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc1401"/>
-<text class="rame" x="286" y="228" id="txtSc1401">X</text>
+<rect x="255.5" y="208" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="scPAG1"/>
+<text class="rame" x="286" y="228" id="txtScPAG1">X</text>
 
 <rect x="241" y="50" width="101" height="36" fill="#3A3A3A"/>
 <text class="station" x="258.5" y="73">Saint-Ouen</text>
