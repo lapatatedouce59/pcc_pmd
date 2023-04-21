@@ -36,3 +36,8 @@ exports.confirm = function (text){
 exports.identify = function (ip, co, ci){
     return console.log('\x1b[37m[\x1b[32m=\x1b[37m] Client situé à '+ci+' en '+co+' avec l\'ip '+ip);
 }
+
+exports.info = function (text){
+    return console.log('\x1b[37m\033[44m[INFO]\033[0m '+text);
+}
+

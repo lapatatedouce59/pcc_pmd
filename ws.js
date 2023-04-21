@@ -1,5 +1,6 @@
 console.log('[@] Library init')
 const logger = require('./logger')
+const ogia = require('./OGIA')
 const fs = require('fs')
 const https = require('https')
 console.log('[V] Library init logger and fs')
@@ -11,7 +12,14 @@ const wss = new WebSocket.Server({ port: 8081 });
     key: fs.readFileSync('/etc/letsencrypt/live/patate.ddns.net/privkey.pem')
 })
 
-const wss = new WebSocketServer({server});*/
+
+const wss = new WebSocketServer({server});
+
+server.listen(8081, function listening() {
+    console.log('Address: ', wss.address());
+});
+
+*/
 
 console.log('[V] WebSocket init on port 8081')
 console.log('[@] Server Api init')
@@ -361,16 +369,7 @@ wss.on('connection', (ws) => {
                                 logger.error('Pas de canton +1!')
                                 console.log('[S1? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2101':
-                                        _NEXTCINDEX = 7
-                                        break;
-                                    default:
-                                        _NEXTCINDEX = 0
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -402,16 +401,7 @@ wss.on('connection', (ws) => {
                             } else {
                                 console.log('[S1? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2101':
-                                        _NEXTCINDEX = 7
-                                        break;
-                                    default:
-                                        _NEXTCINDEX = 0
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -425,62 +415,16 @@ wss.on('connection', (ws) => {
                                 apiSave()
                                 return;
                             }
-                        } else {   //check si y'a un iti
+                        } else {   //check si y'a un iti               //!                   OCCURENCE       ////////////////////////////
                             console.log("[S1? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
                             //? ITIS D'AIGUILLES
-                            if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
-                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[7].cid)
-                                pccApi.SEC[_secIndex].cantons[7].trains.push( {
-                                    tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                    name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                } )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else
-                            if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
-                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[6].cid)
-                                pccApi.SEC[_secIndex].cantons[6].trains.push( {
-                                    tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                    name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                } )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else
-                            if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
-                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[2].cid)
-                                pccApi.SEC[_secIndex].cantons[2].trains.push( {
-                                    tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                    name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                } )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }; //pas d'iti, on traite l'aiguille comme un canton normal
+                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 1, wss)) return;
+                            //pas d'iti, on traite l'aiguille comme un canton normal
                             if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
                                 logger.error('Pas de canton +1!')
                                 console.log('[S1? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2101':
-                                        _NEXTCINDEX = 7
-                                        break;
-                                    default:
-                                        _NEXTCINDEX = 0
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -511,16 +455,7 @@ wss.on('connection', (ws) => {
                             } else {
                                 console.log('[S1? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2101':
-                                        _NEXTCINDEX = 7
-                                        break;
-                                    default:
-                                        _NEXTCINDEX = 0
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -550,16 +485,7 @@ wss.on('connection', (ws) => {
                                 logger.error('Pas de canton -1!')
                                 console.log('[S1? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2101':
-                                        _NEXTCINDEX = 7
-                                        break;
-                                    default:
-                                        _NEXTCINDEX = 0
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -590,16 +516,7 @@ wss.on('connection', (ws) => {
                             } else {
                                 console.log('[S1? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2101':
-                                        _NEXTCINDEX = 7
-                                        break;
-                                    default:
-                                        _NEXTCINDEX = 0
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -616,64 +533,18 @@ wss.on('connection', (ws) => {
                         } else {
                             console.log("[S1? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
                             console.warn('pour l\'instant on s\'en fous des iti mais faudra les mettre!')    //?         METTRE LES ITIS
-                            
+                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 1, wss)) return;
+
                             if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S1? V2 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
 
-                                if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
-                                    console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[2].cid)
-                                    pccApi.SEC[_secIndex].cantons[2].trains.push( {
-                                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                    } )
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()
-                                    return;
-                                } else
-                                if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
-                                    console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[1].cid)
-                                    pccApi.SEC[_secIndex].cantons[1].trains.push( {
-                                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                    } )
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()
-                                    return;
-                                } else
-                                if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
-                                    console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[7].cid)
-                                    pccApi.SEC[_secIndex].cantons[7].trains.push( {
-                                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                    } )
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()
-                                    return;
-                                };
+                                //!                   OCCURENCE       ////////////////////////////
 
                                 if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
                                     logger.error('Pas de canton -1!')
                                     console.log('[S1? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
     
-                                    let _NEXTCINDEX = false
-
-                                    switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                        case 'c2101':
-                                            _NEXTCINDEX = 7
-                                            break;
-                                        default:
-                                            _NEXTCINDEX = 0
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                    }
+                                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
     
                                     pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
                                         tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -702,16 +573,7 @@ wss.on('connection', (ws) => {
                             } else {
                                 console.log('[S1? V2 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2101':
-                                        _NEXTCINDEX = 7
-                                        break;
-                                    default:
-                                        _NEXTCINDEX = 0
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -752,14 +614,7 @@ wss.on('connection', (ws) => {
                                 logger.error('Pas de canton -1!')
                                 console.log('[S2? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c1102':
-                                        _NEXTCINDEX = 4
-                                        break;
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
 
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -791,14 +646,7 @@ wss.on('connection', (ws) => {
                             } else {
                                 console.log('[S2? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c1102':
-                                        _NEXTCINDEX = 4
-                                        break;
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
 
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -812,61 +660,15 @@ wss.on('connection', (ws) => {
                                 apiSave()
                                 return;
                             }
-                        } else {   //check si y'a un iti
+                        } else {   //check si y'a un iti                            //!                   OCCURENCE       ////////////////////////////
                             console.log("[S2? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
-                            if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
-                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[2].cid)
-                                pccApi.SEC[_secIndex].cantons[2].trains.push( {
-                                    tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                    name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                } )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else
-                            if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
-                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[1].cid)
-                                pccApi.SEC[_secIndex].cantons[1].trains.push( {
-                                    tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                    name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                } )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else
-                            if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
-                                console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[7].cid)
-                                pccApi.SEC[_secIndex].cantons[7].trains.push( {
-                                    tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                    name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                } )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }; //pas d'iti, on traite l'aiguille comme un canton normal
+                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 2, wss)) return;
+                            //pas d'iti, on traite l'aiguille comme un canton normal
                             if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
                                 logger.error('Pas de canton -1!')
                                 console.log('[S2? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
 
-                                let _NEXTCINDEX = false
-
-                                console.log(_NEXTCINDEX)
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c1102':
-                                        _NEXTCINDEX = 4
-                                        break;
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
 
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -897,14 +699,7 @@ wss.on('connection', (ws) => {
                             } else {
                                 console.log('[S2? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c1102':
-                                        _NEXTCINDEX = 4
-                                        break;
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
 
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -932,16 +727,10 @@ wss.on('connection', (ws) => {
                             console.log("[S2? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
                             if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
                                 logger.error('Pas de canton +1!')
+                                if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==='c2501') return logger.error('LIMITE DE LIGNE, AUCUNE ACTION!');
                                 console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2402':
-                                        _NEXTCINDEX = 5
-                                        break;
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
 
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -972,14 +761,7 @@ wss.on('connection', (ws) => {
                             } else {
                                 console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2402':
-                                        _NEXTCINDEX = 5
-                                        break;
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
 
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -996,62 +778,19 @@ wss.on('connection', (ws) => {
                         } else {
                             console.log("[S2? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
                             console.warn('pour l\'instant on s\'en fous des iti mais faudra les mettre!')
+
+                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 2, wss)) return;
                             
                             if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S2? V2 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
-
-                                if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
-                                    console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[2].cid)
-                                    pccApi.SEC[_secIndex].cantons[2].trains.push( {
-                                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                    } )
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()
-                                    return;
-                                } else
-                                if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
-                                    console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[1].cid)
-                                    pccApi.SEC[_secIndex].cantons[1].trains.push( {
-                                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                    } )
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()
-                                    return;
-                                } else
-                                if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
-                                    console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[7].cid)
-                                    pccApi.SEC[_secIndex].cantons[7].trains.push( {
-                                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                    } )
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()
-                                    return;
-                                };
+                                
+                                //!                   OCCURENCE       ////////////////////////////
 
                                 if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
                                     logger.error('Pas de canton +1!')
                                     console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
     
-                                    let _NEXTCINDEX = false
-    
-                                    switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                        case 'c2402':
-                                            _NEXTCINDEX = 5
-                                            break;
-                                        //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                    }
+                                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
     
                                     pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {
                                         tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
@@ -1081,14 +820,7 @@ wss.on('connection', (ws) => {
                             } else {
                                 console.log('[S2? V2 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
 
-                                let _NEXTCINDEX = false
-
-                                switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
-                                    case 'c2402':
-                                        _NEXTCINDEX = 5
-                                        break;
-                                    //au fur et a mesure, il faudra rajouter les évennements (si le train est sur 1102 et qu'il va voie 1, il ira sur le canton d'index 4 de la section précédente)
-                                }
+                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
 
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,

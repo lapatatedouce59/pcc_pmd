@@ -5,6 +5,7 @@
     "ws": "^8.12.1"
   },
   "scripts": {
-    "ws": "node --inspect ws.js"
+    "test": "node --inspect ws.js",
+    "prod": "node ws.js"
   }
 }

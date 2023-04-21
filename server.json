@@ -175,8 +175,8 @@
         },
         {
           "cid": "c1301",
-          "position": "r",
-          "dir": "r",
+          "position": "a2",
+          "dir": "up",
           "trains": []
         },
         {
@@ -189,7 +189,12 @@
         },
         {
           "cid": "c2101",
-          "trains": []
+          "trains": [
+            {
+              "tid": "3",
+              "name": "Léo"
+            }
+          ]
         },
         {
           "cid": "c2201",
@@ -197,8 +202,8 @@
         },
         {
           "cid": "c2301",
-          "position": "r",
-          "dir": "r",
+          "position": "a2",
+          "dir": "up",
           "trains": []
         },
         {
@@ -216,7 +221,12 @@
       "cantons": [
         {
           "cid": "c1102",
-          "trains": [],
+          "trains": [
+            {
+              "tid": "2",
+              "name": "Jean Marc"
+            }
+          ],
           "position": "r",
           "dir": "r"
         },
@@ -232,12 +242,7 @@
         },
         {
           "cid": "c1402",
-          "trains": [
-            {
-              "tid": "2",
-              "name": "Jean Marc"
-            }
-          ]
+          "trains": []
         },
         {
           "cid": "c2102",
@@ -255,12 +260,7 @@
           "cid": "c2402",
           "position": "r",
           "dir": "r",
-          "trains": [
-            {
-              "tid": "3",
-              "name": "Léo"
-            }
-          ]
+          "trains": []
         },
         {
           "cid": "cPAG1",
