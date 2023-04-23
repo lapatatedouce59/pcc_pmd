@@ -335,7 +335,8 @@
             6: s2svgDoc.getElementById('10'),
             7: s2svgDoc.getElementById('11'),
             8: [s2svgDoc.getElementById('12'),s2svgDoc.getElementById('13'),s2svgDoc.getElementById('14')],
-            9: s2svgDoc.getElementById('15'),
+            9: [s2svgDoc.getElementById('20'),s2svgDoc.getElementById('22'), s2svgDoc.getElementById('19')],
+            10: s2svgDoc.getElementById('15'),
             aiguilles: [
                 {
                     id: 'C2',
@@ -1182,8 +1183,9 @@
                 if(_CANTON_==='voys') continue;
                 _CANTON_ --;
                 console.log('[❔] ARRAY['+_CANTON_+']')
+                console.log(data.SEC[1].cantons[_CANTON_].cid)
                 //fill des fleches de dir
-                let dir = data.SEC[1].cantons[2].dir;
+                let dir = data.SEC[1].cantons[0].dir;
                 if(dir==='up'){
                     for (let bits in _GLIST_.arrows[0]){
                         _GLIST_.arrows[0][bits].style.fill='#66D264';
@@ -1206,6 +1208,29 @@
                         _GLIST_.arrows[1][bits].style.fill='#707070';
                     }
                 }
+                dir = data.SEC[1].cantons[1].dir;
+                if(dir==='up'){
+                    for (let bits in _GLIST_.arrows[2]){
+                        _GLIST_.arrows[2][bits].style.fill='#66D264';
+                    }
+                    for (let bits in _GLIST_.arrows[3]){
+                        _GLIST_.arrows[3][bits].style.fill='#707070';
+                    }
+                } else if(dir==='down'){
+                    for (let bits in _GLIST_.arrows[3]){
+                        _GLIST_.arrows[3][bits].style.fill='#66D264';
+                    }
+                    for (let bits in _GLIST_.arrows[2]){
+                        _GLIST_.arrows[2][bits].style.fill='#707070';
+                    }
+                } else {
+                    for (let bits in _GLIST_.arrows[2]){
+                        _GLIST_.arrows[2][bits].style.fill='#707070';
+                    }
+                    for (let bits in _GLIST_.arrows[3]){
+                        _GLIST_.arrows[3][bits].style.fill='#707070';
+                    }
+                }
                 /*if (data.SEC[1].cantons[_CANTON_].position==='r'){
                     _GLIST_.voys['NOR'].setAttribute('href', '../ON.png');
                     _GLIST_.voys['A1Dev'].setAttribute('href', '../OFF.png')
@@ -1221,7 +1246,6 @@
                 }*/
                 //console.log(data.SEC[0]._GLIST_[0].trains[0]) EXEMPLE DE CHEMIN
                 if(data.SEC[1].cantons[_CANTON_].cid==='c2202'){
-                    console.log('écran 1 --------------------------------------------------------')
                     if(data.SEC[1].cantons[_CANTON_].trains.length >=1){
                         _GLIST_.screens['2202'][1].textContent=data.SEC[1].cantons[_CANTON_].trains[0].tid
                         _GLIST_.screens['2202'][0].style.fill='#3C0A0A'
@@ -1233,7 +1257,6 @@
                 }
                 
                 if(data.SEC[1].cantons[_CANTON_].cid==='c1302'){
-                    console.log('écran 2 --------------------------------------------------------')
                     if(data.SEC[1].cantons[_CANTON_].trains.length >=1){
                         _GLIST_.screens['1302'][1].textContent=data.SEC[1].cantons[_CANTON_].trains[0].tid
                         _GLIST_.screens['1302'][0].style.fill='#3C0A0A'
@@ -1245,7 +1268,6 @@
                 }
 
                 if(data.SEC[1].cantons[_CANTON_].cid==='cPAG1'){
-                    console.log('aaaaaa SECREE ----------------------------------------------------')
                     if(data.SEC[1].cantons[_CANTON_].trains.length >=1){
                         _GLIST_.screens['PAG1'][1].textContent=data.SEC[1].cantons[_CANTON_].trains[0].tid
                         _GLIST_.screens['PAG1'][0].style.fill='#3C0A0A'
@@ -1282,42 +1304,42 @@
 
 
                         if(data.SEC[1].cantons[_CANTON_].position==='r'){
-                            clearAllCantons('S2',_CANTON_)
+                            //clearAllCantons('S2',_CANTON_)
                             for(let bits in _GLIST_[_CANTON_+1]){
                                 console.log(_GLIST_[_CANTON_+1][bits])
                                 _GLIST_[_CANTON_+1][bits].style.fill='#E1A712';
                             }
-                        } else if (data.SEC[1]._GLIST_[_CANTON_].position==='a1'){
+                        } else if (data.SEC[1].cantons[_CANTON_].position==='a1'){
                             //clearAllCantons(_CANTON_, 'a1')
                             switch(data.SEC[1].cantons[_CANTON_].cid){
-                                case 'c1301':
-                                    clearAllCantons('S2',_CANTON_)
-                                    for(let bits in _GLIST_.aiguilles[0].a1c1301){
-                                        console.log(_GLIST_.aiguilles[0].a1c1301[bits])
-                                        _GLIST_.aiguilles[0].a1c1301[bits].style.fill='#E1A712';
+                                case 'c1102':
+                                    //clearAllCantons('S2',_CANTON_)
+                                    for(let bits in _GLIST_.aiguilles[0].a1c1102){
+                                        console.log(_GLIST_.aiguilles[0].a1c1102[bits])
+                                        _GLIST_.aiguilles[0].a1c1102[bits].style.fill='#E1A712';
                                     }
                                     break;
-                                case 'c2301':
-                                    for(let bits in _GLIST_.aiguilles[0].a1c2301){
-                                        console.log(_GLIST_.aiguilles[0].a1c2301[bits])
-                                        _GLIST_.aiguilles[0].a1c2301[bits].style.fill='#E1A712';
+                                case 'c2402':
+                                    for(let bits in _GLIST_.aiguilles[0].a1c2402){
+                                        console.log(_GLIST_.aiguilles[0].a1c2402[bits])
+                                        _GLIST_.aiguilles[0].a1c2402[bits].style.fill='#E1A712';
                                     }
                                     break;
                             }
                         } else if (data.SEC[1].cantons[_CANTON_].position==='a2'){
                             //clearAllCantons(_CANTON_, 'a2')
                             switch(data.SEC[1].cantons[_CANTON_].cid){
-                                case 'c1301':
-                                    clearAllCantons('S2',_CANTON_)
-                                    for(let bits in _GLIST_.aiguilles[0].a2c1301){
-                                        console.log(_GLIST_.aiguilles[0].a2c1301[bits])
-                                        _GLIST_.aiguilles[0].a2c1301[bits].style.fill='#E1A712';
+                                case 'c1202':
+                                    //clearAllCantons('S2',_CANTON_)
+                                    for(let bits in _GLIST_.aiguilles[0].a2c1202){
+                                        console.log(_GLIST_.aiguilles[0].a2c1202[bits])
+                                        _GLIST_.aiguilles[0].a2c1202[bits].style.fill='#E1A712';
                                     }
                                     break;
-                                case 'c2301':
-                                    for(let bits in _GLIST_.aiguilles[0].a2c2301){
-                                        console.log(_GLIST_.aiguilles[0].a2c2301[bits])
-                                        _GLIST_.aiguilles[0].a2c2301[bits].style.fill='#E1A712';
+                                case 'cPAG1':
+                                    for(let bits in _GLIST_.aiguilles[0].a2cEND){
+                                        console.log(_GLIST_.aiguilles[0].a2cEND[bits])
+                                        _GLIST_.aiguilles[0].a2cEND[bits].style.fill='#E1A712';
                                     }
                                     break;
                             }
@@ -1346,82 +1368,107 @@
                     } else {
                         console.log((_CANTON_+1)+ ' est une aiguille')
                         console.log('[🚫] aiguille '+(_CANTON_+1)+' libre')
-                        console.log(data.SEC[0].cantons[_CANTON_])
+                        console.log(data.SEC[1].cantons[_CANTON_])
 
                         if(data.SEC[1].cantons[_CANTON_].position==='r'){
                             console.log(data.SEC[1].cantons[_CANTON_].cid+' en neutre')
-                            clearAllCantons('S2',_CANTON_)
+                            //clearAllCantons('S2',_CANTON_)
                             for(let bits in _GLIST_[_CANTON_+1]){
                                 console.log(_GLIST_[_CANTON_+1][bits])
                                 _GLIST_[_CANTON_+1][bits].style.fill='#66D264';
                             }
-                            /*_GLIST_.lights.S1C1.setAttribute('href', '../V1S1_GREEN.png')
-                            _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_GREEN.png')
-                            _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_RED.png')*/
+                            if(data.SEC[1].cantons[_CANTON_].position === 'a1'){
+                                cantonsS1.lights.S1C2.setAttribute('href', '../V1S1_GREEN.png')
+                                _GLIST_.lights.S5C2.setAttribute('href', '../V1S1_RED.png')
+                                _GLIST_.lights.S6C2.setAttribute('href', '../DS_OFF.png')
+                                _GLIST_.lights.S2C2.setAttribute('href', '../V2S2_GREEN.png')
+                                _GLIST_.lights.S4C2.setAttribute('href', '../DS_OFF.png')
+                            } else if (data.SEC[1].cantons[_CANTON_].position === 'a2'){
+                                cantonsS1.lights.S3C2.setAttribute('href', '../V1S1_GREEN.png')
+                                _GLIST_.lights.DEPC2.setAttribute('href', '../V2S2_RED.png')
+                            }
                         } else if (data.SEC[1].cantons[_CANTON_].position==='a1'){
-                            clearAllCantons('S2',_CANTON_,'deleteCenter')
+                            //clearAllCantons('S2',_CANTON_,'deleteCenter')
                             console.log(data.SEC[1].cantons[_CANTON_].cid+' en aiguille a1')
                             //clearAllCantons(_CANTON_, 'a1')
                             switch(data.SEC[1].cantons[_CANTON_].cid){
-                                case 'c1301':
-                                    clearAllCantons('S2',_CANTON_)
-                                    console.log(data.SEC[1].cantons[_CANTON_].cid+' démarre son itération de peinture pour c1301 a1')
-                                    for(let bits in _GLIST_.aiguilles[0].a1c1301){
-                                        console.log(_GLIST_.aiguilles[0].a1c1301[bits])
-                                        _GLIST_.aiguilles[0].a1c1301[bits].style.fill='#66D264';
+                                case 'c1102':
+                                    clearAllCantons('S2',_CANTON_, 'a1p')
+                                    console.log(data.SEC[1].cantons[_CANTON_].cid+' démarre son itération de peinture pour c1102 a1')
+                                    for(let bits in _GLIST_.aiguilles[0].a1c1102){
+                                        console.log(_GLIST_.aiguilles[0].a1c1102[bits])
+                                        _GLIST_.aiguilles[0].a1c1102[bits].style.fill='#66D264';
                                     }
                                     break;
-                                case 'c2301':
-                                    console.log(data.SEC[1].cantons[_CANTON_].cid+' démarre son itération de peinture pour c2301 a1')
-                                    for(let bits in _GLIST_.aiguilles[0].a1c2301){
-                                        console.log(_GLIST_.aiguilles[0].a1c2301[bits])
-                                        _GLIST_.aiguilles[0].a1c2301[bits].style.fill='#66D264';
+                                case 'c2402':
+                                    clearAllCantons('S2',_CANTON_, 'a1p')
+                                    console.log(data.SEC[1].cantons[_CANTON_].cid+' démarre son itération de peinture pour c2402 a1')
+                                    for(let bits in _GLIST_.aiguilles[0].a1c2402){
+                                        console.log(_GLIST_.aiguilles[0].a1c2402[bits])
+                                        _GLIST_.aiguilles[0].a1c2402[bits].style.fill='#66D264';
                                     }
                                     break;
                             }
                             switch(data.SEC[1].cantons[_CANTON_].dir){
                                 case 'up':
-                                    /*_GLIST_.lights.S1C1.setAttribute('href', '../V1S1_RED.png')
-                                    _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_RED.png')
-                                    _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_RED.png')*/
+                                    cantonsS1.lights.S1C2.setAttribute('href', '../V1S1_RED.png')
+                                    _GLIST_.lights.S5C2.setAttribute('href', '../V2S2_GREEN.png')
+                                    _GLIST_.lights.S6C2.setAttribute('href', '../DS_ON.png')
+                                    _GLIST_.lights.S4C2.setAttribute('href', '../DS_OFF.png')
+                                    _GLIST_.lights.S2C2.setAttribute('href', '../V2S2_RED.png')
                                     break;
                                 case 'down':
-                                    /*_GLIST_.lights.S1C1.setAttribute('href', '../V1S1_RED.png')
-                                    _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_RED.png')
-                                    _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_GREEN.png')*/
-                            }
+                                    cantonsS1.lights.S1C2.setAttribute('href', '../V1S1_RED.png')
+                                    _GLIST_.lights.S5C2.setAttribute('href', '../V2S2_RED.png')
+                                    _GLIST_.lights.S6C2.setAttribute('href', '../DS_OFF.png')
+                                    _GLIST_.lights.S2C2.setAttribute('href', '../V2S2_RED.png')
+                                    _GLIST_.lights.S4C2.setAttribute('href', '../DS_ON.png')
+                                    break;
+                                case 'r':
+                                    cantonsS1.lights.S1C2.setAttribute('href', '../V1S1_GREEN.png')
+                                    _GLIST_.lights.S5C2.setAttribute('href', '../V1S1_RED.png')
+                                    _GLIST_.lights.S6C2.setAttribute('href', '../DS_OFF.png')
+                                    _GLIST_.lights.S2C2.setAttribute('href', '../V2S2_GREEN.png')
+                                    _GLIST_.lights.S4C2.setAttribute('href', '../DS_OFF.png')
+                                    break;
+                            }                                                                      
                             
                         } else if (data.SEC[1].cantons[_CANTON_].position==='a2'){
-                            clearAllCantons('S2',_CANTON_,'deleteCenter')
+                            //clearAllCantons('S2',_CANTON_,'deleteCenter')
                             console.log(data.SEC[1].cantons[_CANTON_].cid+' en aiguille a2')
                             //clearAllCantons(_CANTON_, 'a2')
                             switch(data.SEC[1].cantons[_CANTON_].cid){
-                                case 'c1301':
-                                    clearAllCantons('S2',_CANTON_)
-                                    console.log(data.SEC[1].cantons[_CANTON_].cid+' démarre son itération de peinture pour c1301 a2')
-                                    for(let bits in _GLIST_.aiguilles[0].a2c1301){
-                                        console.log(_GLIST_.aiguilles[0].a2c1301[bits])
-                                        _GLIST_.aiguilles[0].a2c1301[bits].style.fill='#66D264';
+                                case 'c1202':
+                                    clearAllCantons('S2',_CANTON_, 'a2p')
+                                    console.log(data.SEC[1].cantons[_CANTON_].cid+' démarre son itération de peinture pour c1202 a2')
+                                    for(let bits in _GLIST_.aiguilles[0].a2c1202){
+                                        console.log(_GLIST_.aiguilles[0].a2c1202[bits])
+                                        _GLIST_.aiguilles[0].a2c1202[bits].style.fill='#66D264';
                                     }
                                     break;
-                                case 'c2301':
-                                    console.log(data.SEC[1].cantons[_CANTON_].cid+' démarre son itération de peinture pour c2301 a2')
-                                    for(let bits in _GLIST_.aiguilles[0].a2c2301){
-                                        console.log(_GLIST_.aiguilles[0].a2c2301[bits])
-                                        _GLIST_.aiguilles[0].a2c2301[bits].style.fill='#66D264';
+                                case 'cA2PAG':
+                                    clearAllCantons('S2',_CANTON_, 'a2p')
+                                    console.log(data.SEC[1].cantons[_CANTON_].cid+' démarre son itération de peinture pour cPAG1 a2')
+                                    for(let bits in _GLIST_.aiguilles[0].a2cEND){
+                                        console.log(_GLIST_.aiguilles[0].a2cEND[bits])
+                                        _GLIST_.aiguilles[0].a2cEND[bits].style.fill='#66D264';
                                     }
                                     break;
                             }
-                            switch(data.SEC[0].cantons[_CANTON_].dir){
+                            switch(data.SEC[1].cantons[_CANTON_].dir){
                                 case 'up':
-                                    /*_GLIST_.lights.S1C1.setAttribute('href', '../V1S1_GREEN.png')
-                                    _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_RED.png')
-                                    _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_RED.png')*/
+                                    cantonsS1.lights.S3C2.setAttribute('href', '../V1S1_RED.png')
+                                    _GLIST_.lights.S6C2.setAttribute('href', '../DS_OFF.png')
+                                    _GLIST_.lights.DEPC2.setAttribute('href', '../V2S2_GREEN.png')
                                     break;
                                 case 'down':
-                                    /*_GLIST_.lights.S1C1.setAttribute('href', '../V1S1_RED.png')
-                                    _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_GREEN.png')
-                                    _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_RED.png')*/
+                                    cantonsS1.lights.S3C2.setAttribute('href', '../V1S1_GREEN.png')
+                                    _GLIST_.lights.S6C2.setAttribute('href', '../DS_OFF.png')
+                                    _GLIST_.lights.DEPC2.setAttribute('href', '../V2S2_RED.png')
+                                    break;
+                                case 'r':
+                                    cantonsS1.lights.S3C2.setAttribute('href', '../V1S1_GREEN.png')
+                                    _GLIST_.lights.DEPC2.setAttribute('href', '../V2S2_RED.png')
                                     break;
                             }
                         } 
@@ -1518,30 +1565,46 @@
                     _GLIST_[_CANTON_+1][bits].style.fill='#707070';
                     console.log('effacage de '+ (_CANTON_+1))
                 }
-                for(let bits in _GLIST_.aiguilles[0].a1c1301){
+                for(let bits in _GLIST_.aiguilles[0].a1c1102){
                     //console.log(_GLIST_.aiguilles[0].a1c1301[bits])
-                    _GLIST_.aiguilles[0].a1c1301[bits].style.fill='#707070'
+                    _GLIST_.aiguilles[0].a1c1102[bits].style.fill='#707070'
                 }
-                for(let bits in _GLIST_.aiguilles[0].a1c2301){
+                for(let bits in _GLIST_.aiguilles[0].a1c2402){
                     //console.log(_GLIST_.aiguilles[0].a1c2301[bits])
-                    _GLIST_.aiguilles[0].a1c2301[bits].style.fill='#707070'
+                    _GLIST_.aiguilles[0].a1c2402[bits].style.fill='#707070'
                 }
-                for(let bits in _GLIST_.aiguilles[0].a2c1301){
+                for(let bits in _GLIST_.aiguilles[0].a2c1202){
                     //console.log(_GLIST_.aiguilles[0].a2c1301[bits])
-                    _GLIST_.aiguilles[0].a2c1301[bits].style.fill='#707070'
+                    _GLIST_.aiguilles[0].a2c1202[bits].style.fill='#707070'
                 }
-                for(let bits in _GLIST_.aiguilles[0].a2c2301){
+                for(let bits in _GLIST_.aiguilles[0].a2cEND){
                     //console.log(_GLIST_.aiguilles[0].a2c2301[bits])
-                    _GLIST_.aiguilles[0].a2c2301[bits].style.fill='#707070'
+                    _GLIST_.aiguilles[0].a2cEND[bits].style.fill='#707070'
                 }
             } else {
                 if(mode==='deleteCenter'){
-                    for(let bits in _GLIST_[3]){
-                        _GLIST_[3][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
+                    for(let bits in _GLIST_[1]){
+                        _GLIST_[1][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
+                    }
+
+                    for(let bits in _GLIST_[2]){
+                        _GLIST_[2][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
                     }
 
                     for(let bits in _GLIST_[8]){
                         _GLIST_[8][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
+                    }
+                    _GLIST_[10].style.fill='#707070'; //suppression des couleurs sur les parallèles
+                } else if (mode === 'a1p'){
+                    for(let bits in _GLIST_[1]){
+                        _GLIST_[1][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
+                    }
+                    for(let bits in _GLIST_[8]){
+                        _GLIST_[8][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
+                    }
+                } else if (mode === 'a2p'){
+                    for(let bits in _GLIST_[2]){
+                        _GLIST_[2][bits].style.fill='#707070'; //suppression des couleurs sur les parallèles
                     }
                 }
             }

@@ -858,20 +858,23 @@ wss.on('connection', (ws) => {
                     return;
                 }
                 console.log('commande '+cmd)
-                for (let _CANTON_ of pccApi.SEC[0].cantons){
-                    if(_CANTON_.hasOwnProperty('position')){
-                        let index = pccApi.SEC[0].cantons.findIndex(obj => {
-                            return obj.cid===_CANTON_.cid
-                        })
-                        aiguilles.push({c:_CANTON_, index:index})
+                for (let _SECTION in pccApi.SEC){
+                    for (let _CANTON_ of pccApi.SEC[_SECTION].cantons){
+                        if(_CANTON_.hasOwnProperty('position')){
+                            let index = pccApi.SEC[_SECTION].cantons.findIndex(obj => {
+                                return obj.cid===_CANTON_.cid
+                            })
+                            aiguilles.push({c:_CANTON_, index:index})
+                        }
                     }
                 }
+
                 console.log(aiguilles)
 
                 if(cmd==="SET"){                        
                     if(cmdargs.length<2||cmdargs.length>2)   return;
                     if(cmdargs[0]==='1201' && cmdargs[1]==='2201'){
-                        console.log('ITI A2 SENS 1 TRIGGER')
+                        console.log('ITI A2 C1 SENS 1 TRIGGER')
 
                         pccApi.SEC[0].cantons[aiguilles[0].index].position='a2';
                         pccApi.SEC[0].cantons[aiguilles[0].index].dir='up';
@@ -880,7 +883,7 @@ wss.on('connection', (ws) => {
 
                     } else
                     if(cmdargs[0]==='2201' && cmdargs[1]==='1201'){
-                        console.log('ITI A2 SENS 2 TRIGGER')
+                        console.log('ITI A2 C1 SENS 2 TRIGGER')
 
                         pccApi.SEC[0].cantons[aiguilles[0].index].position='a2';
                         pccApi.SEC[0].cantons[aiguilles[0].index].dir='down';
@@ -889,7 +892,7 @@ wss.on('connection', (ws) => {
 
                     } else
                     if(cmdargs[0]==='2401' && cmdargs[1]==='1401'){
-                        console.log('ITI A1 SENS 1 TRIGGER')
+                        console.log('ITI A1 C1 SENS 1 TRIGGER')
 
                         pccApi.SEC[0].cantons[aiguilles[0].index].position='a1';
                         pccApi.SEC[0].cantons[aiguilles[0].index].dir='down';
@@ -898,7 +901,7 @@ wss.on('connection', (ws) => {
 
                     } else
                     if(cmdargs[0]==='1401' && cmdargs[1]==='2401'){
-                        console.log('ITI A1 SENS 2 TRIGGER')
+                        console.log('ITI A1 C1 SENS 2 TRIGGER')
 
                         pccApi.SEC[0].cantons[aiguilles[0].index].position='a1';
                         pccApi.SEC[0].cantons[aiguilles[0].index].dir='up';
@@ -906,12 +909,62 @@ wss.on('connection', (ws) => {
                         pccApi.SEC[0].cantons[aiguilles[1].index].dir='up';
 
                     } else
-                    if(cmdargs[0]==='A' && cmdargs[1]==='R'){ //commande de reset
-                        console.log('ITI A RESET')
+                    if(cmdargs[0]==='C1' && cmdargs[1]==='R'){ //commande de reset
+                        console.log('ITI C1 RESET')
                         pccApi.SEC[0].cantons[aiguilles[0].index].position='r';
                         pccApi.SEC[0].cantons[aiguilles[0].index].dir='r';
                         pccApi.SEC[0].cantons[aiguilles[1].index].position='r';
                         pccApi.SEC[0].cantons[aiguilles[1].index].dir='r';
+                    } else                                                            //SECTION 2
+                    if(cmdargs[0]==='1202' && cmdargs[1]==='2101'){
+                        console.log('ITI A1 C2 SENS 2 TRIGGER')
+
+                        pccApi.SEC[1].cantons[aiguilles[2].index].position='a1';
+                        pccApi.SEC[1].cantons[aiguilles[2].index].dir='up';
+                        pccApi.SEC[1].cantons[aiguilles[4].index].position='a1';
+                        pccApi.SEC[1].cantons[aiguilles[4].index].dir='up';
+
+                    } else
+                    if(cmdargs[0]==='2101' && cmdargs[1]==='1202'){
+                        console.log('ITI A1 C2 SENS 1 TRIGGER')
+
+                        pccApi.SEC[1].cantons[aiguilles[2].index].position='a1';
+                        pccApi.SEC[1].cantons[aiguilles[2].index].dir='down';
+                        pccApi.SEC[1].cantons[aiguilles[4].index].position='a1';
+                        pccApi.SEC[1].cantons[aiguilles[4].index].dir='down';
+
+                    } else
+                    if(cmdargs[0]==='1102' && cmdargs[1]==='PAG1'){
+                        console.log('ITI A2 C2B SENS 1 TRIGGER')
+
+                        pccApi.SEC[1].cantons[aiguilles[3].index].position='a2';          //petite note: se réferer au console.log de aiguille[]
+                        pccApi.SEC[1].cantons[aiguilles[3].index].dir='down';
+                        pccApi.SEC[1].cantons[aiguilles[5].index].position='a2';
+                        pccApi.SEC[1].cantons[aiguilles[5].index].dir='down';
+
+                    } else
+                    if(cmdargs[0]==='PAG1' && cmdargs[1]==='1102'){
+                        console.log('ITI A2 C2B SENS 2 TRIGGER')
+
+                        pccApi.SEC[1].cantons[aiguilles[3].index].position='a2';
+                        pccApi.SEC[1].cantons[aiguilles[3].index].dir='up';
+                        pccApi.SEC[1].cantons[aiguilles[5].index].position='a2';
+                        pccApi.SEC[1].cantons[aiguilles[5].index].dir='up';
+
+                    } else
+                    if(cmdargs[0]==='C2' && cmdargs[1]==='R'){ //commande de reset
+                        console.log('ITI C2 RESET')
+                        pccApi.SEC[1].cantons[aiguilles[2].index].position='r';
+                        pccApi.SEC[1].cantons[aiguilles[2].index].dir='r';
+                        pccApi.SEC[1].cantons[aiguilles[4].index].position='r';
+                        pccApi.SEC[1].cantons[aiguilles[4].index].dir='r';
+                    } else
+                    if(cmdargs[0]==='C2B' && cmdargs[1]==='R'){ //commande de reset
+                        console.log('ITI C2B RESET')
+                        pccApi.SEC[1].cantons[aiguilles[3].index].position='r';
+                        pccApi.SEC[1].cantons[aiguilles[3].index].dir='r';
+                        pccApi.SEC[1].cantons[aiguilles[5].index].position='r';
+                        pccApi.SEC[1].cantons[aiguilles[5].index].dir='r';
                     }
                     apiSave()
                 }

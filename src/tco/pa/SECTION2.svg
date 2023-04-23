@@ -57,20 +57,20 @@
 <path d="M166.5 215L173.5 195.556H159.5L166.5 215Z" fill="#707070" name="A2DB" id="32"/>
 
 <rect x="255.5" y="-31" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc2202"/>
-<text class="rame" x="286" y="-11" id="txtSc2202">X</text>
+<text class="rame" x="286" y="-11" id="txtSc2202">TEST</text>
 
 <rect x="255.5" y="142" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc1302"/>
-<text class="rame" x="286" y="162" id="txtSc1302">X</text>
+<text class="rame" x="286" y="162" id="txtSc1302">TEST</text>
 
 <rect x="255.5" y="208" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="scPAG1"/>
-<text class="rame" x="286" y="228" id="txtScPAG1">X</text>
+<text class="rame" x="286" y="228" id="txtScPAG1">TEST</text>
 
 <rect x="241" y="50" width="101" height="36" fill="#3A3A3A"/>
 <text class="station" x="258.5" y="73">Saint-Ouen</text>
 
-<image x= "0" y="-27" href="../DS_OFF.png" height="15" width="15" id="S4C1"/>
+<image x= "0" y="-27" href="../DS_OFF.png" height="15" width="15" id="S4C2"/>
 <image x= "0" y="-47" href="../S4C2.png" height="25" width="18" id="eS4C2"/>
-<image x= "235" y="141" href="../DS_OFF.png" height="15" width="15" id="S2C2"/>
+<image x= "235" y="141" href="../DS_OFF.png" height="15" width="15" id="S6C2"/>
 <image x= "235" y="152" href="../S6C2.png" height="25" width="18" id="eS6C2"/>
 <image x= "228" y="-27" href="../V2S2_GREEN.png" height="25" width="25" id="S2C2"/>
 <image x= "234" y="-47" href="../S2C2.png" height="25" width="18" id="eS2C2"/>
