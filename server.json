@@ -181,16 +181,16 @@
         },
         {
           "cid": "c1401",
-          "trains": []
-        },
-        {
-          "cid": "c1501",
           "trains": [
             {
               "tid": "3",
               "name": "Léo"
             }
           ]
+        },
+        {
+          "cid": "c1501",
+          "trains": []
         },
         {
           "cid": "c2101",
@@ -222,13 +222,13 @@
         {
           "cid": "c1102",
           "trains": [],
-          "position": "a1",
-          "dir": "up"
+          "position": "r",
+          "dir": "r"
         },
         {
           "cid": "c1202",
-          "position": "a2",
-          "dir": "up",
+          "position": "r",
+          "dir": "r",
           "trains": []
         },
         {
@@ -258,18 +258,18 @@
         },
         {
           "cid": "c2402",
-          "position": "a1",
-          "dir": "up",
+          "position": "r",
+          "dir": "r",
           "trains": []
         },
         {
-          "cid": "cA2PAG",
+          "cid": "cGA2PAG",
           "trains": [],
-          "position": "a2",
-          "dir": "up"
+          "position": "r",
+          "dir": "r"
         },
         {
-          "cid": "cPAG1",
+          "cid": "cGPAG1",
           "trains": []
         }
       ]

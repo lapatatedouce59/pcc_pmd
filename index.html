@@ -25,6 +25,10 @@
             height: calc(1730px/4);
             width: calc(7203px/4);
         }
+        .warn{
+            background-color: #EF0000;
+            color: white;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 </head>
@@ -192,6 +196,7 @@
     <br>
     <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
     <button id="sendCmd">SEND</button>
+    <h3 id="attention" class="warn">Ne pas faire avancer une rame sans respecter les feux!!!</h3>
     <h2>Repos et page de test <span><a href="https://github.com/lapatatedouce59/pcc_pmd">ici</a></span></h2>
     <script type="module">
 
@@ -268,6 +273,11 @@
         let btnSend = document.getElementById('sendCmd')
         let commandInput = document.getElementById('commandInput')
         let btnReload = document.getElementById('reload')
+        let TEXTE_POUR_FAIRE_ATTENTION_SA_MERE = document.getElementById('attention')
+
+        setInterval(async function(){
+            TEXTE_POUR_FAIRE_ATTENTION_SA_MERE.classList.toggle('warn')
+        }, 500)
 
         let cantonsS1 = false
         
@@ -1186,6 +1196,13 @@
                 console.log(data.SEC[1].cantons[_CANTON_].cid)
                 //fill des fleches de dir
                 let dir = data.SEC[1].cantons[0].dir;
+                /*cantonsS1.lights.S1C2.setAttribute('href', '../V1S1_GREEN.png')
+                _GLIST_.lights.S5C2.setAttribute('href', '../V2S2_RED.png')
+                _GLIST_.lights.S6C2.setAttribute('href', '../DS_OFF.png')
+                _GLIST_.lights.S2C2.setAttribute('href', '../V2S2_GREEN.png')
+                _GLIST_.lights.S4C2.setAttribute('href', '../DS_OFF.png')
+                cantonsS1.lights.S3C2.setAttribute('href', '../V1S1_GREEN.png')
+                _GLIST_.lights.DEPC2.setAttribute('href', '../V2S2_RED.png')*/
                 if(dir==='up'){
                     for (let bits in _GLIST_.arrows[0]){
                         _GLIST_.arrows[0][bits].style.fill='#66D264';
@@ -1267,7 +1284,7 @@
                     }
                 }
 
-                if(data.SEC[1].cantons[_CANTON_].cid==='cPAG1'){
+                if(data.SEC[1].cantons[_CANTON_].cid==='cGPAG1'){
                     if(data.SEC[1].cantons[_CANTON_].trains.length >=1){
                         _GLIST_.screens['PAG1'][1].textContent=data.SEC[1].cantons[_CANTON_].trains[0].tid
                         _GLIST_.screens['PAG1'][0].style.fill='#3C0A0A'
@@ -1336,7 +1353,7 @@
                                         _GLIST_.aiguilles[0].a2c1202[bits].style.fill='#E1A712';
                                     }
                                     break;
-                                case 'cPAG1':
+                                case 'cGA2PAG':
                                     for(let bits in _GLIST_.aiguilles[0].a2cEND){
                                         console.log(_GLIST_.aiguilles[0].a2cEND[bits])
                                         _GLIST_.aiguilles[0].a2cEND[bits].style.fill='#E1A712';
@@ -1377,13 +1394,13 @@
                                 console.log(_GLIST_[_CANTON_+1][bits])
                                 _GLIST_[_CANTON_+1][bits].style.fill='#66D264';
                             }
-                            if(data.SEC[1].cantons[_CANTON_].position === 'a1'){
+                            if(data.SEC[1].cantons[_CANTON_].cid === 'c1102'){
                                 cantonsS1.lights.S1C2.setAttribute('href', '../V1S1_GREEN.png')
-                                _GLIST_.lights.S5C2.setAttribute('href', '../V1S1_RED.png')
+                                _GLIST_.lights.S5C2.setAttribute('href', '../V2S2_RED.png')
                                 _GLIST_.lights.S6C2.setAttribute('href', '../DS_OFF.png')
                                 _GLIST_.lights.S2C2.setAttribute('href', '../V2S2_GREEN.png')
                                 _GLIST_.lights.S4C2.setAttribute('href', '../DS_OFF.png')
-                            } else if (data.SEC[1].cantons[_CANTON_].position === 'a2'){
+                            } else if (data.SEC[1].cantons[_CANTON_].cid === 'c1202'){
                                 cantonsS1.lights.S3C2.setAttribute('href', '../V1S1_GREEN.png')
                                 _GLIST_.lights.DEPC2.setAttribute('href', '../V2S2_RED.png')
                             }
@@ -1446,7 +1463,7 @@
                                         _GLIST_.aiguilles[0].a2c1202[bits].style.fill='#66D264';
                                     }
                                     break;
-                                case 'cA2PAG':
+                                case 'cGA2PAG':
                                     clearAllCantons('S2',_CANTON_, 'a2p')
                                     console.log(data.SEC[1].cantons[_CANTON_].cid+' démarre son itération de peinture pour cPAG1 a2')
                                     for(let bits in _GLIST_.aiguilles[0].a2cEND){

@@ -22,7 +22,7 @@ const fs = require('fs')
 */
 
 exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voie, wss) {
-    if((!(typeof _trainIndex === 'number'))||(!(typeof _secIndex === 'number'))||(!(typeof _cantonIndex === 'number'))||(!(typeof voie === 'number'))) throw new Error ('[OGIA] Un des arguments ('+voie+') n\'est pas un nombre!')
+    if((!(typeof _trainIndex === 'number'))||(!(typeof _secIndex === 'number'))||(!(typeof _cantonIndex === 'number'))||(typeof voie === 'undefined')) throw new Error ('[OGIA] Un des arguments ('+voie+') n\'est pas un nombre!')
     if(!(wss)) throw new Error ('[OGIA] Le WebSocket n\'a pas été renseigné!')
     function apiSave(){
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
@@ -83,8 +83,35 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
             }
             apiSave()
             return true;
+        } else                  //?    SECTION 2
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1202" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a2"){
+            logger.info('Mouvement pris en charge par l\'OGIA')
+            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[8].cid)
+            pccApi.SEC[_secIndex].cantons[8].trains.push( {
+                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
+                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
+            } )
+            pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                logger.confirm('Mouvement effectué avec succès')
+            }
+            apiSave()
+            return true;
+        } else
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2402" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
+            logger.info('Mouvement pris en charge par l\'OGIA')
+            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[0].cid)
+            pccApi.SEC[_secIndex].cantons[0].trains.push( {
+                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
+                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
+            } )
+            pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                logger.confirm('Mouvement effectué avec succès')
+            }
+            apiSave()
+            return true;
         }
-        return false;
     } else if (voie === 2){
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
             logger.info('Mouvement pris en charge par l\'OGIA')
@@ -127,9 +154,39 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
             }
             apiSave()
             return true;
+        } else            //? SECTION 2
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1102" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
+            logger.info('Mouvement pris en charge par l\'OGIA')
+            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[7].cid)
+            pccApi.SEC[_secIndex].cantons[7].trains.push( {
+                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
+                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
+            } )
+            pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                logger.confirm('Mouvement effectué avec succès')
+            }
+            apiSave()
+            return true;
         }
-        logger.info('L\'OGIA n\'a pas trouvé d\'itinéraire valide.')
+        logger.info('[OGIA] L\'OGIA n\'a pas trouvé d\'itinéraire valide.')
         return false;
+    } else if(voie==='GAT'){
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="cGA2PAG" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a2"){
+            logger.info('Mouvement pris en charge par l\'OGIA')
+            console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[1].cid)
+            pccApi.SEC[_secIndex].cantons[1].trains.push( {
+                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
+                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
+            } )
+            pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                logger.confirm('Mouvement effectué avec succès')
+            }
+            apiSave()
+            return true;
+        }
+        logger.info('[OGIA] L\'OGIA n\'a pas trouvé d\'itinéraire valide.')
     } else throw new Error ('[OGIA] La voie renseignée ('+voie+') n\'est pas valide.')
 }
 
