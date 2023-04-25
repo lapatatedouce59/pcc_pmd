@@ -373,18 +373,20 @@
                 '2202':[s2svgDoc.getElementById('sc2202'), s2svgDoc.getElementById('txtSc2202')],
                 '1302':[s2svgDoc.getElementById('sc1302'), s2svgDoc.getElementById('txtSc1302')],
                 'PAG1':[s2svgDoc.getElementById('scPAG1'), s2svgDoc.getElementById('txtScPAG1')]
-            }/*,
+            },
             voys: {
-                'NOR':s2svgDoc.getElementById('voyC1Nor'),
-                'A1Dev':s2svgDoc.getElementById('voyC1A1Dev'),
-                'A2Dev':s2svgDoc.getElementById('voyC1A2Dev'),
-                'GAR':s2svgDoc.getElementById('voyC1Gar'),
-                'INSR':s2svgDoc.getElementById('voyC1Insr'),
-                'AUTO':s2svgDoc.getElementById('voyC1Auto')
-            }*/
+                'NORA1':s2svgDoc.getElementById('voyC2Nor'),
+                'NORA2':s2svgDoc.getElementById('voyC2BNor'),
+                'A1Dev':s2svgDoc.getElementById('voyC2A1Dev'),
+                'A2Dev':s2svgDoc.getElementById('voyC2A2Dev'),
+                'ENT':s2svgDoc.getElementById('voyC2ENT'),
+                'DEP':s2svgDoc.getElementById('voyC2DEP'),
+                'AUTO':s2svgDoc.getElementById('voyC2Auto'),
+                'SP':s2svgDoc.getElementById('voyC2SP')
+            }
             
             }
-            getCantonsInfo()
+            getCantonsInfoS2()
         })
 
 
@@ -1248,19 +1250,32 @@
                         _GLIST_.arrows[3][bits].style.fill='#707070';
                     }
                 }
-                /*if (data.SEC[1].cantons[_CANTON_].position==='r'){
-                    _GLIST_.voys['NOR'].setAttribute('href', '../ON.png');
+                if (data.SEC[1].cantons[_CANTON_].position==='r' && data.SEC[1].cantons[_CANTON_].cid==='c1102'){
+                    _GLIST_.voys['NORA1'].setAttribute('href', '../ON.png');
                     _GLIST_.voys['A1Dev'].setAttribute('href', '../OFF.png')
+                }
+                if (data.SEC[1].cantons[_CANTON_].position==='r' && data.SEC[1].cantons[_CANTON_].cid==='c1202'){
+                    _GLIST_.voys['NORA2'].setAttribute('href', '../ON.png');
                     _GLIST_.voys['A2Dev'].setAttribute('href', '../OFF.png')
-                } else if (data.SEC[1].cantons[_CANTON_].position==='a1'){
-                    _GLIST_.voys['NOR'].setAttribute('href', '../OFF.png');
+                    _GLIST_.voys['ENT'].setAttribute('href', '../OFF.png')
+                    _GLIST_.voys['DEP'].setAttribute('href', '../OFF.png')
+                }
+                if (data.SEC[1].cantons[_CANTON_].cid==='c1102' && data.SEC[1].cantons[_CANTON_].position==='a1'){
+                    _GLIST_.voys['NORA1'].setAttribute('href', '../OFF.png');
                     _GLIST_.voys['A1Dev'].setAttribute('href', '../ON.png')
-                    _GLIST_.voys['A2Dev'].setAttribute('href', '../OFF.png')
-                } else if (data.SEC[1].cantons[_CANTON_].position==='a2'){
-                    _GLIST_.voys['NOR'].setAttribute('href', '../OFF.png');
-                    _GLIST_.voys['A1Dev'].setAttribute('href', '../OFF.png')
+                }
+                if (data.SEC[1].cantons[_CANTON_].cid==='c1202' && data.SEC[1].cantons[_CANTON_].dir==='up'){
+                    _GLIST_.voys['NORA2'].setAttribute('href', '../OFF.png');
                     _GLIST_.voys['A2Dev'].setAttribute('href', '../ON.png')
-                }*/
+                    _GLIST_.voys['ENT'].setAttribute('href', '../ON.png')
+                    _GLIST_.voys['DEP'].setAttribute('href', '../OFF.png')
+                }
+                if (data.SEC[1].cantons[_CANTON_].cid==='c1202' && data.SEC[1].cantons[_CANTON_].dir==='down'){
+                    _GLIST_.voys['NORA2'].setAttribute('href', '../OFF.png');
+                    _GLIST_.voys['A2Dev'].setAttribute('href', '../ON.png')
+                    _GLIST_.voys['ENT'].setAttribute('href', '../OFF.png')
+                    _GLIST_.voys['DEP'].setAttribute('href', '../ON.png')
+                }
                 //console.log(data.SEC[0]._GLIST_[0].trains[0]) EXEMPLE DE CHEMIN
                 if(data.SEC[1].cantons[_CANTON_].cid==='c2202'){
                     if(data.SEC[1].cantons[_CANTON_].trains.length >=1){
