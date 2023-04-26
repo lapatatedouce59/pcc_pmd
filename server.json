@@ -184,9 +184,19 @@
           "trains": [
             {
               "tid": "3",
-              "name": "Léo"
+              "name": "Léo",
+              "states": {
+                "doorsOpenedPV": true,
+                "doorsClosedPV": false
+              }
             }
-          ]
+          ],
+          "type": "quai",
+          "name": "MSTO V1",
+          "states": {
+            "doorsOpened": true,
+            "doorsClosed": false
+          }
         },
         {
           "cid": "c1501",
@@ -198,7 +208,13 @@
         },
         {
           "cid": "c2201",
-          "trains": []
+          "trains": [],
+          "type": "quai",
+          "name": "MSTO V2",
+          "states": {
+            "doorsOpened": true,
+            "doorsClosed": false
+          }
         },
         {
           "cid": "c2301",
@@ -227,8 +243,8 @@
         },
         {
           "cid": "c1202",
-          "position": "r",
-          "dir": "r",
+          "position": "a2",
+          "dir": "down",
           "trains": []
         },
         {
@@ -236,9 +252,19 @@
           "trains": [
             {
               "tid": "2",
-              "name": "Jean Marc"
+              "name": "Jean Marc",
+              "states": {
+                "doorsOpenedPV": false,
+                "doorsClosedPV": true
+              }
             }
-          ]
+          ],
+          "type": "quai",
+          "name": "STO V1",
+          "states": {
+            "doorsOpened": false,
+            "doorsClosed": true
+          }
         },
         {
           "cid": "c1402",
@@ -250,7 +276,13 @@
         },
         {
           "cid": "c2202",
-          "trains": []
+          "trains": [],
+          "type": "quai",
+          "name": "STO V2",
+          "states": {
+            "doorsOpened": true,
+            "doorsClosed": false
+          }
         },
         {
           "cid": "c2302",
@@ -265,8 +297,8 @@
         {
           "cid": "cGA2PAG",
           "trains": [],
-          "position": "r",
-          "dir": "r"
+          "position": "a2",
+          "dir": "down"
         },
         {
           "cid": "cGPAG1",

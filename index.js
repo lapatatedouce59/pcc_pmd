@@ -206,7 +206,8 @@ fetch('https://api.db-ip.com/v2/free/self', {
     let ip = ipdata.ipAddress
     let country = ipdata.countryName
     let city = ipdata.city
-    ws = new WebSocket("ws://localhost:8081")
+    let ipAdress = false
+    ws = new WebSocket('ws://localhost:8081')
 
     ws.addEventListener('open', () => {
         console.log("Connecté au WS")
@@ -214,7 +215,8 @@ fetch('https://api.db-ip.com/v2/free/self', {
             op: 1,
             ip: ip,
             country: country,
-            city: city
+            city: city,
+            from: 'TCO-LIGNE'
         }));
 
         ws.addEventListener('message', msg => {

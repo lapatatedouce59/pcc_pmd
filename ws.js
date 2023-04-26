@@ -61,7 +61,7 @@ wss.on('connection', (ws) => {
         
         switch(op){
             case 1 :
-                logger.identify(data.ip, data.country, data.city)
+                logger.identify(data.ip||0, data.country||0, data.city||0, data.from)
                 logger.message('outcome','server.json')
                 //ws.send(JSON.stringify(pccApi));
                 ws.send(JSON.stringify(pccApi));
@@ -331,6 +331,41 @@ wss.on('connection', (ws) => {
                         break;
                 }
                 apiSave()
+                break;
+            case 204 :
+                logger.message('income',JSON.stringify(data))
+                if (data.execute==='OPENPV-BTN'){
+                    let response = JSON.parse(getCantonsInfo(data.target))
+                    let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
+                    trainObj.states.doorsOpenedPV=true
+                    trainObj.states.doorsClosedPV=false
+                    apiSave()
+                } else
+                if (data.execute==='CLOSEPV-BTN'){
+                    let response = JSON.parse(getCantonsInfo(data.target))
+                    let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
+                    trainObj.states.doorsOpenedPV=false
+                    trainObj.states.doorsClosedPV=true
+                    apiSave()
+                } else
+                if (data.execute==='CLOSEPP-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    console.log(stationIndex, sectionIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    stationObj.states.doorsClosed=true
+                    stationObj.states.doorsOpened=false
+                    apiSave()
+                } else
+                if (data.execute==='OPENPP-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    stationObj.states.doorsClosed=false
+                    stationObj.states.doorsOpened=true
+                    apiSave()
+                }
+
                 break;
             case 400:
                 class Aiguille {
@@ -1218,16 +1253,16 @@ function getCantonsInfo(id){
         for (let _CANTON_ in pccApi.SEC[_SEC_].cantons){
             _CANTON_ = parseInt(_CANTON_);
             _SEC_ = parseInt(_SEC_);
-                console.log('[❔] ARRAY['+_CANTON_+'], SECTION['+_SEC_+']')
+                //console.log('[❔] ARRAY['+_CANTON_+'], SECTION['+_SEC_+']')
                 //console.log(data.SEC[0].cantons[0].trains[0]) EXEMPLE DE CHEMIN
                 if(pccApi.SEC[_SEC_].cantons[_CANTON_].trains.length >= 1){
-                    console.log('[👉] canton '+(_CANTON_+1)+'section '+(_SEC_+1)+' occupé')
+                    //console.log('[👉] canton '+(_CANTON_+1)+'section '+(_SEC_+1)+' occupé')
                 
                     for(let _TRAIN_ in pccApi.SEC[_SEC_].cantons[_CANTON_].trains){
-                        console.log(pccApi.SEC[_SEC_].cantons[_CANTON_].trains[_TRAIN_]);
+                        //console.log(pccApi.SEC[_SEC_].cantons[_CANTON_].trains[_TRAIN_]);
                         let tid = pccApi.SEC[_SEC_].cantons[_CANTON_].trains[_TRAIN_].tid;
                         //canton_train.set(_TRAIN_, _CANTON_)
-                        console.log('_TRAIN_ '+_TRAIN_+" _CANTON_ "+_CANTON_)
+                        //console.log('_TRAIN_ '+_TRAIN_+" _CANTON_ "+_CANTON_)
     
                         fresponse.trains.push( {
                             cantonId: pccApi.SEC[_SEC_].cantons[_CANTON_].cid,
@@ -1242,10 +1277,32 @@ function getCantonsInfo(id){
             }
         }
     if (id){
-        console.log(fresponse.trains)
+        //console.log(fresponse.trains)
         for(let rame of fresponse.trains){
             if(rame.trainId == id) return JSON.stringify(rame);
         }
         return false;
-    } else return JSON.stringify(fresponse) //!!! CRASH DU WS QUAND 2 RAMES: LA 2EME RAME EST IMMOBILE ET CREE UN CRASH
+    } else return JSON.stringify(fresponse)
+}
+
+
+function getStationsInfo(id){
+    let reponse={name: false, id: false, states: false, trains: []}
+    for (let sec of data.SEC){
+        for (let ctns of sec.cantons){
+            if(!(ctns.hasOwnProperty('type'))) continue;
+            if(!(ctns.name === id)) continue;
+            console.log(ctns.type+' canton '+ctns.cid+' appelée '+ctns.name)
+            reponse.id=ctns.cid;
+
+            reponse.name=ctns.name;
+
+            reponse.states=ctns.states
+            for (let train of ctns.trains){
+                console.log(train)
+                reponse.trains.push(train)
+            }
+        }
+    }
+    return reponse;
 }

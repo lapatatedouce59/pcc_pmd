@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="description" content="PCC Multijoueur de PMD - ALPHA">
+    <meta http-equiv="content-language" content="fr">
+    <meta name="robots" content="index">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PCC PMD ALPHA">
+    <meta property="og:url" content="pmdapp.fr/tools/pccBeta/">
+    <meta property="og:description" content="PCC Multijoueur de PMD - ALPHA">
+    <meta property="og:site_name" content="PMD Multijoueur - PCC réaliste [DEV]">
+    <meta property="og:image:width" content="284">
+    <meta property="og:image:height" content="170">
+    <meta property="og:image" content="https://pmdapp.fr/tools/pccBeta/logo.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PCC PMD ALPHA">
+    <meta name="twitter:description" content="PMD Multijoueur - PCC réaliste [DEV]">
+    <meta name="twitter:image" content="https://pmdapp.fr/tools/pccBeta/logo.png">
+    <link rel="icon" href="favicon.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +29,10 @@
         }
 
         .voy{
+            color: white;
+            background-color: #8B8B8B;
+        }
+        .voyStation{
             color: white;
             background-color: #8B8B8B;
         }
@@ -28,6 +50,9 @@
         .warn{
             background-color: #EF0000;
             color: white;
+        }
+        #fstation{
+            background-color: #DCDCDC;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
@@ -197,8 +222,41 @@
     <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
     <button id="sendCmd">SEND</button>
     <h3 id="attention" class="warn">Ne pas faire avancer une rame sans respecter les feux!!!</h3>
+
+    <div id="fstation">
+        <div id="stationhead" style="width: 100%; background-color: #5E5E5E; color: white;">
+            <span><b>Gestion des quais</b></span><span> - EAS</span> <br>
+            <span id="quaiTitle"></span>
+        </div>
+        <span><fieldset style="width: 20%; display: inline-block;">
+            <legend>Sectionner une station</legend>
+            <select name="stationSelect" id="stationSelect">
+            </select> <br>
+            <input type="button" value="ACQUITTER" id="btnAcquitStation">
+        </fieldset></span>
+        <span><fieldset style="width: 20%; display: inline-block;">
+            <legend>ACTIONS TEST</legend>
+            <input type="button" value="Ouvrir PP" id="btnOpenPP">
+            <input type="button" value="Fermer PP" id="btnClosePP"> <br>
+            <input type="button" value="Ouvrir PV" id="btnOpenPV">
+            <input type="button" value="Fermer PV" id="btnClosePV"> <br>
+            <input type="text" id="trainOrderAffect" placeholder="Train concerné...">
+        </fieldset></span>
+        <div id="stationState">
+            <fieldset>
+                <legend>Quai</legend>
+                <span id="doorsOpened" class="voyStation">PP Ouvertes</span> <span id="doorsClosed" class="voyStation">PP Fermées</span> <br>
+                <span id="doorsOpenedPV" class="voyStation">PV Ouvertes</span> <span id="doorsClosedPV" class="voyStation">PV Fermées</span>
+            </fieldset>
+        </div>
+    </div>
+
     <h2>Repos et page de test <span><a href="https://github.com/lapatatedouce59/pcc_pmd">ici</a></span></h2>
-    
-    <script src="./index.js" type="module"></script>
+
+
+
+    <!--<script src="./index.js" type="module"></script>-->
+
+    <script src="./stationHandlerClient.js" type="module"></script>
 </body>
 </html>

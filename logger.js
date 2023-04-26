@@ -33,8 +33,8 @@ exports.confirm = function (text){
     return console.log('\033[42m\x1b[37m[\x1b[30mCONFIRM\x1b[37m]\033[0m '+text);
 }
 
-exports.identify = function (ip, co, ci){
-    return console.log('\x1b[37m[\x1b[32m=\x1b[37m] Client situé à '+ci+' en '+co+' avec l\'ip '+ip);
+exports.identify = function (ip, co, ci, from){
+    return console.log('\x1b[37m[\x1b[32m=\x1b[37m] Client situé à '+ci+' en '+co+' avec l\'ip '+ip+'\n PROVIENS DE L\'INSTANCE '+from);
 }
 
 exports.info = function (text){
