@@ -336,6 +336,7 @@ wss.on('connection', (ws) => {
                 logger.message('income',JSON.stringify(data))
                 if (data.execute==='OPENPV-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
+                    if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
                     trainObj.states.doorsOpenedPV=true
                     trainObj.states.doorsClosedPV=false
@@ -343,6 +344,7 @@ wss.on('connection', (ws) => {
                 } else
                 if (data.execute==='CLOSEPV-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
+                    if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
                     trainObj.states.doorsOpenedPV=false
                     trainObj.states.doorsClosedPV=true
@@ -1246,7 +1248,19 @@ wss.on('connection', (ws) => {
 /**
  * Cherche sur quel canton se trouve le train passé en paramètre
  * @param id l'ID du train
- */ 
+ */
+/*function verifyExistingTrain(id){
+    console.log('ON CHERCHE LE N° ' + id)
+    let tidArray = []
+    let trains = JSON.parse(getCantonsInfo()) //ça foire ici
+    console.log(trains.trains)
+    for (let train in trains.trains) {
+        let _TID_ = trains.trains[train].trainId; //en gros on récupère l'id de chaque train existant
+        console.log(_TID_)
+        idArray.push(JSON.parse(_TID_))
+    }
+}*/
+
 function getCantonsInfo(id){
     let fresponse={ trains: [] }
     for (let _SEC_ in pccApi.SEC){

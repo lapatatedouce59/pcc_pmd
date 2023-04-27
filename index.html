@@ -32,7 +32,19 @@
             color: white;
             background-color: #8B8B8B;
         }
-        .voyStation{
+        .voyStationState{
+            color: white;
+            background-color: #8B8B8B;
+        }
+        .voyStationInfo{
+            color: white;
+            background-color: #8B8B8B;
+        }
+        .voyStationOthers{
+            color: white;
+            background-color: #8B8B8B;
+        }
+        .voyStationTrain{
             color: white;
             background-color: #8B8B8B;
         }
@@ -243,11 +255,15 @@
             <input type="text" id="trainOrderAffect" placeholder="Train concerné...">
         </fieldset></span>
         <div id="stationState">
-            <fieldset>
+            <span><fieldset style="width: 30%; display: inline-table;">
                 <legend>Quai</legend>
-                <span id="doorsOpened" class="voyStation">PP Ouvertes</span> <span id="doorsClosed" class="voyStation">PP Fermées</span> <br>
-                <span id="doorsOpenedPV" class="voyStation">PV Ouvertes</span> <span id="doorsClosedPV" class="voyStation">PV Fermées</span>
-            </fieldset>
+                <span id="doorsOpened" class="voyStationState">PP Ouvertes</span> <span id="doorsClosed" class="voyStationState">PP Fermées</span> <br>
+            </fieldset></span>
+            <span><fieldset style="width: 30%; display: inline-table;">
+                <legend>Train</legend>
+                <span class="voyStationOthers" id="trainPresent">Canton occupé</span> <span>Train N°<input type="text" value="NON" id="trainNumber" disabled style="width: 10%;"></span><br>
+                <span id="doorsOpenedPV" class="voyStationTrain">PV Ouvertes</span> <span id="doorsClosedPV" class="voyStationTrain">PV Fermées</span>
+            </fieldset></span>
         </div>
     </div>
 

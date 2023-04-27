@@ -8,6 +8,8 @@ let doorsOpened = document.getElementById('doorsOpened')
 let doorsClosed = document.getElementById('doorsClosed')
 let doorsOpenedPV = document.getElementById('doorsOpenedPV')
 let doorsClosedPV = document.getElementById('doorsClosedPV')
+let trainPresent = document.getElementById('trainPresent')
+let trainNumber = document.getElementById('trainNumber')
 
 let btnOpenPV = document.getElementById('btnOpenPV')
 let btnClosePV = document.getElementById('btnClosePV')
@@ -108,7 +110,7 @@ selectMenu.addEventListener('input', () => {
 })
 
 function updateVoy(s){
-    for (let voy of document.getElementsByClassName('voyStation')){
+    for (let voy of document.getElementsByClassName('voyStationState')){
         let elemid = voy.id
         let elem=document.getElementById(elemid)
         console.log(elem)
@@ -120,9 +122,35 @@ function updateVoy(s){
                 break;
             case true:
                 console.log(elemid+' true.')
-                voy.classList.toggle('ok')
+                voy.classList.toggle('ok', true)
                 break;
         }
+    }
+    if(s.trains[0]){
+        trainPresent.classList.toggle('ok', true)
+        for (let voy of document.getElementsByClassName('voyStationTrain')){
+            let elemid = voy.id
+            let elem=document.getElementById(elemid)
+            console.log(elem)
+    
+            switch(s.trains[0].states[elemid]){
+                case false:
+                    console.log(elemid+' faux.')
+                    voy.classList.remove('ok')
+                    break;
+                case true:
+                    console.log(elemid+' true.')
+                    voy.classList.toggle('ok', true)
+                    break;
+            }
+        }
+        trainNumber.value=s.trains[0].tid
+    } else {
+        trainPresent.classList.remove('ok')
+        for(let voy of document.getElementsByClassName('voyStationTrain')){
+            voy.classList.remove('ok')
+        }
+        trainNumber.value='NON'
     }
 }
 

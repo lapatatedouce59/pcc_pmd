@@ -194,8 +194,8 @@
           "type": "quai",
           "name": "MSTO V1",
           "states": {
-            "doorsOpened": true,
-            "doorsClosed": false
+            "doorsOpened": false,
+            "doorsClosed": true
           }
         },
         {
@@ -280,8 +280,8 @@
           "type": "quai",
           "name": "STO V2",
           "states": {
-            "doorsOpened": true,
-            "doorsClosed": false
+            "doorsOpened": false,
+            "doorsClosed": true
           }
         },
         {
