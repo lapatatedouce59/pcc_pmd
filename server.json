@@ -195,7 +195,13 @@
           "name": "MSTO V1",
           "states": {
             "doorsOpened": false,
-            "doorsClosed": true
+            "doorsClosed": true,
+            "doorsOpenedPAS": false,
+            "doorsClosedPAS": false,
+            "defPartOuvPP": false,
+            "defPartFerPP": false,
+            "defTotOuvPP": false,
+            "defTotFerPP": false
           }
         },
         {
@@ -213,7 +219,13 @@
           "name": "MSTO V2",
           "states": {
             "doorsOpened": true,
-            "doorsClosed": false
+            "doorsClosed": false,
+            "doorsOpenedPAS": true,
+            "doorsClosedPAS": false,
+            "defPartOuvPP": false,
+            "defPartFerPP": false,
+            "defTotOuvPP": false,
+            "defTotFerPP": false
           }
         },
         {
@@ -254,8 +266,8 @@
               "tid": "2",
               "name": "Jean Marc",
               "states": {
-                "doorsOpenedPV": false,
-                "doorsClosedPV": true
+                "doorsOpenedPV": true,
+                "doorsClosedPV": false
               }
             }
           ],
@@ -263,7 +275,13 @@
           "name": "STO V1",
           "states": {
             "doorsOpened": false,
-            "doorsClosed": true
+            "doorsClosed": true,
+            "doorsOpenedPAS": true,
+            "doorsClosedPAS": false,
+            "defPartOuvPP": false,
+            "defPartFerPP": false,
+            "defTotOuvPP": false,
+            "defTotFerPP": false
           }
         },
         {
@@ -281,7 +299,13 @@
           "name": "STO V2",
           "states": {
             "doorsOpened": false,
-            "doorsClosed": true
+            "doorsClosed": true,
+            "doorsOpenedPAS": true,
+            "doorsClosedPAS": false,
+            "defPartOuvPP": false,
+            "defPartFerPP": false,
+            "defTotOuvPP": false,
+            "defTotFerPP": false
           }
         },
         {

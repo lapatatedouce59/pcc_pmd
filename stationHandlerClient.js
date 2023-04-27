@@ -10,17 +10,34 @@ let doorsOpenedPV = document.getElementById('doorsOpenedPV')
 let doorsClosedPV = document.getElementById('doorsClosedPV')
 let trainPresent = document.getElementById('trainPresent')
 let trainNumber = document.getElementById('trainNumber')
+let doorsOpenedPAS = document.getElementById('doorsOpenedPAS')
+let doorsClosedPAS = document.getElementById('doorsClosedPAS')
 
+//btnAnomalies
+let btnPartialPPOpeningInc = document.getElementById('btnPartialPPOpeningInc')
+let btnPartialPPClosingInc = document.getElementById('btnPartialPPClosingInc')
+let btnTotalPPOpeningInc = document.getElementById('btnTotalPPOpeningInc')
+let btnTotalPPClosingInc = document.getElementById('btnTotalPPClosingInc')
+let btnReset = document.getElementById('btnReset')
+
+//btn actions
 let btnOpenPV = document.getElementById('btnOpenPV')
 let btnClosePV = document.getElementById('btnClosePV')
 let btnOpenPP = document.getElementById('btnOpenPP')
 let btnClosePP = document.getElementById('btnClosePP')
 let trainOrderAffect = document.getElementById('trainOrderAffect')
 
+let btnAcquitStation = document.getElementById('btnAcquitStation')
+
 quaiTitle.innerHTML=selectMenu.value
 
 let ws = new WebSocket('ws://localhost:8081')
 let data=false
+
+import sm from './sm.js'
+sm.init()
+
+sm.registerSound('gong', './src/formats/gong.mp3')
 
 ws.addEventListener('open', ()=> {
     console.log('Connecté au WS')
@@ -109,29 +126,67 @@ selectMenu.addEventListener('input', () => {
     updateVoy(station)
 })
 
+const blinkIntervalId = new Map()
+
+let beepIntervalId = false
+
+let blinkIdReturn = 0
+
 function updateVoy(s){
+    for(let i = 1; i<100; i++){
+        if(i===beepIntervalId) continue;
+        clearInterval(i)
+    }
+    
     for (let voy of document.getElementsByClassName('voyStationState')){
         let elemid = voy.id
         let elem=document.getElementById(elemid)
-        console.log(elem)
 
         switch(s.states[elemid]){
             case false:
                 console.log(elemid+' faux.')
                 voy.classList.remove('ok')
+                voy.classList.remove('alarm')
+                blinkIdReturn = blinkIntervalId.get(elemid)
+                clearInterval(blinkIdReturn)
+                clearInterval(blinkIdReturn-1)
+                blinkIntervalId.delete(elemid)
                 break;
             case true:
                 console.log(elemid+' true.')
                 voy.classList.toggle('ok', true)
+                voy.classList.remove('alarm')
+                blinkIdReturn = blinkIntervalId.get(elemid)
+                clearInterval(blinkIdReturn)
+                clearInterval(blinkIdReturn-1)
+                blinkIntervalId.delete(elemid)
+                break;
+            case 1:
+                console.log(elemid+' Alarme')
+                voy.classList.remove('ok')
+                voy.classList.toggle('alarm', true)
+                blinkIdReturn = blinkIntervalId.get(elemid)
+                clearInterval(blinkIdReturn)
+                clearInterval(blinkIdReturn-1)
+                blinkIntervalId.delete(elemid)
+                break;
+            case 2:
+                console.log(elemid+' Anomalie')
+                voy.classList.remove('ok')
+                let blinkId = setInterval(async function() {
+                    voy.classList.toggle('alarm')
+                }, 500)
+                console.log(blinkId)
+                blinkIntervalId.set(elemid, blinkId)
+                console.log(blinkIntervalId)
                 break;
         }
     }
     if(s.trains[0]){
         trainPresent.classList.toggle('ok', true)
+        trainNumber.value=s.trains[0].tid
         for (let voy of document.getElementsByClassName('voyStationTrain')){
             let elemid = voy.id
-            let elem=document.getElementById(elemid)
-            console.log(elem)
     
             switch(s.trains[0].states[elemid]){
                 case false:
@@ -144,13 +199,27 @@ function updateVoy(s){
                     break;
             }
         }
-        trainNumber.value=s.trains[0].tid
     } else {
         trainPresent.classList.remove('ok')
         for(let voy of document.getElementsByClassName('voyStationTrain')){
             voy.classList.remove('ok')
         }
         trainNumber.value='NON'
+    }
+    console.log(blinkIntervalId)
+    if (blinkIntervalId.size >= 1) {
+        console.log(blinkIntervalId+blinkIntervalId.size)
+        sm.playSound('gong', 0.5)
+        if(beepIntervalId!=false) return;
+        beepIntervalId = setInterval(async () => {
+            sm.playSound('gong', 0.5)
+            //sm.stopFreq(2959)
+        }, 1000)
+    } else {
+        console.log('stop')
+        clearInterval(beepIntervalId)
+        beepIntervalId=false
+        sm.stopSound('gong')
     }
 }
 
@@ -196,4 +265,52 @@ btnClosePV.addEventListener('click', ()=>{
         target: trainId
     }));
     trainOrderAffect.style.backgroundColor='white'
+})
+
+btnPartialPPOpeningInc.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "GENRATEINC-PARTIALPPOPEN-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnPartialPPClosingInc.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "GENRATEINC-PARTIALPPCLOSE-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnTotalPPOpeningInc.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "GENRATEINC-TOTALPPOPEN-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnTotalPPClosingInc.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "GENRATEINC-TOTALPPCLOSE-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnReset.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "GENRATEINC-RESET-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnAcquitStation.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "AQC-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
 })

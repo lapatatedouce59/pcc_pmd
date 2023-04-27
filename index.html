@@ -32,9 +32,14 @@
             color: white;
             background-color: #8B8B8B;
         }
+        td{
+            border: #848484 solid;
+            border-width: 1px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
         .voyStationState{
-            color: white;
-            background-color: #8B8B8B;
+            color: black;
+            background-color: #CCCCCC;
         }
         .voyStationInfo{
             color: white;
@@ -53,6 +58,7 @@
         }
         .alarm{
             background-color: #EF0000;
+            color: white;
         }
         .tco{
             background-color: #1C1C1C;
@@ -254,10 +260,34 @@
             <input type="button" value="Fermer PV" id="btnClosePV"> <br>
             <input type="text" id="trainOrderAffect" placeholder="Train concerné...">
         </fieldset></span>
+        <span><fieldset style="width: 50%; display: inline-block;">
+            <legend>ANOMALIES</legend>
+            <input type="button" value="DEFAUT PARTIEL OUVERTURE PP" id="btnPartialPPOpeningInc">
+            <input type="button" value="DEFAUT PARTIEL FERMETURE PP" id="btnPartialPPClosingInc"> <br>
+            <input type="button" value="DEFAUT TOTAL OUVERTURE PP" id="btnTotalPPOpeningInc">
+            <input type="button" value="DEFAUT TOTAL FERMETURE PP" id="btnTotalPPClosingInc"> <br>
+            <input type="button" value="RAZ" id="btnReset">
+        </fieldset></span>
         <div id="stationState">
-            <span><fieldset style="width: 30%; display: inline-table;">
+            <span><fieldset style="width: 30%; display: inline-table; text-align: center;">
                 <legend>Quai</legend>
-                <span id="doorsOpened" class="voyStationState">PP Ouvertes</span> <span id="doorsClosed" class="voyStationState">PP Fermées</span> <br>
+                <table>
+                    <tr><td class="voyStationState" id="doorsOpened"><span id="doorsOpened" class="voyStationState">PP OUVERTES</span></td><td class="voyStationState" id="doorsClosed"><span id="doorsClosed" class="voyStationState">PP FERMÉES</span></td></tr>
+                    <tr><td class="voyStationState" id="doorsOpenedPAS"><span id="doorsOpenedPAS" class="voyStationState">CDE. OUV. PP PAS</span></td><td class="voyStationState" id="doorsClosedPAS"><span id="doorsClosedPAS" class="voyStationState">CDE. FER. PP PAS</span></td></tr>
+                    <tr><td class="voyStationState" id="defPartOuvPP"><span id="defPartOuvPP" class="voyStationState">DEF. PART. OUV. PP</span></td><td class="voyStationState" id="defPartFerPP"><span id="defPartFerPP" class="voyStationState">DEF. PART. FER. PP</span></td></tr>
+                    <tr><td class="voyStationState" id="defTotOuvPP"><span id="defTotOuvPP" class="voyStationState">DEF. TOT. OUV. PP</span></td><td class="voyStationState" id="defTotFerPP"><span id="defTotFerPP" class="voyStationState">DEF. TOT. FER. PP</span></td></tr>
+                    <tr><td colspan="2" class="voyStationState" id="doorsOpenedWithoutTrain"><span id="doorsOpenedWithoutTrain" class="voyStationState">PP OUV. SANS TRAIN EN ZOPP</span></td></tr>
+                    <tr><td colspan="2" class="voyStationState" id="doorsObstacle"><span id="doorsObstacle" class="voyStationState">DETECTION OBSTACLE</span></td></tr>
+                    <tr><td colspan="2" class="voyStationState" id="condemnedDoor"><span id="condemnedDoor" class="voyStationState">PP CONDAMNE PAR CLÉ</span></td></tr>
+                    <tr><td class="voyStationState" id="openedEDoors"><span id="openedEDoors" class="voyStationState">PS OUVERTE</span></td><td class="voyStationState" id="lockedEDoors"><span id="lockedEDoors" class="voyStationState">PS VEROUILLÉES</span></td></tr>
+                    <tr><td class="voyStationState" id="openedPEQ"><span id="openedPEQ" class="voyStationState">PEQ OUVERTE</span></td><td class="voyStationState" id="lockedPEQ"><span id="lockedPEQ" class="voyStationState">PEQ VEROUILLÉES</span></td></tr>
+                    <tr><td class="voyStationState" id="unlockedPMS"><span id="unlockedPMS" class="voyStationState">PMS DEVEROUILLÉ</span></td><td class="voyStationState" id="engagedPEQ"><span id="engagedPEQ" class="voyStationState">PMS ENGAGÉ</span></td></tr>
+                    <tr><td colspan="2" class="voyStationState" id="manualExpKeyEng"><span id="manualExpKeyEng" class="voyStationState">CLE EXPLOITATION MANUELLE ENGAGÉE</span></td></tr>
+                    <tr><td colspan="2" class="voyStationState" id="maintKeyEng"><span id="maintKeyEng" class="voyStationState">CLE MAINTENANCE ENGAGÉE</span></td></tr>
+                    <tr><td colspan="2" class="voyStationState" id="manuelPPOpening"><span id="manuelPPOpening" class="voyStationState">CDE MANUELLE OUV. PP</span></td></tr>
+                    <tr><td colspan="2" class="voyStationState" id="manuelPPClosing"><span id="manuelPPClosing" class="voyStationState">CDE MANUELLE FER. PP</span></td></tr>
+                    <tr><td class="voyStationState" id="departAuth"><span id="departAuth" class="voyStationState">AUTOR. DÉPART</span></td><td class="voyStationState" id="departForce"><span id="departForce" class="voyStationState">FORCAGE DÉPART</span></td></tr>
+                </table>
             </fieldset></span>
             <span><fieldset style="width: 30%; display: inline-table;">
                 <legend>Train</legend>
