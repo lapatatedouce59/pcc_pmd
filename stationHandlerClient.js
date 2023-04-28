@@ -13,6 +13,12 @@ let trainNumber = document.getElementById('trainNumber')
 let doorsOpenedPAS = document.getElementById('doorsOpenedPAS')
 let doorsClosedPAS = document.getElementById('doorsClosedPAS')
 
+let btnActiveHLP = document.getElementById('btnActiveHLP')
+let btnActiveDSO = document.getElementById('btnActiveDSO')
+let btnInactiveHLP = document.getElementById('btnInactiveHLP')
+let btnInactiveDSO = document.getElementById('btnInactiveDSO')
+let btnIhibIDPOPLTP = document.getElementById('btnIhibIDPOPLTP')
+
 //btnAnomalies
 let btnPartialPPOpeningInc = document.getElementById('btnPartialPPOpeningInc')
 let btnPartialPPClosingInc = document.getElementById('btnPartialPPClosingInc')
@@ -28,6 +34,7 @@ let btnOpenPP = document.getElementById('btnOpenPP')
 let btnClosePP = document.getElementById('btnClosePP')
 let trainOrderAffect = document.getElementById('trainOrderAffect')
 let ckbZopp = document.getElementById('ckbZopp')
+let ckbSafe = document.getElementById('ckbSafe')
 let ckbUnlockPMS = document.getElementById('ckbUnlockPMS')
 let ckbManualExploit = document.getElementById('ckbManualExploit')
 let ckbMaintenance = document.getElementById('ckbMaintenance')
@@ -43,6 +50,7 @@ import sm from './sm.js'
 sm.init()
 
 sm.registerSound('gong', './src/formats/gong.mp3')
+sm.registerSound('gongChange', './src/formats/gong.mp3')
 
 ws.addEventListener('open', ()=> {
     console.log('Connecté au WS')
@@ -138,6 +146,7 @@ let beepIntervalId = false
 let blinkIdReturn = 0
 
 function updateVoy(s){
+    sm.playSound('gongChange', 2)
     for(let i = 1; i<10000; i++){
         if(i===beepIntervalId) continue;
         clearInterval(i)
@@ -156,6 +165,10 @@ function updateVoy(s){
                 clearInterval(blinkIdReturn)
                 clearInterval(blinkIdReturn-1)
                 blinkIntervalId.delete(elemid)
+                if(elemid==='IDPOAlreadyActiveByPLTP'){
+                    btnInactiveDSO.disabled=false
+                    btnActiveDSO.disabled=false
+                }
                 break;
             case true:
                 console.log(elemid+' true.')
@@ -165,6 +178,13 @@ function updateVoy(s){
                 clearInterval(blinkIdReturn)
                 clearInterval(blinkIdReturn-1)
                 blinkIntervalId.delete(elemid)
+                if(elemid==='IDPOAlreadyActiveByPLTP' && s.states['PLTPIDPOInhibed']==false){
+                    btnInactiveDSO.disabled=true
+                    btnActiveDSO.disabled=true
+                } else {
+                    btnInactiveDSO.disabled=true
+                    btnActiveDSO.disabled=true
+                }
                 break;
             case 1:
                 console.log(elemid+' Alarme')
@@ -340,6 +360,27 @@ ckbZopp.addEventListener('input', ()=>{
     }
 })
 
+ckbSafe.addEventListener('input', ()=>{
+    let trainId = parseFloat(trainOrderAffect.value)
+    if(!trainId){
+        trainOrderAffect.style.backgroundColor='#EC2020'
+        return;
+    }
+    if(ckbSafe.checked){
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "SAFE-ON-COM",
+            target: trainId
+        }));
+    } else {
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "SAFE-OFF-COM",
+            target: trainId
+        }));
+    }
+})
+
 ckbObs.addEventListener('input', ()=>{
     if(ckbObs.checked){
         ws.send(JSON.stringify({
@@ -402,4 +443,44 @@ ckbMaintenance.addEventListener('input', ()=>{
             target: getStationsInfo(selectMenu.value)
         }));
     }
+})
+
+btnActiveHLP.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "HLP-ON-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnInactiveHLP.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "HLP-OFF-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnActiveDSO.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "DSO-ON-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnInactiveDSO.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "DSO-OFF-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnIhibIDPOPLTP.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "INHIBPLTPIDPO-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
 })

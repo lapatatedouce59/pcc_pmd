@@ -186,9 +186,22 @@
               "tid": "3",
               "name": "Léo",
               "states": {
-                "doorsOpenedPV": true,
-                "doorsClosedPV": false,
-                "inZOPP": false
+                "doorsOpenedPV": false,
+                "doorsClosedPV": true,
+                "trainSecurised": false,
+                "inZOPP": false,
+                "failedStop": false,
+                "secureStop": false,
+                "trainEssai": false,
+                "trainIOP": false,
+                "forbiddenStart": false,
+                "trainEvac": false,
+                "trainEmCall": false,
+                "lsvDef": false,
+                "blockDef": false,
+                "defCdeOuvPV": false,
+                "defCdeFerPV": false,
+                "longTrain": false
               }
             }
           ],
@@ -198,7 +211,7 @@
             "doorsOpened": false,
             "doorsClosed": true,
             "doorsOpenedPAS": false,
-            "doorsClosedPAS": true,
+            "doorsClosedPAS": false,
             "defPartOuvPP": false,
             "defPartFerPP": false,
             "defTotOuvPP": false,
@@ -218,7 +231,13 @@
             "manuelPPOpening": false,
             "manuelPPClosing": false,
             "departAuth": false,
-            "departForce": false
+            "departForce": false,
+            "HLP": false,
+            "DSO": false,
+            "IDPOAlreadyActiveByPLTP": false,
+            "PLTPIDPOInhibed": false,
+            "IDPOAlreadyActiveByALC": false,
+            "ALCIDPOInhibed": false
           }
         },
         {
@@ -258,7 +277,11 @@
             "manuelPPOpening": false,
             "manuelPPClosing": false,
             "departAuth": false,
-            "departForce": false
+            "departForce": false,
+            "HLP": false,
+            "DSO": false,
+            "IDPOAlreadyActiveByPLTP": false,
+            "IDPOAlreadyActiveByALC": false
           }
         },
         {
@@ -301,7 +324,19 @@
               "states": {
                 "doorsOpenedPV": true,
                 "doorsClosedPV": false,
-                "inZOPP": false
+                "inZOPP": false,
+                "failedStop": false,
+                "secureStop": false,
+                "trainEssai": false,
+                "trainIOP": false,
+                "forbiddenStart": false,
+                "trainEvac": false,
+                "trainEmCall": false,
+                "lsvDef": false,
+                "blockDef": false,
+                "defCdeOuvPV": false,
+                "defCdeFerPV": false,
+                "longTrain": false
               }
             }
           ],
@@ -331,7 +366,11 @@
             "manuelPPOpening": false,
             "manuelPPClosing": false,
             "departAuth": false,
-            "departForce": false
+            "departForce": false,
+            "HLP": false,
+            "DSO": false,
+            "IDPOAlreadyActiveByPLTP": false,
+            "IDPOAlreadyActiveByALC": false
           }
         },
         {
@@ -371,7 +410,11 @@
             "manuelPPOpening": false,
             "manuelPPClosing": false,
             "departAuth": false,
-            "departForce": false
+            "departForce": false,
+            "HLP": false,
+            "DSO": false,
+            "IDPOAlreadyActiveByPLTP": false,
+            "IDPOAlreadyActiveByALC": false
           }
         },
         {

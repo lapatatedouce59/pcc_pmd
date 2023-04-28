@@ -20,7 +20,7 @@ server.listen(8081, function listening() {
 });
 
 */
-
+const {setTimeout} = require('timers/promises')
 console.log('[V] WebSocket init on port 8081')
 console.log('[@] Server Api init')
 const pccApi=require('./server.json');
@@ -287,8 +287,22 @@ wss.on('connection', (ws) => {
                     case 'IDPO-COM':
                         if(data.state===false){
                             pccApi.comIDPOTPAS=false
+                            for (let sec of pccApi.SEC){
+                                for (let ctns of sec.cantons){
+                                    if(!(ctns.hasOwnProperty('type'))) continue;
+                                    ctns.states.DSO=false
+                                    ctns.states.IDPOAlreadyActiveByPLTP=false
+                                }
+                            }
                         } else if(data.state===true){
                             pccApi.comIDPOTPAS=true
+                            for (let sec of pccApi.SEC){
+                                for (let ctns of sec.cantons){
+                                    if(!(ctns.hasOwnProperty('type'))) continue;
+                                    ctns.states.DSO=true
+                                    ctns.states.IDPOAlreadyActiveByPLTP=true
+                                }
+                            }
                         }
                         break;
                     case 'UCAINHIB-COM':
@@ -563,6 +577,71 @@ wss.on('connection', (ws) => {
 
                     stationObj.states.maintKeyEng=false
                     apiSave()
+                } else
+                if (data.execute==='SAFE-ON-COM'){
+                    let response = JSON.parse(getCantonsInfo(data.target))
+                    if(!response) return;
+                    let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
+                    let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
+                    
+                    trainObj.states.trainSecurised=true
+                    apiSave()
+                } else
+                if (data.execute==='SAFE-OFF-COM'){
+                    let response = JSON.parse(getCantonsInfo(data.target))
+                    if(!response) return;
+                    let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
+                    let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
+                    
+                    trainObj.states.trainSecurised=false
+                    apiSave()
+                } else
+                if (data.execute==='HLP-ON-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.HLP=true
+                    apiSave()
+                } else
+                if (data.execute==='HLP-OFF-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.HLP=false
+                    apiSave()
+                } else
+                if (data.execute==='DSO-ON-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.DSO=true
+                    apiSave()
+                } else
+                if (data.execute==='DSO-OFF-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.DSO=false
+                    apiSave()
+                } else
+                if (data.execute==='INHIBPLTPIDPO-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    stationObj.states.DSO=false
+                    apiSave()
+                    const weweOnControleSale = async() => {
+                        await setTimeout(5000)
+                        if(stationObj.states.IDPOAlreadyActiveByPLTP===false) {console.log('Ah merde ah c\'est con ça')
+                        return;}
+                        stationObj.states.DSO=true
+                        apiSave()
+                    }
+                    weweOnControleSale()
                 }
 
                 break;
