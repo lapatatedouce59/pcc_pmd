@@ -187,7 +187,8 @@
               "name": "Léo",
               "states": {
                 "doorsOpenedPV": true,
-                "doorsClosedPV": false
+                "doorsClosedPV": false,
+                "inZOPP": false
               }
             }
           ],
@@ -197,11 +198,27 @@
             "doorsOpened": false,
             "doorsClosed": true,
             "doorsOpenedPAS": false,
-            "doorsClosedPAS": false,
+            "doorsClosedPAS": true,
             "defPartOuvPP": false,
             "defPartFerPP": false,
             "defTotOuvPP": false,
-            "defTotFerPP": false
+            "defTotFerPP": false,
+            "doorsOpenedWithoutTrain": false,
+            "activeObs": false,
+            "doorsObstacle": false,
+            "condemnedDoor": false,
+            "openedEDoors": false,
+            "lockedEDoors": true,
+            "openedPEQ": false,
+            "lockedPEQ": true,
+            "unlockedPMS": false,
+            "engagedPMS": false,
+            "manualExpKeyEng": false,
+            "maintKeyEng": false,
+            "manuelPPOpening": false,
+            "manuelPPClosing": false,
+            "departAuth": false,
+            "departForce": false
           }
         },
         {
@@ -218,14 +235,30 @@
           "type": "quai",
           "name": "MSTO V2",
           "states": {
-            "doorsOpened": true,
-            "doorsClosed": false,
-            "doorsOpenedPAS": true,
+            "doorsOpened": false,
+            "doorsClosed": true,
+            "doorsOpenedPAS": false,
             "doorsClosedPAS": false,
             "defPartOuvPP": false,
             "defPartFerPP": false,
             "defTotOuvPP": false,
-            "defTotFerPP": false
+            "defTotFerPP": false,
+            "doorsOpenedWithoutTrain": false,
+            "activeObs": false,
+            "doorsObstacle": false,
+            "condemnedDoor": false,
+            "openedEDoors": false,
+            "lockedEDoors": true,
+            "openedPEQ": false,
+            "lockedPEQ": true,
+            "unlockedPMS": false,
+            "engagedPMS": false,
+            "manualExpKeyEng": false,
+            "maintKeyEng": false,
+            "manuelPPOpening": false,
+            "manuelPPClosing": false,
+            "departAuth": false,
+            "departForce": false
           }
         },
         {
@@ -267,7 +300,8 @@
               "name": "Jean Marc",
               "states": {
                 "doorsOpenedPV": true,
-                "doorsClosedPV": false
+                "doorsClosedPV": false,
+                "inZOPP": false
               }
             }
           ],
@@ -281,7 +315,23 @@
             "defPartOuvPP": false,
             "defPartFerPP": false,
             "defTotOuvPP": false,
-            "defTotFerPP": false
+            "defTotFerPP": false,
+            "doorsOpenedWithoutTrain": false,
+            "activeObs": false,
+            "doorsObstacle": false,
+            "condemnedDoor": false,
+            "openedEDoors": false,
+            "lockedEDoors": true,
+            "openedPEQ": false,
+            "lockedPEQ": true,
+            "unlockedPMS": false,
+            "engagedPMS": false,
+            "manualExpKeyEng": false,
+            "maintKeyEng": false,
+            "manuelPPOpening": false,
+            "manuelPPClosing": false,
+            "departAuth": false,
+            "departForce": false
           }
         },
         {
@@ -305,7 +355,23 @@
             "defPartOuvPP": false,
             "defPartFerPP": false,
             "defTotOuvPP": false,
-            "defTotFerPP": false
+            "defTotFerPP": false,
+            "doorsOpenedWithoutTrain": false,
+            "activeObs": false,
+            "doorsObstacle": false,
+            "condemnedDoor": false,
+            "openedEDoors": false,
+            "lockedEDoors": true,
+            "openedPEQ": false,
+            "lockedPEQ": true,
+            "unlockedPMS": false,
+            "engagedPMS": false,
+            "manualExpKeyEng": false,
+            "maintKeyEng": false,
+            "manuelPPOpening": false,
+            "manuelPPClosing": false,
+            "departAuth": false,
+            "departForce": false
           }
         },
         {

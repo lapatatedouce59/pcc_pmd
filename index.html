@@ -253,11 +253,17 @@
             <input type="button" value="ACQUITTER" id="btnAcquitStation">
         </fieldset></span>
         <span><fieldset style="width: 20%; display: inline-block;">
-            <legend>ACTIONS TEST</legend>
+            <legend>ACTIONS TEST (PMS)</legend>
             <input type="button" value="Ouvrir PP" id="btnOpenPP">
-            <input type="button" value="Fermer PP" id="btnClosePP"> <br>
+            <input type="button" value="Fermer PP" id="btnClosePP"><br>
+            <input type="checkbox" id="ckbUnlockPMS" class="com"><span>Ouvrir le PMS</span><br>
+            <input type="checkbox" id="ckbManualExploit" class="com"><span>Clé exploitation manuelle</span><br>
+            <input type="checkbox" id="ckbMaintenance" class="com"><span>Clé maintenance</span><br>
+            <input type="button" value="Autor. Départ" id="btnAuthDepart"><input type="button" value="RAZ" id="btnResetAuthDepart">
+            <input type="button" value="Forcage" id="btnForceDepart"><br>
             <input type="button" value="Ouvrir PV" id="btnOpenPV">
             <input type="button" value="Fermer PV" id="btnClosePV"> <br>
+            <input type="checkbox" id="ckbZopp" class="com"><span>Train inscrit en ZOPP</span><br>
             <input type="text" id="trainOrderAffect" placeholder="Train concerné...">
         </fieldset></span>
         <span><fieldset style="width: 50%; display: inline-block;">
@@ -266,6 +272,7 @@
             <input type="button" value="DEFAUT PARTIEL FERMETURE PP" id="btnPartialPPClosingInc"> <br>
             <input type="button" value="DEFAUT TOTAL OUVERTURE PP" id="btnTotalPPOpeningInc">
             <input type="button" value="DEFAUT TOTAL FERMETURE PP" id="btnTotalPPClosingInc"> <br>
+            <input type="checkbox" id="ckbObs" class="com"><span>Obstacle Portes</span><br>
             <input type="button" value="RAZ" id="btnReset">
         </fieldset></span>
         <div id="stationState">
@@ -281,7 +288,7 @@
                     <tr><td colspan="2" class="voyStationState" id="condemnedDoor"><span id="condemnedDoor" class="voyStationState">PP CONDAMNE PAR CLÉ</span></td></tr>
                     <tr><td class="voyStationState" id="openedEDoors"><span id="openedEDoors" class="voyStationState">PS OUVERTE</span></td><td class="voyStationState" id="lockedEDoors"><span id="lockedEDoors" class="voyStationState">PS VEROUILLÉES</span></td></tr>
                     <tr><td class="voyStationState" id="openedPEQ"><span id="openedPEQ" class="voyStationState">PEQ OUVERTE</span></td><td class="voyStationState" id="lockedPEQ"><span id="lockedPEQ" class="voyStationState">PEQ VEROUILLÉES</span></td></tr>
-                    <tr><td class="voyStationState" id="unlockedPMS"><span id="unlockedPMS" class="voyStationState">PMS DEVEROUILLÉ</span></td><td class="voyStationState" id="engagedPEQ"><span id="engagedPEQ" class="voyStationState">PMS ENGAGÉ</span></td></tr>
+                    <tr><td class="voyStationState" id="unlockedPMS"><span id="unlockedPMS" class="voyStationState">PMS DEVEROUILLÉ</span></td><td class="voyStationState" id="engagedPMS"><span id="engagedPMS" class="voyStationState">PMS ENGAGÉ</span></td></tr>
                     <tr><td colspan="2" class="voyStationState" id="manualExpKeyEng"><span id="manualExpKeyEng" class="voyStationState">CLE EXPLOITATION MANUELLE ENGAGÉE</span></td></tr>
                     <tr><td colspan="2" class="voyStationState" id="maintKeyEng"><span id="maintKeyEng" class="voyStationState">CLE MAINTENANCE ENGAGÉE</span></td></tr>
                     <tr><td colspan="2" class="voyStationState" id="manuelPPOpening"><span id="manuelPPOpening" class="voyStationState">CDE MANUELLE OUV. PP</span></td></tr>

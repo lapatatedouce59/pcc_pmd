@@ -18,6 +18,7 @@ let btnPartialPPOpeningInc = document.getElementById('btnPartialPPOpeningInc')
 let btnPartialPPClosingInc = document.getElementById('btnPartialPPClosingInc')
 let btnTotalPPOpeningInc = document.getElementById('btnTotalPPOpeningInc')
 let btnTotalPPClosingInc = document.getElementById('btnTotalPPClosingInc')
+let ckbObs = document.getElementById('ckbObs')
 let btnReset = document.getElementById('btnReset')
 
 //btn actions
@@ -26,6 +27,10 @@ let btnClosePV = document.getElementById('btnClosePV')
 let btnOpenPP = document.getElementById('btnOpenPP')
 let btnClosePP = document.getElementById('btnClosePP')
 let trainOrderAffect = document.getElementById('trainOrderAffect')
+let ckbZopp = document.getElementById('ckbZopp')
+let ckbUnlockPMS = document.getElementById('ckbUnlockPMS')
+let ckbManualExploit = document.getElementById('ckbManualExploit')
+let ckbMaintenance = document.getElementById('ckbMaintenance')
 
 let btnAcquitStation = document.getElementById('btnAcquitStation')
 
@@ -133,7 +138,7 @@ let beepIntervalId = false
 let blinkIdReturn = 0
 
 function updateVoy(s){
-    for(let i = 1; i<100; i++){
+    for(let i = 1; i<10000; i++){
         if(i===beepIntervalId) continue;
         clearInterval(i)
     }
@@ -176,6 +181,7 @@ function updateVoy(s){
                 let blinkId = setInterval(async function() {
                     voy.classList.toggle('alarm')
                 }, 500)
+                if(blinkId>=10000) alert('blinkId>=10000, relancer la page!')
                 console.log(blinkId)
                 blinkIntervalId.set(elemid, blinkId)
                 console.log(blinkIntervalId)
@@ -209,10 +215,10 @@ function updateVoy(s){
     console.log(blinkIntervalId)
     if (blinkIntervalId.size >= 1) {
         console.log(blinkIntervalId+blinkIntervalId.size)
-        sm.playSound('gong', 0.5)
+        sm.playSound('gong', 2)
         if(beepIntervalId!=false) return;
         beepIntervalId = setInterval(async () => {
-            sm.playSound('gong', 0.5)
+            sm.playSound('gong', 2)
             //sm.stopFreq(2959)
         }, 1000)
     } else {
@@ -313,4 +319,89 @@ btnAcquitStation.addEventListener('click', ()=>{
         execute: "AQC-BTN",
         target: getStationsInfo(selectMenu.value)
     }));
+})
+
+ckbZopp.addEventListener('input', ()=>{
+    let trainId = parseFloat(trainOrderAffect.value)
+    if(!trainId){
+        trainOrderAffect.style.backgroundColor='#EC2020'
+        return;
+    }
+    if(ckbZopp.checked){
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "ZOPP-ON-COM",
+            target: trainId
+        }));
+    } else {
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "ZOPP-OFF-COM",
+            target: trainId
+        }));
+    }
+})
+
+ckbObs.addEventListener('input', ()=>{
+    if(ckbObs.checked){
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "OBS-ON-COM",
+            target: getStationsInfo(selectMenu.value)
+        }));
+    } else {
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "OBS-OFF-COM",
+            target: getStationsInfo(selectMenu.value)
+        }));
+    }
+})
+
+ckbUnlockPMS.addEventListener('input', ()=>{
+    if(ckbUnlockPMS.checked){
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "PMSUNLOCK-ON-COM",
+            target: getStationsInfo(selectMenu.value)
+        }));
+    } else {
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "PMSUNLOCK-OFF-COM",
+            target: getStationsInfo(selectMenu.value)
+        }));
+    }
+})
+
+ckbManualExploit.addEventListener('input', ()=>{
+    if(ckbManualExploit.checked){
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "PMSMANUAL-ON-COM",
+            target: getStationsInfo(selectMenu.value)
+        }));
+    } else {
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "PMSMANUAL-OFF-COM",
+            target: getStationsInfo(selectMenu.value)
+        }));
+    }
+})
+
+ckbMaintenance.addEventListener('input', ()=>{
+    if(ckbMaintenance.checked){
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "PMSMAINT-ON-COM",
+            target: getStationsInfo(selectMenu.value)
+        }));
+    } else {
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "PMSMAINT-OFF-COM",
+            target: getStationsInfo(selectMenu.value)
+        }));
+    }
 })

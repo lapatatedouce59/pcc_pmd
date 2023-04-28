@@ -340,26 +340,40 @@ wss.on('connection', (ws) => {
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
                     trainObj.states.doorsOpenedPV=true
                     trainObj.states.doorsClosedPV=false
-
-                    let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
-                    stationObj.states.doorsOpened=true
-                    stationObj.states.doorsClosed=false
-                    stationObj.states.doorsClosedPAS=false
-                    stationObj.states.doorsOpenedPAS=true
+                    if(trainObj.states.inZOPP) {
+                        let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
+                        stationObj.states.engagedPMS=false
+                        stationObj.states.doorsOpened=true
+                        stationObj.states.doorsClosed=false
+                        stationObj.states.doorsClosedPAS=false
+                        stationObj.states.doorsOpenedPAS=true
+                        stationObj.states.defPartFerPP=false
+                        stationObj.states.doorsObstacle=false
+                    }
                     apiSave()
                 } else
                 if (data.execute==='CLOSEPV-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
-                    trainObj.states.doorsOpenedPV=false
                     trainObj.states.doorsClosedPV=true
+                    trainObj.states.doorsOpenedPV=false
 
-                    let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
-                    stationObj.states.doorsOpened=false
-                    stationObj.states.doorsClosed=true
-                    stationObj.states.doorsClosedPAS=true
-                    stationObj.states.doorsOpenedPAS=false
+                    if(trainObj.states.inZOPP) {
+
+                        let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
+                        stationObj.states.engagedPMS=false
+                        stationObj.states.doorsOpened=false
+                        stationObj.states.doorsClosedPAS=true
+                        stationObj.states.doorsOpenedPAS=false
+                        if(stationObj.states.activeObs){
+                            stationObj.states.doorsObstacle=2
+                            stationObj.states.defPartFerPP=2
+                        } else {
+                            stationObj.states.doorsClosed=true
+                            stationObj.states.defPartFerPP=false
+                        }
+                    }
                     apiSave()
                 } else
                 if (data.execute==='CLOSEPP-BTN'){
@@ -367,20 +381,48 @@ wss.on('connection', (ws) => {
                     let sectionIndex = parseInt(data.target.secIndex)
                     console.log(stationIndex, sectionIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
-                    stationObj.states.doorsClosed=true
+                    if(!stationObj.states.manualExpKeyEng) return;
+                    stationObj.states.manuelPPOpening=false
+                    stationObj.states.manuelPPClosing=2
+                    stationObj.states.engagedPMS=2
                     stationObj.states.doorsOpened=false
                     stationObj.states.doorsOpenedPAS=false
                     stationObj.states.doorsClosedPAS=false
+                    stationObj.states.doorsOpenedWithoutTrain=false
+                    if(stationObj.states.activeObs){
+                        stationObj.states.doorsObstacle=2
+                        stationObj.states.defPartFerPP=2
+                    } else {
+                        stationObj.states.doorsClosed=true
+                        stationObj.states.defPartFerPP=false
+                    }
                     apiSave()
                 } else
                 if (data.execute==='OPENPP-BTN'){
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    if(!stationObj.states.manualExpKeyEng) return;
+                    stationObj.states.engagedPMS=2
+                    stationObj.states.manuelPPOpening=2
+                    stationObj.states.manuelPPClosing=false
                     stationObj.states.doorsClosed=false
                     stationObj.states.doorsOpened=true
                     stationObj.states.doorsOpenedPAS=false
                     stationObj.states.doorsClosedPAS=false
+                    stationObj.states.defPartFerPP=false
+                    stationObj.states.doorsObstacle=false
+                    console.log(stationObj.trains)
+                    if(!(stationObj.trains[0])){
+                        stationObj.states.doorsOpenedWithoutTrain=2
+                        apiSave()
+                        return;
+                    }
+                    if(!stationObj.trains[0].states.inZOPP){
+                        stationObj.states.doorsOpenedWithoutTrain=2
+                        apiSave()
+                        return;
+                    }
                     apiSave()
                 } else
                 if(data.execute==='GENRATEINC-PARTIALPPOPEN-BTN'){
@@ -429,6 +471,97 @@ wss.on('connection', (ws) => {
                         if(!(stationObj.states[alarm]===2)) continue;
                         stationObj.states[alarm]=1
                     }
+                    apiSave()
+                } else
+                if (data.execute==='ZOPP-ON-COM'){
+                    let response = JSON.parse(getCantonsInfo(data.target))
+                    if(!response) return;
+                    let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
+
+                    let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
+                    stationObj.states.doorsOpenedWithoutTrain=false
+                    trainObj.states.inZOPP=true
+                    apiSave()
+                } else
+                if (data.execute==='ZOPP-OFF-COM'){
+                    let response = JSON.parse(getCantonsInfo(data.target))
+                    if(!response) return;
+                    let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
+                    let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
+                    if(stationObj.states.doorsOpened){
+                        stationObj.states.doorsOpenedWithoutTrain=2
+                    }
+                    trainObj.states.inZOPP=false
+                    apiSave()
+                } else
+                if (data.execute==='OBS-ON-COM'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.activeObs=true
+                    apiSave()
+                } else
+                if (data.execute==='OBS-OFF-COM'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.activeObs=false
+                    stationObj.states.doorsObstacle=false
+                    apiSave()
+                } else
+                if (data.execute==='PMSUNLOCK-ON-COM'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.unlockedPMS=2
+                    apiSave()
+                } else
+                if (data.execute==='PMSUNLOCK-OFF-COM'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.unlockedPMS=false
+                    apiSave()
+                } else
+                if (data.execute==='PMSMANUAL-ON-COM'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    if(!stationObj.states.unlockedPMS) return;
+
+                    stationObj.states.manualExpKeyEng=2
+                    apiSave()
+                } else
+                if (data.execute==='PMSMANUAL-OFF-COM'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.manualExpKeyEng=false
+                    stationObj.states.engagedPMS=false
+                    stationObj.states.manuelPPOpening=false
+                    stationObj.states.manuelPPClosing=false
+                    apiSave()
+                } else
+                if (data.execute==='PMSMAINT-ON-COM'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    if(!stationObj.states.unlockedPMS) return;
+
+                    stationObj.states.maintKeyEng=2
+                    apiSave()
+                } else
+                if (data.execute==='PMSMAINT-OFF-COM'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.maintKeyEng=false
                     apiSave()
                 }
 
