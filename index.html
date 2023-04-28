@@ -32,7 +32,12 @@
             color: white;
             background-color: #8B8B8B;
         }
-        td{
+        td.voyStationState{
+            border: #848484 solid;
+            border-width: 1px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        td.voyStationTrain{
             border: #848484 solid;
             border-width: 1px;
             font-family: Arial, Helvetica, sans-serif;
@@ -50,8 +55,8 @@
             background-color: #8B8B8B;
         }
         .voyStationTrain{
-            color: white;
-            background-color: #8B8B8B;
+            color: black;
+            background-color: #CCCCCC;
         }
         .ok{
             background-color: #00EF35;
@@ -71,6 +76,12 @@
         }
         #fstation{
             background-color: #DCDCDC;
+        }
+        .btnControl{
+            background-color: #495BFE;
+            width: 100%;
+            color: white;
+            font-weight: bold;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
@@ -278,7 +289,7 @@
         <div id="stationState">
             <span><fieldset style="width: 30%; display: inline-table; text-align: center;">
                 <legend>Quai</legend>
-                <table>
+                <table style="width: 100%;">
                     <tr><td class="voyStationState" id="doorsOpened"><span id="doorsOpened" class="voyStationState">PP OUVERTES</span></td><td class="voyStationState" id="doorsClosed"><span id="doorsClosed" class="voyStationState">PP FERMÉES</span></td></tr>
                     <tr><td class="voyStationState" id="doorsOpenedPAS"><span id="doorsOpenedPAS" class="voyStationState">CDE. OUV. PP PAS</span></td><td class="voyStationState" id="doorsClosedPAS"><span id="doorsClosedPAS" class="voyStationState">CDE. FER. PP PAS</span></td></tr>
                     <tr><td class="voyStationState" id="defPartOuvPP"><span id="defPartOuvPP" class="voyStationState">DEF. PART. OUV. PP</span></td><td class="voyStationState" id="defPartFerPP"><span id="defPartFerPP" class="voyStationState">DEF. PART. FER. PP</span></td></tr>
@@ -294,12 +305,41 @@
                     <tr><td colspan="2" class="voyStationState" id="manuelPPOpening"><span id="manuelPPOpening" class="voyStationState">CDE MANUELLE OUV. PP</span></td></tr>
                     <tr><td colspan="2" class="voyStationState" id="manuelPPClosing"><span id="manuelPPClosing" class="voyStationState">CDE MANUELLE FER. PP</span></td></tr>
                     <tr><td class="voyStationState" id="departAuth"><span id="departAuth" class="voyStationState">AUTOR. DÉPART</span></td><td class="voyStationState" id="departForce"><span id="departForce" class="voyStationState">FORCAGE DÉPART</span></td></tr>
+                    <tr><td colspan="2" class="voyStationState" id="activeRA"><span id="activeRA" class="voyStationState">RA ACTIF</span></td></tr>
                 </table>
             </fieldset></span>
-            <span><fieldset style="width: 30%; display: inline-table;">
+            <span><fieldset style="width: 50%; display: inline-table; text-align: center;">
                 <legend>Train</legend>
+                <table width="100%">
+                    <tbody>
+                        <tr><th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th></tr>
+                        <tr><td class="voyStationTrain" id="doorsOpenedPV" colspan="3" width="50%"><span id="doorsOpenedPV" class="voyStationTrain">PV OUVERTES</span></td><td class="voyStationTrain" id="doorsClosedPV" colspan="3" width="50%"><span id="doorsClosedPV" class="voyStationTrain">PV FERMÉES</span></td></tr>
+                        <tr><td class="voyStationTrain" id="trainSecurised" colspan="3" width="50%"><span id="trainSecurised" class="voyStationTrain">VÉHICULE INSCRIT</span></td><td class="voyStationTrain" id="trainInZOPP" colspan="3" width="50%"><span id="trainInZOPP" class="voyStationTrain">TRAIN EN ZOPP</span></td></tr>
+                        <tr><td colspan="6" id="failedStop" class="voyStationTrain"><span id="failedStop" class="voyStationTrain">STATION RATÉE (POST ZOPP)</span></td></tr>
+                        <tr><td colspan="6" id="secureStop" class="voyStationTrain"><span id="secureStop" class="voyStationTrain">ARRÊT SECOURS (PRE ZOPP)</span></td></tr>
+                        <tr><td class="voyStationTrain" id="trainEssai" colspan="3" width="50%"><span id="trainEssai" class="voyStationTrain">TRAIN EN ESSAI</span></td><td class="voyStationTrain" id="trainIOP" colspan="3" width="50%"><span id="trainIOP" class="voyStationTrain">TRAIN EN IOP</span></td></tr>
+                        <tr><td colspan="2" width="33%"><input type="button" class="btnControl" value="ACTIF" id="btnActiveHLP"></td><td class="voyStationTrain" id="trainIOP" colspan="2" width="33%"><span id="HLP" class="voyStationTrain">HLP</span></td><td colspan="2" width="33%"><input type="button" id="btnInactiveHLP" class="btnControl" value="INACTIF"></td></tr>
+                        <tr><td colspan="6" id="forbiddenStart" class="voyStationTrain"><span id="forbiddenStart" class="voyStationTrain">INTERDICTION DÉPART VÉHICULE</span></td></tr>
+                        <tr><td class="voyStationTrain" id="trainEvac" colspan="3" width="50%"><span id="trainEvac" class="voyStationTrain">EVACUATION</span></td><td class="voyStationTrain" id="trainEmCall" colspan="3" width="50%"><span id="trainEmCall" class="voyStationTrain">APPEL PHONIE</span></td></tr>
+                        <tr><td class="voyStationTrain" id="lsvDef" colspan="3" width="50%"><span id="lsvDef" class="voyStationTrain">DÉFAUT LSV</span></td><td class="voyStationTrain" id="blockDef" colspan="3" width="50%"><span id="blockDef" class="voyStationTrain">DÉFAUT BLOCAGE</span></td></tr>
+                        <tr><td colspan="2" width="33%"><input type="button" class="btnControl" value="ACTIF" id="btnActiveDSO"></td><td class="voyStationTrain" colspan="2" width="33%"><span id="DSO" class="voyStationTrain">DSO/IDPO</span></td><td colspan="2" width="33%"><input type="button" id="btnInactiveDSO" class="btnControl" value="INACTIF"></td></tr>
+                        <tr><td class="voyStationTrain" id="IDPOAlreadyActiveByPLTP" colspan="4"><span id="IDPOAlreadyActiveByPLTP" class="voyStationTrain">IDPO ACTIF PAR PLTP</span></td><td colspan="2"><input type="button" id="btnIhibIDPOPLTP" class="btnControl" value="INHIB"></td></tr>
+                        <tr><td class="voyStationTrain" id="IDPOAlreadyActiveByALC" colspan="4"><span id="IDPOAlreadyActiveByALC" class="voyStationTrain">IDPO ACTIF PAR ALC/SECU AUTO</span></td><td colspan="2"><input type="button" id="btnIhibIDPOALC" class="btnControl" value="INHIB"></td></tr>
+                        <tr><td class="voyStationTrain" id="defCdeOuvPV" colspan="3" width="50%"><span id="defCdeOuvPV" class="voyStationTrain">DEF. CDE. OUV. PV</span></td><td class="voyStationTrain" id="defCdeFerPV" colspan="3" width="50%"><span id="defCdeFerPV" class="voyStationTrain">DEF. CDE. FER. PV</span></td></tr>
+                        <tr><td colspan="6" id="alimDef" class="voyStationTrain"><span id="alimDef" class="voyStationTrain">DÉFAUT ALIMENTATION</span></td></tr>
+                        <tr><td colspan="2" width="33%"><input type="text" value="" id="newTime" placeholder="TEMPS D'ARRÊT EN STATION"></td><td colspan="2" width="33%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="2" width="33%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>
+                        <tr><td colspan="2" width="33%"><span>Identification train:</span></td><td colspan="2" width="33%"><input type="text" id="trainNumber" disabled></td><td colspan="2" width="33%" id="longTrain" class="voyStationTrain"><span id="longTrain" class="voyStationTrain">TRAIN LONG</span></td></tr>
+
+                        <!--<tr><td colspan="3" width="50%">Temps d’arrêt quai:<span></span></td><td width="%" colspan="1"><input type="text" value="10" id="newTime"></td><td colspan="1" width="18%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="1" width="18%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>->
+                    </tbody>
+                </table>
+
                 <span class="voyStationOthers" id="trainPresent">Canton occupé</span> <span>Train N°<input type="text" value="NON" id="trainNumber" disabled style="width: 10%;"></span><br>
-                <span id="doorsOpenedPV" class="voyStationTrain">PV Ouvertes</span> <span id="doorsClosedPV" class="voyStationTrain">PV Fermées</span>
             </fieldset></span>
         </div>
     </div>

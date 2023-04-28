@@ -189,7 +189,6 @@ function updateVoy(s){
         }
     }
     if(s.trains[0]){
-        trainPresent.classList.toggle('ok', true)
         trainNumber.value=s.trains[0].tid
         for (let voy of document.getElementsByClassName('voyStationTrain')){
             let elemid = voy.id
@@ -206,7 +205,6 @@ function updateVoy(s){
             }
         }
     } else {
-        trainPresent.classList.remove('ok')
         for(let voy of document.getElementsByClassName('voyStationTrain')){
             voy.classList.remove('ok')
         }
