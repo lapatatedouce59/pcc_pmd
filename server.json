@@ -188,8 +188,8 @@
               "states": {
                 "doorsOpenedPV": false,
                 "doorsClosedPV": true,
-                "trainSecurised": false,
-                "inZOPP": false,
+                "trainSecurised": true,
+                "inZOPP": true,
                 "failedStop": false,
                 "secureStop": false,
                 "trainEssai": false,
@@ -201,6 +201,7 @@
                 "blockDef": false,
                 "defCdeOuvPV": false,
                 "defCdeFerPV": false,
+                "obstalceActive": false,
                 "longTrain": false
               }
             }
@@ -211,7 +212,7 @@
             "doorsOpened": false,
             "doorsClosed": true,
             "doorsOpenedPAS": false,
-            "doorsClosedPAS": false,
+            "doorsClosedPAS": true,
             "defPartOuvPP": false,
             "defPartFerPP": false,
             "defTotOuvPP": false,
@@ -224,9 +225,9 @@
             "lockedEDoors": true,
             "openedPEQ": false,
             "lockedPEQ": true,
-            "unlockedPMS": false,
+            "unlockedPMS": 1,
             "engagedPMS": false,
-            "manualExpKeyEng": false,
+            "manualExpKeyEng": 1,
             "maintKeyEng": false,
             "manuelPPOpening": false,
             "manuelPPClosing": false,
@@ -237,7 +238,9 @@
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
-            "ALCIDPOInhibed": false
+            "ALCIDPOInhibed": false,
+            "alimDef": false,
+            "actualTime": 10
           }
         },
         {
@@ -281,7 +284,9 @@
             "HLP": false,
             "DSO": false,
             "IDPOAlreadyActiveByPLTP": false,
-            "IDPOAlreadyActiveByALC": false
+            "IDPOAlreadyActiveByALC": false,
+            "alimDef": false,
+            "actualTime": 10
           }
         },
         {
@@ -336,6 +341,7 @@
                 "blockDef": false,
                 "defCdeOuvPV": false,
                 "defCdeFerPV": false,
+                "obstalceActive": false,
                 "longTrain": false
               }
             }
@@ -370,7 +376,9 @@
             "HLP": false,
             "DSO": false,
             "IDPOAlreadyActiveByPLTP": false,
-            "IDPOAlreadyActiveByALC": false
+            "IDPOAlreadyActiveByALC": false,
+            "alimDef": false,
+            "actualTime": 10
           }
         },
         {
@@ -414,7 +422,9 @@
             "HLP": false,
             "DSO": false,
             "IDPOAlreadyActiveByPLTP": false,
-            "IDPOAlreadyActiveByALC": false
+            "IDPOAlreadyActiveByALC": false,
+            "alimDef": false,
+            "actualTime": 10
           }
         },
         {

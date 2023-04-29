@@ -19,12 +19,18 @@ let btnInactiveHLP = document.getElementById('btnInactiveHLP')
 let btnInactiveDSO = document.getElementById('btnInactiveDSO')
 let btnIhibIDPOPLTP = document.getElementById('btnIhibIDPOPLTP')
 
+let btnSetTime = document.getElementById('btnSetTime')
+let newTime = document.getElementById('newTime')
+let actualTime = document.getElementById('actualTime')
+
 //btnAnomalies
 let btnPartialPPOpeningInc = document.getElementById('btnPartialPPOpeningInc')
 let btnPartialPPClosingInc = document.getElementById('btnPartialPPClosingInc')
 let btnTotalPPOpeningInc = document.getElementById('btnTotalPPOpeningInc')
 let btnTotalPPClosingInc = document.getElementById('btnTotalPPClosingInc')
 let ckbObs = document.getElementById('ckbObs')
+let btnEmCall =document.getElementById('btnEmCall')
+let btnAcqEmCall = document.getElementById('btnAcqEmCall')
 let btnReset = document.getElementById('btnReset')
 
 //btn actions
@@ -38,6 +44,7 @@ let ckbSafe = document.getElementById('ckbSafe')
 let ckbUnlockPMS = document.getElementById('ckbUnlockPMS')
 let ckbManualExploit = document.getElementById('ckbManualExploit')
 let ckbMaintenance = document.getElementById('ckbMaintenance')
+let ckbObsVeh = document.getElementById('ckbObsVeh')
 
 let btnAcquitStation = document.getElementById('btnAcquitStation')
 
@@ -151,6 +158,7 @@ function updateVoy(s){
         if(i===beepIntervalId) continue;
         clearInterval(i)
     }
+    actualTime.value=s.states.actualTime
     
     for (let voy of document.getElementsByClassName('voyStationState')){
         let elemid = voy.id
@@ -178,7 +186,7 @@ function updateVoy(s){
                 clearInterval(blinkIdReturn)
                 clearInterval(blinkIdReturn-1)
                 blinkIntervalId.delete(elemid)
-                if(elemid==='IDPOAlreadyActiveByPLTP' && s.states['PLTPIDPOInhibed']==false){
+                if((elemid==='IDPOAlreadyActiveByPLTP' && s.states['PLTPIDPOInhibed']==false)||(elemid==='IDPOAlreadyActiveByALC' && s.states['ALCIDPOInhibed']==false)){
                     btnInactiveDSO.disabled=true
                     btnActiveDSO.disabled=true
                 } else {
@@ -217,10 +225,32 @@ function updateVoy(s){
                 case false:
                     console.log(elemid+' faux.')
                     voy.classList.remove('ok')
+                    voy.classList.remove('alarm')
                     break;
                 case true:
                     console.log(elemid+' true.')
                     voy.classList.toggle('ok', true)
+                    voy.classList.remove('alarm')
+                    break;
+                case 1:
+                    console.log(elemid+' Alarme')
+                    voy.classList.remove('ok')
+                    voy.classList.toggle('alarm', true)
+                    blinkIdReturn = blinkIntervalId.get(elemid)
+                    clearInterval(blinkIdReturn)
+                    clearInterval(blinkIdReturn-1)
+                    blinkIntervalId.delete(elemid)
+                    break;
+                case 2:
+                    console.log(elemid+' Anomalie')
+                    voy.classList.remove('ok')
+                    let blinkId = setInterval(async function() {
+                        voy.classList.toggle('alarm')
+                    }, 500)
+                    if(blinkId>=10000) alert('blinkId>=10000, relancer la page!')
+                    console.log(blinkId)
+                    blinkIntervalId.set(elemid, blinkId)
+                    console.log(blinkIntervalId)
                     break;
             }
         }
@@ -483,4 +513,75 @@ btnIhibIDPOPLTP.addEventListener('click', ()=>{
         execute: "INHIBPLTPIDPO-BTN",
         target: getStationsInfo(selectMenu.value)
     }));
+})
+
+btnIhibIDPOALC.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "INHIBALCIDPO-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+ckbObsVeh.addEventListener('input', ()=>{
+    let trainId = parseFloat(trainOrderAffect.value)
+    if(!trainId){
+        trainOrderAffect.style.backgroundColor='#EC2020'
+        return;
+    }
+    if(ckbObsVeh.checked){
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "OBSVEH-ON-COM",
+            target: trainId
+        }));
+    } else {
+        ws.send(JSON.stringify({
+            op: 204,
+            execute: "OBSVEH-OFF-COM",
+            target: trainId
+        }));
+    }
+})
+
+btnSetTime.addEventListener('click', ()=>{
+    if(!newTime.value){
+        newTime.style.backgroundColor='#EC2020'
+        return;
+    }
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "SETTIME-BTN",
+        new: newTime.value,
+        target: getStationsInfo(selectMenu.value)
+    }));
+    
+})
+
+btnEmCall.addEventListener('click', ()=>{
+    let trainId = parseFloat(trainOrderAffect.value)
+    if(!trainId){
+        trainOrderAffect.style.backgroundColor='#EC2020'
+        return;
+    }
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "EMCALL-BTN",
+        target: trainId
+    }));
+    trainOrderAffect.style.backgroundColor='white'
+})
+
+btnAcqEmCall.addEventListener('click', ()=>{
+    let trainId = parseFloat(trainOrderAffect.value)
+    if(!trainId){
+        trainOrderAffect.style.backgroundColor='#EC2020'
+        return;
+    }
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "ACQEMCALL-BTN",
+        target: trainId
+    }));
+    trainOrderAffect.style.backgroundColor='white'
 })
