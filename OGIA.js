@@ -45,10 +45,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[7].cid)
-            pccApi.SEC[_secIndex].cantons[7].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[7].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')
@@ -59,10 +56,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[6].cid)
-            pccApi.SEC[_secIndex].cantons[6].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[6].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')
@@ -73,10 +67,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[2].cid)
-            pccApi.SEC[_secIndex].cantons[2].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[2].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')
@@ -87,10 +78,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1202" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a2"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[8].cid)
-            pccApi.SEC[_secIndex].cantons[8].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[8].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')
@@ -101,10 +89,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2402" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[0].cid)
-            pccApi.SEC[_secIndex].cantons[0].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[0].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')
@@ -116,10 +101,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[2].cid)
-            pccApi.SEC[_secIndex].cantons[2].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[2].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')
@@ -130,10 +112,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position=="a2"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[1].cid)
-            pccApi.SEC[_secIndex].cantons[1].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')
@@ -144,10 +123,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1301" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[7].cid)
-            pccApi.SEC[_secIndex].cantons[7].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[7].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')
@@ -158,10 +134,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1102" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[7].cid)
-            pccApi.SEC[_secIndex].cantons[7].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[7].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')
@@ -175,10 +148,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="cGA2PAG" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a2"){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[1].cid)
-            pccApi.SEC[_secIndex].cantons[1].trains.push( {
-                tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-            } )
+            pccApi.SEC[_secIndex].cantons[1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
             pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
             if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                 logger.confirm('Mouvement effectué avec succès')

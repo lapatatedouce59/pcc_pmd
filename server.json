@@ -194,9 +194,9 @@
                 "secureStop": false,
                 "trainEssai": false,
                 "trainIOP": false,
-                "forbiddenStart": false,
+                "forbiddenStart": 1,
                 "trainEvac": false,
-                "trainEmCall": false,
+                "trainEmCall": 1,
                 "lsvDef": false,
                 "blockDef": false,
                 "defCdeOuvPV": false,
@@ -234,10 +234,10 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
+            "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
-            "IDPOAlreadyActiveByALC": false,
+            "IDPOAlreadyActiveByALC": true,
             "ALCIDPOInhibed": false,
             "alimDef": false,
             "actualTime": 10
@@ -316,36 +316,13 @@
         },
         {
           "cid": "c1202",
-          "position": "a2",
-          "dir": "down",
+          "position": "r",
+          "dir": "r",
           "trains": []
         },
         {
           "cid": "c1302",
-          "trains": [
-            {
-              "tid": "2",
-              "name": "Jean Marc",
-              "states": {
-                "doorsOpenedPV": true,
-                "doorsClosedPV": false,
-                "inZOPP": false,
-                "failedStop": false,
-                "secureStop": false,
-                "trainEssai": false,
-                "trainIOP": false,
-                "forbiddenStart": false,
-                "trainEvac": false,
-                "trainEmCall": false,
-                "lsvDef": false,
-                "blockDef": false,
-                "defCdeOuvPV": false,
-                "defCdeFerPV": false,
-                "obstalceActive": false,
-                "longTrain": false
-              }
-            }
-          ],
+          "trains": [],
           "type": "quai",
           "name": "STO V1",
           "states": {
@@ -383,7 +360,30 @@
         },
         {
           "cid": "c1402",
-          "trains": []
+          "trains": [
+            {
+              "tid": "2",
+              "name": "Jean Marc",
+              "states": {
+                "doorsOpenedPV": true,
+                "doorsClosedPV": false,
+                "inZOPP": false,
+                "failedStop": false,
+                "secureStop": false,
+                "trainEssai": false,
+                "trainIOP": false,
+                "forbiddenStart": false,
+                "trainEvac": false,
+                "trainEmCall": false,
+                "lsvDef": false,
+                "blockDef": false,
+                "defCdeOuvPV": false,
+                "defCdeFerPV": false,
+                "obstalceActive": false,
+                "longTrain": false
+              }
+            }
+          ]
         },
         {
           "cid": "c2102",
@@ -440,8 +440,8 @@
         {
           "cid": "cGA2PAG",
           "trains": [],
-          "position": "a2",
-          "dir": "down"
+          "position": "r",
+          "dir": "r"
         },
         {
           "cid": "cGPAG1",

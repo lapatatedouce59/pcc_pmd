@@ -159,6 +159,7 @@ function updateVoy(s){
         clearInterval(i)
     }
     actualTime.value=s.states.actualTime
+
     
     for (let voy of document.getElementsByClassName('voyStationState')){
         let elemid = voy.id
@@ -217,6 +218,7 @@ function updateVoy(s){
         }
     }
     if(s.trains[0]){
+        console.log(s.trains[0])
         trainNumber.value=s.trains[0].tid
         for (let voy of document.getElementsByClassName('voyStationTrain')){
             let elemid = voy.id
@@ -257,6 +259,7 @@ function updateVoy(s){
     } else {
         for(let voy of document.getElementsByClassName('voyStationTrain')){
             voy.classList.remove('ok')
+            voy.classList.remove('alarm')
         }
         trainNumber.value='NON'
     }
