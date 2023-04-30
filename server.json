@@ -15,65 +15,65 @@
   "voyAQU": false,
   "voyGAT": true,
   "voyABS": true,
-  "comArmPR": false,
+  "comArmPR": true,
   "SS": [
     {
-      "voyDHTSS04": 1,
+      "voyDHTSS04": true,
       "voyAlimSS04": true,
       "voyDISS04": false
     },
     {
-      "voyDHTSS05": 1,
+      "voyDHTSS05": true,
       "voyAlimSS05": true,
       "voyDISS05": false
     },
     {
-      "voyDHTSS06": 1,
+      "voyDHTSS06": true,
       "voyAlimSS06": true,
       "voyDISS06": false
     },
     {
-      "voyDHTSS07": 1,
+      "voyDHTSS07": true,
       "voyAlimSS07": true,
       "voyDISS07": false
     },
     {
-      "voyDHTSS08": 1,
+      "voyDHTSS08": true,
       "voyAlimSS08": true,
       "voyDISS08": false
     },
     {
-      "voyDHTSS09": 1,
+      "voyDHTSS09": true,
       "voyAlimSS09": true,
       "voyDISS09": false
     },
     {
-      "voyDHTSS10": 1,
+      "voyDHTSS10": true,
       "voyAlimSS10": true,
       "voyDISS10": false
     },
     {
-      "voyDHTSS11": 1,
+      "voyDHTSS11": true,
       "voyAlimSS11": true,
       "voyDISS11": false
     },
     {
-      "voyDHTSS12": 1,
+      "voyDHTSS12": true,
       "voyAlimSS12": true,
       "voyDISS12": false
     },
     {
-      "voyDHTSS13": 1,
+      "voyDHTSS13": true,
       "voyAlimSS13": true,
       "voyDISS13": false
     },
     {
-      "voyDHTSS14": 1,
+      "voyDHTSS14": true,
       "voyAlimSS14": true,
       "voyDISS14": false
     },
     {
-      "voyDHTSS15": 1,
+      "voyDHTSS15": true,
       "voyAlimSS15": true,
       "voyDISS15": false
     }
@@ -282,7 +282,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
+            "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
@@ -351,7 +351,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
+            "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
@@ -367,7 +367,7 @@
               "states": {
                 "doorsOpenedPV": true,
                 "doorsClosedPV": false,
-                "inZOPP": false,
+                "inZOPP": true,
                 "failedStop": false,
                 "secureStop": false,
                 "trainEssai": false,
@@ -380,7 +380,8 @@
                 "defCdeOuvPV": false,
                 "defCdeFerPV": false,
                 "obstalceActive": false,
-                "longTrain": false
+                "longTrain": false,
+                "trainSecurised": true
               }
             }
           ]
@@ -420,7 +421,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
+            "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,

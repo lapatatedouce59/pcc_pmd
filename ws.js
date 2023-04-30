@@ -327,6 +327,20 @@ wss.on('connection', (ws) => {
                             pccApi.SS[9].voyDHTSS13=2;
                             pccApi.SS[10].voyDHTSS14=2;
                             pccApi.SS[11].voyDHTSS15=2;
+                            for (let sec of pccApi.SEC){
+                                for (let ctns of sec.cantons){
+                                    if(!(ctns.hasOwnProperty('type'))) continue;
+                                    ctns.states.alimDef=2
+                                    ctns.states.IDPOAlreadyActiveByALC=true
+                                    ctns.states.DSO=true
+                                    if(ctns.trains[0]){
+                                        let trainObj=ctns.trains[0]
+                                        trainObj.states.forbiddenStart=2
+                                    }
+                                    
+                                }
+                            }
+                            
                         } else if(data.state===true){
                             pccApi.comArmPR=true
                             pccApi.SS[0].voyDHTSS04=true;
@@ -341,6 +355,17 @@ wss.on('connection', (ws) => {
                             pccApi.SS[9].voyDHTSS13=true;
                             pccApi.SS[10].voyDHTSS14=true;
                             pccApi.SS[11].voyDHTSS15=true;
+                            for (let sec of pccApi.SEC){
+                                for (let ctns of sec.cantons){
+                                    if(!(ctns.hasOwnProperty('type'))) continue;
+                                    ctns.states.alimDef=false
+                                    ctns.states.IDPOAlreadyActiveByALC=false
+                                    if(ctns.trains[0]){
+                                        let trainObj=ctns.trains[0]
+                                        trainObj.states.forbiddenStart=false
+                                    }
+                                }
+                            }
                         }
                         break;
                 }
@@ -497,22 +522,23 @@ wss.on('connection', (ws) => {
                         if(!(stationObj.states[alarm]===2)) continue;
                         stationObj.states[alarm]=1
                     }
-
                     let trainObj = stationObj.trains[0]
-                    for(let alarm in trainObj.states){
-                        if(!(trainObj.states[alarm]===2)) continue;
-                        trainObj.states[alarm]=1
+                    if(trainObj){
+                        for(let alarm in trainObj.states){
+                            if(!(trainObj.states[alarm]===2)) continue;
+                            trainObj.states[alarm]=1
+                        }
                     }
-
                     apiSave()
                 } else
                 if (data.execute==='ZOPP-ON-COM'){
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
-
                     let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
-                    stationObj.states.doorsOpenedWithoutTrain=false
+                    if(stationObj.hasOwnProperty('type')){
+                        stationObj.states.doorsOpenedWithoutTrain=false
+                    }
                     trainObj.states.inZOPP=true
                     apiSave()
                 } else
@@ -521,8 +547,10 @@ wss.on('connection', (ws) => {
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
                     let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
-                    if(stationObj.states.doorsOpened){
-                        stationObj.states.doorsOpenedWithoutTrain=2
+                    if(stationObj.hasOwnProperty('type')){
+                        if(stationObj.states.doorsOpened){
+                            stationObj.states.doorsOpenedWithoutTrain=2
+                        }
                     }
                     trainObj.states.inZOPP=false
                     apiSave()
