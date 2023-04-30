@@ -267,16 +267,16 @@
             <legend>ACTIONS TEST (PMS)</legend>
             <input type="button" value="Ouvrir PP" id="btnOpenPP">
             <input type="button" value="Fermer PP" id="btnClosePP"><br>
-            <input type="checkbox" id="ckbUnlockPMS" class="com"><span>Ouvrir le PMS</span><br>
-            <input type="checkbox" id="ckbManualExploit" class="com"><span>Clé exploitation manuelle</span><br>
-            <input type="checkbox" id="ckbMaintenance" class="com"><span>Clé maintenance</span><br>
+            <input type="checkbox" id="ckbUnlockPMS" class="comFormat"><span>Ouvrir le PMS</span><br>
+            <input type="checkbox" id="ckbManualExploit" class="comFormat"><span>Clé exploitation manuelle</span><br>
+            <input type="checkbox" id="ckbMaintenance" class="comFormat"><span>Clé maintenance</span><br>
             <input type="button" value="Autor. Départ" id="btnAuthDepart"><input type="button" value="RAZ" id="btnResetAuthDepart">
             <input type="button" value="Forcage" id="btnForceDepart"><br>
             <input type="button" value="Ouvrir PV" id="btnOpenPV">
             <input type="button" value="Fermer PV" id="btnClosePV"> <br>
-            <input type="checkbox" id="ckbZopp" class="com"><span>Train en ZOPP</span><br>
-            <input type="checkbox" id="ckbSafe" class="com"><span>Train inscrit</span><br>
-            <input type="checkbox" id="ckbObsVeh" class="com"><span>Obstacle Portes Train</span><br>
+            <input type="checkbox" id="ckbZopp" class="comFormat"><span>Train en ZOPP</span><br>
+            <input type="checkbox" id="ckbSafe" class="comFormat"><span>Train inscrit</span><br>
+            <input type="checkbox" id="ckbObsVeh" class="comFormat"><span>Obstacle Portes Train</span><br>
             <input type="text" id="trainOrderAffect" placeholder="Train concerné...">
         </fieldset></span>
         <span><fieldset style="width: 50%; display: inline-block;">
@@ -287,7 +287,7 @@
             <input type="button" value="DEFAUT TOTAL FERMETURE PP" id="btnTotalPPClosingInc"> <br>
             <input type="button" value="EVACUATION" id="btnEvac">
             <input type="button" value="APPEL PCC" id="btnEmCall"><input type="button" value="ACQUITTER APPEL" id="btnAcqEmCall"> <br>
-            <input type="checkbox" id="ckbObs" class="com"><span>Obstacle Portes</span><br>
+            <input type="checkbox" id="ckbObs" class="comFormat"><span>Obstacle Portes</span><br>
             <input type="button" value="RAZ" id="btnReset">
         </fieldset></span>
         <div id="stationState">
@@ -342,8 +342,6 @@
                         <!--<tr><td colspan="3" width="50%">Temps d’arrêt quai:<span></span></td><td width="%" colspan="1"><input type="text" value="10" id="newTime"></td><td colspan="1" width="18%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="1" width="18%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>-->
                     </tbody>
                 </table>
-
-                <span class="voyStationOthers" id="trainPresent">Canton occupé</span> <span>Train N°<input type="text" value="NON" id="trainNumber" disabled style="width: 10%;"></span><br>
             </fieldset></span>
         </div>
     </div>

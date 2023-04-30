@@ -15,65 +15,65 @@
   "voyAQU": false,
   "voyGAT": true,
   "voyABS": true,
-  "comArmPR": true,
+  "comArmPR": false,
   "SS": [
     {
-      "voyDHTSS04": true,
+      "voyDHTSS04": 1,
       "voyAlimSS04": true,
       "voyDISS04": false
     },
     {
-      "voyDHTSS05": true,
+      "voyDHTSS05": 1,
       "voyAlimSS05": true,
       "voyDISS05": false
     },
     {
-      "voyDHTSS06": true,
+      "voyDHTSS06": 1,
       "voyAlimSS06": true,
       "voyDISS06": false
     },
     {
-      "voyDHTSS07": true,
+      "voyDHTSS07": 1,
       "voyAlimSS07": true,
       "voyDISS07": false
     },
     {
-      "voyDHTSS08": true,
+      "voyDHTSS08": 1,
       "voyAlimSS08": true,
       "voyDISS08": false
     },
     {
-      "voyDHTSS09": true,
+      "voyDHTSS09": 1,
       "voyAlimSS09": true,
       "voyDISS09": false
     },
     {
-      "voyDHTSS10": true,
+      "voyDHTSS10": 1,
       "voyAlimSS10": true,
       "voyDISS10": false
     },
     {
-      "voyDHTSS11": true,
+      "voyDHTSS11": 1,
       "voyAlimSS11": true,
       "voyDISS11": false
     },
     {
-      "voyDHTSS12": true,
+      "voyDHTSS12": 1,
       "voyAlimSS12": true,
       "voyDISS12": false
     },
     {
-      "voyDHTSS13": true,
+      "voyDHTSS13": 1,
       "voyAlimSS13": true,
       "voyDISS13": false
     },
     {
-      "voyDHTSS14": true,
+      "voyDHTSS14": 1,
       "voyAlimSS14": true,
       "voyDISS14": false
     },
     {
-      "voyDHTSS15": true,
+      "voyDHTSS15": 1,
       "voyAlimSS15": true,
       "voyDISS15": false
     }
@@ -194,9 +194,9 @@
                 "secureStop": false,
                 "trainEssai": false,
                 "trainIOP": false,
-                "forbiddenStart": 1,
+                "forbiddenStart": false,
                 "trainEvac": false,
-                "trainEmCall": 1,
+                "trainEmCall": false,
                 "lsvDef": false,
                 "blockDef": false,
                 "defCdeOuvPV": false,
@@ -225,22 +225,22 @@
             "lockedEDoors": true,
             "openedPEQ": false,
             "lockedPEQ": true,
-            "unlockedPMS": 1,
+            "unlockedPMS": false,
             "engagedPMS": false,
-            "manualExpKeyEng": 1,
+            "manualExpKeyEng": false,
             "maintKeyEng": false,
             "manuelPPOpening": false,
             "manuelPPClosing": false,
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": true,
+            "DSO": false,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
-            "IDPOAlreadyActiveByALC": true,
+            "IDPOAlreadyActiveByALC": false,
             "ALCIDPOInhibed": false,
             "alimDef": false,
-            "actualTime": 10
+            "actualTime": 23
           }
         },
         {
