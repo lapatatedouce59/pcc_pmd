@@ -181,31 +181,7 @@
         },
         {
           "cid": "c1401",
-          "trains": [
-            {
-              "tid": "3",
-              "name": "Léo",
-              "states": {
-                "doorsOpenedPV": false,
-                "doorsClosedPV": true,
-                "trainSecurised": true,
-                "inZOPP": true,
-                "failedStop": false,
-                "secureStop": false,
-                "trainEssai": false,
-                "trainIOP": false,
-                "forbiddenStart": false,
-                "trainEvac": false,
-                "trainEmCall": false,
-                "lsvDef": false,
-                "blockDef": false,
-                "defCdeOuvPV": false,
-                "defCdeFerPV": false,
-                "obstalceActive": false,
-                "longTrain": false
-              }
-            }
-          ],
+          "trains": [],
           "type": "quai",
           "name": "MSTO V1",
           "states": {
@@ -234,7 +210,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
+            "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -245,7 +221,31 @@
         },
         {
           "cid": "c1501",
-          "trains": []
+          "trains": [
+            {
+              "tid": "3",
+              "name": "Léo",
+              "states": {
+                "doorsOpenedPV": false,
+                "doorsClosedPV": true,
+                "trainSecurised": true,
+                "inZOPP": false,
+                "failedStop": false,
+                "secureStop": false,
+                "trainEssai": false,
+                "trainIOP": false,
+                "forbiddenStart": false,
+                "trainEvac": false,
+                "trainEmCall": false,
+                "lsvDef": false,
+                "blockDef": false,
+                "defCdeOuvPV": false,
+                "defCdeFerPV": false,
+                "obstalceActive": false,
+                "longTrain": false
+              }
+            }
+          ]
         },
         {
           "cid": "c2101",
@@ -328,8 +328,8 @@
           "states": {
             "doorsOpened": false,
             "doorsClosed": true,
-            "doorsOpenedPAS": true,
-            "doorsClosedPAS": false,
+            "doorsOpenedPAS": false,
+            "doorsClosedPAS": true,
             "defPartOuvPP": false,
             "defPartFerPP": false,
             "defTotOuvPP": false,
@@ -351,7 +351,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": true,
+            "DSO": false,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
@@ -365,8 +365,8 @@
               "tid": "2",
               "name": "Jean Marc",
               "states": {
-                "doorsOpenedPV": true,
-                "doorsClosedPV": false,
+                "doorsOpenedPV": false,
+                "doorsClosedPV": true,
                 "inZOPP": true,
                 "failedStop": false,
                 "secureStop": false,

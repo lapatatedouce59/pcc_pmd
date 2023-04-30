@@ -735,8 +735,10 @@ wss.on('connection', (ws) => {
                     trainObj.states.trainEmCall=2
                     trainObj.states.forbiddenStart=2
                     let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
-                    stationObj.states.DSO=true
-                    stationObj.states.IDPOAlreadyActiveByALC=true
+                    if(stationObj.hasOwnProperty('type')){
+                        stationObj.states.DSO=true
+                        stationObj.states.IDPOAlreadyActiveByALC=true
+                    }
                     apiSave()
                 } else
                 if (data.execute==='ACQEMCALL-BTN'){
@@ -791,6 +793,9 @@ wss.on('connection', (ws) => {
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
 
                                 let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
                                 console.log(trainCopy)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
@@ -806,6 +811,9 @@ wss.on('connection', (ws) => {
                                 console.log('[S1? V1 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
                                 
                                 let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
                                 console.log(trainCopy)
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
@@ -820,8 +828,12 @@ wss.on('connection', (ws) => {
                                 console.log('[S1? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
 
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -839,9 +851,13 @@ wss.on('connection', (ws) => {
                                 logger.error('Pas de canton +1!')
                                 console.log('[S1? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
 
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
+                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
 
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -853,7 +869,11 @@ wss.on('connection', (ws) => {
                             if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S1? V1 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -866,7 +886,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
 
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -893,7 +917,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
 
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -905,7 +933,11 @@ wss.on('connection', (ws) => {
                             if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S1? V2 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -918,7 +950,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
 
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -943,7 +979,11 @@ wss.on('connection', (ws) => {
     
                                     let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
     
-                                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                    if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                        trainCopy.states.inZOPP=false
+                                    }
+                                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                     console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                     pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -953,7 +993,11 @@ wss.on('connection', (ws) => {
                                     return;
                                 }
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
@@ -966,7 +1010,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
 
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1003,7 +1051,11 @@ wss.on('connection', (ws) => {
                             if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S1? VG SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1056,7 +1108,11 @@ wss.on('connection', (ws) => {
                                     return;
                                 }
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
@@ -1083,7 +1139,7 @@ wss.on('connection', (ws) => {
                             }
                         }
                     }
-
+//! todo crash hors zopp ouverture porte (a fix pour sens 2)
                     //?         FIN DE MOOVHANDLER V1            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 } else if(data.sens === 2){
@@ -1110,7 +1166,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
 
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1122,7 +1182,11 @@ wss.on('connection', (ws) => {
                             if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S2? V1 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
@@ -1136,6 +1200,10 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
 
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
@@ -1154,8 +1222,12 @@ wss.on('connection', (ws) => {
                                 console.log('[S2? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
 
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1167,7 +1239,11 @@ wss.on('connection', (ws) => {
                             if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S2? V1 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1180,7 +1256,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
 
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1207,8 +1287,12 @@ wss.on('connection', (ws) => {
                                 console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
 
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1220,7 +1304,11 @@ wss.on('connection', (ws) => {
                             if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S2? V2 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1233,7 +1321,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
 
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1258,8 +1350,12 @@ wss.on('connection', (ws) => {
                                     console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
     
                                     let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
+                                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                        trainCopy.states.inZOPP=false
+                                    }
     
-                                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                     console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                     pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1269,7 +1365,11 @@ wss.on('connection', (ws) => {
                                     return;
                                 }
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
@@ -1283,7 +1383,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
 
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1310,6 +1414,10 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
 
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
@@ -1322,7 +1430,11 @@ wss.on('connection', (ws) => {
                             if((/*pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) &&*/pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S2? VG SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1335,7 +1447,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
 
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1359,8 +1475,12 @@ wss.on('connection', (ws) => {
                                     console.log('[S2? VG SIM -> ELSE] Pas de continuité, passage à la section LIGNE')
     
                                     let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
+                                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
     
-                                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                     console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                     pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -1370,7 +1490,11 @@ wss.on('connection', (ws) => {
                                     return;
                                 }
 
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
@@ -1384,7 +1508,11 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
 
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                                    trainCopy.states.inZOPP=false
+                                }
+                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){

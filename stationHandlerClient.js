@@ -66,6 +66,14 @@ ws.addEventListener('open', ()=> {
         from: "STATION"
     }));
 
+    ws.addEventListener('close', ()=>{
+        alert('Le serveur viens de crash! Merci de signaler l\'erreur à La Patate Douce sur discord.gg/pmd en indiquant les actions effectuées!')
+    })
+
+    ws.addEventListener('error',()=>{
+        alert('Le serveur viens de crash! Merci de signaler l\'erreur à La Patate Douce sur discord.gg/pmd en indiquant les actions effectuées!')
+    })
+
     ws.addEventListener('message', msg =>{
         data = JSON.parse(msg.data);
         console.log(data);
@@ -228,8 +236,16 @@ function updateVoy(s){
                     console.log(elemid+' faux.')
                     voy.classList.remove('ok')
                     voy.classList.remove('alarm')
+                    blinkIdReturn = blinkIntervalId.get(elemid)
+                    clearInterval(blinkIdReturn)
+                    clearInterval(blinkIdReturn-1)
+                    blinkIntervalId.delete(elemid)
                     break;
                 case true:
+                    blinkIdReturn = blinkIntervalId.get(elemid)
+                    clearInterval(blinkIdReturn)
+                    clearInterval(blinkIdReturn-1)
+                    blinkIntervalId.delete(elemid)
                     console.log(elemid+' true.')
                     voy.classList.toggle('ok', true)
                     voy.classList.remove('alarm')
