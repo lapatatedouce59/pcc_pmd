@@ -1382,7 +1382,7 @@ wss.on('connection', (ws) => {
                                     return;
                                 }
 
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
                                 if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
                                     trainCopy.states.inZOPP=false
                                 }

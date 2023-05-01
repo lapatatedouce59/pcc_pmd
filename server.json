@@ -189,7 +189,7 @@
             "doorsClosed": true,
             "doorsOpenedPAS": false,
             "doorsClosedPAS": true,
-            "defPartOuvPP": false,
+            "defPartOuvPP": 1,
             "defPartFerPP": false,
             "defTotOuvPP": false,
             "defTotFerPP": false,
@@ -216,7 +216,22 @@
             "IDPOAlreadyActiveByALC": false,
             "ALCIDPOInhibed": false,
             "alimDef": false,
-            "actualTime": 23
+            "actualTime": 23,
+            "afdActive": false,
+            "cancelAfd":false,
+            "VVTS1":false,
+            "vvtS1AlreadyOn":false,
+            "VVTS2":false,
+            "vvtS2AlreadyOn":false,
+            "depaActive":false,
+            "defDepa":false,
+            "idpfActive":false,
+            "impIdpf":false,
+            "istaActive":false,
+            "istaBlock":false,
+            "mapfActive":false,
+            "mapfImp":false,
+            "defOrderExec":false
           }
         },
         {

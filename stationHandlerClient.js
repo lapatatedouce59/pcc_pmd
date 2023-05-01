@@ -4,14 +4,7 @@ let selectValue = false
 let quaiTitle = document.getElementById('quaiTitle')
 
 //voyants
-let doorsOpened = document.getElementById('doorsOpened')
-let doorsClosed = document.getElementById('doorsClosed')
-let doorsOpenedPV = document.getElementById('doorsOpenedPV')
-let doorsClosedPV = document.getElementById('doorsClosedPV')
-let trainPresent = document.getElementById('trainPresent')
 let trainNumber = document.getElementById('trainNumber')
-let doorsOpenedPAS = document.getElementById('doorsOpenedPAS')
-let doorsClosedPAS = document.getElementById('doorsClosedPAS')
 
 let btnActiveHLP = document.getElementById('btnActiveHLP')
 let btnActiveDSO = document.getElementById('btnActiveDSO')
@@ -22,6 +15,24 @@ let btnIhibIDPOPLTP = document.getElementById('btnIhibIDPOPLTP')
 let btnSetTime = document.getElementById('btnSetTime')
 let newTime = document.getElementById('newTime')
 let actualTime = document.getElementById('actualTime')
+
+//commandes
+let btnAFD = document.getElementById('btnAFD')
+let btnRAZAFD = document.getElementById('btnRAZAFD')
+let btnVVTS1 = document.getElementById('btnVVTS1')
+let btnRAZVVTS1 = document.getElementById('btnRAZVVTS1')
+let btnVVTS2 = document.getElementById('btnVVTS2')
+let btnRAZVVTS2 = document.getElementById('btnRAZVVTS2')
+let btnDEPA = document.getElementById('btnDEPA')
+let btnRAZdepa = document.getElementById('btnRAZdepa')
+let btnIDPF = document.getElementById('btnIDPF')
+let btnRAZidpf = document.getElementById('btnRAZidpf')
+let btnISTA = document.getElementById('btnISTA')
+let btnRAZista = document.getElementById('btnRAZista')
+let btnMAPF = document.getElementById('btnMAPF')
+let btnRAZmapf = document.getElementById('btnRAZmapf')
+let btnInhibVVTS1 = document.getElementById('btnInhibVVTS1')
+let btnInhibVVTS2 = document.getElementById('btnInhibVVTS2')
 
 //btnAnomalies
 let btnPartialPPOpeningInc = document.getElementById('btnPartialPPOpeningInc')
@@ -262,6 +273,7 @@ function updateVoy(s){
                 case 2:
                     console.log(elemid+' Anomalie')
                     voy.classList.remove('ok')
+                    voy.classList.add('alarm')
                     let blinkId = setInterval(async function() {
                         voy.classList.toggle('alarm')
                     }, 500)
