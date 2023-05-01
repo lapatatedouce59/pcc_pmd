@@ -19,8 +19,25 @@ server.listen(8081, function listening() {
     console.log('Address: ', wss.address());
 });
 
-*/
+const dotenv = require('dotenv');
+dotenv.config();
+const { EmbedBuilder, WebhookClient } = require('discord.js');
+const webhookToken = process.env.DISCORD_TOKEN
+const webhookClient = new WebhookClient({ url: webhookToken });
+
+
+wss.addListener('listening',()=>{
+    const embed = new EmbedBuilder()
+	    .setTitle('Status du PCC')
+	    .setColor('#74C365')
+        .setDescription('Le serveur général du PCC a démarré!');
+    webhookClient.send({
+	    content: '',
+	    embeds: [embed],
+    });
+})
 const {setTimeout} = require('timers/promises')
+*/
 console.log('[V] WebSocket init on port 8081')
 console.log('[@] Server Api init')
 const pccApi=require('./server.json');
@@ -1383,7 +1400,7 @@ wss.on('connection', (ws) => {
 
                                 let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
 
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
                                 if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
                                     trainCopy.states.inZOPP=false
                                 }
@@ -1430,7 +1447,7 @@ wss.on('connection', (ws) => {
                             if((/*pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) &&*/pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
                                 console.log('[S2? VG SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
 
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
                                 if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
                                     trainCopy.states.inZOPP=false
                                 }
