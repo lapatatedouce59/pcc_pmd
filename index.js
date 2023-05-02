@@ -199,6 +199,14 @@ sm.init()
 
 let data = false
 
+async function isWsRunning(){
+    await sleep(2000)
+    if(!(data)){
+        alert('Le websocket semble être hors ligne! Merci de signaler à La Patate Douce sur Discord!')
+        return;
+    }
+}
+
 fetch('https://api.db-ip.com/v2/free/self', {
     method: 'GET'
 }).then(async reponse => {
@@ -208,6 +216,7 @@ fetch('https://api.db-ip.com/v2/free/self', {
     let city = ipdata.city
     let ipAdress = false
     ws = new WebSocket('ws://localhost:8081')
+
 
     ws.addEventListener('open', () => {
         console.log("Connecté au WS")
@@ -498,6 +507,7 @@ fetch('https://api.db-ip.com/v2/free/self', {
             }
         })
     })
+    isWsRunning()
 });
 
 btnAG.addEventListener("click", () => {
@@ -753,10 +763,6 @@ function sleep(ms) {
 }
 
 function getCantonsInfo() {
-    if(!(data)){
-        alert('Le websocket semble être hors ligne! Merci de signaler à La Patate Douce sur Discord!')
-        return;
-    }
     let _GLIST_ = cantonsS1
     clearAllCantons('S1');
     let fresponse = {
