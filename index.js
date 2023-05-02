@@ -200,7 +200,12 @@ sm.init()
 let data = false
 
 async function isWsRunning(){
-    await sleep(2000)
+    await sleep(1000)
+    if(!(cantonsS2.aiguilles)){
+        alert('Le cache doit être vidé pour continuer, désolé :(')
+        return;
+    }
+    await sleep(1000)
     if(!(data)){
         alert('Le websocket semble être hors ligne! Merci de signaler à La Patate Douce sur Discord!')
         return;
@@ -508,6 +513,7 @@ fetch('https://api.db-ip.com/v2/free/self', {
         })
     })
     isWsRunning()
+
 });
 
 btnAG.addEventListener("click", () => {
@@ -1030,6 +1036,9 @@ function getCantonsInfoS2() {
         if (_CANTON_ === 'voys') continue;
         _CANTON_--;
         console.log('[❔] ARRAY[' + _CANTON_ + ']')
+        if(!(data.SEC[1].cantons[_CANTON_].cid)){
+            alert('Le cache doit être vidé pour continuer, désolé :(')
+        }
         console.log(data.SEC[1].cantons[_CANTON_].cid)
         //fill des fleches de dir
         let dir = data.SEC[1].cantons[0].dir;
@@ -1392,6 +1401,10 @@ function clearAllCantons(list, _CANTON_, mode) {
                     //console.log(_GLIST_[_CANTON_+1][bits])
                     _GLIST_[_CANTON_ + 1][bits].style.fill = '#707070';
                     console.log('effacage de ' + (_CANTON_ + 1))
+                }
+                if(!(_GLIST_.aiguilles)){
+                    alert('Le cache doit être vidé pour continuer, désolé :(')
+                    return;
                 }
                 for (let bits in _GLIST_.aiguilles[0].a1c1301) {
                     //console.log(_GLIST_.aiguilles[0].a1c1301[bits])
