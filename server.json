@@ -155,7 +155,7 @@
   "comFSLine": false,
   "comFSGAT": false,
   "comAG": false,
-  "comIDPOTPAS": false,
+  "comIDPOTPAS": true,
   "comInhibUCA": false,
   "comAuthV1": true,
   "comAuthV2": true,
@@ -181,7 +181,31 @@
         },
         {
           "cid": "c1401",
-          "trains": [],
+          "trains": [
+            {
+              "tid": "3",
+              "name": "Léo",
+              "states": {
+                "doorsOpenedPV": false,
+                "doorsClosedPV": true,
+                "trainSecurised": true,
+                "inZOPP": false,
+                "failedStop": false,
+                "secureStop": false,
+                "trainEssai": false,
+                "trainIOP": false,
+                "forbiddenStart": false,
+                "trainEvac": false,
+                "trainEmCall": false,
+                "lsvDef": false,
+                "blockDef": false,
+                "defCdeOuvPV": false,
+                "defCdeFerPV": false,
+                "obstalceActive": false,
+                "longTrain": false
+              }
+            }
+          ],
           "type": "quai",
           "name": "MSTO V1",
           "states": {
@@ -189,7 +213,7 @@
             "doorsClosed": true,
             "doorsOpenedPAS": false,
             "doorsClosedPAS": true,
-            "defPartOuvPP": 1,
+            "defPartOuvPP": false,
             "defPartFerPP": false,
             "defTotOuvPP": false,
             "defTotFerPP": false,
@@ -210,28 +234,28 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": true,
-            "IDPOAlreadyActiveByPLTP": false,
+            "DSO": false,
+            "IDPOAlreadyActiveByPLTP": true,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
             "ALCIDPOInhibed": false,
             "alimDef": false,
             "actualTime": 23,
             "afdActive": false,
-            "cancelAfd":false,
-            "VVTS1":false,
-            "vvtS1AlreadyOn":false,
-            "VVTS2":false,
-            "vvtS2AlreadyOn":false,
-            "depaActive":false,
-            "defDepa":false,
-            "idpfActive":false,
-            "impIdpf":false,
-            "istaActive":false,
-            "istaBlock":false,
-            "mapfActive":false,
-            "mapfImp":false,
-            "defOrderExec":false
+            "cancelAfd": false,
+            "VVTS1": false,
+            "vvtS1AlreadyOn": false,
+            "VVTS2": false,
+            "vvtS2AlreadyOn": false,
+            "depaActive": false,
+            "defDepa": false,
+            "idpfActive": false,
+            "impIdpf": false,
+            "istaActive": false,
+            "istaBlock": false,
+            "mapfActive": false,
+            "mapfImp": false,
+            "defOrderExec": false
           }
         },
         {
@@ -274,10 +298,25 @@
             "departForce": false,
             "HLP": false,
             "DSO": true,
-            "IDPOAlreadyActiveByPLTP": false,
+            "IDPOAlreadyActiveByPLTP": true,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
-            "actualTime": 10
+            "actualTime": 10,
+            "afdActive": false,
+            "cancelAfd": false,
+            "VVTS1": false,
+            "vvtS1AlreadyOn": false,
+            "VVTS2": false,
+            "vvtS2AlreadyOn": false,
+            "depaActive": false,
+            "defDepa": false,
+            "idpfActive": false,
+            "impIdpf": false,
+            "istaActive": false,
+            "istaBlock": false,
+            "mapfActive": false,
+            "mapfImp": false,
+            "defOrderExec": false
           }
         },
         {
@@ -308,12 +347,36 @@
         {
           "cid": "c1202",
           "position": "a2",
-          "dir": "down",
+          "dir": "up",
           "trains": []
         },
         {
           "cid": "c1302",
-          "trains": [],
+          "trains": [
+            {
+              "tid": "2",
+              "name": "Jean Marc",
+              "states": {
+                "doorsOpenedPV": false,
+                "doorsClosedPV": true,
+                "inZOPP": true,
+                "failedStop": false,
+                "secureStop": false,
+                "trainEssai": false,
+                "trainIOP": false,
+                "forbiddenStart": false,
+                "trainEvac": false,
+                "trainEmCall": false,
+                "lsvDef": false,
+                "blockDef": false,
+                "defCdeOuvPV": false,
+                "defCdeFerPV": false,
+                "obstalceActive": false,
+                "longTrain": false,
+                "trainSecurised": true
+              }
+            }
+          ],
           "type": "quai",
           "name": "STO V1",
           "states": {
@@ -342,40 +405,31 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
-            "IDPOAlreadyActiveByPLTP": false,
+            "DSO": true,
+            "IDPOAlreadyActiveByPLTP": true,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
-            "actualTime": 10
+            "actualTime": 10,
+            "afdActive": false,
+            "cancelAfd": false,
+            "VVTS1": false,
+            "vvtS1AlreadyOn": false,
+            "VVTS2": false,
+            "vvtS2AlreadyOn": false,
+            "depaActive": false,
+            "defDepa": false,
+            "idpfActive": false,
+            "impIdpf": false,
+            "istaActive": false,
+            "istaBlock": false,
+            "mapfActive": false,
+            "mapfImp": false,
+            "defOrderExec": false
           }
         },
         {
           "cid": "c1402",
-          "trains": [
-            {
-              "tid": "2",
-              "name": "Jean Marc",
-              "states": {
-                "doorsOpenedPV": false,
-                "doorsClosedPV": true,
-                "inZOPP": true,
-                "failedStop": false,
-                "secureStop": false,
-                "trainEssai": false,
-                "trainIOP": false,
-                "forbiddenStart": false,
-                "trainEvac": false,
-                "trainEmCall": false,
-                "lsvDef": false,
-                "blockDef": false,
-                "defCdeOuvPV": false,
-                "defCdeFerPV": false,
-                "obstalceActive": false,
-                "longTrain": false,
-                "trainSecurised": true
-              }
-            }
-          ]
+          "trains": []
         },
         {
           "cid": "c2102",
@@ -413,10 +467,25 @@
             "departForce": false,
             "HLP": false,
             "DSO": true,
-            "IDPOAlreadyActiveByPLTP": false,
+            "IDPOAlreadyActiveByPLTP": true,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
-            "actualTime": 10
+            "actualTime": 10,
+            "afdActive": false,
+            "cancelAfd": false,
+            "VVTS1": false,
+            "vvtS1AlreadyOn": false,
+            "VVTS2": false,
+            "vvtS2AlreadyOn": false,
+            "depaActive": false,
+            "defDepa": false,
+            "idpfActive": false,
+            "impIdpf": false,
+            "istaActive": false,
+            "istaBlock": false,
+            "mapfActive": false,
+            "mapfImp": false,
+            "defOrderExec": false
           }
         },
         {
@@ -431,33 +500,9 @@
         },
         {
           "cid": "cGA2PAG",
-          "trains": [
-            {
-              "tid": "3",
-              "name": "Léo",
-              "states": {
-                "doorsOpenedPV": false,
-                "doorsClosedPV": true,
-                "trainSecurised": true,
-                "inZOPP": false,
-                "failedStop": false,
-                "secureStop": false,
-                "trainEssai": false,
-                "trainIOP": false,
-                "forbiddenStart": false,
-                "trainEvac": false,
-                "trainEmCall": false,
-                "lsvDef": false,
-                "blockDef": false,
-                "defCdeOuvPV": false,
-                "defCdeFerPV": false,
-                "obstalceActive": false,
-                "longTrain": false
-              }
-            }
-          ],
+          "trains": [],
           "position": "a2",
-          "dir": "down"
+          "dir": "up"
         },
         {
           "cid": "cGPAG1",
