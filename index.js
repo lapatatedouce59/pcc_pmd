@@ -753,6 +753,10 @@ function sleep(ms) {
 }
 
 function getCantonsInfo() {
+    if(!(data)){
+        alert('Le websocket semble être hors ligne! Merci de signaler à La Patate Douce sur Discord!')
+        return;
+    }
     let _GLIST_ = cantonsS1
     clearAllCantons('S1');
     let fresponse = {
