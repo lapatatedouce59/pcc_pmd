@@ -43,27 +43,57 @@ console.log('[@] Server Api init')
 const pccApi=require('./server.json');
 console.log('[V] Server Api init')
 
+const {v4} = require('uuid')
 const clients = new Map();
 
-wss.on('connection', (ws) => {
-    logger.client(true)
+function apiSave(){
+    fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
 
-    function apiSave(){
-        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+    wss.broadcast(JSON.stringify({
+        op: 300,
+        content: pccApi
+    }))
+    logger.message('broadcast','NEW SERVER DATA => REFRESH')
+    //ws.send();
+}
 
-        wss.broadcast(JSON.stringify({
-            op: 300,
-            content: pccApi
-        }))
-        logger.message('broadcast','NEW SERVER DATA => REFRESH')
-        //ws.send();
+wss.broadcast = function broadcast(msg) {
+    wss.clients.forEach(function each(client) {
+        client.send(msg);
+    });
+};
+
+/*function isClientExisting(clientIp){
+    console.log(clientIp)
+    for(let client of clients){
+        console.log(client.ip)
+        if(clientIp===client.ip){
+            return client;
+        } else {
+            return false;
+        }
     }
+}*/
 
-    wss.broadcast = function broadcast(msg) {
-        wss.clients.forEach(function each(client) {
-            client.send(msg);
-        });
-    };
+wss.on('connection', (ws, req) => {
+    let newUUID;
+    logger.client(true)
+    let clientIp=req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    /*let _client_ = isClientExisting(clientIp);
+    console.log('CLIENT '+_client_)
+    if(_client_){
+        console.log(_client_)
+        newUUID=_client_.uuid
+    } else {
+        console.log(_client_)
+        newUUID = v4();
+        let client = {uuid: newUUID, ip: clientIp};
+        clients.set(newUUID,client)
+    }*/
+    newUUID = v4();
+    let client = {uuid: newUUID, ip: clientIp};
+    clients.set(newUUID,client)
+    console.log(clients)
 
     ws.on('message', msg => {
         let data
@@ -78,13 +108,36 @@ wss.on('connection', (ws) => {
         
         switch(op){
             case 1 :
-                logger.identify(data.ip||0, data.country||0, data.city||0, data.from)
+                logger.identify(clientIp, newUUID, data.from)
                 logger.message('outcome','server.json')
                 //ws.send(JSON.stringify(pccApi));
                 ws.send(JSON.stringify(pccApi));
                 break;
+            case 2:
+                console.log('Demande d\'UUID reçue. Envoi dans 1 seconde.')
+                const bahOnVaAttendreSinonLautreIlVaPasEtreContent = async() => {
+                    await setTimeout(1000)
+                    logger.message('outcome',newUUID)
+                    ws.send(JSON.stringify({uuid: newUUID, op:3}))
+                }
+                bahOnVaAttendreSinonLautreIlVaPasEtreContent()
+                console.log('UUID envoyée.')
+                break;
+            case 4:
+                console.log('['+clients.get(data.uuid).uuid+'] Confirmation d\'UUID reçue. Envoi dans 1 seconde.')
+                const goEncoreAttendre = async() => {
+                    await setTimeout(500)
+                    logger.message('outcome','server.json')
+                    wss.broadcast(JSON.stringify({
+                        op: 300,
+                        content: pccApi
+                    }))
+                }
+                goEncoreAttendre()
+                console.log('Serveur envoyée.')
+                break;
             case 200 :
-                logger.message('income',JSON.stringify(data))
+                logger.message('income',JSON.stringify(data),data.uuid)
                 switch(data.execute){
                     case 'AG':
                         pccApi.comAG=true
@@ -179,7 +232,7 @@ wss.on('connection', (ws) => {
                 }
                 break;
             case 202 :
-                logger.message('income',JSON.stringify(data))
+                logger.message('income',JSON.stringify(data),data.uuid)
                 switch(data.execute){
                     case 'FS-LINE-COM':
                         if(data.state===false){
@@ -389,7 +442,7 @@ wss.on('connection', (ws) => {
                 apiSave()
                 break;
             case 204 :
-                logger.message('income',JSON.stringify(data))
+                logger.message('income',JSON.stringify(data),data.uuid)
                 if (data.execute==='OPENPV-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
@@ -925,7 +978,7 @@ wss.on('connection', (ws) => {
                 let a1301 = new Aiguille(pccApi.SEC[0].cantons[2])
                 let a2301 = new Aiguille(pccApi.SEC[0].cantons[7])
 
-                logger.message('income',JSON.stringify(data))
+                logger.message('income',JSON.stringify(data),data.uuid)
 
                 if(data.sens === 1){
                     let train = JSON.parse(getCantonsInfo(data.train))
@@ -1685,7 +1738,7 @@ wss.on('connection', (ws) => {
                 }
                 break;
             case 500:
-                logger.message('income',JSON.stringify(data))
+                logger.message('income',JSON.stringify(data),data.uuid)
                 let args = data.cmd
                 let cmd = args[0]
 

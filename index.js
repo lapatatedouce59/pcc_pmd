@@ -194,13 +194,18 @@ let beepIntervalId = false
 
 let alreadyBeep = false
 
+let uuid = false
+
 import sm from './sm.js'
 sm.init()
 
 let data = false
 
 async function isWsRunning(){
-    await sleep(1000)
+    await sleep(500)
+    //getCantonsInfo()
+    //getCantonsInfoS2()
+    await sleep(500)
     if(!(cantonsS2.aiguilles)){
         alert('Le cache doit être vidé pour continuer, désolé :(')
         return;
@@ -211,27 +216,14 @@ async function isWsRunning(){
         return;
     }
 }
-
-fetch('https://api.db-ip.com/v2/free/self', {
-    method: 'GET'
-}).then(async reponse => {
-    const ipdata = await reponse.json();
-    let ip = ipdata.ipAddress
-    let country = ipdata.countryName
-    let city = ipdata.city
-    let ipAdress = false
     ws = new WebSocket('ws://localhost:8081')
-
 
     ws.addEventListener('open', () => {
         console.log("Connecté au WS")
         ws.send(JSON.stringify({
             op: 1,
-            ip: ip,
-            country: country,
-            city: city,
             from: 'TCO-LIGNE'
-        }));
+        }))
 
         ws.addEventListener('message', msg => {
             data = JSON.parse(msg.data);
@@ -336,6 +328,8 @@ fetch('https://api.db-ip.com/v2/free/self', {
                     }
                 }
 
+                isWsRunning()
+
                 /*if(data.PR[elemid] === false){
                     console.log("Voyant "+voy.id+" est faux")
                     let elem = document.getElementById(elemid)
@@ -383,9 +377,29 @@ fetch('https://api.db-ip.com/v2/free/self', {
                 } else {
                     sm.stopSound('bip')
                 }
+
+                ws.send(JSON.stringify({
+                    op: 2,
+                    demande: 'GET-UUID?'
+                }))
+            }
+
+            if(data.op===3){
+                console.log(uuid)
+                uuid=data.uuid
+                ws.send(JSON.stringify({
+                    op: 4,
+                    demande: 'TEST-UUID?',
+                    uuid: uuid
+                }))
             }
 
             if (data.op === 300) {
+
+                for(let i = 1; i<10000; i++){
+                    if(i===beepIntervalId) continue;
+                    clearInterval(i)
+                }
 
                 let parsedJson = data.content
                 data = parsedJson
@@ -427,15 +441,15 @@ fetch('https://api.db-ip.com/v2/free/self', {
 
                     } else
                     if (data[elemid] === 2 && !(blinkIntervalId.get(elemid))) {
-                        console.log('Voyant ' + voy.id + ' est en anomalie.')
-                        let elem = document.getElementById(elemid)
-                        elem.classList.remove('ok')
-                        elem.classList.toggle('alarm')
-                        blinkIntervalId.set(elemid, setInterval(async function() {
+                            //console.log('Voyant '+voy.id+' est en anomalie.')
+                            let elem = document.getElementById(elemid)
+                            elem.classList.remove('ok')
                             elem.classList.toggle('alarm')
-                        }, 500))
-                        console.log(blinkIntervalId.get(elemid))
-                        console.log(blinkIntervalId.size)
+                            blinkIntervalId.set(elemid, setInterval(async function() {
+                                elem.classList.toggle('alarm')
+                            }, 500))
+                            console.log(blinkIntervalId.get(elemid))
+                            console.log(blinkIntervalId.size)
                     }
                     //-> VOYANTS SS
                     if (elemid.includes('SS')) {
@@ -471,14 +485,14 @@ fetch('https://api.db-ip.com/v2/free/self', {
                         } else
                         if (data.SS[count][elemid] === 2) {
                             //console.log('Voyant '+voy.id+' est en anomalie.')
-                            let elem = document.getElementById(elemid)
-                            elem.classList.remove('ok')
-                            elem.classList.toggle('alarm', true)
-                            blinkIntervalId.set(elemid, setInterval(async function() {
-                                elem.classList.toggle('alarm')
-                            }, 500))
-                            console.log(blinkIntervalId.get(elemid))
-                            console.log(blinkIntervalId.size)
+                                let elem = document.getElementById(elemid)
+                                elem.classList.remove('ok')
+                                elem.classList.toggle('alarm', true)
+                                blinkIntervalId.set(elemid, setInterval(async function() {
+                                    elem.classList.toggle('alarm')
+                                }, 500))
+                                console.log(blinkIntervalId.get(elemid))
+                                console.log(blinkIntervalId.size)
                         }
 
                         iteration++
@@ -504,6 +518,7 @@ fetch('https://api.db-ip.com/v2/free/self', {
                         //sm.stopFreq(2959)
                     }, 1000)
                 } else {
+                    console.log('y\'a un truc qui déconne')
                     sm.stopSound('bip')
                 }
                 //}
@@ -512,28 +527,28 @@ fetch('https://api.db-ip.com/v2/free/self', {
             }
         })
     })
-    isWsRunning()
-
-});
 
 btnAG.addEventListener("click", () => {
     ws.send(JSON.stringify({
         op: 200,
-        execute: "AG"
+        execute: "AG",
+        uuid: uuid
     }));
 })
 
 btnAG2.addEventListener("click", () => {
     ws.send(JSON.stringify({
         op: 200,
-        execute: "AGreset"
+        execute: "AGreset",
+        uuid: uuid
     }));
 })
 
 btnACQU.addEventListener("click", () => {
     ws.send(JSON.stringify({
         op: 200,
-        execute: "LINE-ACQU"
+        execute: "LINE-ACQU",
+        uuid: uuid
     }));
 })
 
@@ -542,14 +557,16 @@ comFSLine.addEventListener("input", () => {
         ws.send(JSON.stringify({
             op: 202,
             execute: "FS-LINE-COM",
-            state: true
+            state: true,
+            uuid: uuid
         }));
     } else
     if (comFSLine.checked === false) {
         ws.send(JSON.stringify({
             op: 202,
             execute: "FS-LINE-COM",
-            state: false
+            state: false,
+            uuid: uuid
         }));
     }
 })
@@ -559,14 +576,16 @@ comFSGAT.addEventListener("input", () => {
         ws.send(JSON.stringify({
             op: 202,
             execute: "FS-GAT-COM",
-            state: true
+            state: true,
+            uuid: uuid
         }));
     } else
     if (comFSGAT.checked === false) {
         ws.send(JSON.stringify({
             op: 202,
             execute: "FS-GAT-COM",
-            state: false
+            state: false,
+            uuid: uuid
         }));
     }
 })
@@ -576,14 +595,16 @@ comIDPOTPAS.addEventListener("input", () => {
         ws.send(JSON.stringify({
             op: 202,
             execute: "IDPO-COM",
-            state: true
+            state: true,
+            uuid: uuid
         }));
     } else
     if (comIDPOTPAS.checked === false) {
         ws.send(JSON.stringify({
             op: 202,
             execute: "IDPO-COM",
-            state: false
+            state: false,
+            uuid: uuid
         }));
     }
 })
@@ -593,14 +614,16 @@ comInhibUCA.addEventListener("input", () => {
         ws.send(JSON.stringify({
             op: 202,
             execute: "UCAINHIB-COM",
-            state: true
+            state: true,
+            uuid: uuid
         }));
     } else
     if (comInhibUCA.checked === false) {
         ws.send(JSON.stringify({
             op: 202,
             execute: "UCAINHIB-COM",
-            state: false
+            state: false,
+            uuid: uuid
         }));
     }
 })
@@ -610,14 +633,16 @@ comAuthV1.addEventListener("input", () => {
         ws.send(JSON.stringify({
             op: 202,
             execute: "HTAUT1-COM",
-            state: true
+            state: true,
+            uuid: uuid
         }));
     } else
     if (comAuthV1.checked === false) {
         ws.send(JSON.stringify({
             op: 202,
             execute: "HTAUT1-COM",
-            state: false
+            state: false,
+            uuid: uuid
         }));
     }
 })
@@ -627,14 +652,16 @@ comAuthV2.addEventListener("input", () => {
         ws.send(JSON.stringify({
             op: 202,
             execute: "HTAUT2-COM",
-            state: true
+            state: true,
+            uuid: uuid
         }));
     } else
     if (comAuthV2.checked === false) {
         ws.send(JSON.stringify({
             op: 202,
             execute: "HTAUT2-COM",
-            state: false
+            state: false,
+            uuid: uuid
         }));
     }
 })
@@ -644,14 +671,16 @@ comAuthGAT.addEventListener("input", () => {
         ws.send(JSON.stringify({
             op: 202,
             execute: "HTAUTGAT-COM",
-            state: true
+            state: true,
+            uuid: uuid
         }));
     } else
     if (comAuthGAT.checked === false) {
         ws.send(JSON.stringify({
             op: 202,
             execute: "HTAUTGAT-COM",
-            state: false
+            state: false,
+            uuid: uuid
         }));
     }
 })
@@ -661,14 +690,16 @@ comForceHT.addEventListener("input", () => {
         ws.send(JSON.stringify({
             op: 202,
             execute: "FORCEHT-COM",
-            state: true
+            state: true,
+            uuid: uuid
         }));
     } else
     if (comForceHT.checked === false) {
         ws.send(JSON.stringify({
             op: 202,
             execute: "FORCEHT-COM",
-            state: false
+            state: false,
+            uuid: uuid
         }));
     }
 })
@@ -678,14 +709,16 @@ comArmPR.addEventListener("input", () => {
         ws.send(JSON.stringify({
             op: 202,
             execute: "ARMPR-COM",
-            state: true
+            state: true,
+            uuid: uuid
         }));
     } else
     if (comArmPR.checked === false) {
         ws.send(JSON.stringify({
             op: 202,
             execute: "ARMPR-COM",
-            state: false
+            state: false,
+            uuid: uuid
         }));
     }
 })
@@ -705,7 +738,8 @@ btnForward.addEventListener('click', () => {
         ws.send(JSON.stringify({
             op: 400,
             sens: 1,
-            train: TTARGET
+            train: TTARGET,
+            uuid: uuid
         }))
         console.log('Ordre 400 pour le train ' + TTARGET)
     }
@@ -723,7 +757,8 @@ btnDownward.addEventListener('click', () => {
         ws.send(JSON.stringify({
             op: 400,
             sens: 2,
-            train: TTARGET
+            train: TTARGET,
+            uuid: uuid
         }))
         console.log('Ordre 400 pour le train ' + TTARGET)
     }
@@ -751,7 +786,8 @@ btnSend.addEventListener('click', () => {
     if (!(args[0] === 'SET' || 'REM')) return;
     ws.send(JSON.stringify({
         op: 500,
-        cmd: args
+        cmd: args,
+        uuid: uuid
     }))
 })
 

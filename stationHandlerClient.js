@@ -69,6 +69,29 @@ sm.init()
 
 sm.registerSound('gong', './src/formats/gong.mp3')
 sm.registerSound('gongChange', './src/formats/gong.mp3')
+sm.registerSound('w','./src/formats/warn.mp3')
+
+let warnInterval = false
+
+function sleep(ms) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
+}
+
+async function faireBip(){
+    warnInterval=setInterval(async function() {
+        selectMenu.classList.toggle('warn')
+        sm.playSound('w')
+        console.log('bip')
+    }, 250)
+    await sleep(3000)
+    console.log('boup')
+    clearInterval(warnInterval)
+    selectMenu.classList.remove('warn')
+}
+
+faireBip()
 
 ws.addEventListener('open', ()=> {
     console.log('Connecté au WS')
@@ -173,10 +196,7 @@ let blinkIdReturn = 0
 
 function updateVoy(s){
     sm.playSound('gongChange', 2)
-    for(let i = 1; i<10000; i++){
-        if(i===beepIntervalId) continue;
-        clearInterval(i)
-    }
+    
     actualTime.value=s.states.actualTime
 
     
