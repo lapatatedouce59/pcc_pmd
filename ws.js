@@ -35,9 +35,9 @@ wss.addListener('listening',()=>{
 	    content: '',
 	    embeds: [embed],
     });
-})
+})*/
 const {setTimeout} = require('timers/promises')
-*/
+
 console.log('[V] WebSocket init on port 8081')
 console.log('[@] Server Api init')
 const pccApi=require('./server.json');
@@ -766,6 +766,146 @@ wss.on('connection', (ws) => {
                     trainObj.states.forbiddenStart=false
                     let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
                     stationObj.states.IDPOAlreadyActiveByALC=false
+                    apiSave()
+                } else
+                if (data.execute==='AFD-ON-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.afdActive=true
+                    apiSave()
+                } else
+                if (data.execute==='AFD-RAZ-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.afdActive=false
+                    apiSave()
+                } else
+                if (data.execute==='VVTS1-ON-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.VVTS1=true
+                    apiSave()
+                } else
+                if (data.execute==='VVTS1-RAZ-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.VVTS1=false
+                    apiSave()
+                } else
+                if (data.execute==='VVTS2-ON-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.VVTS2=true
+                    apiSave()
+                } else
+                if (data.execute==='VVTS2-RAZ-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.VVTS2=false
+                    apiSave()
+                } else
+                if (data.execute==='DEPA-ON-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.depaActive=true
+                    apiSave()
+                } else
+                if (data.execute==='DEPA-RAZ-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.depaActive=false
+                    apiSave()
+                } else
+                if (data.execute==='IDPF-ON-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.idpfActive=true
+                    apiSave()
+                } else
+                if (data.execute==='IDPF-RAZ-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.idpfActive=false
+                    apiSave()
+                } else
+                if (data.execute==='MAPF-ON-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.mapfActive=true
+                    apiSave()
+                } else
+                if (data.execute==='MAPF-RAZ-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.mapfActive=false
+                    apiSave()
+                } else
+                if (data.execute==='ISTA-ON-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.istaActive=true
+                    apiSave()
+                } else
+                if (data.execute==='ISTA-RAZ-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.istaActive=false
+                    apiSave()
+                } else
+                if (data.execute==='VVTS1-INHIB-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.defOrderExec=2
+                    const weweOnAttendLaFinDeLhinib = async() => {
+                        await setTimeout(4000)
+                        stationObj.states.defOrderExec=false
+                        apiSave()
+                    }
+                    weweOnAttendLaFinDeLhinib()
+                    apiSave()
+                } else
+                if (data.execute==='VVTS2-INHIB-BTN'){
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.defOrderExec=2
+                    const weweOnAttendLaFinDeLhinib = async() => {
+                        await setTimeout(4000)
+                        stationObj.states.defOrderExec=false
+                        apiSave()
+                    }
+                    weweOnAttendLaFinDeLhinib()
                     apiSave()
                 }
 
