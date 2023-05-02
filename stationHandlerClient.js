@@ -616,3 +616,131 @@ btnAcqEmCall.addEventListener('click', ()=>{
     }));
     trainOrderAffect.style.backgroundColor='white'
 })
+
+btnAFD.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "AFD-ON-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnRAZAFD.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "AFD-RAZ-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnVVTS1.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "VVTS1-ON-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnRAZVVTS1.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "VVTS1-RAZ-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnInhibVVTS1.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "VVTS1-INHIB-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnVVTS2.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "VVTS2-ON-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnRAZVVTS2.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "VVTS2-RAZ-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnInhibVVTS2.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "VVTS2-INHIB-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnDEPA.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "DEPA-ON-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnRAZdepa.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "DEPA-RAZ-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnIDPF.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "IDPF-ON-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnRAZidpf.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "IDPF-RAZ-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnMAPF.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "MAPF-ON-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnRAZmapf.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "MAPF-RAZ-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnISTA.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "ISTA-ON-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
+
+btnRAZista.addEventListener('click', ()=>{
+    ws.send(JSON.stringify({
+        op: 204,
+        execute: "ISTA-RAZ-BTN",
+        target: getStationsInfo(selectMenu.value)
+    }));
+})
