@@ -497,6 +497,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='CLOSEPP-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     console.log(stationIndex, sectionIndex)
@@ -526,6 +527,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='OPENPP-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -553,6 +555,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if(data.execute==='GENRATEINC-PARTIALPPOPEN-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -560,6 +563,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if(data.execute==='GENRATEINC-PARTIALPPCLOSE-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -567,6 +571,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if(data.execute==='GENRATEINC-TOTALPPOPEN-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -574,6 +579,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if(data.execute==='GENRATEINC-TOTALPPCLOSE-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -581,6 +587,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if(data.execute==='GENRATEINC-RESET-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -591,6 +598,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if(data.execute==='AQC-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -608,6 +616,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='ZOPP-ON-COM'){
+                    if(!data.target.cIndex) return;
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
@@ -619,6 +628,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='ZOPP-OFF-COM'){
+                    if(!data.target.cIndex) return;
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
@@ -632,6 +642,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='OBS-ON-COM'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -640,6 +651,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='OBS-OFF-COM'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -649,6 +661,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='PMSUNLOCK-ON-COM'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -657,6 +670,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='PMSUNLOCK-OFF-COM'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -665,6 +679,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='PMSMANUAL-ON-COM'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -674,6 +689,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='PMSMANUAL-OFF-COM'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -685,6 +701,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='PMSMAINT-ON-COM'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -694,6 +711,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='PMSMAINT-OFF-COM'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -720,6 +738,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='HLP-ON-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -728,6 +747,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='HLP-OFF-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -736,6 +756,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='DSO-ON-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -744,6 +765,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='DSO-OFF-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -752,6 +774,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='INHIBPLTPIDPO-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -767,6 +790,7 @@ wss.on('connection', (ws, req) => {
                     weweOnControleSale()
                 } else
                 if (data.execute==='INHIBALCIDPO-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -796,6 +820,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='SETTIME-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -828,6 +853,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='AFD-ON-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -836,6 +862,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='AFD-RAZ-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -844,6 +871,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='VVTS1-ON-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -852,6 +880,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='VVTS1-RAZ-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -860,6 +889,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='VVTS2-ON-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -868,6 +898,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='VVTS2-RAZ-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -876,6 +907,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='DEPA-ON-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -884,6 +916,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='DEPA-RAZ-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -892,6 +925,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='IDPF-ON-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -900,6 +934,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='IDPF-RAZ-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -908,6 +943,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='MAPF-ON-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -916,6 +952,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='MAPF-RAZ-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -924,6 +961,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='ISTA-ON-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -932,6 +970,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='ISTA-RAZ-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -940,6 +979,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='VVTS1-INHIB-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -954,6 +994,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='VVTS2-INHIB-BTN'){
+                    if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
