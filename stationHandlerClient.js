@@ -272,6 +272,7 @@ function updateVoy(s){
             case 2:
                 console.log(elemid+' Anomalie')
                 voy.classList.remove('ok')
+                voy.classList.toggle('alarm',true)
                 let blinkId = setInterval(async function() {
                     voy.classList.toggle('alarm')
                 }, 500)
@@ -279,7 +280,7 @@ function updateVoy(s){
                 console.log(blinkId)
                 blinkIntervalId.set(elemid, blinkId)
                 console.log(blinkIntervalId)
-                fileIntervals.push(blinkIntervalId)
+                fileIntervals.push(blinkId)
                 break;
         }
     }
@@ -320,7 +321,7 @@ function updateVoy(s){
                 case 2:
                     console.log(elemid+' Anomalie')
                     voy.classList.remove('ok')
-                    voy.classList.add('alarm')
+                    voy.classList.toggle('alarm',true)
                     let blinkId = setInterval(async function() {
                         voy.classList.toggle('alarm')
                     }, 500)
@@ -328,9 +329,11 @@ function updateVoy(s){
                     console.log(blinkId)
                     blinkIntervalId.set(elemid, blinkId)
                     console.log(blinkIntervalId)
+                    fileIntervals.push(blinkId)
                     break;
             }
         }
+        console.log(fileIntervals)
     } else {
         for(let voy of document.getElementsByClassName('voyStationTrain')){
             voy.classList.remove('ok')
