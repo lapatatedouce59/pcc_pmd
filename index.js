@@ -72,6 +72,7 @@ let btnSend = document.getElementById('sendCmd')
 let commandInput = document.getElementById('commandInput')
 let btnReload = document.getElementById('reload')
 let TEXTE_POUR_FAIRE_ATTENTION_SA_MERE = document.getElementById('attention')
+let tiensCatherineTonUUID =  document.getElementById('uuidLigne')
 
 setInterval(async function() {
     TEXTE_POUR_FAIRE_ATTENTION_SA_MERE.classList.toggle('warn')
@@ -387,6 +388,7 @@ async function isWsRunning(){
             if(data.op===3){
                 console.log(uuid)
                 uuid=data.uuid
+                tiensCatherineTonUUID.innerHTML = uuid
                 ws.send(JSON.stringify({
                     op: 4,
                     demande: 'TEST-UUID?',

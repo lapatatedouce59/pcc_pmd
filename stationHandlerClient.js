@@ -59,6 +59,8 @@ let ckbObsVeh = document.getElementById('ckbObsVeh')
 
 let btnAcquitStation = document.getElementById('btnAcquitStation')
 
+let jeTeMontreTonUUID = document.getElementById('uuidStation')
+
 quaiTitle.innerHTML=selectMenu.value
 
 let ws = new WebSocket('ws://localhost:8081')
@@ -143,6 +145,7 @@ ws.addEventListener('open', ()=> {
             }))
         }else if(data.op===3){
             uuid=data.uuid
+            jeTeMontreTonUUID.innerHTML=uuid
             console.log(uuid)
             ws.send(JSON.stringify({
                 op: 4,

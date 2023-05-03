@@ -137,7 +137,7 @@ wss.on('connection', (ws, req) => {
                 console.log('Serveur envoyée.')
                 break;
             case 200 :
-                logger.message('income',JSON.stringify(data),data.uuid)
+                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip)
                 switch(data.execute){
                     case 'AG':
                         pccApi.comAG=true
@@ -232,7 +232,7 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 202 :
-                logger.message('income',JSON.stringify(data),data.uuid)
+                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip)
                 switch(data.execute){
                     case 'FS-LINE-COM':
                         if(data.state===false){
@@ -442,7 +442,7 @@ wss.on('connection', (ws, req) => {
                 apiSave()
                 break;
             case 204 :
-                logger.message('income',JSON.stringify(data),data.uuid)
+                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip)
                 if (data.execute==='OPENPV-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
@@ -978,7 +978,7 @@ wss.on('connection', (ws, req) => {
                 let a1301 = new Aiguille(pccApi.SEC[0].cantons[2])
                 let a2301 = new Aiguille(pccApi.SEC[0].cantons[7])
 
-                logger.message('income',JSON.stringify(data),data.uuid)
+                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip)
 
                 if(data.sens === 1){
                     let train = JSON.parse(getCantonsInfo(data.train))
@@ -1738,7 +1738,7 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 500:
-                logger.message('income',JSON.stringify(data),data.uuid)
+                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip)
                 let args = data.cmd
                 let cmd = args[0]
 
