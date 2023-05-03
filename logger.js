@@ -14,10 +14,10 @@ exports.client = function (state) {
   };
 }
 
-exports.message = function (type,data,uuid,ip,instance){
+exports.message = function (type,data,uname,ip,instance){
     switch (type){
         case 'income':
-            return console.log('                   \033[44m'+ip+'\033[0m\n\x1b[37m[\x1b[32mINCOMING MESSAGE\x1b[37m] \033[47m\033[30m{'+uuid+'}->'+instance+'\033[0m\n'+data);
+            return console.log('                   \033[44m'+ip+'\033[0m\n\x1b[37m[\x1b[32mINCOMING MESSAGE\x1b[37m] \033[47m\033[30m{'+uname+'}->'+instance+'\033[0m\n'+data);
         case 'outcome':
             return console.log('\x1b[37m[\x1b[35mOUTCOMING MESSAGE\x1b[37m] '+data);
         case 'broadcast':

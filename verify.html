@@ -1,0 +1,19 @@
+<script>
+    let URL_data = {}
+
+    for(const el of document.location.hash.substr(1).split("&")){
+        URL_data[el.split("=")[0]] = el.split("=")[1]
+    }
+
+    fetch('https://discord.com/api/users/@me', {
+        headers:{Authorization:'Bearer '+URL_data.access_token}
+        }).then(res => {
+            if(res.status===401){
+                alert('Un problème est survenu. Veuillez vous reconnecter.')
+                document.location.href='https://discord.com/api/oauth2/authorize?client_id=1102519610848313344&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Fverify.html&response_type=token&scope=identify'
+            } else {
+                document.cookie='discord_token='+URL_data.access_token+'; expires='+URL_data.expires_in+';'
+                document.location.href='./index.html'
+            }
+        })/*.then(json => console.log(json))*/
+</script>

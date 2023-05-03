@@ -62,11 +62,11 @@ let btnAcquitStation = document.getElementById('btnAcquitStation')
 let jeTeMontreTonUUID = document.getElementById('uuidStation')
 
 quaiTitle.innerHTML=selectMenu.value
-
 let ws = new WebSocket('ws://localhost:8081')
 let data=false
 
 let uuid = false;
+let usrname = username
 
 
 let fileIntervals=[]
@@ -102,10 +102,16 @@ faireBip()
 
 ws.addEventListener('open', ()=> {
     console.log('Connecté au WS')
-    ws.send(JSON.stringify({
-        op: 1,
-        from: "STATION"
-    }));
+    const weweOnAttends = async() => {
+        await sleep(100)
+        ws.send(JSON.stringify({
+            op: 1,
+            from: "STATION",
+            uname: username
+        }));
+        console.log(username)
+    }
+    weweOnAttends()
 
     ws.addEventListener('close', ()=>{
         alert('Le serveur viens de crash! Merci de signaler l\'erreur à La Patate Douce sur discord.gg/pmd en indiquant les actions effectuées!')

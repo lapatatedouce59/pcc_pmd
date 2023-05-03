@@ -107,7 +107,8 @@ wss.on('connection', (ws, req) => {
         
         switch(op){
             case 1 :
-                let client = {uuid: newUUID, ip: clientIp, instance:data.from};
+                console.log(clientIp)
+                let client = {uuid: newUUID, ip: clientIp, instance:data.from, uname: data.uname};
                 clients.set(newUUID,client)
                 console.log(clients)
                 logger.identify(clientIp, newUUID, clients.get(newUUID).instance)
@@ -141,7 +142,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 200 :
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
                 switch(data.execute){
                     case 'AG':
                         pccApi.comAG=true
@@ -237,7 +238,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 202 :
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
                 switch(data.execute){
                     case 'FS-LINE-COM':
                         if(data.state===false){
@@ -448,7 +449,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 204 :
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
                 if (data.execute==='OPENPV-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
@@ -1026,7 +1027,7 @@ wss.on('connection', (ws, req) => {
                 let a1301 = new Aiguille(pccApi.SEC[0].cantons[2])
                 let a2301 = new Aiguille(pccApi.SEC[0].cantons[7])
 
-                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
 
                 if(data.sens === 1){
                     let train = JSON.parse(getCantonsInfo(data.train))
@@ -1787,7 +1788,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 500:
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),data.uuid,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
                 let args = data.cmd
                 let cmd = args[0]
 

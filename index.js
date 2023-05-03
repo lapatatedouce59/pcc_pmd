@@ -54,6 +54,8 @@ let btnACQU = document.getElementById('btnACQU')
 let btnAG = document.getElementById('btnAG')
 let btnAG2 = document.getElementById('btnAG2')
 
+let usrname = username
+
 let comForceHT = document.getElementById('comForceHT')
 let comAuthV1 = document.getElementById('comAuthV1')
 let comAuthV2 = document.getElementById('comAuthV2')
@@ -221,10 +223,16 @@ async function isWsRunning(){
 
     ws.addEventListener('open', () => {
         console.log("Connecté au WS")
-        ws.send(JSON.stringify({
-            op: 1,
-            from: 'TCO-LIGNE'
-        }))
+        const weweOnAttends = async() => {
+            await sleep(100)
+            ws.send(JSON.stringify({
+                op: 1,
+                from: "TCO-LIGNE",
+                uname: username
+            }));
+            console.log(username)
+        }
+        weweOnAttends()
 
         ws.addEventListener('message', msg => {
             data = JSON.parse(msg.data);
