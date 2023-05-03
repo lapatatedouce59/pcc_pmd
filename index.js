@@ -396,11 +396,6 @@ async function isWsRunning(){
 
             if (data.op === 300) {
 
-                for(let i = 1; i<10000; i++){
-                    if(i===beepIntervalId) continue;
-                    clearInterval(i)
-                }
-
                 let parsedJson = data.content
                 data = parsedJson
                 let iteration = 0
