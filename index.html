@@ -74,7 +74,7 @@
             background-color: #EF0000;
             color: white;
         }
-        #fstation{
+        .format{
             background-color: #DCDCDC;
         }
         .btnControl{
@@ -82,6 +82,12 @@
             width: 100%;
             color: white;
             font-weight: bold;
+        }
+        td.voyTrainState{
+            border: #848484 solid;
+            border-width: 1px;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #CCCCCC;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
@@ -259,7 +265,7 @@
     <div class="user">
         Votre UUID de station: <span id="uuidStation">indéfini</span>
     </div>
-    <div id="fstation">
+    <div id="fstation" class="format">
         <div id="stationhead" style="width: 100%; background-color: #5E5E5E; color: white;">
             <span><b>Gestion des quais</b></span><span> - EAS</span> <br>
             <span id="quaiTitle"></span>
@@ -372,6 +378,86 @@
 
                         <!--<tr><td colspan="3" width="50%">Temps d’arrêt quai:<span></span></td><td width="%" colspan="1"><input type="text" value="10" id="newTime"></td><td colspan="1" width="18%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="1" width="18%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>-->
                     </tbody>
+                </table>
+            </fieldset></span>
+        </div>
+    </div>
+    <span><fieldset style="width: 20%; display: inline-block;">
+        <legend>Sectionner un train</legend>
+        <select name="stationSelect" id="stationSelect">
+            <option value="O">CHOISIR TRAIN</option>
+        </select> <br>
+        <input type="button" value="ACQUITTER" id="btnAcquitTrain">
+    </fieldset></span>
+    <div id="train" class="format">
+        <div id="stationhead" style="width: 100%; background-color: #5E5E5E; color: white;">
+            <span><b>Gestion des trains</b></span> <br>
+            <span id="trainTitle"></span>
+        </div>
+        <div id="trainHead" style="width: 100%;">
+            <table>
+                <tr>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Rame:</span></td><td><input class="voyTrainState" id="trainNumber" disabled value="3" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Canton:</span></td><td><input class="voyTrainState" id="trainCanton" disabled value="1107" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Associé:</span></td><td><input class="voyTrainState" id="trainAsso" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Vitesse:</span></td><td><input class="voyTrainState" id="trainSpeed" disabled value="0" style="width: 30%;"></td>
+                </tr>
+                <tr>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Etat:</span></td><td><input class="voyTrainState" id="trainState" disabled value="PRET" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>PA:</span></td><td><input class="voyTrainState" id="trainCanton" disabled value="ABS" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Mission:</span></td><td><input class="voyTrainState" id="trainAsso" disabled value="OLY" style="width: 30%;"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="trainState">
+            <span><fieldset style="width: 15%; display: inline-table; text-align: center;">
+                <legend>Alarmes</legend>
+                <table style="width: 100%; height: 100%;">
+                    <tr><td class="voyTrainState" id="TMSActive"><span id="TMSActive" class="voyTrainState">TMS</span></td></tr>
+                    <tr><td class="voyTrainState" id="EVACActive"><span id="EVACActive" class="voyTrainState">ÉVACUATION</span></td></tr>
+                    <tr><td class="voyTrainState" id="defTech"><span id="defTech" class="voyTrainState">DEF. TECHNIQUE</span></td></tr>
+                    <tr><td class="voyTrainState" id="defLtpa"><span id="defLtpa" class="voyTrainState">DEF. LTPA</span></td></tr>
+                    <tr><td class="voyTrainState" id="tneHorsZGAT"><span id="tneHorsZGAT" class="voyTrainState">TNE/TNI HORS ZGAT</span></td></tr>
+                    <tr><td class="voyTrainState"><span class="voyTrainState">-</span></td></tr>
+                    <tr><td class="voyTrainState"><span class="voyTrainState">-</span></td></tr>
+                    <tr><td class="voyTrainState"><span class="voyTrainState">-</span></td></tr>
+                </table>
+            </fieldset></span>
+            <span><fieldset style="width: 15%; display: inline-table; text-align: center;">
+                <legend>FU</legend>
+                <table style="width: 100%; height: 100%;">
+                    <tr><td class="voyTrainState" id="fuKSEPO"><span id="fuKSEPO" class="voyTrainState">FU K.SE.PO</span></td></tr>
+                    <tr><td class="voyTrainState" id="fuSurvitesse"><span id="fuSurvitesse" class="voyTrainState">FU SURVITESSE</span></td></tr>
+                    <tr><td class="voyTrainState" id="fuDiscMob"><span id="fuDiscMob" class="voyTrainState">FU DISC. MOBILITE</span></td></tr>
+                    <tr><td class="voyTrainState" id="fuVacma"><span id="fuVacma" class="voyTrainState">FU VACMA</span></td></tr>
+                    <tr><td class="voyTrainState" id="fuKPAMN"><span id="fuKPAMN" class="voyTrainState">FU KPAMN</span></td></tr>
+                    <tr><td class="voyTrainState" id="fuPil"><span id="fuPil" class="voyTrainState">FU PILOTE</span></td></tr>
+                    <tr><td class="voyTrainState" id="fuObsColl"><span id="fuObsColl" class="voyTrainState">FU OBS/COLL</span></td></tr>
+                    <tr><td class="voyTrainState" id="fuNoFS"><span id="fuNoFS" class="voyTrainState">FU ABS. FS</span></td></tr>
+                    <tr><td class="voyTrainState" id="fuRuptAtt"><span id="fuRuptAtt" class="voyTrainState">FU RUPT. ATTELAGE</span></td></tr>
+                    <tr><td class="voyTrainState" id="testAuto"><span id="testAuto" class="voyTrainState">TEST AUTO</span></td></tr>
+                </table>
+            </fieldset></span>
+            <span><fieldset style="width: 15%; display: inline-table; text-align: center;">
+                <legend>Energie</legend>
+                <table style="width: 100%; height: 100%;">
+                    <tr><td class="voyTrainState" id="defCvs"><span id="defCvs" class="voyTrainState">DÉFAUT CVS</span></td></tr>
+                    <tr><td class="voyTrainState" id="trainBattery"><span id="trainBattery" class="voyTrainState">TRAIN EN BATTERIE</span></td></tr>
+                    <tr><td class="voyTrainState" id="btDelest"><span id="btDelest" class="voyTrainState">DELESTAGE BT</span></td></tr>
+                    <tr><td class="voyTrainState" id="defDistBt"><span id="defDistBt" class="voyTrainState">DEF. DIST. BT</span></td></tr>
+                    <tr><td class="voyTrainState" id="defPart750"><span id="defPart750" class="voyTrainState">DEFAUT PART. DJ 750V</span></td></tr>
+                    <tr><td class="voyTrainState" id="abs750"><span id="abs750" class="voyTrainState">ABSENCE 750V</span></td></tr>
+                    <tr><td class="voyTrainState" id="trainPAT"><span id="trainPAT" class="voyTrainState">TRAIN SUR PAT</span></td></tr>
+                </table>
+            </fieldset></span>
+            <span><fieldset style="width: 15%; display: inline-table; text-align: center;">
+                <legend>Echange</legend>
+                <table style="width: 100%; height: 100%;">
+                    <tr><td class="voyTrainState" id="defPartOuvPV" colspan="3"><span id="defPartOuvPV" class="voyTrainState">DEF. PARTIEL OUV. PV</span></td></tr>
+                    <tr><td class="voyTrainState" id="defTotOuvPV" colspan="3"><span id="defTotOuvPV" class="voyTrainState">DEF. TOTAL OUV. PV</span></td></tr>
+                    <tr><td class="voyTrainState" id="trainInscrit" colspan="3"><span id="trainInscrit" class="voyTrainState">TRAIN INSCRIT</span></td></tr>
+                    <tr><td class="voyTrainState" id="evacUitp" colspan="3"><span id="evacUitp" class="voyTrainState">ÉVACUATION UITP</span></td></tr>
+                    <tr><td colspan="1"><input type="button" value="IOP" class="btnControl" id="btnIop"></td><td class="voyTrainState" id="IOP" colspan="1"><span id="IOP" class="voyTrainState">IOP</span></td><td colspan="1"><input type="button" value="RAZ" class="btnControl" id="btnRazIop"></td></tr>
                 </table>
             </fieldset></span>
         </div>
