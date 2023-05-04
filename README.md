@@ -15,6 +15,8 @@ Install NodeJS and run the `ws.js` via the following command:
 node ws.js
 ```
 Run the `index.html` via a basic **web server**, either with *WAMP* (or *XAMP*...) or with *Live Server* extention in VSCode. <br>
-In case of bugs, consider submitting an Issue.
+In case of bugs, consider submitting an Issue.<br>
+
+To whitelist a discord user, go to `carte-sim.js` and put an id in the array of whitelist.
 
 ``````
