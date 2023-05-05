@@ -233,7 +233,7 @@
             "manuelPPClosing": false,
             "departAuth": false,
             "departForce": false,
-            "HLP": true,
+            "HLP": false,
             "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,

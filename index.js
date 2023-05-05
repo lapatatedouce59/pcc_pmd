@@ -54,6 +54,10 @@ let btnACQU = document.getElementById('btnACQU')
 let btnAG = document.getElementById('btnAG')
 let btnAG2 = document.getElementById('btnAG2')
 
+let toast= document.getElementById('snackbar')
+
+let showuname = document.getElementById('uname')
+
 let usrname = username
 
 let comForceHT = document.getElementById('comForceHT')
@@ -189,7 +193,7 @@ S2.addEventListener('load', () => {
 
 sm.registerSound("bip", './src/pltp/snds/bip.mp3');
 
-let ws = false
+let ws = new WebSocket('ws://localhost:8081')
 
 const blinkIntervalId = new Map()
 
@@ -219,7 +223,7 @@ async function isWsRunning(){
         return;
     }
 }
-    ws = new WebSocket('ws://localhost:8081')
+    //ws = new WebSocket('ws://localhost:8081')
 
     ws.addEventListener('open', () => {
         console.log("Connecté au WS")
@@ -228,9 +232,10 @@ async function isWsRunning(){
             ws.send(JSON.stringify({
                 op: 1,
                 from: "TCO-LIGNE",
-                uname: username
+                uname: username||localStorage.getItem('dUsername')
             }));
             console.log(username)
+            showuname.innerHTML=localStorage.getItem('dUsername')
         }
         weweOnAttends()
 
@@ -402,6 +407,21 @@ async function isWsRunning(){
                     demande: 'TEST-UUID?',
                     uuid: uuid
                 }))
+            }
+
+            if(data.op===10){
+                let uuid=data.content.uuid
+                let newUserName=data.content.uname
+                toast.innerHTML='L\'utilisateur '+newUserName+' a rejoins le PCC avec l\'UUID '+uuid+' !'
+                toast.className="show";
+                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
+                
+            }
+
+            if(data.op===11){
+                toast.innerHTML='Un utilisateur a quitté la page.'
+                toast.className="show";
+                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
             }
 
             if (data.op === 300) {

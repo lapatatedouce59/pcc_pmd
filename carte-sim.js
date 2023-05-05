@@ -35,6 +35,7 @@ if(tahLesBonsGateauxSaMereMerciSimon.discord_token){
                         const weweOnAttends = async() => {
                             let int = setInterval(function(){
                                 if(wsOpen){
+                                    localStorage.setItem('dUsername',usr.username)
                                     username=usr.username
                                     clearInterval(int)
                                     //ws.send(JSON.stringify({op: 1, exept: 'VERIFICATION', username: usr.username}))
@@ -43,7 +44,6 @@ if(tahLesBonsGateauxSaMereMerciSimon.discord_token){
                         }
                         weweOnAttends()
                     } else {
-                        alert('Vous n\'êtes pas dans la whitelist! Contactez La Patate Douce sur discord.')
                         document.location.href='https://discord.com/api/oauth2/authorize?client_id=1102519610848313344&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Fverify.html&response_type=token&scope=identify'
                     }
                 })

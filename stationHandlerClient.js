@@ -107,7 +107,7 @@ ws.addEventListener('open', ()=> {
         ws.send(JSON.stringify({
             op: 1,
             from: "STATION",
-            uname: username
+            uname: username||localStorage.getItem('dUsername')
         }));
         console.log(username)
     }

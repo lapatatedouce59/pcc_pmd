@@ -129,13 +129,19 @@ wss.on('connection', (ws, req) => {
             case 4:
                 console.log('['+clients.get(data.uuid).uuid+'] Confirmation d\'UUID reçue. Envoi dans 1 seconde.')
                 const goEncoreAttendre = async() => {
-                    await setTimeout(500)
+                    await setTimeout(400)
                     if(!isClientExisting(data.uuid)) return;
-                    logger.message('outcome','server.json')
                     wss.broadcast(JSON.stringify({
+                        op: 10,
+                        content: { uuid: clients.get(data.uuid).uuid, uname: clients.get(data.uuid).uname }
+                    }))
+                    await setTimeout(400)
+                    logger.message('broadcast','ARRIVAL')
+                    ws.send(JSON.stringify({
                         op: 300,
                         content: pccApi
                     }))
+                    logger.message('outcome','server.json')
                 }
                 goEncoreAttendre()
                 console.log('Serveur envoyée.')
@@ -1920,6 +1926,10 @@ wss.on('connection', (ws, req) => {
     })
 
     ws.on('close', ()=>{
+        wss.broadcast(JSON.stringify({
+            op: 11
+        }))
+        logger.message('broadcast','ARRIVAL')
         logger.client(false)
     })
 })
