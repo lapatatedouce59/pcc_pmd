@@ -623,7 +623,6 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='ZOPP-ON-COM'){
-                    if(!data.target.cIndex) return;
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
@@ -635,7 +634,6 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                 } else
                 if (data.execute==='ZOPP-OFF-COM'){
-                    if(!data.target.cIndex) return;
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]

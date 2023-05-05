@@ -234,7 +234,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": true,
+            "DSO": false,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,

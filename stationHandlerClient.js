@@ -262,8 +262,8 @@ function updateVoy(s){
                     btnInactiveDSO.disabled=true
                     btnActiveDSO.disabled=true
                 } else {
-                    btnInactiveDSO.disabled=true
-                    btnActiveDSO.disabled=true
+                    btnInactiveDSO.disabled=false
+                    btnActiveDSO.disabled=false
                 }
                 break;
             case 1:
