@@ -523,7 +523,7 @@
                     <tr><td class="voyTrainState" id="cmdOuvPortesTrain" colspan="3"><span id="cmdOuvPortesTrain" class="voyTrainState">CMD. OUV. PORTES</span></td></tr>
                     <tr><td class="voyTrainState" id="opl" colspan="3"><span id="opl" class="voyTrainState">OUV. PORTES. LIGNE</span></td></tr>
                     <tr><td class="voyTrainState" id="lvsTrain" colspan="3"><span id="lvsTrain" class="voyTrainState">LIAISON VEH. STATION</span></td></tr>
-                    <tr><td class="voyTrainState" id="lvsTrain" colspan="3"><span id="lvsTrain" class="voyTrainState">SÉQ. DÉMMARAGE</span></td></tr>
+                    <tr><td class="voyTrainState" id="seqDemTrain" colspan="3"><span id="seqDemTrain" class="voyTrainState">SÉQ. DÉMMARAGE</span></td></tr>
                     <tr><td class="voyTrainState" id="asmd" colspan="3"><span id="asmd" class="voyTrainState">0.8 ASMD</span></td></tr>
                     <tr><td class="voyTrainState" id="v0pas" colspan="3"><span id="v0pas" class="voyTrainState">P0 PAS</span></td></tr>
                     <tr><td class="voyTrainState" id="cmdFu" colspan="3"><span id="cmdFu" class="voyTrainState">COMMANDE FU</span></td></tr>
@@ -577,7 +577,7 @@
                     <tr><td class="voyTrainState" id="trainLights" colspan="2"><span id="trainLights" class="voyTrainState">ÉCLAIRAGE</span></td></tr>
                     <tr><td class="voyTrainState" id="trainHeating" colspan="2"><span id="trainHeating" class="voyTrainState">CHAUFFAGE</span></td></tr>
                     <tr><td class="voyTrainState" id="trainFans" colspan="2"><span id="trainFans" class="voyTrainState">VENTILLATION</span></td></tr>
-                    <tr><td class="voyTrainState" id="trainFans" colspan="2"><span id="trainFans" class="voyTrainState">FUMÉE</span></td></tr>
+                    <tr><td class="voyTrainState" id="trainSmoke" colspan="2"><span id="trainSmoke" class="voyTrainState">FUMÉE</span></td></tr>
                     <tr><td class="voyTrainState" id="trainEstinguisher" colspan="2"><span id="trainEstinguisher" class="voyTrainState">EXTINCTEUR</span></td></tr>
                     <tr><td class="voyTrainState" id="trainTempBrakes" colspan="2"><span id="trainTempBrakes" class="voyTrainState">TEMP. FREINS</span></td></tr>
                     <tr><td class="voyTrainState" id="trainComp" colspan="2"><span id="trainComp" class="voyTrainState">COMPRESSEUR</span></td></tr>
@@ -623,7 +623,7 @@
             <span><fieldset style="width: 25%; display: inline-table; text-align: center;">
                 <legend>VITESSE</legend>
                 <table style="width: 100%; height: 100%;">
-                    <tr><td class="voyTrainState" id="vitModifTrain" colspan="3" style="width: 50%;"><span id="vitModifTrain" class="voyTrainState">VIT. MODIFIÉE TRAIN</span></td><td class="voyTrainState" id="tractionS1" colspan="3" style="width: 50%;"><span id="vitModifTrain" class="voyTrainState">VIT. MODIFIÉE STATION</span></td></tr>
+                    <tr><td class="voyTrainState" id="vitModifTrain" colspan="3" style="width: 50%;"><span id="vitModifTrain" class="voyTrainState">VIT. MODIFIÉE TRAIN</span></td><td class="voyTrainState" id="vitModifSta" colspan="3" style="width: 50%;"><span id="vitModifSta" class="voyTrainState">VIT. MODIFIÉE STATION</span></td></tr>
                     <tr><td class="voyTrainState" id="vitModifPAS" colspan="3"><span id="vitModifPAS" class="voyTrainState">VIT. MODIFIÉE PAS</span></td><td colspan="3"><input type="button" value="INHIB. VITESSES AUTRES" class="btnControl" id="btnInhibVit"></td></tr>
                     <tr><td colspan="1"><input type="button" value="0.8" class="btnControl" id="btnCmd08ms"></td><td class="voyTrainState" id="cmd08ms" colspan="2"><span id="cmd08ms" class="voyTrainState">0.8 M/S</span></td><td class="voyTrainState" id="waitLectBal" colspan="3"><span id="waitLectBal" class="voyTrainState">ATTENTE LECTURE BALISE</span></td></tr>
                     <tr><td colspan="1"><input type="button" value="0" class="btnControl" id="btnCmd0ms"></td><td class="voyTrainState" id="cmd0ms" colspan="2"><span id="cmd0ms" class="voyTrainState">0 M/S</span></td><td colspan="3"><input type="button" value="DEMARRAGE SECOURS" class="btnControl" id="btnODS"></td></tr>
@@ -635,10 +635,10 @@
             <span><fieldset style="width: 25%; display: inline-table; text-align: center;">
                 <legend>PREPARATION</legend>
                 <table style="width: 100%; height: 100%;">
-                    <tr><td class="voyTrainState" id="awakeMR" colspan="2"><span id="awakeMR" class="voyTrainState">MR RÉVEILLÉ</span></td><td class="voyTrainState" id="tractionS1" colspan="2"><span id="pretTrain" class="voyTrainState">TRAIN PRÊT</span></td></tr>
+                    <tr><td class="voyTrainState" id="awakeMR" colspan="2"><span id="awakeMR" class="voyTrainState">MR RÉVEILLÉ</span></td><td class="voyTrainState" id="pretTrain" colspan="2"><span id="pretTrain" class="voyTrainState">TRAIN PRÊT</span></td></tr>
                     <tr><td style="width: 25%;"><input type="button" value="ÉVEIL" class="btnControl" id="btnEveil"></td><td style="width: 25%;"><input type="button" value="ENDORM." class="btnControl" id="btnEndorm"></td><td style="width: 25%;"><input type="button" value="PRÉP." class="btnControl" id="btnPrep"></td><td style="width: 25%;"><input type="button" value="DÉPREP." class="btnControl" id="btnDeprep"></td></tr>
                     <tr><td class="voyTrainState" id="defEveil" colspan="2"><span id="defEveil" class="voyTrainState">DÉFAUT ÉVEIL</span></td><td class="voyTrainState" id="deprepTrain" colspan="2"><span id="deprepTrain" class="voyTrainState">DÉPRÉPARATION</span></td></tr>
-                    <tr><td class="voyTrainState" id="defEndorm" colspan="2"><span id="defEndorm" class="voyTrainState">DÉFAUT ENDORMISSEMENT</span></td><td class="voyTrainState" id="deprepTrain" colspan="2"><span id="deprepTrain" class="voyTrainState">DÉFAUT DÉPREP.</span></td></tr>
+                    <tr><td class="voyTrainState" id="defEndorm" colspan="2"><span id="defEndorm" class="voyTrainState">DÉFAUT ENDORMISSEMENT</span></td><td class="voyTrainState" id="defDeprep" colspan="2"><span id="deprepTrain" class="voyTrainState">DÉFAUT DÉPREP.</span></td></tr>
                     <tr><td class="voyTrainState" id="echecPrep" colspan="2"><span id="echecPrep" class="voyTrainState">ÉCHEC PRÉP.</span></td><td class="voyTrainState" id="refusDeprep" colspan="2"><span id="refusDeprep" class="voyTrainState">REFUS DÉPREP</span></td></tr>
                     <tr><td class="voyTrainState" id="validTests" colspan="2"><span id="validTests" class="voyTrainState">TESTS VALIDES</span></td><td class="voyTrainState" id="echecTestFU" colspan="2"><span id="echecTestFU" class="voyTrainState">TEST FU A L'ECHEC</span></td></tr>
                     <tr><td class="voyTrainState" id="activeTests" colspan="2"><span id="activeTests" class="voyTrainState">TESTS EN COURS</span></td><td class="voyTrainState" id="unvalidTest" colspan="2"><span id="unvalidTest" class="voyTrainState">TEST NON VALIDE</span></td></tr>
