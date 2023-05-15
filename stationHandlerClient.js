@@ -140,6 +140,9 @@ ws.addEventListener('open', ()=> {
                     let opt = document.createElement('OPTION')
                     opt.innerHTML=ctns.name
                     opt.value=ctns.name
+                    opt.classList='stationOpt'
+                    opt.id=ctns.name
+                    opt.class='staOpt'
                     gr.appendChild(opt)
                 }
                 inflationDuPrixDuCarburant++
@@ -206,6 +209,28 @@ function getStationProperties(id){
     return reponse;
 }
 
+function yaUnDefautQQPart(){
+    for(let staOpt of document.getElementsByClassName('stationOpt')){
+        staOpt.classList.remove('alarm')
+    }
+    let defList=[]
+    for (let sec in data.SEC){
+        for (let ctns in data.SEC[sec].cantons){
+            if(typeof data.SEC[sec].cantons[ctns].type === 'undefined') continue;
+            for(const property of Object.entries(data.SEC[sec].cantons[ctns].states)){
+                if(!(property[1] === 1 || property[1] === 2)) continue;
+                defList.push(data.SEC[sec].cantons[ctns].name)
+            }
+        }
+    }
+    console.log(defList)
+    for (let sta in defList){
+        console.log(defList[sta])
+        let elem = document.getElementById(defList[sta])
+        elem.classList.toggle('alarm',true)
+    }
+}
+
 selectMenu.addEventListener('input', () => {
     selectValue = selectMenu.value
     let station = getStationsInfo(selectMenu.value)
@@ -226,6 +251,8 @@ function updateVoy(s){
         if(interval===beepIntervalId) continue;
         clearInterval(interval)
     }
+
+    yaUnDefautQQPart()
 
     sm.playSound('gongChange', 2)
     
