@@ -98,7 +98,7 @@ async function faireBip(){
     selectMenu.classList.remove('warn')
 }
 
-faireBip()
+//faireBip()
 
 ws.addEventListener('open', ()=> {
     console.log('Connecté au WS')
