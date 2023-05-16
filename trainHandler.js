@@ -35,7 +35,11 @@ ws.addEventListener('open', ()=> {
             uname: username||localStorage.getItem('dUsername')
         }));
         console.log(username)
+<<<<<<< Updated upstream
     }ddd
+=======
+    }
+>>>>>>> Stashed changes
     weweOnAttends()
 
     ws.addEventListener('message', msg =>{
