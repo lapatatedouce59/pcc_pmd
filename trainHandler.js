@@ -1,6 +1,21 @@
+let selectMenuTrain = document.getElementById('trainSelect');
+let selectValueTrain = false
+
+//INFOS TRAIN HEAD
+let trainNumberTrain = document.getElementById('trainNumberTrain')
+let trainCanton = document.getElementById('trainCanton')
+let trainAsso = document.getElementById('trainAsso')
+let trainSpeed = document.getElementById('trainSpeed')
+let trainState = document.getElementById('trainState')
+let trainGSec = document.getElementById('trainGSec')
+let trainMission = document.getElementById('trainMission')
+let fuCount = document.getElementById('fuCount')
+let fuCountInput = document.getElementById('fuCountInput')
+
+let btnAcquitTrain = document.getElementById('btnAcquitTrain')
+
 let jeTeMontreTonUUID = document.getElementById('uuidTrain')
 
-quaiTitle.innerHTML=selectMenu.value
 let ws = new WebSocket('ws://localhost:8081')
 let data=false
 
@@ -35,11 +50,7 @@ ws.addEventListener('open', ()=> {
             uname: username||localStorage.getItem('dUsername')
         }));
         console.log(username)
-<<<<<<< Updated upstream
-    }ddd
-=======
     }
->>>>>>> Stashed changes
     weweOnAttends()
 
     ws.addEventListener('message', msg =>{
@@ -47,28 +58,26 @@ ws.addEventListener('open', ()=> {
         console.log(data);
 
         if(!(data.op)){
-            let sections = []
+            let trains = []
             let inflationDuPrixDuCarburant = 0
             for (let sec of data.SEC){
-                sections.push({sec : 'SECTION '+sec.id, quais: []})
-                let gr = document.createElement('OPTGROUP')
-                gr.label='SECTION '+sec.id
-                selectMenu.appendChild(gr)
                 for (let ctns of sec.cantons){
-                    if(!(ctns.hasOwnProperty('type'))) continue;
-                    console.log(ctns.type+' canton '+ctns.cid+' appelée '+ctns.name)
-                    sections[inflationDuPrixDuCarburant].quais.push({sname: ctns.name})
-                    let opt = document.createElement('OPTION')
-                    opt.innerHTML=ctns.name
-                    opt.value=ctns.name
-                    opt.classList='stationOpt'
-                    opt.id=ctns.name
-                    opt.class='staOpt'
-                    gr.appendChild(opt)
+                    if(!(ctns.trains.length >=1)) continue;
+                    console.log('canton '+ctns.cid)
+                    for (let train of ctns.trains){
+                        console.log(train)
+                        trains.push({tname: train.tid})
+                        let opt = document.createElement('OPTION')
+                        opt.innerHTML=train.tid
+                        opt.value=train.tid
+                        opt.classList='trainOpt'
+                        opt.id=train.tid
+                        selectMenuTrain.appendChild(opt)
+                    }
                 }
                 inflationDuPrixDuCarburant++
             }
-            console.log(sections)
+            console.log(trains)
             ws.send(JSON.stringify({
                 op: 2,
                 demande: 'GET-UUID?'
@@ -84,47 +93,37 @@ ws.addEventListener('open', ()=> {
             }))
         } else if (data.op===300){
             data=data.content
-            let station = getStationsInfo(selectMenu.value)
-            updateVoy(station)
+            let train = getTrainInfo(selectMenuTrain.value)
+            console.log(train)
+            updateVoy(train)
         }
     })
 })
 
-function getStationsInfo(id){
-    let reponse={name: false, id: false, states: false, trains: [], secIndex: false, cIndex: false}
+function getTrainInfo(id){
+    let reponse={id: false, states: false, trains: [], secIndex: false, cIndex: false, tIndex: false}
     console.log(data.SEC)
     for (let sec of data.SEC){
         for (let ctns of sec.cantons){
-            if(!(ctns.hasOwnProperty('type'))) continue;
-            if(!(ctns.name === id)) continue;
-            console.log(ctns.type+' canton '+ctns.cid+' appelée '+ctns.name)
-            reponse.id=ctns.cid;
-
-            reponse.name=ctns.name;
-
-            reponse.states=ctns.states
             for (let train of ctns.trains){
+                if(!(train.tid === id)) continue;
                 console.log(train)
                 reponse.trains.push(train)
+                reponse.id=ctns.cid;
+                if(ctns.hasOwnProperty('type')) {
+                    reponse.states=ctns.states
+                }
             }
         }
     }
-    let complementALaReponseParcequeOnEnAJamaisAssez = getStationProperties(id)
-    reponse.secIndex=complementALaReponseParcequeOnEnAJamaisAssez.secIndex;
-    reponse.cIndex=complementALaReponseParcequeOnEnAJamaisAssez.cIndex;
-    return reponse;
-}
-
-function getStationProperties(id){
-    let reponse={name: false, id: false, secIndex: false, cIndex: false}
     for (let sec in data.SEC){
         for (let ctns in data.SEC[sec].cantons){
-            if(typeof data.SEC[sec].cantons[ctns].type === 'undefined') continue;
-            if(!(data.SEC[sec].cantons[ctns].name === id)) continue;
-            reponse.id=data.SEC[sec].cantons[ctns].cid;
-            reponse.name=data.SEC[sec].cantons[ctns].name;
-            reponse.secIndex=sec;
-            reponse.cIndex=ctns;
+            for(let train in data.SEC[sec].cantons[ctns].trains){
+                if(!(data.SEC[sec].cantons[ctns].trains[train].tid === id)) continue;
+                reponse.tIndex=train
+                reponse.secIndex=sec;
+                reponse.cIndex=ctns;
+            }
         }
     }
     return reponse;
@@ -152,12 +151,11 @@ function yaUnDefautQQPart(){
     }
 }
 
-selectMenu.addEventListener('input', () => {
-    selectValue = selectMenu.value
-    let station = getStationsInfo(selectMenu.value)
-    quaiTitle.innerHTML=selectMenu.value
-    console.log(station)
-    updateVoy(station)
+selectMenuTrain.addEventListener('input', () => {
+    selectValueTrain = selectMenuTrain.value
+    let train = getTrainInfo(selectMenuTrain.value)
+    console.log(train)
+    updateVoy(train)
 })
 
 const blinkIntervalId = new Map()
@@ -166,25 +164,73 @@ let beepIntervalId = false
 
 let blinkIdReturn = 0
 
-function updateVoy(s){
+function updateVoy(c){
+
+    console.log(c)
+
+    trainNumberTrain.value=c.trains[0].tid
+    trainCanton.value=c.id.replace('c','')
+
+    if(data.SEC[c.secIndex].id!=='GAT'){
+        trainGSec.value='ABS'
+    } else {
+        trainGSec.value='GAT'
+    }
+
+    let actualTState=c.trains[0].states
+
+    if(actualTState.pretTrain===false){
+        trainState.value='TNE/NI'
+        trainState.classList.toggle('alarm',true)
+        trainState.classList.remove('ok')
+    }else if(actualTState.pretTrain===true){
+        trainState.value='PRÊT'
+        trainState.classList.toggle('ok',true)
+        trainState.classList.remove('alarm')
+    }
+
+    if(actualTState.speed===false){
+        trainSpeed.value='TMS!'
+        trainSpeed.classList.toggle('alarm',true)
+        trainSpeed.classList.remove('ok')
+    }else{
+        trainState.value=actualTState.speed
+        trainSpeed.classList.remove('alarm')
+    }
+
+    fuCountInput.value=actualTState.cptFu
+    if(actualTState.cptFu>0){
+        fuCount.classList.toggle('alarm',true)
+        fuCountInput.classList.toggle('alarm',true)
+    }else{
+        fuCount.classList.remove('alarm')
+        fuCountInput.classList.remove('alarm')
+    }
+
+    if(actualTState.mission===false){
+        trainMission.value='/'
+    } else {
+        trainMission.value=actualTState.mission
+    }
+
+    if(data.SEC[c.secIndex].cantons[c.cIndex].trains[1]){
+        trainAsso.value=data.SEC[c.secIndex].cantons[c.cIndex].trains[1].tid
+    } else trainAsso.value='NON'
 
     for(let interval of fileIntervals){
         if(interval===beepIntervalId) continue;
         clearInterval(interval)
     }
 
-    yaUnDefautQQPart()
+    //yaUnDefautQQPart()
 
     sm.playSound('gongChange', 2)
     
-    actualTime.value=s.states.actualTime
-
-    
-    for (let voy of document.getElementsByClassName('voyStationState')){
+    for (let voy of document.getElementsByClassName('voyTrainState')){
         let elemid = voy.id
         let elem=document.getElementById(elemid)
 
-        switch(s.states[elemid]){
+        switch(c.trains[0].states[elemid]){
             case false:
                 console.log(elemid+' faux.')
                 voy.classList.remove('ok')
@@ -193,10 +239,6 @@ function updateVoy(s){
                 clearInterval(blinkIdReturn)
                 clearInterval(blinkIdReturn-1)
                 blinkIntervalId.delete(elemid)
-                if(elemid==='IDPOAlreadyActiveByPLTP'){
-                    btnInactiveDSO.disabled=false
-                    btnActiveDSO.disabled=false
-                }
                 break;
             case true:
                 console.log(elemid+' true.')
@@ -206,13 +248,6 @@ function updateVoy(s){
                 clearInterval(blinkIdReturn)
                 clearInterval(blinkIdReturn-1)
                 blinkIntervalId.delete(elemid)
-                if((elemid==='IDPOAlreadyActiveByPLTP' && s.states['PLTPIDPOInhibed']==false)||(elemid==='IDPOAlreadyActiveByALC' && s.states['ALCIDPOInhibed']==false)){
-                    btnInactiveDSO.disabled=true
-                    btnActiveDSO.disabled=true
-                } else {
-                    btnInactiveDSO.disabled=false
-                    btnActiveDSO.disabled=false
-                }
                 break;
             case 1:
                 console.log(elemid+' Alarme')
@@ -238,7 +273,7 @@ function updateVoy(s){
                 break;
         }
     }
-    if(s.trains[0]){
+    /*if(s.trains[0]){
         console.log(s.trains[0])
         trainNumber.value=s.trains[0].tid
         for (let voy of document.getElementsByClassName('voyStationTrain')){
@@ -294,7 +329,7 @@ function updateVoy(s){
             voy.classList.remove('alarm')
         }
         trainNumber.value='NON'
-    }
+    }*/
     console.log(blinkIntervalId)
     if (blinkIntervalId.size >= 1) {
         console.log(blinkIntervalId+blinkIntervalId.size)

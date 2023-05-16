@@ -42,6 +42,14 @@
             border-width: 1px;
             font-family: Arial, Helvetica, sans-serif;
         }
+        td.voyTrainState{
+            border: #848484 solid;
+            border-width: 1px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .voyTrainState{
+            background-color: #CCCCCC;
+        }
         .voyStationState{
             color: black;
             background-color: #CCCCCC;
@@ -82,12 +90,6 @@
             width: 100%;
             color: white;
             font-weight: bold;
-        }
-        td.voyTrainState{
-            border: #848484 solid;
-            border-width: 1px;
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #CCCCCC;
         }
 
 
@@ -444,15 +446,15 @@
         <div id="trainHead" style="width: 100%;">
             <table>
                 <tr>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Rame:</span></td><td><input class="voyTrainState" id="trainNumberTrain" disabled value="-" style="width: 30%;"></td>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Canton:</span></td><td><input class="voyTrainState" id="trainCanton" disabled value="-" style="width: 30%;"></td>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Associé:</span></td><td><input class="voyTrainState" id="trainAsso" disabled value="-" style="width: 30%;"></td>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Vitesse:</span></td><td><input class="voyTrainState" id="trainSpeed" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Rame:</span></td><td><input id="trainNumberTrain" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Canton:</span></td><td><input id="trainCanton" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Associé:</span></td><td><input id="trainAsso" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Vitesse:</span></td><td><input id="trainSpeed" disabled value="-" style="width: 30%;"></td>
                 </tr>
                 <tr>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Etat:</span></td><td><input class="voyTrainState" id="trainState" disabled value="-" style="width: 30%;"></td>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>PA:</span></td><td><input class="voyTrainState" id="trainGSec" disabled value="-" style="width: 30%;"></td>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Mission:</span></td><td><input class="voyTrainState" id="trainMission" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Etat:</span></td><td><input id="trainState" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>PA:</span></td><td><input id="trainGSec" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Mission:</span></td><td><input id="trainMission" disabled value="-" style="width: 30%;"></td>
                 </tr>
             </table>
         </div>
@@ -527,7 +529,7 @@
                     <tr><td class="voyTrainState" id="asmd" colspan="3"><span id="asmd" class="voyTrainState">0.8 ASMD</span></td></tr>
                     <tr><td class="voyTrainState" id="v0pas" colspan="3"><span id="v0pas" class="voyTrainState">P0 PAS</span></td></tr>
                     <tr><td class="voyTrainState" id="cmdFu" colspan="3"><span id="cmdFu" class="voyTrainState">COMMANDE FU</span></td></tr>
-                    <tr><td colspan="2"><span>Compt. FU:</span></td><td class="voyTrainState" id="fuCount" colspan="1" style="width: 30%;"><input class="voyTrainState" id="fuCount" class="voyTrainState" value="0" disabled style="width: 30%;"></td></tr>
+                    <tr><td colspan="2"><span>Compt. FU:</span></td><td class="voyTrainState" id="fuCount" colspan="1" style="width: 30%;"><input class="voyTrainState" id="fuCountInput" class="voyTrainState" value="" disabled style="width: 30%;"></td></tr>
                     <tr><td colspan="3"><input type="button" value="ACQ. COMPTEUR FU" class="btnControl" id="btnAcqComptFu"></td></tr>
                     <tr><td class="voyTrainState" id="fsOk" colspan="3"><span id="fsOk" class="voyTrainState">FS VALIDE</span></td></tr>
                     <tr><td class="voyTrainState" id="fuFranch" colspan="3"><span id="fuFranch" class="voyTrainState">FU FRANCHISSEMENT</span></td></tr>
@@ -657,10 +659,6 @@
 
     <script src="./stationHandlerClient.js" type="module"></script>
 
-<<<<<<< Updated upstream
-    <script src="./trainHandlerClient.js" type="module"></script>
-=======
     <script src="./trainHandler.js" type="module"></script>
->>>>>>> Stashed changes
 </body>
 </html>
