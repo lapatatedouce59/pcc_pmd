@@ -431,7 +431,7 @@
     </div>
     <span><fieldset style="width: 20%; display: inline-block;">
         <legend>Sectionner un train</legend>
-        <select name="stationSelect" id="stationSelect">
+        <select name="trainSelect" id="trainSelect">
             <option value="O">CHOISIR TRAIN</option>
         </select> <br>
         <input type="button" value="ACQUITTER" id="btnAcquitTrain">
@@ -444,15 +444,15 @@
         <div id="trainHead" style="width: 100%;">
             <table>
                 <tr>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Rame:</span></td><td><input class="voyTrainState" id="trainNumber" disabled value="3" style="width: 30%;"></td>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Canton:</span></td><td><input class="voyTrainState" id="trainCanton" disabled value="1107" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Rame:</span></td><td><input class="voyTrainState" id="trainNumberTrain" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Canton:</span></td><td><input class="voyTrainState" id="trainCanton" disabled value="-" style="width: 30%;"></td>
                     <td style="font-family: Arial, Helvetica, sans-serif;"><span>Associé:</span></td><td><input class="voyTrainState" id="trainAsso" disabled value="-" style="width: 30%;"></td>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Vitesse:</span></td><td><input class="voyTrainState" id="trainSpeed" disabled value="0" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Vitesse:</span></td><td><input class="voyTrainState" id="trainSpeed" disabled value="-" style="width: 30%;"></td>
                 </tr>
                 <tr>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Etat:</span></td><td><input class="voyTrainState" id="trainState" disabled value="PRET" style="width: 30%;"></td>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>PA:</span></td><td><input class="voyTrainState" id="trainCanton" disabled value="ABS" style="width: 30%;"></td>
-                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Mission:</span></td><td><input class="voyTrainState" id="trainAsso" disabled value="OLY" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Etat:</span></td><td><input class="voyTrainState" id="trainState" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>PA:</span></td><td><input class="voyTrainState" id="trainGSec" disabled value="-" style="width: 30%;"></td>
+                    <td style="font-family: Arial, Helvetica, sans-serif;"><span>Mission:</span></td><td><input class="voyTrainState" id="trainMission" disabled value="-" style="width: 30%;"></td>
                 </tr>
             </table>
         </div>
@@ -656,5 +656,7 @@
     <script src="./index.js" type="module"></script>
 
     <script src="./stationHandlerClient.js" type="module"></script>
+
+    <script src="./trainHandlerClient.js" type="module"></script>
 </body>
 </html>
