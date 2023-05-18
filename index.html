@@ -318,7 +318,7 @@
         </div>
         <span><fieldset style="width: 20%; display: inline-block;">
             <legend>Sectionner une station</legend>
-            <select name="stationSelect" id="stationSelect">
+            <select name="stationSelect" id="stationSelect" multiple size="10">
                 <option value="O">CHOISIR STATION</option>
             </select> <br>
             <input type="button" value="ACQUITTER" id="btnAcquitStation">
@@ -433,10 +433,14 @@
     </div>
     <span><fieldset style="width: 20%; display: inline-block;">
         <legend>Sectionner un train</legend>
-        <select name="trainSelect" id="trainSelect">
+        <select name="trainSelect" id="trainSelect" multiple size="10">
             <option value="O">CHOISIR TRAIN</option>
         </select> <br>
         <input type="button" value="ACQUITTER" id="btnAcquitTrain">
+    </fieldset></span>
+    <span><fieldset style="width: 20%; display: inline-block;">
+        <legend>ACTIONS</legend>
+        <span><input type="button" id="fuCreate" value="Créer FU"></span> <span><input type="button" id="fuReleave" value="Lever FU"></span>
     </fieldset></span>
     <div id="train" class="format" style=" align-items: center;">
         <div id="stationhead" style="width: 100%; background-color: #5E5E5E; color: white;">
@@ -640,7 +644,7 @@
                     <tr><td class="voyTrainState" id="awakeMR" colspan="2"><span id="awakeMR" class="voyTrainState">MR RÉVEILLÉ</span></td><td class="voyTrainState" id="pretTrain" colspan="2"><span id="pretTrain" class="voyTrainState">TRAIN PRÊT</span></td></tr>
                     <tr><td style="width: 25%;"><input type="button" value="ÉVEIL" class="btnControl" id="btnEveil"></td><td style="width: 25%;"><input type="button" value="ENDORM." class="btnControl" id="btnEndorm"></td><td style="width: 25%;"><input type="button" value="PRÉP." class="btnControl" id="btnPrep"></td><td style="width: 25%;"><input type="button" value="DÉPREP." class="btnControl" id="btnDeprep"></td></tr>
                     <tr><td class="voyTrainState" id="defEveil" colspan="2"><span id="defEveil" class="voyTrainState">DÉFAUT ÉVEIL</span></td><td class="voyTrainState" id="deprepTrain" colspan="2"><span id="deprepTrain" class="voyTrainState">DÉPRÉPARATION</span></td></tr>
-                    <tr><td class="voyTrainState" id="defEndorm" colspan="2"><span id="defEndorm" class="voyTrainState">DÉFAUT ENDORMISSEMENT</span></td><td class="voyTrainState" id="defDeprep" colspan="2"><span id="deprepTrain" class="voyTrainState">DÉFAUT DÉPREP.</span></td></tr>
+                    <tr><td class="voyTrainState" id="defEndorm" colspan="2"><span id="defEndorm" class="voyTrainState">DÉFAUT ENDORMISSEMENT</span></td><td class="voyTrainState" id="defDeprep" colspan="2"><span id="defDeprep" class="voyTrainState">DÉFAUT DÉPREP.</span></td></tr>
                     <tr><td class="voyTrainState" id="echecPrep" colspan="2"><span id="echecPrep" class="voyTrainState">ÉCHEC PRÉP.</span></td><td class="voyTrainState" id="refusDeprep" colspan="2"><span id="refusDeprep" class="voyTrainState">REFUS DÉPREP</span></td></tr>
                     <tr><td class="voyTrainState" id="validTests" colspan="2"><span id="validTests" class="voyTrainState">TESTS VALIDES</span></td><td class="voyTrainState" id="echecTestFU" colspan="2"><span id="echecTestFU" class="voyTrainState">TEST FU A L'ECHEC</span></td></tr>
                     <tr><td class="voyTrainState" id="activeTests" colspan="2"><span id="activeTests" class="voyTrainState">TESTS EN COURS</span></td><td class="voyTrainState" id="unvalidTest" colspan="2"><span id="unvalidTest" class="voyTrainState">TEST NON VALIDE</span></td></tr>

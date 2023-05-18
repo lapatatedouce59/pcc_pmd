@@ -1012,6 +1012,228 @@ wss.on('connection', (ws, req) => {
                     }
                     weweOnAttendLaFinDeLhinib()
                     apiSave()
+                } else                                       //TRAIN
+                if(data.execute==='AQC-BTN-TRAIN'){
+                    if(!data.target.secIndex) return;
+                    if(!data.target.cIndex) return;
+                    if(!data.target.tIndex) return;
+                    let cantonIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let trainIndex = parseInt(data.target.tIndex)
+                    let trainObj = pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]
+                    for(let alarm in trainObj.states){
+                        if(!(trainObj.states[alarm]===2)) continue;
+                        if(alarm==='cptFu') continue;
+                        trainObj.states[alarm]=1
+                    }
+                    apiSave()
+                } else
+                if(data.execute==='FU-BTN-ON'){
+                    if(!data.target.secIndex) return;
+                    if(!data.target.cIndex) return;
+                    if(!data.target.tIndex) return;
+                    let cantonIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let trainIndex = parseInt(data.target.tIndex)
+                    let trainObj = pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]
+                    trainObj.states.fuNoFS=2
+                    trainObj.states.cmdFu=2
+                    trainObj.states.cptFu++
+                    trainObj.states.activeFU=true
+                    if(trainObj.states.cptFu>2){
+                        trainObj.states.defTech=2
+                        trainObj.states.v0pas=2
+                        trainObj.states.blockedTrain=2
+                    }
+                    apiSave()
+                } else
+                if(data.execute==='FU-BTN-OFF'){
+                    if(!data.target.secIndex) return;
+                    if(!data.target.cIndex) return;
+                    if(!data.target.tIndex) return;
+                    let cantonIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let trainIndex = parseInt(data.target.tIndex)
+                    let trainObj = pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]
+                    trainObj.states.fuNoFS=false
+                    trainObj.states.cmdFu=false
+                    trainObj.states.activeFU=false
+                    apiSave()
+                } else
+                if(data.execute==='CPTFU-BTN-ACQ'){
+                    if(!data.target.secIndex) return;
+                    if(!data.target.cIndex) return;
+                    if(!data.target.tIndex) return;
+                    let cantonIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let trainIndex = parseInt(data.target.tIndex)
+                    let trainObj = pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]
+                    trainObj.states.cptFu=0
+                    trainObj.states.defTech=false
+                    trainObj.states.v0pas=false
+                    trainObj.states.blockedTrain=false
+                    apiSave()
+                } else
+                if(data.execute==='PREP-BTN'){
+                    if(!data.target.secIndex) return;
+                    if(!data.target.cIndex) return;
+                    if(!data.target.tIndex) return;
+                    let cantonIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let trainIndex = parseInt(data.target.tIndex)
+                    let trainObj = pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]
+                    const goFaireDuRPInutile = async() => {
+                        trainObj.states.TMSActive=true
+                        trainObj.states.defLtpa=2
+                        apiSave()
+                        await setTimeout(2000)
+                        trainObj.states.defTech=2
+                        trainObj.states.defFN=2
+                        trainObj.states.permBrake=true
+                        trainObj.states.defLectBal=2
+                        trainObj.states.activeFU=true
+                        trainObj.states.cmdFu=2
+                        trainObj.states.cptFu++
+                        apiSave()
+                        await setTimeout(1500)
+                        trainObj.states.trainFrott=2
+                        trainObj.states.defCvs=2
+                        trainObj.states.trainBattery=2
+                        trainObj.states.abs750=2
+                        apiSave()
+                        await setTimeout(2000)
+                        trainObj.states.defDistBt=2
+                        trainObj.states.btDelest=2
+                        trainObj.states.avarieOnduls=2
+                        apiSave()
+                        await setTimeout(4000)
+                        trainObj.states.awakeMR=true
+                        trainObj.states.speed=0
+                        trainObj.states.defLtpa=false
+                        trainObj.states.defLectBal=false
+                        trainObj.states.trainPilot=true
+                        trainObj.states.v0pas=2
+                        trainObj.states.trainFrott=true
+                        apiSave()
+                        await setTimeout(4000)
+                        trainObj.states.activeTests=true
+                        trainObj.states.btDelest=false
+                        trainObj.states.defDistBt=false
+                        trainObj.states.defCvs=false
+                        trainObj.states.abs750=false
+                        trainObj.states.trainBattery=false
+                        trainObj.states.activeOnduls=true
+                        apiSave()
+                        await setTimeout(1000)
+                        trainObj.states.testAuto=2
+                        trainObj.states.activeFI=true
+                        trainObj.states.forbCommand=2
+                        apiSave()
+                        await setTimeout(10000)
+                        trainObj.states.avarieOnduls=false
+                        apiSave()
+                        await setTimeout(4000)
+                        trainObj.states.validTests=true
+                        trainObj.states.activeTests=false
+                        trainObj.states.defTech=false
+                        apiSave()
+                        await setTimeout(4000)
+                        trainObj.states.trainLights=true
+                        trainObj.states.trainHeating=true
+                        trainObj.states.trainComp=true
+                        trainObj.states.fsOk=2
+                        trainObj.states.fuNoFS=2
+                        trainObj.states.IOP=true
+                        trainObj.states.blockedTrain=true
+                        trainObj.states.vitModifPAS=true
+                        trainObj.states.cptFu++
+                        apiSave()
+                        await setTimeout(10000)
+                        trainObj.states.nullSpeed=true
+                        trainObj.states.defFN=false
+                        trainObj.states.testAuto=false
+                        trainObj.states.waitingMission=true
+                        trainObj.states.permBrake=false
+                        trainObj.states.cmdTraction=true
+                        apiSave()
+                        await setTimeout(10000)
+                        trainObj.states.pretTrain=true
+                        trainObj.states.autoTrain=true
+                        trainObj.states.forbCommand=false
+                        apiSave()
+                    }
+                    goFaireDuRPInutile()
+                    apiSave()
+                } else
+                if(data.execute==='DEPREP-BTN'){
+                    if(!data.target.secIndex) return;
+                    if(!data.target.cIndex) return;
+                    if(!data.target.tIndex) return;
+                    let cantonIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let trainIndex = parseInt(data.target.tIndex)
+                    let trainObj = pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]
+                    const goFaireDuRPInutile = async() => {
+                        for(let alarm in trainObj.states){
+                            if(alarm==='cptFu') continue;
+                            trainObj.states[alarm]=false
+                        }
+                        trainObj.states.speed=0
+                        trainObj.states.TMSActive=true
+                        trainObj.states.pretTrain=true
+                        trainObj.states.trainLights=true
+                        trainObj.states.trainHeating=true
+                        trainObj.states.trainComp=true
+                        trainObj.states.trainFrott=true
+                        trainObj.states.autoTrain=true
+                        trainObj.states.trainPilot=true
+                        trainObj.states.activeOnduls=true
+                        trainObj.states.fsOk=2
+                        trainObj.states.awakeMR=true
+
+                        trainObj.states.fuNoFS=2
+                        trainObj.states.cmdFu=2
+                        trainObj.states.blockedTrain=true
+                        trainObj.states.v0pas=2
+                        trainObj.states.activeFU=true
+                        trainObj.states.canceledMission=true
+                        trainObj.states.IOP=true
+                        trainObj.states.validTests=false
+                        trainObj.states.deprepTrain=true
+                        trainObj.states.cptFu++
+                        apiSave()
+                        await setTimeout(2000)
+                        trainObj.states.autoTrain=false
+                        trainObj.states.trainPilot=false
+                        trainObj.states.defFN=2
+                        trainObj.states.permBrake=true
+                        apiSave()
+                        await setTimeout(1500)
+                        trainObj.states.trainLights=false
+                        trainObj.states.trainHeating=false
+                        trainObj.states.trainComp=false
+                        trainObj.states.trainFrott=false
+                        apiSave()
+                        await setTimeout(1000)
+                        trainObj.states.abs750=2
+                        trainObj.states.activeOnduls=false
+                        trainObj.states.avarieOnduls=2
+                        apiSave()
+                        await setTimeout(1000)
+                        trainObj.states.pretTrain=false
+                        trainObj.states.activeFI=true
+                        trainObj.states.cptFu=0
+                        trainObj.states.avarieOnduls=false
+                        apiSave()
+                        await setTimeout(5000)
+                        for(let alarm in trainObj.states){
+                            if(alarm==='cptFu') continue;
+                            trainObj.states[alarm]=false
+                        }
+                        apiSave()
+                    }
+                    goFaireDuRPInutile()
+                    apiSave()
                 }
 
                 break;
