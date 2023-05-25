@@ -62,12 +62,35 @@ let btnAcquitStation = document.getElementById('btnAcquitStation')
 let jeTeMontreTonUUID = document.getElementById('uuidStation')
 
 quaiTitle.innerHTML=selectMenu.value
-let ws = new WebSocket('ws://localhost:8081')
+let copyConfig = document.getElementById('copyConfig')
+window.actualRequest = actualRequest
+let showRequest = document.getElementById('request')
+//let window.WebSocket = new WebSocket('window.WebSocket://localhost:8081')
 let data=false
 
 let uuid = false;
 let usrname = username
 
+let keystroke = []
+
+window.addEventListener('keydown', (e)=>{
+    keystroke.push(e.code)
+    if(keystroke[0]==='ControlLeft' && keystroke[1]==='ShiftLeft' && keystroke[2]==='AltLeft' && keystroke[3]==='KeyQ' && keystroke[4]==='KeyS'){
+        keystroke = []
+        window.WebSocket.send(JSON.stringify({
+            op: 204,
+            execute: "AQC-BTN",
+            target: getStationsInfo(selectMenu.value),
+            uuid: uuid
+        }));
+    } else {
+        async function waitABit(){
+            await sleep(500)
+            keystroke = []
+        }
+        waitABit()
+    }
+})
 
 let fileIntervals=[]
 
@@ -100,28 +123,28 @@ async function faireBip(){
 
 //faireBip()
 
-ws.addEventListener('open', ()=> {
+window.WebSocket.addEventListener('open', ()=> {
     console.log('Connecté au WS')
-    const weweOnAttends = async() => {
+    /*const weweOnAttends = async() => {
         await sleep(100)
-        ws.send(JSON.stringify({
+        window.WebSocket.send(JSON.stringify({
             op: 1,
             from: "STATION",
             uname: username||localStorage.getItem('dUsername')
         }));
         console.log(username)
     }
-    weweOnAttends()
+    weweOnAttends()*/
 
-    ws.addEventListener('close', ()=>{
+    window.WebSocket.addEventListener('close', ()=>{
         alert('Le serveur viens de crash! Merci de signaler l\'erreur à La Patate Douce sur discord.gg/pmd en indiquant les actions effectuées!')
     })
 
-    ws.addEventListener('error',()=>{
+    window.WebSocket.addEventListener('error',()=>{
         alert('Le serveur viens de crash! Merci de signaler l\'erreur à La Patate Douce sur discord.gg/pmd en indiquant les actions effectuées!')
     })
 
-    ws.addEventListener('message', msg =>{
+    window.WebSocket.addEventListener('message', msg =>{
         data = JSON.parse(msg.data);
         console.log(data);
 
@@ -148,19 +171,19 @@ ws.addEventListener('open', ()=> {
                 inflationDuPrixDuCarburant++
             }
             console.log(sections)
-            ws.send(JSON.stringify({
+            /*window.WebSocket.send(JSON.stringify({
                 op: 2,
                 demande: 'GET-UUID?'
-            }))
+            }))*/
         }else if(data.op===3){
             uuid=data.uuid
             jeTeMontreTonUUID.innerHTML=uuid
-            console.log(uuid)
-            ws.send(JSON.stringify({
+            /*console.log(uuid)
+            window.WebSocket.send(JSON.stringify({
                 op: 4,
                 demande: 'TEST-UUID?',
                 uuid: uuid
-            }))
+            }))*/
         } else if (data.op===300){
             data=data.content
             let station = getStationsInfo(selectMenu.value)
@@ -392,21 +415,25 @@ function updateVoy(s){
 }
 
 btnClosePP.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "CLOSEPP-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnOpenPP.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "OPENPP-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.actualRequest = actualRequest
+    window.WebSocket.send(actualRequest);
 })
 
 btnOpenPV.addEventListener('click', ()=>{
@@ -415,12 +442,14 @@ btnOpenPV.addEventListener('click', ()=>{
         trainOrderAffect.style.backgroundColor='#EC2020'
         return;
     }
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "OPENPV-BTN",
         target: trainId,
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
     trainOrderAffect.style.backgroundColor='white'
 })
 
@@ -430,67 +459,81 @@ btnClosePV.addEventListener('click', ()=>{
         trainOrderAffect.style.backgroundColor='#EC2020'
         return;
     }
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "CLOSEPV-BTN",
         target: trainId,
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
     trainOrderAffect.style.backgroundColor='white'
 })
 
 btnPartialPPOpeningInc.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "GENRATEINC-PARTIALPPOPEN-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnPartialPPClosingInc.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "GENRATEINC-PARTIALPPCLOSE-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnTotalPPOpeningInc.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "GENRATEINC-TOTALPPOPEN-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnTotalPPClosingInc.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "GENRATEINC-TOTALPPCLOSE-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnReset.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "GENRATEINC-RESET-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnAcquitStation.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "AQC-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 ckbZopp.addEventListener('input', ()=>{
@@ -500,19 +543,23 @@ ckbZopp.addEventListener('input', ()=>{
         return;
     }
     if(ckbZopp.checked){
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "ZOPP-ON-COM",
             target: trainId,
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     } else {
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "ZOPP-OFF-COM",
             target: trainId,
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     }
 })
 
@@ -523,146 +570,178 @@ ckbSafe.addEventListener('input', ()=>{
         return;
     }
     if(ckbSafe.checked){
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "SAFE-ON-COM",
             target: trainId,
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     } else {
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "SAFE-OFF-COM",
             target: trainId,
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     }
 })
 
 ckbObs.addEventListener('input', ()=>{
     if(ckbObs.checked){
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "OBS-ON-COM",
             target: getStationsInfo(selectMenu.value),
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     } else {
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "OBS-OFF-COM",
             target: getStationsInfo(selectMenu.value),
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     }
 })
 
 ckbUnlockPMS.addEventListener('input', ()=>{
     if(ckbUnlockPMS.checked){
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "PMSUNLOCK-ON-COM",
             target: getStationsInfo(selectMenu.value),
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     } else {
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "PMSUNLOCK-OFF-COM",
             target: getStationsInfo(selectMenu.value),
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     }
 })
 
 ckbManualExploit.addEventListener('input', ()=>{
     if(ckbManualExploit.checked){
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "PMSMANUAL-ON-COM",
             target: getStationsInfo(selectMenu.value),
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     } else {
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "PMSMANUAL-OFF-COM",
             target: getStationsInfo(selectMenu.value),
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     }
 })
 
 ckbMaintenance.addEventListener('input', ()=>{
     if(ckbMaintenance.checked){
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "PMSMAINT-ON-COM",
             target: getStationsInfo(selectMenu.value),
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     } else {
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "PMSMAINT-OFF-COM",
             target: getStationsInfo(selectMenu.value),
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     }
 })
 
 btnActiveHLP.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "HLP-ON-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnInactiveHLP.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "HLP-OFF-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnActiveDSO.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "DSO-ON-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnInactiveDSO.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "DSO-OFF-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnIhibIDPOPLTP.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "INHIBPLTPIDPO-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnIhibIDPOALC.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "INHIBALCIDPO-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 ckbObsVeh.addEventListener('input', ()=>{
@@ -672,19 +751,23 @@ ckbObsVeh.addEventListener('input', ()=>{
         return;
     }
     if(ckbObsVeh.checked){
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "OBSVEH-ON-COM",
             target: trainId,
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     } else {
-        ws.send(JSON.stringify({
+        actualRequest = JSON.stringify({
             op: 204,
             execute: "OBSVEH-OFF-COM",
             target: trainId,
             uuid: uuid
-        }));
+        })
+        window.WebSocket.send(actualRequest);
+        window.actualRequest = actualRequest
     }
 })
 
@@ -693,13 +776,15 @@ btnSetTime.addEventListener('click', ()=>{
         newTime.style.backgroundColor='#EC2020'
         return;
     }
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "SETTIME-BTN",
         new: newTime.value,
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
     
 })
 
@@ -709,12 +794,14 @@ btnEmCall.addEventListener('click', ()=>{
         trainOrderAffect.style.backgroundColor='#EC2020'
         return;
     }
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "EMCALL-BTN",
         target: trainId,
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
     trainOrderAffect.style.backgroundColor='white'
 })
 
@@ -724,155 +811,189 @@ btnAcqEmCall.addEventListener('click', ()=>{
         trainOrderAffect.style.backgroundColor='#EC2020'
         return;
     }
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "ACQEMCALL-BTN",
         target: trainId,
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
     trainOrderAffect.style.backgroundColor='white'
 })
 
 btnAFD.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "AFD-ON-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnRAZAFD.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "AFD-RAZ-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnVVTS1.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "VVTS1-ON-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnRAZVVTS1.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "VVTS1-RAZ-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnInhibVVTS1.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "VVTS1-INHIB-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnVVTS2.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "VVTS2-ON-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnRAZVVTS2.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "VVTS2-RAZ-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnInhibVVTS2.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "VVTS2-INHIB-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnDEPA.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "DEPA-ON-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnRAZdepa.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "DEPA-RAZ-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnIDPF.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "IDPF-ON-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnRAZidpf.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "IDPF-RAZ-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnMAPF.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "MAPF-ON-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnRAZmapf.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "MAPF-RAZ-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnISTA.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "ISTA-ON-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnRAZista.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "ISTA-RAZ-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })

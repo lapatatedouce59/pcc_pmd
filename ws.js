@@ -137,7 +137,7 @@ wss.on('connection', (ws, req) => {
                     }))
                     await setTimeout(400)
                     logger.message('broadcast','ARRIVAL')
-                    ws.send(JSON.stringify({
+                    wss.broadcast(JSON.stringify({
                         op: 300,
                         content: pccApi
                     }))
@@ -1162,7 +1162,18 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.forbCommand=false
                         apiSave()
                     }
-                    goFaireDuRPInutile()
+                    const refusPrep = async() => {
+                        trainObj.states.echecPrep=2
+                        apiSave()
+                        await setTimeout(10000)
+                        trainObj.states.echecPrep=false
+                        apiSave()
+                    }
+                    if(trainObj.states.pretTrain){
+                        refusPrep()
+                    } else {
+                        goFaireDuRPInutile()
+                    }
                     apiSave()
                 } else
                 if(data.execute==='DEPREP-BTN'){
@@ -1232,8 +1243,18 @@ wss.on('connection', (ws, req) => {
                         }
                         apiSave()
                     }
-                    goFaireDuRPInutile()
-                    apiSave()
+                    const refusDeprep = async() => {
+                        trainObj.states.refusDeprep=2
+                        apiSave()
+                        await setTimeout(10000)
+                        trainObj.states.refusDeprep=false
+                        apiSave()
+                    }
+                    if(trainObj.states.pretTrain){
+                        goFaireDuRPInutile()
+                    } else {
+                        refusDeprep()
+                    }
                 }
 
                 break;

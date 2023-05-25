@@ -25,8 +25,30 @@ let btnPrep = document.getElementById('btnPrep')
 let btnDeprep = document.getElementById('btnDeprep')
 
 let jeTeMontreTonUUID = document.getElementById('uuidTrain')
+let copyConfig = document.getElementById('copyConfig')
+window.actualRequest = actualRequest
+let showRequest = document.getElementById('request')
 
-let ws = new WebSocket('ws://localhost:8081')
+let keystroke = []
+
+window.addEventListener('keydown', (e)=>{
+    keystroke.push(e.code)
+    if(keystroke[0]==='ControlLeft' && keystroke[1]==='ShiftLeft' && keystroke[2]==='AltLeft' && keystroke[3]==='KeyQ' && keystroke[4]==='KeyT'){
+        keystroke = []
+        window.WebSocket.send(JSON.stringify({
+            op: 204,
+            execute: "AQC-BTN-TRAIN",
+            target: getTrainInfo(selectMenuTrain.value),
+            uuid: uuid
+        }));
+    } else {
+        async function waitABit(){
+            await sleep(500)
+            keystroke = []
+        }
+        waitABit()
+}})
+//let window.WebSocket = new WebSocket('window.WebSocket://localhost:8081')
 let data=false
 
 let uuid = false;
@@ -50,20 +72,20 @@ function sleep(ms) {
     });
 }
 
-ws.addEventListener('open', ()=> {
+window.WebSocket.addEventListener('open', ()=> {
     console.log('Connecté au WS')
-    const weweOnAttends = async() => {
+    /*const weweOnAttends = async() => {
         await sleep(100)
-        ws.send(JSON.stringify({
+        window.WebSocket.send(JSON.stringify({
             op: 1,
             from: "TRAIN",
             uname: username||localStorage.getItem('dUsername')
         }));
         console.log(username)
     }
-    weweOnAttends()
+    weweOnAttends()*/
 
-    ws.addEventListener('message', msg =>{
+    window.WebSocket.addEventListener('message', msg =>{
         data = JSON.parse(msg.data);
         console.log(data);
 
@@ -88,19 +110,19 @@ ws.addEventListener('open', ()=> {
                 inflationDuPrixDuCarburant++
             }
             console.log(trains)
-            ws.send(JSON.stringify({
+            /*window.WebSocket.send(JSON.stringify({
                 op: 2,
                 demande: 'GET-UUID?'
-            }))
+            }))*/
         }else if(data.op===3){
             uuid=data.uuid
             jeTeMontreTonUUID.innerHTML=uuid
             console.log(uuid)
-            ws.send(JSON.stringify({
+            /*window.WebSocket.send(JSON.stringify({
                 op: 4,
                 demande: 'TEST-UUID?',
                 uuid: uuid
-            }))
+            }))*/
         } else if (data.op===300){
             data=data.content
             let train = getTrainInfo(selectMenuTrain.value)
@@ -364,55 +386,67 @@ function updateVoy(c){
 }
 
 btnAcquitTrain.addEventListener('click', ()=>{
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "AQC-BTN-TRAIN",
         target: getTrainInfo(selectMenuTrain.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 fuCreate.addEventListener('click', () => {
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "FU-BTN-ON",
         target: getTrainInfo(selectMenuTrain.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 fuReleave.addEventListener('click', () => {
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "FU-BTN-OFF",
         target: getTrainInfo(selectMenuTrain.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnAcqComptFu.addEventListener('click', () => {
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "CPTFU-BTN-ACQ",
         target: getTrainInfo(selectMenuTrain.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnPrep.addEventListener('click', () => {
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "PREP-BTN",
         target: getTrainInfo(selectMenuTrain.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
 
 btnDeprep.addEventListener('click', () => {
-    ws.send(JSON.stringify({
+    actualRequest = JSON.stringify({
         op: 204,
         execute: "DEPREP-BTN",
         target: getTrainInfo(selectMenuTrain.value),
         uuid: uuid
-    }));
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
