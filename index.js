@@ -199,6 +199,10 @@ S2.addEventListener('load', () => {
 
 
 sm.registerSound("bip", './src/pltp/snds/bip.mp3');
+sm.registerSound("join", './src/global/join.mp3');
+sm.registerSound("left", './src/global/leave.mp3');
+sm.registerSound("enter", './src/global/enter.mp3');
+sm.registerSound("wb", './src/global/wb.mp3');
 
 window.WebSocket = new WebSocket('ws://localhost:8081')
 
@@ -241,6 +245,7 @@ async function isWsRunning(){
                 from: "TCO-LIGNE",
                 uname: username||localStorage.getItem('dUsername')
             }));
+            sm.playSound('wb')
             console.log(username)
             showuname.innerHTML=localStorage.getItem('dUsername')
         }
@@ -420,6 +425,7 @@ async function isWsRunning(){
                 let uuid=data.content.uuid
                 let newUserName=data.content.uname
                 toast.innerHTML='L\'utilisateur '+newUserName+' a rejoins le PCC avec l\'UUID '+uuid+' !'
+                sm.playSound('enter')
                 toast.className="show";
                 setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
                 
@@ -428,6 +434,7 @@ async function isWsRunning(){
             if(data.op===11){
                 toast.innerHTML='Un utilisateur a quitté la page.'
                 toast.className="show";
+                sm.playSound('left')
                 setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
             }
 
