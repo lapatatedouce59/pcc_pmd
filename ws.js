@@ -119,7 +119,7 @@ wss.on('connection', (ws, req) => {
             case 2:
                 console.log('Demande d\'UUID reçue. Envoi dans 1 seconde.')
                 const bahOnVaAttendreSinonLautreIlVaPasEtreContent = async() => {
-                    await setTimeout(1000)
+                    await setTimeout(500)
                     logger.message('outcome',newUUID)
                     ws.send(JSON.stringify({uuid: newUUID, op:3}))
                 }
@@ -129,13 +129,13 @@ wss.on('connection', (ws, req) => {
             case 4:
                 console.log('['+clients.get(data.uuid).uuid+'] Confirmation d\'UUID reçue. Envoi dans 1 seconde.')
                 const goEncoreAttendre = async() => {
-                    await setTimeout(400)
+                    await setTimeout(200)
                     if(!isClientExisting(data.uuid)) return;
                     wss.broadcast(JSON.stringify({
                         op: 10,
                         content: { uuid: clients.get(data.uuid).uuid, uname: clients.get(data.uuid).uname }
                     }))
-                    await setTimeout(400)
+                    await setTimeout(200)
                     logger.message('broadcast','ARRIVAL')
                     wss.broadcast(JSON.stringify({
                         op: 300,
@@ -464,6 +464,7 @@ wss.on('connection', (ws, req) => {
                     trainObj.states.doorsClosedPV=false
                     if(trainObj.states.inZOPP) {
                         let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
+                        if(typeof stationObj.states === 'undefined') return apiSave();
                         stationObj.states.engagedPMS=false
                         stationObj.states.doorsOpened=true
                         stationObj.states.doorsClosed=false
@@ -483,6 +484,7 @@ wss.on('connection', (ws, req) => {
                     if(trainObj.states.inZOPP) {
 
                         let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
+                        if(typeof stationObj.states === 'undefined') return apiSave();
                         stationObj.states.engagedPMS=false
                         stationObj.states.doorsOpened=false
                         stationObj.states.doorsClosedPAS=true
@@ -2162,7 +2164,24 @@ wss.on('connection', (ws, req) => {
                     }
                     apiSave()
                 }
-
+                break;
+            case 600:
+                if(!isClientExisting(data.uuid)) return;
+                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                for (let event of pccApi.events){
+                    if(!(event.id===data.inc)) continue;
+                    event.state='Résolution'
+                    event.showState=2
+                    let currentDate = new Date();
+                    let currentHour = currentDate.getHours();
+                    let currentMinute = currentDate.getMinutes();
+                    let currentDay = currentDate.getDate();
+                    let currentMonth = currentDate.getUTCMonth()+1
+                    let currentYear = currentDate.getFullYear();
+                    event.date=event.date+' - '+currentDay+'/'+currentMonth+'/'+currentYear+', '+currentHour+'h'+currentMinute;
+                    apiSave()
+                }
+                break;
         }
     })
 

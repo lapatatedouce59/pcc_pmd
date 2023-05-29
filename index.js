@@ -1618,3 +1618,8 @@ function clearAllCantons(list, _CANTON_, mode) {
 copyConfig.addEventListener('click', () => {
     showRequest.innerHTML=window.actualRequest
 })
+
+let btnAdminAccess = document.getElementById('btnAdminAccess')
+btnAdminAccess.addEventListener('click',()=>{
+    document.location.href='admin.html'
+})

@@ -740,5 +740,39 @@
         }
       ]
     }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "name": "Défaut compresseur",
+      "user": "Patate Douce",
+      "date": "27/05/2023 12h32",
+      "state": "En cours",
+      "showState": true
+    },
+    {
+      "id": 2,
+      "name": "Défaut portes",
+      "user": "Patate Douce",
+      "date": "27/05/2023 13h01",
+      "state": "Résolution",
+      "showState": 2
+    },
+    {
+      "id": 3,
+      "name": "Défaut CVS",
+      "user": "Patate Douce",
+      "date": "27/05/2023 11h27",
+      "state": "En attente",
+      "showState": 1
+    },
+    {
+      "id": 4,
+      "name": "Défaut de merde",
+      "user": "Patate Douce",
+      "date": "27/05/2023 12h32",
+      "state": "Terliné",
+      "showState": false
+    }
   ]
 }

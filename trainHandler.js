@@ -24,7 +24,6 @@ let btnEndorm = document.getElementById('btnEndorm')
 let btnPrep = document.getElementById('btnPrep')
 let btnDeprep = document.getElementById('btnDeprep')
 
-let jeTeMontreTonUUID = document.getElementById('uuidTrain')
 let copyConfig = document.getElementById('copyConfig')
 window.actualRequest = actualRequest
 let showRequest = document.getElementById('request')
@@ -116,7 +115,6 @@ window.WebSocket.addEventListener('open', ()=> {
             }))*/
         }else if(data.op===3){
             uuid=data.uuid
-            jeTeMontreTonUUID.innerHTML=uuid
             console.log(uuid)
             /*window.WebSocket.send(JSON.stringify({
                 op: 4,

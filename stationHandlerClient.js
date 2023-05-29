@@ -59,8 +59,6 @@ let ckbObsVeh = document.getElementById('ckbObsVeh')
 
 let btnAcquitStation = document.getElementById('btnAcquitStation')
 
-let jeTeMontreTonUUID = document.getElementById('uuidStation')
-
 quaiTitle.innerHTML=selectMenu.value
 let copyConfig = document.getElementById('copyConfig')
 window.actualRequest = actualRequest
@@ -177,7 +175,6 @@ window.WebSocket.addEventListener('open', ()=> {
             }))*/
         }else if(data.op===3){
             uuid=data.uuid
-            jeTeMontreTonUUID.innerHTML=uuid
             /*console.log(uuid)
             window.WebSocket.send(JSON.stringify({
                 op: 4,
@@ -252,6 +249,9 @@ function yaUnDefautQQPart(){
         let elem = document.getElementById(defList[sta])
         elem.classList.toggle('alarm',true)
     }
+    if (defList.length >= 1){
+        //sm.playSound('gongChange', 2)
+    }
 }
 
 selectMenu.addEventListener('input', () => {
@@ -276,8 +276,6 @@ function updateVoy(s){
     }
 
     yaUnDefautQQPart()
-
-    sm.playSound('gongChange', 2)
     
     actualTime.value=s.states.actualTime
 

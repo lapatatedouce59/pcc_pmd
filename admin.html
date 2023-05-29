@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCC Admin</title>
+    <style>
+        #header{
+            display: flex;
+            align-items: center;
+        }
+        #incidents{
+            text-align: center;
+        }
+        td.table1{
+            padding-inline: 100px;
+        }
+        th.table1{
+            padding-inline: 100px;
+        }
+        .eventFinished{
+            background-color: darkgray;
+        }
+        .eventActive{
+            background-color: rgb(5, 255, 59);
+        }
+        .eventWaiting{
+            background-color: rgb(232, 210, 19);
+        }
+        .eventTerminating{
+            background-color: rgb(232, 19, 19);
+        }
+        button{
+            background: none;
+            font-weight: bold;
+            width: 100%;
+        }
+        #genIncidents{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <button id="backToTheBeginingBaby">RETOURNER AU PCC</button>
+    <div id="header">
+        <span><img src="src/global/logo new.png" alt="" height="60vh"></span>
+        <span style="font-family: Arial, Helvetica, sans-serif; font-size: 50px; color: black; font-weight: bold;">  GESTION PARTIE MULTIJOUEUR</span>
+    </div>
+    <div id="incidentsDiv" class="genericCont">
+        
+        <fieldset id="activeIncidents">
+        <legend>Incidents en cours</legend>
+        <table id="incidents">
+            <tr>
+                <th scope="col" class="table1">Visualisation</th>
+                <th scope="col" class="table1">Nom de l'incident</th>
+                <th scope="col" class="table1">Utilisateur à l'origine</th>
+                <th scope="col" class="table1">Datation</th>
+                <th scope="col" class="table1">État</th>
+                <th scope="col" class="table1">Actions</th>
+            </tr>
+        </table>
+        </fieldset>
+    </div>
+    <div id="genIncidentsDiv" class="genericCont">
+        
+        <fieldset id="generateIncidents">
+        <legend>Générer des incidents</legend>
+        <table id="genIncidents">
+            <tr style="background-color: slategrey; color: white;">
+                <th scope="col">Sévérité</th>
+                <th scope="col">Ligne</th>
+                <th scope="col">Station</th>
+                <th scope="col">Train</th>
+                <th scope="col">PA</th>
+                <th scope="col">Voyageur</th>
+            </tr>
+            <tr style="background-color: #AEFFA7;">
+                <th scope="row">Petite</th>
+                <td><button id="btnDefVoy">Défaut voyant platine</button></td>
+                <td><button id="btnObsPortes">Obstacle porte</button></td>
+                <td><button id="btnDefEcl">Défaut éclairage</button></td>
+                <td><button id="btnDiscIti">Discordance itinéraire</button></td>
+                <td><button id="btnDiscIti">Appel urgence</button></td>
+            </tr>
+            <tr style="background-color: #AEFFA7;">
+                <th scope="row"></th>
+                <td><button id="btnSurintens">Surintensité</button></td>
+                <td><button id="btnDefPPOuv">Ouv. PP défectueuse</button></td>
+                <td><button id="btnDefPVOuv">Ouv. PV défectueuse</button></td>
+                <td><button id="btnCycle">Défaut cycle</button></td>
+                <td><button id="btnColisSus">Colis suspect</button></td>
+            </tr>
+            <tr style="background-color: #F3E77B;">
+                <th scope="row">Moyenne</th>
+                <td><button id="btnRuptElec">Rupteur électrique</button></td>
+                <td><button id="btnDefPP">PP défectueuse</button></td>
+                <td><button id="btnPatinage">Patinage</button></td>
+                <td><button id="btnDefTapis">Défaut tapis</button></td>
+                <td><button id="btnIncVoyageur">Incident voyageur</button></td>
+            </tr>
+            <tr style="background-color: #F3E77B;">
+                <th scope="row"></th>
+                <td><button id="btnVerglas">Verglas</button></td>
+                <td><button id="btnPSOuv">PS ouverte</button></td>
+                <td><button id="btnTempFreins">Température freins</button></td>
+                <td><button id="btnDefFS">Défaut FS</button></td>
+                <td><button id="btnInterFDO">Intervention FDO</button></td>
+            </tr>
+            <tr style="background-color: #F3E77B;">
+                <th scope="row"></th>
+                <td><button id="btnDefAlim">Défaut alimentation</button></td>
+                <td><button id="btnDefLSV">LSV défectueuse</button></td>
+                <td><button id="btnPneuCreve">Pneu crevé</button></td>
+                <td><button id="btnDefComIti">Défaut commande itinéraire</button></td>
+                <td><button id="btnSurchargeTrain">Surcharge</button></td>
+            </tr>
+            <tr style="background-color: #FF8080;">
+                <th scope="row">Forte</th>
+                <td><button id="btnObsVoies">Obstacle sur les voies</button></td>
+                <td><button id="btnVandalPP">Vandalisme PP</button></td>
+                <td><button id="btnRuptAtt">Rupture attelage</button></td>
+                <td><button id="btnDefPAS">Défaut PAS</button></td>
+                <td><button id="btnKSAEvac">Poignée évacuation</button></td>
+            </tr>
+            <tr style="background-color: #FF8080;">
+                <th scope="row"></th>
+                <td><button id="btnIncSignal">Incident signalisation</button></td>
+                <td><button id="btnIncendieStation">Incendie Station</button></td>
+                <td><button id="btnCommPAE">Communication PAE</button></td>
+                <td><button id="btnPerteEnergie">Perte énergie</button></td>
+                <td><button id="btnPersonOnRails">Individu / voies</button></td>
+            </tr>
+            <tr style="background-color: #FF8080;">
+                <th scope="row"></th>
+                <td><button id="btnNoPAL">Perte PAL</button></td>
+                <td><button id=""> - </button></td>
+                <td><button id="btnSmokeWeedEveryday">Fumée interieure</button></td>
+                <td><button id=""> - </button></td>
+                <td><button id=""> - </button></td>
+            </tr>
+            <tr style="background-color: #FF8080;">
+                <th scope="row"></th>
+                <td><button id="btnStrongWinds">Vents violents</button></td>
+                <td><button id=""> - </button></td>
+                <td><button id="btnDefElec">Défaut électrique</button></td>
+                <td><button id=""> - </button></td>
+                <td><button id=""> - </button></td>
+            </tr>
+            <tr style="background-color: #FF8080;">
+                <th scope="row"></th>
+                <td><button id="btnPluieForte">Forte pluie</button></td>
+                <td><button id=""> - </button></td>
+                <td><button id="btnDefTrac">Défaut traction</button></td>
+                <td><button id=""> - </button></td>
+                <td><button id=""> - </button></td>
+            </tr>
+            <tr style="background-color: #FF8080;">
+                <th scope="row"></th>
+                <td><button id=""> - </button></td>
+                <td><button id=""> - </button></td>
+                <td><button id="btnDefFrein">Défaut freinage</button></td>
+                <td><button id=""> - </button></td>
+                <td><button id=""> - </button></td>
+            </tr>
+        </table>
+        </fieldset>
+    </div>
+    <script src="admin.js"></script>
+</body>
+</html>
