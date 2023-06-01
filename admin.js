@@ -21,7 +21,6 @@ ws.addEventListener('open', ()=> {
         console.log(data);
 
         if(!(data.op)){
-            //!INIT
 
             ws.send(JSON.stringify({
                 op: 2,
@@ -59,6 +58,19 @@ function updatePannes(){
             let tdTime = newTr.insertCell(3)
             let tdActualState = newTr.insertCell(4)
             let tdActions = newTr.insertCell(5)
+
+            let razButton=document.createElement('button')
+            tdActions.appendChild(razButton)
+            razButton.id='endIncident['+event.id+']'
+            razButton.innerText='RAZ'
+            razButton.classList.add('actionButtons')
+            razButton.addEventListener('click',()=>{
+                ws.send(JSON.stringify({
+                    op: 600,
+                    inc: event.id,
+                    uuid: uuid
+                }));
+            })
     
             switch(event.showState){
                 case true:
@@ -72,6 +84,8 @@ function updatePannes(){
                     tdVisual.classList.remove('eventWaiting')
                     tdVisual.classList.remove('eventTerminating')
                     tdVisual.classList.toggle('eventFinished',true)
+                    var btn = document.getElementById('endIncident['+event.id+']')
+                    btn.disabled=true
                     break;
                 case 1:
                     tdVisual.classList.remove('eventActive')
@@ -84,6 +98,8 @@ function updatePannes(){
                     tdVisual.classList.remove('eventFinished')
                     tdVisual.classList.remove('eventWaiting')
                     tdVisual.classList.toggle('eventTerminating',true)
+                    var btn = document.getElementById('endIncident['+event.id+']')
+                    btn.disabled=true
                     break;
             }
             tdVisual.id='eventVisual'+event.id
@@ -94,19 +110,6 @@ function updatePannes(){
             tdActualState.innerHTML=event.state;
             tdUsername.innerHTML=event.user;
             tdTime.innerHTML=event.date;
-    
-            let razButton=document.createElement('button')
-            tdActions.appendChild(razButton)
-            razButton.id='endIncident['+event.id+']'
-            razButton.innerText='RAZ'
-            razButton.classList.add('actionButtons')
-            razButton.addEventListener('click',()=>{
-                ws.send(JSON.stringify({
-                    op: 600,
-                    inc: event.id,
-                    uuid: uuid
-                }));
-            })
             continue;
         } else if (incMap.get(event.id)===event.showState){
             console.log('Elément évalué identique.')
@@ -132,6 +135,8 @@ function updatePannes(){
                 upTdVisual.classList.remove('eventWaiting')
                 upTdVisual.classList.remove('eventTerminating')
                 upTdVisual.classList.toggle('eventFinished',true)
+                var btn = document.getElementById('endIncident['+event.id+']')
+                btn.disabled=true
                 break;
             case 1:
                 upTdVisual.classList.remove('eventActive')
@@ -144,6 +149,8 @@ function updatePannes(){
                 upTdVisual.classList.remove('eventFinished')
                 upTdVisual.classList.remove('eventWaiting')
                 upTdVisual.classList.toggle('eventTerminating',true)
+                var btn = document.getElementById('endIncident['+event.id+']')
+                btn.disabled=true
                 break;
         }
         continue;
@@ -154,3 +161,13 @@ function updatePannes(){
 backToTheBeginingBaby.addEventListener('click',()=>{
     document.location.href='index.html'
 })
+
+for (let cmdButtons of document.getElementsByClassName('btnCommandeIncident')){
+    cmdButtons.addEventListener('click',()=>{
+        ws.send(JSON.stringify({
+            op: 601,
+            pressedButton: cmdButtons.id,
+            uuid: uuid
+        }));
+    })
+}

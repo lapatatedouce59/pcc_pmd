@@ -1,6 +1,7 @@
 console.log('[@] Library init')
 const logger = require('./logger')
 const ogia = require('./OGIA')
+const gsa = require('./GSA')
 const fs = require('fs')
 const https = require('https')
 console.log('[V] Library init logger and fs')
@@ -2180,7 +2181,22 @@ wss.on('connection', (ws, req) => {
                     let currentYear = currentDate.getFullYear();
                     event.date=event.date+' - '+currentDay+'/'+currentMonth+'/'+currentYear+', '+currentHour+'h'+currentMinute;
                     apiSave()
+                    let foo = async () => {
+                        await setTimeout(2000)
+                        event.showState=false
+                        event.state='Terminé'
+                        apiSave()
+                    }
+                    foo()
                 }
+                break;
+            case 601:
+                if(!isClientExisting(data.uuid)) return;
+                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                let prefix = data.pressedButton.slice(0,1)
+                let command = data.pressedButton.substr(1)
+                let user = clients.get(data.uuid)
+                gsa.applyIncident(prefix,command,user,wss)
                 break;
         }
     })

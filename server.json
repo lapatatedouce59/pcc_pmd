@@ -164,6 +164,7 @@
   "SEC": [
     {
       "id": "1",
+      "states": {},
       "cantons": [
         {
           "cid": "c1101",
@@ -773,6 +774,15 @@
       "date": "27/05/2023 12h32",
       "state": "Terliné",
       "showState": false
+    },
+    {
+      "id": 5,
+      "name": "Compresseur",
+      "user": ">root/bin/LaPatateDouce.exe_",
+      "date": "1/6/2023, 16h6",
+      "now": 1685628376337,
+      "state": "En attente",
+      "showState": 1
     }
   ]
 }
