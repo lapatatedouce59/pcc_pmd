@@ -57,7 +57,8 @@ function updatePannes(){
             let tdUsername = newTr.insertCell(2)
             let tdTime = newTr.insertCell(3)
             let tdActualState = newTr.insertCell(4)
-            let tdActions = newTr.insertCell(5)
+            let tdTarget = newTr.insertCell(5)
+            let tdActions = newTr.insertCell(6)
 
             let razButton=document.createElement('button')
             tdActions.appendChild(razButton)
@@ -110,6 +111,11 @@ function updatePannes(){
             tdActualState.innerHTML=event.state;
             tdUsername.innerHTML=event.user;
             tdTime.innerHTML=event.date;
+            switch(event.targetType){
+                case 'train':
+                    tdTarget.innerHTML='Train n°'+data.SEC[parseInt(event.target.sIndex)].cantons[parseInt(event.target.cIndex)].trains[parseInt(event.target.tIndex)].tid+' à '+data.SEC[parseInt(event.target.sIndex)].cantons[parseInt(event.target.cIndex)].cid;
+                    break;
+            }
             continue;
         } else if (incMap.get(event.id)===event.showState){
             console.log('Elément évalué identique.')

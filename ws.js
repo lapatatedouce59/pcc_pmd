@@ -463,6 +463,7 @@ wss.on('connection', (ws, req) => {
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
                     trainObj.states.doorsOpenedPV=true
                     trainObj.states.doorsClosedPV=false
+                    trainObj.states.cmdOuvPortesTrain=true
                     if(trainObj.states.inZOPP) {
                         let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
                         if(typeof stationObj.states === 'undefined') return apiSave();
@@ -481,6 +482,7 @@ wss.on('connection', (ws, req) => {
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
                     trainObj.states.doorsOpenedPV=false
+                    trainObj.states.cmdOuvPortesTrain=false
 
                     if(trainObj.states.inZOPP) {
 
@@ -634,6 +636,7 @@ wss.on('connection', (ws, req) => {
                         stationObj.states.doorsOpenedWithoutTrain=false
                     }
                     trainObj.states.inZOPP=true
+                    trainObj.states.lvsTrain=true
                     apiSave()
                 } else
                 if (data.execute==='ZOPP-OFF-COM'){
@@ -647,6 +650,7 @@ wss.on('connection', (ws, req) => {
                         }
                     }
                     trainObj.states.inZOPP=false
+                    trainObj.states.lvsTrain=true
                     apiSave()
                 } else
                 if (data.execute==='OBS-ON-COM'){
@@ -734,6 +738,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
                     
                     trainObj.states.trainSecurised=true
+                    trainObj.states.trainInscrit=true
                     apiSave()
                 } else
                 if (data.execute==='SAFE-OFF-COM'){
@@ -743,6 +748,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
                     
                     trainObj.states.trainSecurised=false
+                    trainObj.states.trainInscrit=false
                     apiSave()
                 } else
                 if (data.execute==='HLP-ON-BTN'){
@@ -2181,13 +2187,7 @@ wss.on('connection', (ws, req) => {
                     let currentYear = currentDate.getFullYear();
                     event.date=event.date+' - '+currentDay+'/'+currentMonth+'/'+currentYear+', '+currentHour+'h'+currentMinute;
                     apiSave()
-                    let foo = async () => {
-                        await setTimeout(2000)
-                        event.showState=false
-                        event.state='Terminé'
-                        apiSave()
-                    }
-                    foo()
+                    gsa.cancelIncident(event, wss, event.id)
                 }
                 break;
             case 601:

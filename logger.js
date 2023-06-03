@@ -40,4 +40,3 @@ exports.identify = function (ip, uuid, from){
 exports.info = function (text){
     return console.log('\x1b[37m\033[44m[INFO]\033[0m '+text);
 }
-
