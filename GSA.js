@@ -172,6 +172,21 @@ exports.applyIncident = async function(det, cmd, usr, wss){
                     }
                 }
                 intervalId=setInterval(changeCallback, 10)
+            } else if (cmd==='btnRuptAtt'){
+                let panne = new incident('Rupture attelage',usr, wss, exports.getRandomTrain(), 'train')
+                panne.publish()
+                apiSave()
+                await setTimeout(2000)
+                panne.setActive()
+                tInfo=panne.target
+                let trainObj = pccApi.SEC[tInfo.sIndex].cantons[tInfo.cIndex].trains[tInfo.tIndex]
+                trainObj.states.tractionS1=false
+                trainObj.states.tractionS2=false
+                trainObj.states.cmdTraction=false
+                trainObj.states.fuRuptAtt=2
+                trainObj.states.activeFU=true
+                trainObj.states.fsOk=2
+                apiSave()
             }
             break;
         case 'P':
@@ -313,6 +328,19 @@ exports.cancelIncident=async function(event, wss, evid){
             apiSave()
             await setTimeout(2000)
             event.showState=false
+            event.state='Terminé'
+            apiSave()
+            break;
+        case 'Rupture attelage':
+            logger.info('[GSA] RAZ de l\'évennement '+event.name+' d\'ID '+event.id+'.')
+            var target=event.target
+            var trainObj = pccApi.SEC[parseInt(target.sIndex)].cantons[parseInt(target.cIndex)].trains[parseInt(target.tIndex)]
+            trainObj.states.fuRuptAtt=false
+            trainObj.states.activeFU=false
+            apiSave()
+            await setTimeout(2000)
+            event.showState=false
+            trainObj.states.fsOk=true
             event.state='Terminé'
             apiSave()
             break;

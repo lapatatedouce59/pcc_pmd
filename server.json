@@ -393,7 +393,7 @@
             "doorsOpenedPAS": false,
             "doorsClosedPAS": false,
             "defPartOuvPP": false,
-            "defPartFerPP": 1,
+            "defPartFerPP": false,
             "defTotOuvPP": false,
             "defTotFerPP": false,
             "doorsOpenedWithoutTrain": false,
@@ -502,7 +502,7 @@
                 "fuKPAMN": false,
                 "fuPil": false,
                 "fuObsColl": false,
-                "fuNoFS": 1,
+                "fuNoFS": false,
                 "fuRuptAtt": false,
                 "testAuto": false,
                 "defCvs": false,
@@ -528,8 +528,8 @@
                 "seqDemTrain": false,
                 "asmd": false,
                 "v0pas": false,
-                "cmdFu": 1,
-                "fsOk": 1,
+                "cmdFu": false,
+                "fsOk": true,
                 "fuFranch": false,
                 "inhibedCycleSeq": false,
                 "autoIti": false,
@@ -568,12 +568,12 @@
                 "defKIBS": false,
                 "tractionS1": false,
                 "tractionS2": false,
-                "cmdTraction": true,
+                "cmdTraction": false,
                 "activeOnduls": true,
                 "avarieOnduls": false,
                 "patEnr": false,
                 "neutralManip": false,
-                "activeFU": true,
+                "activeFU": false,
                 "activeFI": true,
                 "defFN": false,
                 "defFU": false,
@@ -832,6 +832,51 @@
         "tIndex": "0",
         "cIndex": "3",
         "sIndex": "0"
+      },
+      "targetType": "train"
+    },
+    {
+      "id": 9,
+      "name": "Ouv. PV défectueuse",
+      "user": ">root/bin/LaPatateDouce.exe_",
+      "date": "4/6/2023, 13h30 - 4/6/2023, 13h31",
+      "now": 1685878218760,
+      "state": "Terminé",
+      "showState": false,
+      "target": {
+        "tIndex": "0",
+        "cIndex": "3",
+        "sIndex": "0"
+      },
+      "targetType": "train"
+    },
+    {
+      "id": 10,
+      "name": "Pneu crevé",
+      "user": ">root/bin/LaPatateDouce.exe_",
+      "date": "4/6/2023, 13h31 - 4/6/2023, 13h32",
+      "now": 1685878301367,
+      "state": "Terminé",
+      "showState": false,
+      "target": {
+        "tIndex": "0",
+        "cIndex": "2",
+        "sIndex": "1"
+      },
+      "targetType": "train"
+    },
+    {
+      "id": 11,
+      "name": "Rupture attelage",
+      "user": ">root/bin/LaPatateDouce.exe_",
+      "date": "4/6/2023, 13h43 - 4/6/2023, 13h44",
+      "now": 1685879013201,
+      "state": "Terminé",
+      "showState": false,
+      "target": {
+        "tIndex": "0",
+        "cIndex": "2",
+        "sIndex": "1"
       },
       "targetType": "train"
     }
