@@ -11,6 +11,7 @@ let copyConfig = document.getElementById('copyConfig')
 let actualRequest=''
 window.actualRequest = actualRequest
 let showRequest = document.getElementById('request')
+let roleOP = document.getElementById('roleOP')
 
 let comForceHT = document.getElementById('comForceHT')
 let comAuthV1 = document.getElementById('comAuthV1')
@@ -204,15 +205,11 @@ sm.registerSound("left", './src/global/leave.mp3');
 sm.registerSound("enter", './src/global/enter.mp3');
 sm.registerSound("wb", './src/global/wb.mp3');
 
-window.WebSocket = new WebSocket('ws://localhost:8081')
-
 const blinkIntervalId = new Map()
 
 let beepIntervalId = false
 
 let alreadyBeep = false
-
-let uuid = false
 
 import sm from './sm.js'
 sm.init()
@@ -236,9 +233,9 @@ async function isWsRunning(){
 }
     //ws = new WebSocket('ws://localhost:8081')
 
-    window.WebSocket.addEventListener('open', () => {
+    //window.WebSocket.addEventListener('open', () => {
         console.log("Connecté au WS")
-        const weweOnAttends = async() => {
+        /*const weweOnAttends = async() => {
             await sleep(100)
             window.WebSocket.send(JSON.stringify({
                 op: 1,
@@ -249,11 +246,11 @@ async function isWsRunning(){
             console.log(username)
             showuname.innerHTML=localStorage.getItem('dUsername')
         }
-        weweOnAttends()
+        weweOnAttends()*/
 
         window.WebSocket.addEventListener('message', msg => {
             data = JSON.parse(msg.data);
-            console.log(data)
+            //console.log(data)
             if (!data.op) {
                 let iteration = 0
                 let count = 0
@@ -354,7 +351,7 @@ async function isWsRunning(){
                     }
                 }
 
-                isWsRunning()
+                //isWsRunning()
 
                 /*if(data.PR[elemid] === false){
                     console.log("Voyant "+voy.id+" est faux")
@@ -403,14 +400,9 @@ async function isWsRunning(){
                 } else {
                     sm.stopSound('bip')
                 }
-
-                window.WebSocket.send(JSON.stringify({
-                    op: 2,
-                    demande: 'GET-UUID?'
-                }))
             }
 
-            if(data.op===3){
+            /*if(data.op===3){
                 console.log(uuid)
                 uuid=data.uuid
                 tiensCatherineTonUUID.innerHTML = uuid
@@ -419,7 +411,7 @@ async function isWsRunning(){
                     demande: 'TEST-UUID?',
                     uuid: uuid
                 }))
-            }
+            }*/
 
             if(data.op===10){
                 let uuid=data.content.uuid
@@ -432,14 +424,28 @@ async function isWsRunning(){
             }
 
             if(data.op===11){
-                toast.innerHTML='Un utilisateur a quitté la page.'
+                toast.innerHTML=data.name+' a quitté la page.'
                 toast.className="show";
                 sm.playSound('left')
                 setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
             }
 
-            if (data.op === 300) {
-
+            if ((data.op === 300)||(data.op === 2)) {
+                console.log('maj recue')
+                if(data.op===2){
+                    if(data.uuid){
+                        window.uuid=data.uuid
+                        tiensCatherineTonUUID.innerHTML = data.uuid
+                    }
+                    if(data.uname){
+                        window.uname=data.uname
+                        showuname.innerHTML = data.uname
+                    }
+                    if(data.role){
+                        window.role=data.role
+                        roleOP.innerHTML = data.role
+                    }
+                }
                 let parsedJson = data.content
                 data = parsedJson
                 let iteration = 0
@@ -565,13 +571,13 @@ async function isWsRunning(){
                 getCantonsInfoS2()
             }
         })
-    })
+    //})
 
 btnAG.addEventListener("click", () => {
     actualRequest = JSON.stringify({
         op: 200,
         execute: "AG",
-        uuid: uuid
+        uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
@@ -581,7 +587,7 @@ btnAG2.addEventListener("click", () => {
     actualRequest = JSON.stringify({
         op: 200,
         execute: "AGreset",
-        uuid: uuid
+        uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
@@ -591,7 +597,7 @@ btnACQU.addEventListener("click", () => {
     actualRequest = JSON.stringify({
         op: 200,
         execute: "LINE-ACQU",
-        uuid: uuid
+        uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
@@ -603,7 +609,7 @@ comFSLine.addEventListener("input", () => {
             op: 202,
             execute: "FS-LINE-COM",
             state: true,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -613,7 +619,7 @@ comFSLine.addEventListener("input", () => {
             op: 202,
             execute: "FS-LINE-COM",
             state: false,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -626,7 +632,7 @@ comFSGAT.addEventListener("input", () => {
             op: 202,
             execute: "FS-GAT-COM",
             state: true,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -636,7 +642,7 @@ comFSGAT.addEventListener("input", () => {
             op: 202,
             execute: "FS-GAT-COM",
             state: false,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -649,7 +655,7 @@ comIDPOTPAS.addEventListener("input", () => {
             op: 202,
             execute: "IDPO-COM",
             state: true,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -659,7 +665,7 @@ comIDPOTPAS.addEventListener("input", () => {
             op: 202,
             execute: "IDPO-COM",
             state: false,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -672,7 +678,7 @@ comInhibUCA.addEventListener("input", () => {
             op: 202,
             execute: "UCAINHIB-COM",
             state: true,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -682,7 +688,7 @@ comInhibUCA.addEventListener("input", () => {
             op: 202,
             execute: "UCAINHIB-COM",
             state: false,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -695,7 +701,7 @@ comAuthV1.addEventListener("input", () => {
             op: 202,
             execute: "HTAUT1-COM",
             state: true,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -705,7 +711,7 @@ comAuthV1.addEventListener("input", () => {
             op: 202,
             execute: "HTAUT1-COM",
             state: false,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -718,7 +724,7 @@ comAuthV2.addEventListener("input", () => {
             op: 202,
             execute: "HTAUT2-COM",
             state: true,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -728,7 +734,7 @@ comAuthV2.addEventListener("input", () => {
             op: 202,
             execute: "HTAUT2-COM",
             state: false,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -741,7 +747,7 @@ comAuthGAT.addEventListener("input", () => {
             op: 202,
             execute: "HTAUTGAT-COM",
             state: true,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -751,7 +757,7 @@ comAuthGAT.addEventListener("input", () => {
             op: 202,
             execute: "HTAUTGAT-COM",
             state: false,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -764,7 +770,7 @@ comForceHT.addEventListener("input", () => {
             op: 202,
             execute: "FORCEHT-COM",
             state: true,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -775,7 +781,7 @@ comForceHT.addEventListener("input", () => {
             op: 202,
             execute: "FORCEHT-COM",
             state: false,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -788,7 +794,7 @@ comArmPR.addEventListener("input", () => {
             op: 202,
             execute: "ARMPR-COM",
             state: true,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -798,7 +804,7 @@ comArmPR.addEventListener("input", () => {
             op: 202,
             execute: "ARMPR-COM",
             state: false,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
@@ -821,7 +827,7 @@ btnForward.addEventListener('click', () => {
             op: 400,
             sens: 1,
             train: TTARGET,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest)
         window.actualRequest = actualRequest
@@ -842,7 +848,7 @@ btnDownward.addEventListener('click', () => {
             op: 400,
             sens: 2,
             train: TTARGET,
-            uuid: uuid
+            uuid: window.uuid
         })
         window.WebSocket.send(actualRequest)
         window.actualRequest = actualRequest
@@ -873,7 +879,7 @@ btnSend.addEventListener('click', () => {
     actualRequest = JSON.stringify({
         op: 500,
         cmd: args,
-        uuid: uuid
+        uuid: window.uuid
     })
     window.actualRequest = actualRequest
     window.WebSocket.send(actualRequest)
@@ -893,6 +899,8 @@ function sleep(ms) {
 }
 
 function getCantonsInfo() {
+    //data=data.content
+    console.log(data)
     let _GLIST_ = cantonsS1
     clearAllCantons('S1');
     let fresponse = {
@@ -1160,9 +1168,9 @@ function getCantonsInfoS2() {
         if (_CANTON_ === 'voys') continue;
         _CANTON_--;
         console.log('[❔] ARRAY[' + _CANTON_ + ']')
-        if(!(data.SEC[1].cantons[_CANTON_].cid)){
+        /*if(!(data.SEC[1].cantons[_CANTON_].cid)){
             alert('Le cache doit être vidé pour continuer, désolé :(')
-        }
+        }*/
         console.log(data.SEC[1].cantons[_CANTON_].cid)
         //fill des fleches de dir
         let dir = data.SEC[1].cantons[0].dir;
@@ -1526,10 +1534,10 @@ function clearAllCantons(list, _CANTON_, mode) {
                     _GLIST_[_CANTON_ + 1][bits].style.fill = '#707070';
                     console.log('effacage de ' + (_CANTON_ + 1))
                 }
-                if(!(_GLIST_.aiguilles)){
+                /*if(!(_GLIST_.aiguilles)){
                     alert('Le cache doit être vidé pour continuer, désolé :(')
                     return;
-                }
+                }*/
                 for (let bits in _GLIST_.aiguilles[0].a1c1301) {
                     //console.log(_GLIST_.aiguilles[0].a1c1301[bits])
                     _GLIST_.aiguilles[0].a1c1301[bits].style.fill = '#707070'

@@ -25,7 +25,6 @@ let btnPrep = document.getElementById('btnPrep')
 let btnDeprep = document.getElementById('btnDeprep')
 
 let copyConfig = document.getElementById('copyConfig')
-window.actualRequest = actualRequest
 let showRequest = document.getElementById('request')
 
 let keystroke = []
@@ -71,7 +70,7 @@ function sleep(ms) {
     });
 }
 
-window.WebSocket.addEventListener('open', ()=> {
+//window.WebSocket.addEventListener('open', ()=> {
     console.log('Connecté au WS')
     /*const weweOnAttends = async() => {
         await sleep(100)
@@ -86,49 +85,53 @@ window.WebSocket.addEventListener('open', ()=> {
 
     window.WebSocket.addEventListener('message', msg =>{
         data = JSON.parse(msg.data);
-        console.log(data);
+        //console.log(data);
 
         if(!(data.op)){
-            let trains = []
-            let inflationDuPrixDuCarburant = 0
-            for (let sec of data.SEC){
-                for (let ctns of sec.cantons){
-                    if(!(ctns.trains.length >=1)) continue;
-                    console.log('canton '+ctns.cid)
-                    for (let train of ctns.trains){
-                        console.log(train)
-                        trains.push({tname: train.tid})
-                        let opt = document.createElement('OPTION')
-                        opt.innerHTML=train.tid
-                        opt.value=train.tid
-                        opt.classList='trainOpt'
-                        opt.id=train.tid
-                        selectMenuTrain.appendChild(opt)
-                    }
-                }
-                inflationDuPrixDuCarburant++
-            }
-            console.log(trains)
+
             /*window.WebSocket.send(JSON.stringify({
                 op: 2,
                 demande: 'GET-UUID?'
             }))*/
-        }else if(data.op===3){
+        }/*else if(data.op===3){
             uuid=data.uuid
             console.log(uuid)
-            /*window.WebSocket.send(JSON.stringify({
+            window.WebSocket.send(JSON.stringify({
                 op: 4,
                 demande: 'TEST-UUID?',
                 uuid: uuid
-            }))*/
-        } else if (data.op===300){
+            }))
+        }*/else if ((data.op===300)||(data.op===2)){
+            let op = data.op
             data=data.content
+            if(op===2){
+                let trains = []
+                let inflationDuPrixDuCarburant = 0
+                for (let sec of data.SEC){
+                    for (let ctns of sec.cantons){
+                        if(!(ctns.trains.length >=1)) continue;
+                        console.log('canton '+ctns.cid)
+                        for (let train of ctns.trains){
+                            console.log(train)
+                            trains.push({tname: train.tid})
+                            let opt = document.createElement('OPTION')
+                            opt.innerHTML=train.tid
+                            opt.value=train.tid
+                            opt.classList='trainOpt'
+                            opt.id=train.tid
+                            selectMenuTrain.appendChild(opt)
+                        }
+                    }
+                    inflationDuPrixDuCarburant++
+                }
+                console.log(trains)
+            }
             let train = getTrainInfo(selectMenuTrain.value)
             console.log(train)
             updateVoy(train)
         }
     })
-})
+//})
 
 function getTrainInfo(id){
     let reponse={id: false, states: false, trains: [], secIndex: false, cIndex: false, tIndex: false}
@@ -388,7 +391,7 @@ btnAcquitTrain.addEventListener('click', ()=>{
         op: 204,
         execute: "AQC-BTN-TRAIN",
         target: getTrainInfo(selectMenuTrain.value),
-        uuid: uuid
+        uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
@@ -399,7 +402,7 @@ fuCreate.addEventListener('click', () => {
         op: 204,
         execute: "FU-BTN-ON",
         target: getTrainInfo(selectMenuTrain.value),
-        uuid: uuid
+        uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
@@ -410,7 +413,7 @@ fuReleave.addEventListener('click', () => {
         op: 204,
         execute: "FU-BTN-OFF",
         target: getTrainInfo(selectMenuTrain.value),
-        uuid: uuid
+        uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
@@ -421,7 +424,7 @@ btnAcqComptFu.addEventListener('click', () => {
         op: 204,
         execute: "CPTFU-BTN-ACQ",
         target: getTrainInfo(selectMenuTrain.value),
-        uuid: uuid
+        uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
@@ -432,7 +435,7 @@ btnPrep.addEventListener('click', () => {
         op: 204,
         execute: "PREP-BTN",
         target: getTrainInfo(selectMenuTrain.value),
-        uuid: uuid
+        uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
@@ -443,7 +446,7 @@ btnDeprep.addEventListener('click', () => {
         op: 204,
         execute: "DEPREP-BTN",
         target: getTrainInfo(selectMenuTrain.value),
-        uuid: uuid
+        uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest

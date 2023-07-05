@@ -45,7 +45,7 @@ const pccApi=require('./server.json');
 console.log('[V] Server Api init')
 
 const {v4} = require('uuid')
-const clients = new Map();
+const clients = {}
 
 function apiSave(){
     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
@@ -65,8 +65,7 @@ wss.broadcast = function broadcast(msg) {
 };
 
 function isClientExisting(uuid){
-    console.log(uuid)
-    if(clients.get(uuid)) return true;
+    if(clients[uuid]) return true;
     /*for(let client of clients){
         console.log(client[0])
         if(uuid===client.uuid){
@@ -82,42 +81,78 @@ wss.on('connection', (ws, req) => {
     let newUUID;
     logger.client(true)
     let clientIp=req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    /*let _client_ = isClientExisting(clientIp);
-    console.log('CLIENT '+_client_)
-    if(_client_){
-        console.log(_client_)
-        newUUID=_client_.uuid
-    } else {
-        console.log(_client_)
-        newUUID = v4();
-        let client = {uuid: newUUID, ip: clientIp};
-        clients.set(newUUID,client)
-    }*/
     newUUID = v4();
 
     ws.on('message', msg => {
-        let data
+        let data = false;
+        let op = 0;
         try{
             data = JSON.parse(msg);
+            op = data.op;
         } catch (error) {
             logger.error(error)
         }
-        op = data.op;
 
         if(op==='300') return;
         
         switch(op){
             case 1 :
-                console.log(clientIp)
+                const verificationProcess = async() => {
+                    let whitelist = ['383637400099880964']
+                    let chefs = ['383637400099880964']
+                    /*await setTimeout(function (){
+                        let discordVerif = discord.getUserInfo(data.token)
+                        console.log(discordVerif)
+                    },1000)*/
+                    //await setTimeout(1000)
+                    if(data.token){
+                        fetch('https://discord.com/api/users/@me', {
+                            headers:{Authorization:'Bearer '+data.token}}).then(res => {
+                                if(res.status===401){
+                                    logger.error('[DV] Utilisateur inconnu.')
+                                    ws.send(JSON.stringify({ op: 999,error: 10, message: 'L\'utilisateur est inconnu.' }))
+                                } else {
+                                    res.json().then(usr => {
+                                    if(whitelist.includes(usr.id)){
+                                        logger.info('[DV] '+usr.username+' autorisé.')
+                                        ws.id=newUUID
+                                        ws.usr=usr
+                                        ws.ip=clientIp
+                                        ws.instance=data.from
+                                        if(chefs.includes(usr.id)){
+                                            ws.role='chef'
+                                        } else {
+                                            ws.role='operator'
+                                        }
+                                        wss.broadcast(JSON.stringify({
+                                            op: 10,
+                                            content: { uuid: ws.id, uname: ws.usr.username }
+                                        }))
+                                        ws.send(JSON.stringify({ op: 2, uuid: ws.id, content: pccApi, uname:ws.usr.username, role:ws.role }))
+                                        clients[ws.id]=ws
+                                        logger.identify(ws,Object.keys(clients).length)
+                                    } else {
+                                        logger.error('[DV] '+usr.username+' non whitelisté')
+                                        ws.send(JSON.stringify({ op: 999,error: 20, message: 'L\'utilisateur n\'est pas whitelisté.' }))
+                                    }})
+                                }
+                        })
+                    } else {
+                        logger.error('[DV] Pas de token renseigné!')
+                        ws.send(JSON.stringify({ op: 999,error: 30, message: 'L\'utilisateur n\'a pas envoyé de token valide ou une erreur est survenue.' }))
+                    }
+                }
+                verificationProcess()
+                /*console.log(clientIp)
                 let client = {uuid: newUUID, ip: clientIp, instance:data.from, uname: data.uname};
                 clients.set(newUUID,client)
                 console.log(clients)
                 logger.identify(clientIp, newUUID, clients.get(newUUID).instance)
                 logger.message('outcome','server.json')
                 //ws.send(JSON.stringify(pccApi));
-                ws.send(JSON.stringify(pccApi));
+                ws.send(JSON.stringify(pccApi));*/
                 break;
-            case 2:
+            /*case 2:
                 console.log('Demande d\'UUID reçue. Envoi dans 1 seconde.')
                 const bahOnVaAttendreSinonLautreIlVaPasEtreContent = async() => {
                     await setTimeout(500)
@@ -146,10 +181,10 @@ wss.on('connection', (ws, req) => {
                 }
                 goEncoreAttendre()
                 console.log('Serveur envoyée.')
-                break;
+                break;*/
             case 200 :
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 switch(data.execute){
                     case 'AG':
                         pccApi.comAG=true
@@ -245,7 +280,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 202 :
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 switch(data.execute){
                     case 'FS-LINE-COM':
                         if(data.state===false){
@@ -456,7 +491,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 204 :
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if (data.execute==='OPENPV-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
@@ -1283,7 +1318,7 @@ wss.on('connection', (ws, req) => {
                 let a1301 = new Aiguille(pccApi.SEC[0].cantons[2])
                 let a2301 = new Aiguille(pccApi.SEC[0].cantons[7])
 
-                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
 
                 if(data.sens === 1){
                     let train = JSON.parse(getCantonsInfo(data.train))
@@ -2044,7 +2079,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 500:
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 let args = data.cmd
                 let cmd = args[0]
 
@@ -2072,7 +2107,7 @@ wss.on('connection', (ws, req) => {
                     }
                 }
 
-                console.log(aiguilles)
+                //console.log(aiguilles)
 
                 if(cmd==="SET"){                        
                     if(cmdargs.length<2||cmdargs.length>2)   return;
@@ -2174,7 +2209,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 600:
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 for (let event of pccApi.events){
                     if(!(event.id===data.inc)) continue;
                     event.state='Résolution'
@@ -2192,7 +2227,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 601:
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),clients.get(data.uuid).uname,clients.get(data.uuid).ip,clients.get(data.uuid).instance)
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 let prefix = data.pressedButton.slice(0,1)
                 let command = data.pressedButton.substr(1)
                 let user = clients.get(data.uuid)
@@ -2200,14 +2235,18 @@ wss.on('connection', (ws, req) => {
                 break;
         }
     })
+    ws.on("close", ()=>{
 
-    ws.on('close', ()=>{
-        wss.broadcast(JSON.stringify({
-            op: 11
-        }))
-        logger.message('broadcast','ARRIVAL')
-        logger.client(false)
-    })
+        if(clients[ws.id]){
+            wss.broadcast(JSON.stringify({
+                op: 11,
+                name: ws.usr.username
+            }))
+            delete clients[ws.id];
+            logger.client(false,ws,Object.keys(clients).length);
+            apiSave()
+        }
+    });
 })
 
 /**

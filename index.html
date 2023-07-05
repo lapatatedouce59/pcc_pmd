@@ -136,13 +136,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <script src="./carte-sim.js"></script>
+    <script src="./connexion.js"></script>
     <button id="btnAdminAccess">ACCEDER AU PANNEL ADMIN</button>
     <div class="user">
         Connecté en tant que: <span id="uname">indéfini</span>
     </div>
     <div class="user">
         Votre UUID: <span id="uuidLigne">indéfini</span>
+    </div>
+    <div class="user">
+        Votre rôle: <span id="roleOP">indéfini</span>
     </div>
     <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
     <span><button id="btnACQU">ACQUITTER</button></span>
@@ -370,7 +373,7 @@
                     <tr><td colspan="2" class="voyStationState" id="activeRA"><span id="activeRA" class="voyStationState">RA ACTIF</span></td></tr>
                 </table>
             </fieldset></span>
-            <span><fieldset style="width: 44%; display: inline-table; text-align: center;">
+            <span><fieldset style=" display: inline-table; text-align: center;">
                 <legend>Train</legend>
                 <table style= "height: 100%;">
                     <tbody>
