@@ -2230,7 +2230,7 @@ wss.on('connection', (ws, req) => {
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 let prefix = data.pressedButton.slice(0,1)
                 let command = data.pressedButton.substr(1)
-                let user = clients.get(data.uuid)
+                let user = clients[data.uuid]
                 gsa.applyIncident(prefix,command,user,wss)
                 break;
         }

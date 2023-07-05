@@ -203,7 +203,7 @@ class incident{
     constructor(name, user, wss, target, type){
         console.log(target)
         this.name = name
-        this.user = user.uname
+        this.user = user.usr.username
         this.date = new Date()
         this.time = this.date.getTime()
         this.id = pccApi.events.length+1

@@ -1,40 +1,20 @@
-let data=false
-let ws = new WebSocket('ws://localhost:8081')
+//let data=false
 let uuid = false
 
 let incidentsTable = document.getElementById('incidents')
 let backToTheBeginingBaby = document.getElementById('backToTheBeginingBaby')
 
-ws.addEventListener('open', ()=> {
+window.WebSocket.addEventListener('open', ()=> {
     console.log('Connecté au WS')
-    const weweOnAttends = async() => {
-        ws.send(JSON.stringify({
-            op: 1,
-            from: "ADMIN-PAGE",
-            uname: localStorage.getItem('dUsername')
-        }));
-    }
-    weweOnAttends()
 
-    ws.addEventListener('message', msg =>{
+    window.WebSocket.addEventListener('message', msg =>{
         data = JSON.parse(msg.data);
         console.log(data);
-
-        if(!(data.op)){
-
-            ws.send(JSON.stringify({
-                op: 2,
-                demande: 'GET-UUID?'
-            }))
-        }else if(data.op===3){
-            uuid=data.uuid
-            console.log(uuid)
-            ws.send(JSON.stringify({
-                op: 4,
-                demande: 'TEST-UUID?',
-                uuid: uuid
-            }))
-        } else if (data.op===300){
+        if ((data.op===2)||(data.op===300)){
+            if(data.op===2){
+                window.uuid=data.uuid
+            }
+            console.log(window.uuid)
             data=data.content
             updatePannes()
         }
@@ -66,10 +46,10 @@ function updatePannes(){
             razButton.innerText='RAZ'
             razButton.classList.add('actionButtons')
             razButton.addEventListener('click',()=>{
-                ws.send(JSON.stringify({
+                window.WebSocket.send(JSON.stringify({
                     op: 600,
                     inc: event.id,
-                    uuid: uuid
+                    uuid: window.uuid
                 }));
             })
     
@@ -170,10 +150,10 @@ backToTheBeginingBaby.addEventListener('click',()=>{
 
 for (let cmdButtons of document.getElementsByClassName('btnCommandeIncident')){
     cmdButtons.addEventListener('click',()=>{
-        ws.send(JSON.stringify({
+        window.WebSocket.send(JSON.stringify({
             op: 601,
             pressedButton: cmdButtons.id,
-            uuid: uuid
+            uuid: window.uuid
         }));
     })
 }
