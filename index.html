@@ -29,8 +29,17 @@
         }
 
         .voy{
-            color: white;
+            color: black;
             background-color: #8B8B8B;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: black solid 3px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
         }
         td.voyStationState{
             border: #848484 solid;
@@ -71,7 +80,7 @@
         }
         .alarm{
             background-color: #EF0000;
-            color: white;
+            
         }
         .tco{
             background-color: #1C1C1C;
@@ -132,6 +141,53 @@
         from {bottom: 30px; opacity: 1;}
         to {bottom: 0; opacity: 0;}
         }
+
+        .com{
+            display: none;
+        }
+        .com + .comLabel{
+            display: inline-block;
+            padding: 0 0 0 0px;
+            background: url("src/pltp/img/com_off.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomForceHT{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomFSLine{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomAuth{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomAuthGAT{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomFSGAT{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 </head>
@@ -148,28 +204,85 @@
         Votre rôle: <span id="roleOP">indéfini</span>
     </div>
     <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
-    <span><button id="btnACQU">ACQUITTER</button></span>
+    <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex;">
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <legend>GÉNÉRAL</legend>
+            <table id="partieGenerale" style="text-align: center;">
+                <tr>
+                    <td><span id="voyGAT" class="voy">GAT</span></td>
+                    <td><span id="voyABS" class="voy">ABS</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button id="btnAG" style="background-image: url('/src/pltp/img/cdp.png'); background-position: center; background-size: cover; height: 200px; width: 200px; border: none; border-radius: 100px;"></button><br><span>C.DJ.G</span></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="checkbox" id="comForceHT" class="com">
+                        <label for="comForceHT" id="lcomForceHT" class="comLabel"></label><br>
+                        <span>FORCAGE HT</span>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <legend>LIGNE</legend>
+            <table id="partieGenerale" style="text-align: center;">
+                <tr>
+                    <td><span id="voyFS" class="voy">FS</span><br><span>AutFS</span></td>
+                </tr>
+                <tr>
+                    <td><span id="voyALC" class="voy">ALC</span><br><span>COUPURE</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="comFSLine" class="com">
+                        <label for="comFSLine" id="lcomFSLine" class="comLabel"></label><br>
+                        <span>COUPURE FS</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span id="voyHT" class="voy">HT</span><br><img src="./src/pltp/img/next.png" alt=""></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="comAuth" class="com">
+                        <label for="comAuth" id="lcomAuth" class="comLabel"></label><br>
+                        <span id="voyUCA" class="voy">UCA</span><br>
+                        <span>AUTOR. HT LIGNE</span>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <legend>GAT</legend>
+            <table id="partieGenerale" style="text-align: center;">
+                <tr>
+                    <td><span id="voyFSGAT" class="voy">FS</span><br><span>AutFS GAT</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="comFSGAT" class="com">
+                        <label for="comFSGAT" id="lcomFSGAT" class="comLabel"></label><br>
+                        <span>COUPURE FS</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span id="voyHTGAT" class="voy">HT</span><br><img src="./src/pltp/img/next.png" alt=""></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" id="comAuthGAT" class="com">
+                        <label for="comAuthGAT" id="lcomAuthGAT" class="comLabel"></label><br>
+                        <span id="voyUCAGAT" class="voy">UCA</span><br>
+                        <span>AUTOR. HT GAT</span>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+    <br><span><button id="btnACQU">ACQUITTER</button></span>
     <br>
-    <span id="voyGAT" class="voy">GAT</span>
-    <span id="voyABS" class="voy">ABS</span>
-    <span><button id="btnAG">AG</button></span>
     <span><button id="btnAG2">rétablir</button></span>
-    <span> <input type="checkbox" id="comForceHT" class="com"> Forcage HT </span>
-    <br>
-    <span id="voyUCA" class="voy">UCA</span>
-    <span> <input type="checkbox" id="comAuth" checked class="com"> AUTHT </span>
-    <span id="voyHT" class="voy">HT</span>
-    <span> <input type="checkbox" id="comFSLine" class="com"> COUPURE FS </span>
-    <span id="voyALC" class="voy">ALC</span>
-    <span id="voyFS" class="voy">FS</span>
-    <br>
-    <span id="voyUCAGAT" class="voy">UCA</span>
-    <span> <input type="checkbox" id="comAuthGAT" class="com" checked> AUTHT </span>
-    <span id="voyHTGAT" class="voy">HT</span>
-    <span> <input type="checkbox" id="comFSGAT" class="com"> COUPURE FS </span>
-    <span id="voyFSGAT" class="voy">FS</span>
-    <br>
-    <span> <input type="checkbox" id="comArmPR" class="com" checked> Armt. PR </span>
     <br>
     <span id="voyCC" class="voy">CC</span>
     <span id="voyPAL" class="voy">PAL</span>
@@ -179,6 +292,7 @@
     <br>
     <span> <input type="checkbox" id="comIDPOTPAS" class="com"> IDPO tout PAS </span>
     <br>
+
     <h3>SS</h3>
     <span id="voyAlimSS04" class="voy">ALIM</span>
     <span id="voyDHTSS04" class="voy">DHT</span>
