@@ -14,8 +14,7 @@ let showRequest = document.getElementById('request')
 let roleOP = document.getElementById('roleOP')
 
 let comForceHT = document.getElementById('comForceHT')
-let comAuthV1 = document.getElementById('comAuthV1')
-let comAuthV2 = document.getElementById('comAuthV2')
+let comAuth = document.getElementById('comAuth')
 let comFSLine = document.getElementById('comFSLine')
 let comAuthGAT = document.getElementById('comAuthGAT')
 let comFSGAT = document.getElementById('comFSGAT')
@@ -695,44 +694,21 @@ comInhibUCA.addEventListener("input", () => {
     }
 })
 
-comAuthV1.addEventListener("input", () => {
-    if (comAuthV1.checked === true) {
+comAuth.addEventListener("input", () => {
+    if (comAuth.checked === true) {
         actualRequest = JSON.stringify({
             op: 202,
-            execute: "HTAUT1-COM",
+            execute: "HTAUT-COM",
             state: true,
             uuid: window.uuid
         })
         window.WebSocket.send(actualRequest);
         window.actualRequest = actualRequest
     } else
-    if (comAuthV1.checked === false) {
+    if (comAuth.checked === false) {
         actualRequest = JSON.stringify({
             op: 202,
-            execute: "HTAUT1-COM",
-            state: false,
-            uuid: window.uuid
-        })
-        window.WebSocket.send(actualRequest);
-        window.actualRequest = actualRequest
-    }
-})
-
-comAuthV2.addEventListener("input", () => {
-    if (comAuthV2.checked === true) {
-        actualRequest = JSON.stringify({
-            op: 202,
-            execute: "HTAUT2-COM",
-            state: true,
-            uuid: window.uuid
-        })
-        window.WebSocket.send(actualRequest);
-        window.actualRequest = actualRequest
-    } else
-    if (comAuthV2.checked === false) {
-        actualRequest = JSON.stringify({
-            op: 202,
-            execute: "HTAUT2-COM",
+            execute: "HTAUT-COM",
             state: false,
             uuid: window.uuid
         })

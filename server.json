@@ -1,12 +1,9 @@
 {
   "comForceHT": false,
-  "voyUCAV1": true,
-  "voyUCAV2": true,
-  "voyHTV1": true,
-  "voyHTV2": true,
+  "voyUCA": true,
+  "voyHT": true,
   "voyALC": true,
-  "voyFSV1": true,
-  "voyFSV2": true,
+  "voyFS": true,
   "voyFSGAT": true,
   "voyUCAGAT": true,
   "voyHTGAT": true,
@@ -157,10 +154,9 @@
   "comAG": false,
   "comIDPOTPAS": false,
   "comInhibUCA": false,
-  "comAuthV1": true,
-  "comAuthV2": true,
+  "comAuth": true,
   "comAuthGAT": true,
-  "comHTV1": true,
+  "comHT": true,
   "SEC": [
     {
       "id": "1",
@@ -211,7 +207,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
+            "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -413,7 +409,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
+            "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
@@ -636,7 +632,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
+            "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
@@ -697,7 +693,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": false,
+            "DSO": true,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
@@ -863,5 +859,9 @@
       },
       "targetType": "train"
     }
-  ]
+  ],
+  "voyFSV1": true,
+  "voyFSV2": true,
+  "voyHTV1": 1,
+  "voyHTV2": 1
 }

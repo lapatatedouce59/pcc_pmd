@@ -191,33 +191,26 @@ wss.on('connection', (ws, req) => {
                         console.log(pccApi.comAG)
                         pccApi.voyGAT=2
                         pccApi.voyABS=2
-                        pccApi.voyHTV1=2
-                        pccApi.voyHTV2=2
-                        pccApi.voyFSV1=2
-                        pccApi.voyFSV2=2
+                        pccApi.voyHT=2
+                        pccApi.voyFS=2
                         pccApi.voyHTGAT=2
                         pccApi.voyFSGAT=2
-                        
                         apiSave();
                         break;
                     case 'AGreset':
                         pccApi.comAG=false
                         console.log(pccApi.comAG)
-                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
+                        if((pccApi.comAuth) && !(pccApi.comFSLine)){
                             pccApi.voyABS=true
                         }
                         if((pccApi.comAuthGAT) && !(pccApi.comFSGAT)){
                             pccApi.voyGAT=true
                         }
-                        if(pccApi.comAuthV1){
-                            pccApi.voyHTV1=true
-                        }
-                        if(pccApi.comAuthV2){
-                            pccApi.voyHTV2=true
+                        if(pccApi.comAuth){
+                            pccApi.voyHT=true
                         }
                         if(!(pccApi.comFSLine)){
-                            pccApi.voyFSV1=true
-                            pccApi.voyFSV2=true
+                            pccApi.voyFS=true
                         }
                         if(!(pccApi.comFSGAT)){
                             pccApi.voyFSGAT=true
@@ -230,10 +223,8 @@ wss.on('connection', (ws, req) => {
                     case 'LINE-ACQU':
                         if (pccApi.voyGAT===2) pccApi.voyGAT=1;
                         if (pccApi.voyABS===2) pccApi.voyABS=1;
-                        if (pccApi.voyHTV1===2) pccApi.voyHTV1=1;
-                        if (pccApi.voyHTV2===2) pccApi.voyHTV2=1;
-                        if (pccApi.voyFSV1===2) pccApi.voyFSV1=1;
-                        if (pccApi.voyFSV2===2) pccApi.voyFSV2=1;
+                        if (pccApi.voyHT===2) pccApi.voyHT=1;
+                        if (pccApi.voyFS===2) pccApi.voyFS=1;
                         if (pccApi.voyHTGAT===2) pccApi.voyHTGAT=1;
                         if (pccApi.voyFSGAT===2) pccApi.voyFSGAT=1;
                         //VOYANTS SS
@@ -288,15 +279,13 @@ wss.on('connection', (ws, req) => {
                             if(pccApi.comAG===false){
                                 console.log('OK')
                                 console.log(pccApi.comAG)
-                                pccApi.voyFSV1=true
-                                pccApi.voyFSV2=true
+                                pccApi.voyFS=true
                             }
                         } else if(data.state===true){
                             pccApi.comFSLine=true
-                            pccApi.voyFSV1=2
-                            pccApi.voyFSV2=2
+                            pccApi.voyFS=2
                         }
-                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
+                        if((pccApi.comAuth) && !(pccApi.comFSLine)){
                             pccApi.voyABS=true
                         } else {
                             pccApi.voyABS=2
@@ -320,37 +309,19 @@ wss.on('connection', (ws, req) => {
                             pccApi.voyGAT=2
                         }
                         break;
-                    case 'HTAUT1-COM':
+                    case 'HTAUT-COM':
                         if(data.state===false){
-                            pccApi.comAuthV1=false
+                            pccApi.comAuth=false
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
-                                pccApi.voyHTV1=2
+                                pccApi.voyHT=2
                             }
                         } else if(data.state===true){
-                            pccApi.comAuthV1=true
+                            pccApi.comAuth=true
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
-                                pccApi.voyHTV1=true
+                                pccApi.voyHT=true
                             }
                         }
-                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
-                            pccApi.voyABS=true
-                        } else {
-                            pccApi.voyABS=2
-                        }
-                        break;
-                    case 'HTAUT2-COM':
-                        if(data.state===false){
-                            pccApi.comAuthV2=false
-                            if(pccApi.comAG===false || pccApi.comForceHT===true){
-                                pccApi.voyHTV2=2
-                            }
-                        } else if(data.state===true){
-                            pccApi.comAuthV2=true
-                            if(pccApi.comAG===false || pccApi.comForceHT===true){
-                                pccApi.voyHTV2=true
-                            }
-                        }
-                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
+                        if((pccApi.comAuth) && !(pccApi.comFSLine)){
                             pccApi.voyABS=true
                         } else {
                             pccApi.voyABS=2
@@ -379,19 +350,17 @@ wss.on('connection', (ws, req) => {
                         if(data.state===false){
                             pccApi.comForceHT=false
                             if(pccApi.comAG===true){
-                                pccApi.voyHTV1=2
-                                pccApi.voyHTV2=2
+                                pccApi.voyHT=2
                                 pccApi.voyHTGAT=2
                             }
                         } else if(data.state===true){
                             pccApi.comForceHT=true
                             if(pccApi.comAG===true){
-                                pccApi.voyHTV1=true
-                                pccApi.voyHTV2=true
+                                pccApi.voyHT=true
                                 pccApi.voyHTGAT=true
                             }
                         }
-                        if((pccApi.comAuthV1) && (pccApi.comAuthV2) && !(pccApi.comFSLine)){
+                        if((pccApi.comAuth) && !(pccApi.comFSLine)){
                             pccApi.voyABS=true
                         } else {
                             pccApi.voyABS=2
