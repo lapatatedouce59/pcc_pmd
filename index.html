@@ -188,6 +188,27 @@
             width: 50px;
             background-size: cover;
         }
+        .com:checked + #lcomArmPR{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomInhibUCA{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomIDPOTPAS{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 </head>
@@ -279,14 +300,41 @@
                 </tr>
             </table>
         </fieldset>
+    </div><br>
+    <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex;">
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <legend>PR</legend>
+            <input type="checkbox" id="comArmPR" class="com">
+            <label for="comArmPR" id="lcomArmPR" class="comLabel"></label><br>
+            <span>Armt. PR</span>
+        </fieldset>
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px; justify-content: center; flex-direction: column;display: inline-flex;">
+            <legend>DEF</legend>
+            <div>
+                <span id="voyCC" class="voy">CC</span>
+                <span id="voyPAL" class="voy">PAL</span>
+                <span id="voyAQU" class="voy">AQU</span>
+            </div>
+        </fieldset>
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <legend>UCA</legend>
+            <input type="checkbox" id="comInhibUCA" class="com">
+            <label for="comInhibUCA" id="lcomInhibUCA" class="comLabel"></label><br>
+            <span>Inhib. UCA</span>
+        </fieldset>
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <legend>SECU</legend>
+            <input type="checkbox" id="comIDPOTPAS" class="com">
+            <label for="comIDPOTPAS" id="lcomIDPOTPAS" class="comLabel"></label><br>
+            <span>IDPO/DSO tout PAS</span>
+        </fieldset>
     </div>
     <br><span><button id="btnACQU">ACQUITTER</button></span>
     <br>
     <span><button id="btnAG2">rétablir</button></span>
     <br>
-    <span id="voyCC" class="voy">CC</span>
-    <span id="voyPAL" class="voy">PAL</span>
-    <span id="voyAQU" class="voy">AQU</span>
+    <span> <input type="checkbox" id="comArmPR" class="com" checked> Armt. PR </span>
+    <br>
     <br>
     <span> <input type="checkbox" id="comInhibUCA" class="com"> Inhib. UCA </span>
     <br>
@@ -407,7 +455,7 @@
     <h2 style="color:rgb(0, 0, 0);">merci de pas faire planter le wss, sinon notifiez moi sur discord - Patate Douce</h2>
         <h2 style="color:rgb(0, 0, 0);"><- S2 S1-></h2>
     <div class="tco" style="height: 650px;">
-        <div class="ligne" style="height: 1200px; position: relative;">
+        <div class="ligne" style="height: 1200px; position: relative; pointer-events: none;">
             <span><object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object></span><span><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep"></object></span><span><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg"></object></span><br>
             
         </div>
