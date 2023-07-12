@@ -183,6 +183,7 @@ function josephineChercheLesDefauts(){
         tOpt.innerText=tOpt.id
         tOpt.classList.remove('alarm')
     }
+    listDef.innerHTML=''
     clearInterval(beepIntervalId)
     sm.stopSound('gong')
     let defList=[]

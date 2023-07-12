@@ -195,6 +195,38 @@ wss.on('connection', (ws, req) => {
                         pccApi.voyFS=2
                         pccApi.voyHTGAT=2
                         pccApi.voyFSGAT=2
+                        for (let sec of pccApi.SEC){
+                            for(let ctn of sec.cantons){
+                                for(let veh of ctn.trains){
+                                    if(veh.states.awakeMR===true){
+                                        veh.states.abs750=2
+                                        veh.states.btDelest=2
+                                        veh.states.trainBattery=2
+                                        veh.states.fsOk=2
+                                        veh.states.fuNoFS=2
+                                        veh.states.cmdFu=2
+                                        veh.states.reguTrain=false
+                                        veh.states.activeFU=true
+                                        veh.states.activeOnduls=false
+                                        veh.states.trainLights=false
+                                        veh.states.trainHeating=false
+                                        veh.states.trainComp=false
+                                        veh.states.defTech=2
+                                        veh.states.defCvs=2
+                                        veh.states.cmdTraction=false
+                                        let checkSpeedInter = setInterval(checkSpeed,100)
+                                        function checkSpeed(){
+                                            if(veh.states.speed===0){
+                                                clearInterval(checkSpeedInter)
+                                                veh.states.activeFI=true
+                                                apiSave()
+                                            }
+                                        }
+                                        
+                                    }
+                                }
+                            }
+                        }
                         apiSave();
                         break;
                     case 'AGreset':
@@ -218,6 +250,81 @@ wss.on('connection', (ws, req) => {
                         if(pccApi.comAuthGAT){
                             pccApi.voyHTGAT=true
                         }
+                        for (let sec of pccApi.SEC){
+                            for(let ctn of sec.cantons){
+                                for(let veh of ctn.trains){
+                                    if(veh.states.awakeMR===true){
+                                        let timeFunc = async () => {
+                                            await setTimeout(100)
+                                            if(pccApi.voyFS===true){
+                                                veh.states.fsOk=true
+                                                veh.states.fuNoFS=false
+                                            }
+                                            apiSave()
+                                            await setTimeout(600)
+                                            if(pccApi.voyFS===true){
+                                                veh.states.activeFI=false
+                                                veh.states.activeFU=false
+                                                veh.states.cmdFu=false
+                                                veh.states.fuNoFS=false
+                                            }
+                                            apiSave()
+                                            await setTimeout(300)
+                                            if(pccApi.voyFS===true){
+                                                veh.states.cmdTraction=true
+                                                veh.states.tractionS1=true
+                                            }
+                                            apiSave()
+                                            await setTimeout(5700)
+                                            if(pccApi.voyHT===true){
+                                                veh.states.abs750=false
+                                                veh.states.btDelest=false
+                                                veh.states.trainBattery=false
+                                            }
+                                            apiSave()
+                                            await setTimeout(3400)
+                                            if(pccApi.voyFS===true){
+                                                veh.states.activeFU=true
+                                                veh.states.tractionS1=false
+                                                veh.states.cmdTraction=false
+                                                veh.states.cmdFu=2
+                                                veh.states.fuDiscMob=2
+                                            }
+                                            if(pccApi.voyHT===true){
+                                                veh.states.avarieOnduls=2
+                                                veh.states.defTech=2
+                                                veh.states.trainHeating=true
+                                                veh.states.trainComp=true
+                                            }
+                                            apiSave()
+                                            await setTimeout(2500)
+                                            if(pccApi.voyHT===true){
+                                                veh.states.defCvs=false
+                                                veh.states.trainLights=true
+                                            }
+                                            apiSave()
+                                            await setTimeout(120)
+                                            veh.states.prodPert=true
+                                            apiSave()
+                                            await setTimeout(4900)
+                                            if(pccApi.voyHT===true){
+                                                veh.states.avarieOnduls=false
+                                                veh.states.activeOnduls=true
+                                            }
+                                            if(pccApi.voyFS===true){
+                                                veh.states.activeFU=false
+                                                veh.states.cmdFu=false
+                                                veh.states.fuDiscMob=false
+                                                veh.states.defTech=false
+                                                veh.states.cmdTraction=true
+                                            }
+                                            apiSave()
+                                        }
+                                        timeFunc()
+                                    }
+                                }
+                            }
+                        }
                         apiSave();
                         break;
                     case 'LINE-ACQU':
@@ -228,7 +335,7 @@ wss.on('connection', (ws, req) => {
                         if (pccApi.voyHTGAT===2) pccApi.voyHTGAT=1;
                         if (pccApi.voyFSGAT===2) pccApi.voyFSGAT=1;
                         //VOYANTS SS
-                        console.log(pccApi.SS[0].voyDHTSS04)
+                        /*console.log(pccApi.SS[0].voyDHTSS04)
                         if (pccApi.SS[0].voyAlimSS04===2) pccApi.SS[0].voyAlimSS04=1;
                         if (pccApi.SS[0].voyDHTSS04===2) pccApi.SS[0].voyDHTSS04=1;
                         if (pccApi.SS[0].voyDISS04===2) pccApi.SS[0].voyDISS04=1;
@@ -264,7 +371,7 @@ wss.on('connection', (ws, req) => {
                         if (pccApi.SS[10].voyDISS14===2) pccApi.SS[10].voyDISS14=1;
                         if (pccApi.SS[11].voyAlimSS15===2) pccApi.SS[11].voyAlimSS15=1;
                         if (pccApi.SS[11].voyDHTSS15===2) pccApi.SS[11].voyDHTSS15=1;
-                        if (pccApi.SS[11].voyDISS15===2) pccApi.SS[11].voyDISS15=1;
+                        if (pccApi.SS[11].voyDISS15===2) pccApi.SS[11].voyDISS15=1;*/
                         apiSave();
                         break;
                 }
@@ -277,13 +384,49 @@ wss.on('connection', (ws, req) => {
                         if(data.state===false){
                             pccApi.comFSLine=false
                             if(pccApi.comAG===false){
-                                console.log('OK')
-                                console.log(pccApi.comAG)
                                 pccApi.voyFS=true
+                                for (let sec of pccApi.SEC){
+                                    for(let ctn of sec.cantons){
+                                        for(let veh of ctn.trains){
+                                            if(veh.states.awakeMR===true){
+                                                veh.states.fsOk=true
+                                                veh.states.fuNoFS=false
+                                                veh.states.cmdFu=false
+                                                veh.states.activeFU=false
+                                                veh.states.cmdTraction=true
+                                                veh.states.activeFI=false
+                                            }
+                                        }
+                                    }
+                                }
                             }
+
                         } else if(data.state===true){
                             pccApi.comFSLine=true
                             pccApi.voyFS=2
+                            for (let sec of pccApi.SEC){
+                                for(let ctn of sec.cantons){
+                                    for(let veh of ctn.trains){
+                                        if(veh.states.awakeMR===true){
+                                            veh.states.fsOk=2
+                                            veh.states.fuNoFS=2
+                                            veh.states.cmdFu=2
+                                            veh.states.reguTrain=false
+                                            veh.states.activeFU=true
+                                            veh.states.cmdTraction=false
+                                            let checkSpeedInter = setInterval(checkSpeed,100)
+                                            function checkSpeed(){
+                                                if(veh.states.speed===0){
+                                                    clearInterval(checkSpeedInter)
+                                                    veh.states.activeFI=true
+                                                    apiSave()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            apiSave();
                         }
                         if((pccApi.comAuth) && !(pccApi.comFSLine)){
                             pccApi.voyABS=true
@@ -314,11 +457,53 @@ wss.on('connection', (ws, req) => {
                             pccApi.comAuth=false
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=2
+                                for (let sec of pccApi.SEC){
+                                    for(let ctn of sec.cantons){
+                                        for(let veh of ctn.trains){
+                                            if(veh.states.awakeMR===true){
+                                                veh.states.abs750=2
+                                                veh.states.btDelest=2
+                                                veh.states.trainBattery=2
+                                                veh.states.activeOnduls=false
+                                                veh.states.avarieOnduls=2
+                                                veh.states.trainLights=false
+                                                veh.states.trainHeating=false
+                                                veh.states.trainComp=false
+                                                veh.states.defTech=2
+                                                veh.states.defCvs=2
+                                                veh.states.cmdTraction=false
+                                            }
+                                        }
+                                    }
+                                }
+                                apiSave();
                             }
                         } else if(data.state===true){
                             pccApi.comAuth=true
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=true
+                                for (let sec of pccApi.SEC){
+                                    for(let ctn of sec.cantons){
+                                        for(let veh of ctn.trains){
+                                            if(veh.states.awakeMR===true){
+                                                veh.states.abs750=false
+                                                veh.states.btDelest=false
+                                                veh.states.trainBattery=false
+                                                veh.states.activeOnduls=true
+                                                veh.states.avarieOnduls=false
+                                                veh.states.trainLights=true
+                                                veh.states.trainHeating=true
+                                                veh.states.trainComp=true
+                                                veh.states.defTech=false
+                                                veh.states.defCvs=false
+                                                if(pccApi.voyFS===true){
+                                                    veh.states.cmdTraction=true
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                apiSave();
                             }
                         }
                         if((pccApi.comAuth) && !(pccApi.comFSLine)){
@@ -402,7 +587,7 @@ wss.on('connection', (ws, req) => {
                     case 'ARMPR-COM':
                         if(data.state===false){
                             pccApi.comArmPR=false
-                            pccApi.SS[0].voyDHTSS04=2;
+                            /*pccApi.SS[0].voyDHTSS04=2;
                             pccApi.SS[1].voyDHTSS05=2;
                             pccApi.SS[2].voyDHTSS06=2;
                             pccApi.SS[3].voyDHTSS07=2;
@@ -413,7 +598,7 @@ wss.on('connection', (ws, req) => {
                             pccApi.SS[8].voyDHTSS12=2;
                             pccApi.SS[9].voyDHTSS13=2;
                             pccApi.SS[10].voyDHTSS14=2;
-                            pccApi.SS[11].voyDHTSS15=2;
+                            pccApi.SS[11].voyDHTSS15=2;*/
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
                                     if(!(ctns.hasOwnProperty('type'))) continue;
@@ -430,7 +615,7 @@ wss.on('connection', (ws, req) => {
                             
                         } else if(data.state===true){
                             pccApi.comArmPR=true
-                            pccApi.SS[0].voyDHTSS04=true;
+                            /*pccApi.SS[0].voyDHTSS04=true;
                             pccApi.SS[1].voyDHTSS05=true;
                             pccApi.SS[2].voyDHTSS06=true;
                             pccApi.SS[3].voyDHTSS07=true;
@@ -441,7 +626,7 @@ wss.on('connection', (ws, req) => {
                             pccApi.SS[8].voyDHTSS12=true;
                             pccApi.SS[9].voyDHTSS13=true;
                             pccApi.SS[10].voyDHTSS14=true;
-                            pccApi.SS[11].voyDHTSS15=true;
+                            pccApi.SS[11].voyDHTSS15=true;*/
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
                                     if(!(ctns.hasOwnProperty('type'))) continue;
@@ -1099,7 +1284,7 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.TMSActive=true
                         trainObj.states.defLtpa=2
                         apiSave()
-                        await setTimeout(2000)
+                        await setTimeout(2040)
                         trainObj.states.defTech=2
                         trainObj.states.defFN=2
                         trainObj.states.permBrake=true
@@ -1108,18 +1293,18 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.cmdFu=2
                         trainObj.states.cptFu++
                         apiSave()
-                        await setTimeout(1500)
+                        await setTimeout(1510)
                         trainObj.states.trainFrott=2
                         trainObj.states.defCvs=2
                         trainObj.states.trainBattery=2
                         trainObj.states.abs750=2
                         apiSave()
-                        await setTimeout(2000)
+                        await setTimeout(2120)
                         trainObj.states.defDistBt=2
                         trainObj.states.btDelest=2
                         trainObj.states.avarieOnduls=2
                         apiSave()
-                        await setTimeout(4000)
+                        await setTimeout(4015)
                         trainObj.states.awakeMR=true
                         trainObj.states.speed=0
                         trainObj.states.defLtpa=false
@@ -1128,32 +1313,38 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.v0pas=2
                         trainObj.states.trainFrott=true
                         apiSave()
-                        await setTimeout(4000)
+                        await setTimeout(4015)
+                        if(pccApi.voyHT===true){
+                            trainObj.states.abs750=false
+                            trainObj.states.trainBattery=false
+                            trainObj.states.btDelest=false
+                            trainObj.states.activeOnduls=true
+                        }
                         trainObj.states.activeTests=true
-                        trainObj.states.btDelest=false
                         trainObj.states.defDistBt=false
                         trainObj.states.defCvs=false
-                        trainObj.states.abs750=false
-                        trainObj.states.trainBattery=false
-                        trainObj.states.activeOnduls=true
                         apiSave()
-                        await setTimeout(1000)
+                        await setTimeout(1034)
                         trainObj.states.testAuto=2
                         trainObj.states.activeFI=true
                         trainObj.states.forbCommand=2
                         apiSave()
-                        await setTimeout(10000)
+                        await setTimeout(10120)
                         trainObj.states.avarieOnduls=false
                         apiSave()
-                        await setTimeout(4000)
+                        await setTimeout(4030)
                         trainObj.states.validTests=true
                         trainObj.states.activeTests=false
-                        trainObj.states.defTech=false
+                        if(pccApi.voyHT===true){
+                            trainObj.states.defTech=false
+                        }
                         apiSave()
-                        await setTimeout(4000)
-                        trainObj.states.trainLights=true
-                        trainObj.states.trainHeating=true
-                        trainObj.states.trainComp=true
+                        await setTimeout(4080)
+                        if(pccApi.voyHT===true){
+                            trainObj.states.trainLights=true
+                            trainObj.states.trainHeating=true
+                            trainObj.states.trainComp=true
+                        }
                         trainObj.states.fsOk=2
                         trainObj.states.fuNoFS=2
                         trainObj.states.IOP=true
@@ -1161,7 +1352,7 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.vitModifPAS=true
                         trainObj.states.cptFu++
                         apiSave()
-                        await setTimeout(10000)
+                        await setTimeout(10028)
                         trainObj.states.nullSpeed=true
                         trainObj.states.defFN=false
                         trainObj.states.testAuto=false
@@ -1169,11 +1360,18 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.permBrake=false
                         trainObj.states.cmdTraction=true
                         apiSave()
-                        await setTimeout(10000)
+                        await setTimeout(10021)
                         trainObj.states.pretTrain=true
                         trainObj.states.autoTrain=true
                         trainObj.states.forbCommand=false
+                        trainObj.states.vitModifPAS=false
                         apiSave()
+                        await setTimeout(400)
+                        if(pccApi.voyFS===true){
+                            trainObj.states.cmdFu=false
+                            trainObj.states.fuNoFS=false
+                            trainObj.states.fsOk=true
+                        }
                     }
                     const refusPrep = async() => {
                         trainObj.states.echecPrep=2
