@@ -27,6 +27,8 @@ let btnDeprep = document.getElementById('btnDeprep')
 let copyConfig = document.getElementById('copyConfig')
 let showRequest = document.getElementById('request')
 
+let listDef=document.getElementById('listDef')
+
 let keystroke = []
 
 window.addEventListener('keydown', (e)=>{
@@ -178,25 +180,62 @@ let blinkIdReturn = 0
 function josephineChercheLesDefauts(){
 
     for(let tOpt of document.getElementsByClassName('trainOpt')){
+        tOpt.innerText=tOpt.id
         tOpt.classList.remove('alarm')
     }
+    clearInterval(beepIntervalId)
+    sm.stopSound('gong')
     let defList=[]
+    let anoList=[]
     for (let sec in data.SEC){
         for (let ctns in data.SEC[sec].cantons){
             for (let train in data.SEC[sec].cantons[ctns].trains){
                 if(!(data.SEC[sec].cantons[ctns].trains[train])) continue;
                 for(const property of Object.entries(data.SEC[sec].cantons[ctns].trains[train].states)){
                     if(!(property[1] === 1 || property[1] === 2)) continue;
-                    defList.push(data.SEC[sec].cantons[ctns].trains[train].tid)
+                    if(property[1]===1){
+                        defList.push(data.SEC[sec].cantons[ctns].trains[train].tid)
+                    }
+                    if(property[1]===2){
+                        anoList.push({name:data.SEC[sec].cantons[ctns].trains[train].tid,def:property[0],pos:data.SEC[sec].cantons[ctns].cid})
+                    }
                 }
             }
         }
     }
     console.log(defList)
     for (let tr in defList){
-        console.log(defList[tr])
+        console.log(defList)
         let elem = document.getElementById(defList[tr])
-        elem.classList.toggle('alarm',true)
+        console.log(elem)
+        elem.innerText='🟥' +defList[tr]
+    }
+    for (let tr in anoList){
+        console.log('PRESET 6666')
+        let defDiv = document.createElement('div')
+        defDiv.id=anoList[tr].name+'DEF'
+        let tName = document.createElement('mark')
+        tName.innerText='Train '+anoList[tr].name
+        let cName = document.createElement('strong')
+        cName.innerText=' '+anoList[tr].pos
+        let defName = document.createElement('span')
+        defName.innerText=' '+anoList[tr].def
+        defDiv.appendChild(tName)
+        defDiv.appendChild(cName)
+        defDiv.appendChild(defName)
+        listDef.appendChild(defDiv)
+        let elem = document.getElementById(anoList[tr].name)
+        elem.classList.add('alarm')
+    }
+    if (anoList.length >= 1){
+        console.log(anoList.length)
+        beepIntervalId = setInterval(async () => {
+            sm.playSound('gong', 2)
+            //sm.stopFreq(2959)
+        }, 1000)
+    } else {
+        clearInterval(beepIntervalId)
+        sm.stopSound('gong')
     }
 
 }
@@ -370,7 +409,7 @@ function updateVoy(c){
         trainNumber.value='NON'
     }*/
     console.log(blinkIntervalId)
-    if (blinkIntervalId.size >= 1) {
+    /*if (blinkIntervalId.size >= 1) {
         console.log(blinkIntervalId+blinkIntervalId.size)
         sm.playSound('gong', 2)
         if(beepIntervalId!=false) return;
@@ -383,7 +422,7 @@ function updateVoy(c){
         clearInterval(beepIntervalId)
         beepIntervalId=false
         sm.stopSound('gong')
-    }
+    }*/
 }
 
 btnAcquitTrain.addEventListener('click', ()=>{

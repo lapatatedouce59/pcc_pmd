@@ -37,50 +37,59 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            border: black solid 3px;
+            border: black solid 2px;
             font-family: Arial, Helvetica, sans-serif;
             font-size: 15px;
+            transition: 500ms;
         }
         td.voyStationState{
             border: #848484 solid;
             border-width: 1px;
             font-family: Arial, Helvetica, sans-serif;
+            transition: 500ms;
         }
         td.voyStationTrain{
             border: #848484 solid;
             border-width: 1px;
             font-family: Arial, Helvetica, sans-serif;
+            transition: 500ms;
         }
         td.voyTrainState{
             border: #848484 solid;
             border-width: 1px;
             font-family: Arial, Helvetica, sans-serif;
+            transition: 500ms;
         }
         .voyTrainState{
             background-color: #CCCCCC;
+            transition: 500ms;
         }
         .voyStationState{
             color: black;
             background-color: #CCCCCC;
+            transition: 500ms;
         }
         .voyStationInfo{
             color: white;
             background-color: #8B8B8B;
+            transition: 500ms;
         }
         .voyStationOthers{
             color: white;
             background-color: #8B8B8B;
+            transition: 500ms;
         }
         .voyStationTrain{
             color: black;
             background-color: #CCCCCC;
+            transition: 500ms;
         }
         .ok{
             background-color: #00EF35;
         }
         .alarm{
             background-color: #EF0000;
-            
+            transition: 500ms;
         }
         .tco{
             background-color: #1C1C1C;
@@ -90,6 +99,7 @@
         .warn{
             background-color: #EF0000;
             color: white;
+            transition: 400ms;
         }
         .format{
             background-color: #DCDCDC;
@@ -209,6 +219,10 @@
             width: 50px;
             background-size: cover;
         }
+        mark{
+            background-color: #EF0000;
+            color: white;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 </head>
@@ -224,6 +238,12 @@
     <div class="user">
         Votre rôle: <span id="roleOP">indéfini</span>
     </div>
+    <fieldset>
+        <legend>Vue rapide des anomalies</legend>
+        <div id="listDef">
+
+        </div>
+    </fieldset>
     <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
     <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex;">
         <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
@@ -327,6 +347,52 @@
             <input type="checkbox" id="comIDPOTPAS" class="com">
             <label for="comIDPOTPAS" id="lcomIDPOTPAS" class="comLabel"></label><br>
             <span>IDPO/DSO tout PAS</span>
+        </fieldset>
+    </div><br>
+    <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex;">
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <table>
+                <tr>
+                    <td style="text-align: center;" colspan="5">
+                        <span>AUTOR.HT</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span id="voyHTAutSS04" class="voy">HT</span>
+                    </td>
+                    <td colspan="3" style="text-align: start;">
+                        <img src="./src/pltp/img/lNext.png" width="10px" style="position: relative; left: 20px;"><br>
+                        <span>AUTO</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <img src="./src/pltp/img/lNext.png" width="10px"><br>
+                        <span>OUI</span>
+                    </td>
+                    <td>
+                        <input type="range" min="-1" max="1" style="width: 50px; outline: none; background: transparent; color: white; appearance: none;"><br>
+                        <label for="comStateSS04" style="display: none; width: 50px; height: 50px;"></label>
+                        <span>SS04</span>
+                    </td>
+                    <td colspan="2">
+                        <span>NON</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: center;">
+                        <span id="voyDHTSS04" class="voy">DHT</span>
+                        <span id="voyDISS04" class="voy">DI</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <img src="./src/pltp/img/next.png" alt=""><br>
+                        <span id="voyAlimSS04" class="voy">ALIM</span>
+                    </td>
+                </tr>
+            </table>
         </fieldset>
     </div>
     <br><span><button id="btnACQU">ACQUITTER</button></span>
@@ -472,7 +538,7 @@
     <br>
     <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
     <button id="sendCmd">SEND</button>
-    <h3 id="attention" class="warn">Ne pas faire avancer une rame sans respecter les feux!!!</h3>
+    <h3 id="attention" class="warn" style="transition: 400ms;">Ne pas faire avancer une rame sans respecter les feux!!!</h3>
 
     <div id="fstation" class="format">
         <div id="stationhead" style="width: 100%; background-color: #5E5E5E; color: white;">

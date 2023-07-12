@@ -59,6 +59,8 @@ let ckbObsVeh = document.getElementById('ckbObsVeh')
 
 let btnAcquitStation = document.getElementById('btnAcquitStation')
 
+let listDef = document.getElementById('listDef')
+
 quaiTitle.innerHTML=selectMenu.value
 let copyConfig = document.getElementById('copyConfig')
 let showRequest = document.getElementById('request')
@@ -236,25 +238,55 @@ function getStationProperties(id){
 function yaUnDefautQQPart(){
     for(let staOpt of document.getElementsByClassName('stationOpt')){
         staOpt.classList.remove('alarm')
+        staOpt.innerText=staOpt.id
     }
+    clearInterval(beepIntervalId)
+    sm.stopSound('gong')
+    listDef.innerHTML=''
     let defList=[]
+    let anoList=[]
     for (let sec in data.SEC){
         for (let ctns in data.SEC[sec].cantons){
             if(typeof data.SEC[sec].cantons[ctns].type === 'undefined') continue;
             for(const property of Object.entries(data.SEC[sec].cantons[ctns].states)){
                 if(!(property[1] === 1 || property[1] === 2)) continue;
-                defList.push(data.SEC[sec].cantons[ctns].name)
+                if(property[1] === 1){
+                    defList.push(data.SEC[sec].cantons[ctns].name)
+                }
+                if(property[1] === 2){
+                    anoList.push({name:data.SEC[sec].cantons[ctns].name,def:property[0]})
+                }
             }
         }
     }
     console.log(defList)
     for (let sta in defList){
-        console.log(defList[sta])
+        console.log(defList)
         let elem = document.getElementById(defList[sta])
-        elem.classList.toggle('alarm',true)
+        console.log(elem)
+        elem.innerText='🟥' +defList[sta]
     }
-    if (defList.length >= 1){
-        //sm.playSound('gongChange', 2)
+    for (let sta in anoList){
+        let defDiv = document.createElement('div')
+        defDiv.id=anoList[sta]
+        let staName = document.createElement('mark')
+        staName.innerText=anoList[sta].name
+        let defName = document.createElement('span')
+        defName.innerText=' '+anoList[sta].def
+        defDiv.appendChild(staName)
+        defDiv.appendChild(defName)
+        listDef.appendChild(defDiv)
+        let elem = document.getElementById(anoList[sta].name)
+        elem.classList.add('alarm',true)
+    }
+    if (anoList.length >= 1){
+        beepIntervalId = setInterval(async () => {
+            sm.playSound('gong', 2)
+            //sm.stopFreq(2959)
+        }, 1000)
+    } else {
+        clearInterval(beepIntervalId)
+        sm.stopSound('gong')
     }
 }
 
@@ -400,7 +432,7 @@ function updateVoy(s){
         trainNumber.value='NON'
     }
     console.log(blinkIntervalId)
-    if (blinkIntervalId.size >= 1) {
+    /*if (blinkIntervalId.size >= 1) {
         console.log(blinkIntervalId+blinkIntervalId.size)
         sm.playSound('gong', 2)
         if(beepIntervalId!=false) return;
@@ -413,7 +445,7 @@ function updateVoy(s){
         clearInterval(beepIntervalId)
         beepIntervalId=false
         sm.stopSound('gong')
-    }
+    }*/
 }
 
 btnClosePP.addEventListener('click', ()=>{

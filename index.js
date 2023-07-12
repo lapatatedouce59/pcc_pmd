@@ -496,7 +496,7 @@ async function isWsRunning(){
                             console.log(blinkIntervalId.size)
                     }
                     //-> VOYANTS SS
-                    if (elemid.includes('SS')) {
+                    /*if (elemid.includes('SS')) {
                         //console.log(elemid)
                         //console.log(data.SS[count])
                         //console.log(data.SS[count][elemid])
@@ -544,7 +544,7 @@ async function isWsRunning(){
                             count++;
                             iteration = 0
                         }
-                    }
+                    }*/
 
                 }
                 for (let com of document.getElementsByClassName('com')) {

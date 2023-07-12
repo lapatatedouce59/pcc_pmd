@@ -15,9 +15,18 @@
   "comArmPR": true,
   "SS": [
     {
-      "voyDHTSS04": true,
-      "voyAlimSS04": true,
-      "voyDISS04": false
+      "voyDHT": true,
+      "voyAlim": true,
+      "voyDI": false,
+      "comAut": "auto",
+      "voyHTAut": true,
+      "comAutHT": true,
+      "voyAutHT": true,
+      "comCoupFS": false,
+      "voyFS": true,
+      "voyHT": true,
+      "voyRU": true,
+      "voyDHTSS04": true
     },
     {
       "voyDHTSS05": true,
@@ -249,7 +258,7 @@
                 "doorsOpenedPV": false,
                 "doorsClosedPV": true,
                 "trainSecurised": true,
-                "inZOPP": true,
+                "inZOPP": false,
                 "failedStop": false,
                 "secureStop": false,
                 "trainEssai": false,
@@ -470,7 +479,7 @@
               "name": "Jean Marc",
               "states": {
                 "doorsOpenedPV": false,
-                "doorsClosedPV": false,
+                "doorsClosedPV": true,
                 "inZOPP": false,
                 "failedStop": false,
                 "secureStop": false,
@@ -856,6 +865,66 @@
         "tIndex": "0",
         "cIndex": "2",
         "sIndex": "1"
+      },
+      "targetType": "train"
+    },
+    {
+      "id": 9,
+      "name": "Défaut Éclairage",
+      "user": "patatedouce.dev",
+      "date": "11/7/2023, 23h44 - 11/7/2023, 23h44",
+      "now": 1689111841389,
+      "state": "Terminé",
+      "showState": false,
+      "target": {
+        "tIndex": "0",
+        "cIndex": "6",
+        "sIndex": "0"
+      },
+      "targetType": "train"
+    },
+    {
+      "id": 10,
+      "name": "Pneu crevé",
+      "user": "patatedouce.dev",
+      "date": "11/7/2023, 23h44 - 11/7/2023, 23h45",
+      "now": 1689111869936,
+      "state": "Terminé",
+      "showState": false,
+      "target": {
+        "tIndex": "0",
+        "cIndex": "6",
+        "sIndex": "0"
+      },
+      "targetType": "train"
+    },
+    {
+      "id": 11,
+      "name": "Ouv. PV défectueuse",
+      "user": "patatedouce.dev",
+      "date": "11/7/2023, 23h46 - 11/7/2023, 23h49",
+      "now": 1689111963378,
+      "state": "Terminé",
+      "showState": false,
+      "target": {
+        "tIndex": "0",
+        "cIndex": "2",
+        "sIndex": "1"
+      },
+      "targetType": "train"
+    },
+    {
+      "id": 12,
+      "name": "Pneu crevé",
+      "user": "patatedouce.dev",
+      "date": "11/7/2023, 23h50 - 12/7/2023, 0h4",
+      "now": 1689112255291,
+      "state": "Terminé",
+      "showState": false,
+      "target": {
+        "tIndex": "0",
+        "cIndex": "6",
+        "sIndex": "0"
       },
       "targetType": "train"
     }
