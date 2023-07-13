@@ -15,6 +15,7 @@
   "comArmPR": true,
   "SS": [
     {
+      "name": "SS04",
       "voyDHT": true,
       "voyAlim": true,
       "voyDI": false,
@@ -25,63 +26,21 @@
       "comCoupFS": false,
       "voyFS": true,
       "voyHT": true,
-      "voyRU": true,
-      "voyDHTSS04": true
+      "voyRU": true
     },
     {
-      "voyDHTSS05": true,
-      "voyAlimSS05": true,
-      "voyDISS05": false
-    },
-    {
-      "voyDHTSS06": true,
-      "voyAlimSS06": true,
-      "voyDISS06": false
-    },
-    {
-      "voyDHTSS07": true,
-      "voyAlimSS07": true,
-      "voyDISS07": false
-    },
-    {
-      "voyDHTSS08": true,
-      "voyAlimSS08": true,
-      "voyDISS08": false
-    },
-    {
-      "voyDHTSS09": true,
-      "voyAlimSS09": true,
-      "voyDISS09": false
-    },
-    {
-      "voyDHTSS10": true,
-      "voyAlimSS10": true,
-      "voyDISS10": false
-    },
-    {
-      "voyDHTSS11": true,
-      "voyAlimSS11": true,
-      "voyDISS11": false
-    },
-    {
-      "voyDHTSS12": true,
-      "voyAlimSS12": true,
-      "voyDISS12": false
-    },
-    {
-      "voyDHTSS13": true,
-      "voyAlimSS13": true,
-      "voyDISS13": false
-    },
-    {
-      "voyDHTSS14": true,
-      "voyAlimSS14": true,
-      "voyDISS14": false
-    },
-    {
-      "voyDHTSS15": true,
-      "voyAlimSS15": true,
-      "voyDISS15": false
+      "name": "SS05",
+      "voyDHT": true,
+      "voyAlim": true,
+      "voyDI": false,
+      "comAut": "auto",
+      "voyHTAut": true,
+      "comAutHT": true,
+      "voyAutHT": true,
+      "comCoupFS": false,
+      "voyFS": true,
+      "voyHT": true,
+      "voyRU": true
     }
   ],
   "PR": [

@@ -291,7 +291,9 @@ async function isWsRunning(){
                         console.log(blinkIntervalId.size)
                     }
 
-                    if (elemid.includes('SS')) {
+
+
+                    /*if (elemid.includes('SS')) {
                         console.log(elemid)
                         console.log(data.SS[count])
                         console.log(data.SS[count][elemid])
@@ -334,7 +336,7 @@ async function isWsRunning(){
                             count++;
                             iteration = 0
                         }
-                    }
+                    }*/
                 }
 
                 for (let com of document.getElementsByClassName('com')) {
@@ -494,6 +496,61 @@ async function isWsRunning(){
                             }, 500))
                             console.log(blinkIntervalId.get(elemid))
                             console.log(blinkIntervalId.size)
+                    }
+                    for(let ss of data.SS){
+                        let name = ss.name //expected: SS04 ou SS05
+                        for(let prop of Object.keys(ss)){
+                            console.log((prop+name)+' et '+elemid)
+                            if(!(elemid===(prop+name))) continue;//si voyHTSS04 === voyHT + SS04
+                            console.log(ss)
+
+                            console.log(elemid)
+                            console.log(ss[prop])
+                            if (ss[prop] === false) {
+                                console.log("Voyant " + elemid + " est faux")
+                                let elem = document.getElementById(elemid)
+                                elem.classList.remove('alarm', 'ok')
+                                clearInterval(blinkIntervalId.get(elemid))
+                                blinkIntervalId.delete(elemid)
+                                clearInterval(beepIntervalId)
+                                continue;
+                            } else
+                            if (ss[prop] === true) {
+                                console.log('Voyant ' + elemid + ' est vrai.')
+                                let elem = document.getElementById(elemid)
+                                elem.classList.remove('alarm')
+                                elem.classList.toggle('ok', true)
+                                clearInterval(blinkIntervalId.get(elemid))
+                                blinkIntervalId.delete(elemid)
+                                clearInterval(beepIntervalId)
+                                continue;
+                            } else
+                            if (ss[prop] === 1) {
+                                console.log('Voyant ' + elemid + ' est en défaut.')
+                                let elem = document.getElementById(elemid)
+                                elem.classList.remove('ok')
+                                elem.classList.remove('alarm')
+                                elem.classList.toggle('alarm', true)
+                                console.log(blinkIntervalId.get(elemid))
+                                clearInterval(blinkIntervalId.get(elemid))
+                                blinkIntervalId.delete(elemid)
+                                clearInterval(beepIntervalId)
+                                continue;
+        
+                            } else
+                            if (ss[prop] === 2 && !(blinkIntervalId.get(elemid))) {
+                                    //console.log('Voyant '+voy.id+' est en anomalie.')
+                                    let elem = document.getElementById(elemid)
+                                    elem.classList.remove('ok')
+                                    elem.classList.toggle('alarm')
+                                    blinkIntervalId.set(elemid, setInterval(async function() {
+                                        elem.classList.toggle('alarm')
+                                    }, 500))
+                                    console.log(blinkIntervalId.get(elemid))
+                                    console.log(blinkIntervalId.size)
+                                    continue;
+                                }
+                        }
                     }
                     //-> VOYANTS SS
                     /*if (elemid.includes('SS')) {
