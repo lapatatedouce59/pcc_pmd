@@ -42,7 +42,7 @@ let keystroke = []
 
 window.addEventListener('keydown', (e)=>{
     keystroke.push(e.code)
-    console.log(keystroke)
+    //console.log(keystroke)
     if(keystroke[0]==='ControlLeft' && keystroke[1]==='ShiftLeft' && keystroke[2]==='AltLeft' && keystroke[3]==='KeyQ' && keystroke[4]==='KeyL'){
         keystroke = []
         window.WebSocket.send(JSON.stringify({

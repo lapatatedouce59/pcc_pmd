@@ -219,6 +219,34 @@
             width: 50px;
             background-size: cover;
         }
+        .com:checked + #lcomAutHTSS04{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomCoupFSSS04{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomAutHTSS05{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomCoupFSSS05{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
         mark{
             background-color: #EF0000;
             color: white;
@@ -351,7 +379,81 @@
     </div><br>
     <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex;">
         <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
-            <table>
+            <legend>SS</legend>
+            <fieldset style="text-align: center; width:80%; border-radius: 10px; border: black solid 2px;">
+                <legend>PAS</legend>
+                <table style="display: inline-flex; align-items: center;">
+                    <tr>
+                        <td>
+                            <span id="voyHTSS04" class="voy">PA<br />01</span><br>
+                        </td>
+                        <td>
+                            <span id="voyHTSS05" class="voy">PA<br />02</span><br>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+            <table style="float: left;">
+                <tr style="position: relative; top: 30px;">
+                    <td colspan="2" style="text-align: end;">
+                        <img src="./src/pltp/img/arrow1.png" width="12px" style="position: relative; top: 10px; left: 12px;">
+                    </td>
+                    <td colspan="1"><span id="voyHTSS04" class="voy">HT</span></td>
+                    <td colspan="2" style="text-align: start;">
+                        <img src="./src/pltp/img/arrow2.png" width="12px" style="position: relative; top: 10px; right: 12px;">
+                    </td>
+                </tr>
+                <tr style="position: relative; top: 15px;">
+                    <td colspan="2" style="position: relative; left: 5px;">
+                        <span id="voyFSSS04" class="voy">FS</span>
+                    </td>
+                    <td colspan="1"></td>
+                    <td colspan="2">
+                        <span id="voyHTSS04" class="voy">HT</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center; position: relative;">
+                        <img src="./src/pltp/img/link2.png" width="2px" style="position: relative; left: 7px; top: 10px;">
+                    </td>
+                    <td colspan="3" style="text-align: start; position: relative; left: 7px;">
+                        <span>NON</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: end;" colspan="2">
+                        <img src="./src/pltp/img/link1.png" width="23px" style="position: relative; bottom: 12px; left: 5px;">
+                    </td>
+                    <td>
+                        <input type="checkbox" id="comCoupFSSS04" class="com">
+                        <label for="comCoupFSSS04" id="lcomCoupFSSS04" class="comLabel"></label><br>
+                    </td>
+                    <td style="text-align: start;" colspan="2">
+                        <span>OUI</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: center; position: relative; left: 7px;">
+                        <span>COUPURE FS</span><br>
+                        <img src="./src/pltp/img/lNext.png" width="10px"><br>
+                        <span>1</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <span id="voyHTAutABS" class="voy">ABS</span>
+                    </td>
+                    <td>
+                        <img src="./src/pltp/img/lNextr.png" width="10px" >
+                    </td>
+                    <td>
+                        <input type="checkbox" id="comAutHTSS04" class="com">
+                        <label for="comAutHTSS04" id="lcomAutHTSS04" class="comLabel"></label><br>
+                    </td>
+                    <td style="text-align: start;">
+                        <span>0</span>
+                    </td>
+                </tr>
                 <tr>
                     <td style="text-align: center;" colspan="5">
                         <span>AUTOR.HT</span>
@@ -390,6 +492,108 @@
                     <td colspan="5">
                         <img src="./src/pltp/img/next.png" alt=""><br>
                         <span id="voyAlimSS04" class="voy">ALIM</span>
+                    </td>
+                </tr>
+            </table>
+            <table style="float: left;">
+                <tr style="position: relative; top: 30px;">
+                    <td colspan="2" style="text-align: end;">
+                        <img src="./src/pltp/img/arrow1.png" width="12px" style="position: relative; top: 10px; left: 12px;">
+                    </td>
+                    <td colspan="1"><span id="voyHTSS04" class="voy">HT</span></td>
+                    <td colspan="2" style="text-align: start;">
+                        <img src="./src/pltp/img/arrow2.png" width="12px" style="position: relative; top: 10px; right: 12px;">
+                    </td>
+                </tr>
+                <tr style="position: relative; top: 15px;">
+                    <td colspan="2" style="position: relative; left: 5px;">
+                        <span id="voyFSSS05" class="voy">FS</span>
+                    </td>
+                    <td colspan="1"></td>
+                    <td colspan="2">
+                        <span id="voyHTSS05" class="voy">HT</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center; position: relative;">
+                        <img src="./src/pltp/img/link2.png" width="2px" style="position: relative; left: 7px; top: 10px;">
+                    </td>
+                    <td colspan="3" style="text-align: start; position: relative; left: 7px;">
+                        <span>NON</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: end;" colspan="2">
+                        <img src="./src/pltp/img/link1.png" width="23px" style="position: relative; bottom: 12px; left: 5px;">
+                    </td>
+                    <td>
+                        <input type="checkbox" id="comCoupFSSS05" class="com">
+                        <label for="comCoupFSSS05" id="lcomCoupFSSS05" class="comLabel"></label><br>
+                    </td>
+                    <td style="text-align: start;" colspan="2">
+                        <span>OUI</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: center; position: relative; left: 7px;">
+                        <span>COUPURE FS</span><br>
+                        <img src="./src/pltp/img/lNext.png" width="10px"><br>
+                        <span>1</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">
+                        <span id="voyHTAutABS" class="voy">ABS</span>
+                    </td>
+                    <td>
+                        <img src="./src/pltp/img/lNextr.png" width="10px" >
+                    </td>
+                    <td>
+                        <input type="checkbox" id="comAutHTSS05" class="com">
+                        <label for="comAutHTSS05" id="lcomAutHTSS05" class="comLabel"></label><br>
+                    </td>
+                    <td style="text-align: start;">
+                        <span>0</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;" colspan="5">
+                        <span>AUTOR.HT</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span id="voyHTAutSS05" class="voy">HT</span>
+                    </td>
+                    <td colspan="3" style="text-align: start;">
+                        <img src="./src/pltp/img/lNext.png" width="10px" style="position: relative; left: 20px;"><br>
+                        <span>AUTO</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <img src="./src/pltp/img/lNext.png" width="10px"><br>
+                        <span>OUI</span>
+                    </td>
+                    <td>
+                        <input type="range" min="-1" max="1" style="width: 50px; outline: none; background: transparent; color: white; appearance: none;"><br>
+                        <label for="comStateSS05" style="display: none; width: 50px; height: 50px;"></label>
+                        <span>SS04</span>
+                    </td>
+                    <td colspan="2">
+                        <span>NON</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" style="text-align: center;">
+                        <span id="voyDHTSS05" class="voy">DHT</span>
+                        <span id="voyDISS05" class="voy">DI</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5">
+                        <img src="./src/pltp/img/next.png" alt=""><br>
+                        <span id="voyAlimSS05" class="voy">ALIM</span>
                     </td>
                 </tr>
             </table>
