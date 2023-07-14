@@ -612,7 +612,16 @@ wss.on('connection', (ws, req) => {
                                     
                                 }
                             }
-                            
+                            for (let ss of pccApi.SS){
+                                ss.voyAlim=2
+                                ss.voyHT=2
+                                ss.voyHTAut=2
+                                ss.voyHTAutABS=2
+                                ss.voyPA=2
+                            }
+                            pccApi.voyABS=2
+                            pccApi.voyHT=2
+                            pccApi.voyCC=2
                         } else if(data.state===true){
                             pccApi.comArmPR=true
                             /*pccApi.SS[0].voyDHTSS04=true;
@@ -637,6 +646,35 @@ wss.on('connection', (ws, req) => {
                                         trainObj.states.forbiddenStart=false
                                     }
                                 }
+                            }
+                            for (let ss of pccApi.SS){
+                                ss.voyAlim=true
+                                
+                                console.log(ss)
+                                console.log(pccApi)
+                                if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                                    ss.voyHTAutABS=true
+                                    console.log('ouais 1')
+                                }
+                                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                                    ss.voyHTAut=true
+                                    ss.voyHT=true
+                                    console.log('ouais 2')
+                                }
+                                if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
+                                    ss.voyPA=true
+                                    console.log('ouais 3')
+                                }
+                            }
+                            pccApi.voyCC=false
+                            if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(pccApi.SS[0].voyHT===true)&&(pccApi.SS[1].voyHT==true)){
+                                pccApi.voyHT=true
+                                console.log('ouais 4')
+                            }
+                            
+                            if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(pccApi.SS[0].voyPA===true)&&(pccApi.SS[1].voyPA==true)&&(pccApi.comFSLine===false)&&(pccApi.voyALC===true)){
+                                pccApi.voyABS=true
+                                console.log('ouais 5')
                             }
                         }
                         break;
