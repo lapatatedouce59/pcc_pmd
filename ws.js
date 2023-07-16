@@ -76,6 +76,230 @@ function isClientExisting(uuid){
     }*/
     return false;
 }
+//PREFAB FUNCTIONS
+let ss04CLIST = ['c1101','c1201','c1301','c1401','c1501','c2101','c2201','c2301','c2401','c2501']
+let ss05CLIST = ['c1102','c1202','c1302','c1402','c2102','c2202','c2302','c2402']
+function HTTrains(type,zone){
+    function executeDwn(veh){
+        if(veh.states.awakeMR===true){
+            veh.states.abs750=2
+            veh.states.btDelest=2
+            veh.states.trainBattery=2
+            veh.states.reguTrain=false
+            veh.states.activeOnduls=false
+            veh.states.trainLights=false
+            veh.states.trainHeating=false
+            veh.states.trainComp=false
+            veh.states.defTech=2
+            veh.states.defCvs=2
+            veh.states.cmdTraction=false
+        }
+    }
+    function executeUp(veh){
+        if(veh.states.awakeMR===true){
+            let timeFunc = async () => {
+                await setTimeout(2700)
+                veh.states.abs750=false
+                veh.states.btDelest=false
+                veh.states.trainBattery=false
+                apiSave()
+                await setTimeout(3400)
+                veh.states.avarieOnduls=2
+                veh.states.defTech=2
+                veh.states.trainHeating=true
+                veh.states.trainComp=true
+                apiSave()
+                await setTimeout(2500)
+                veh.states.defCvs=false
+                veh.states.trainLights=true
+                apiSave()
+                await setTimeout(120)
+                veh.states.prodPert=true
+                apiSave()
+                await setTimeout(4900)
+                veh.states.avarieOnduls=false
+                veh.states.activeOnduls=true
+                veh.states.defTech=false
+                apiSave()
+            }
+            timeFunc()
+        }
+    }
+    switch(zone){
+        case 'SS04':
+            for(let sec of pccApi.SEC){
+                for(let ctn of sec.cantons){
+                    if(!(ss04CLIST.includes(ctn.cid))) continue;
+                    for(let veh of ctn.trains){
+                        if(type === 'down'){
+                            for(let veh of ctn.trains){
+                                executeDwn(veh)
+                            }
+                        }
+                        if(type === 'up'){
+                            for(let veh of ctn.trains){
+                                executeUp(veh)
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        break;
+        case 'SS05':
+            for(let sec of pccApi.SEC){
+                for(let ctn of sec.cantons){
+                    if(!(ss05CLIST.includes(ctn.cid))) continue;
+                    for(let veh of ctn.trains){
+                        if(type === 'down'){
+                            executeDwn(veh)
+                        }
+                        if(type === 'up'){
+                            executeUp(veh)
+                        }
+                    }
+                }
+            }
+        break;
+        case 'all':
+            console.log(pccApi)
+            for(let sec of pccApi.SEC){
+                for(let ctn of sec.cantons){
+                    if(ss04CLIST.includes(ctn.cid)){
+                        if((pccApi.SS[0].comAutHT===false)&&(pccApi.SS[0].voyHTAut===true)&&(pccApi.SS[0].voyRU===true)){
+                            if(type === 'down'){
+                                for(let veh of ctn.trains){
+                                    executeDwn(veh)
+                                }
+                            }
+                            if(type === 'up'){
+                                for(let veh of ctn.trains){
+                                    executeUp(veh)
+                                }
+                            }
+                        }
+                    } else
+                    if(ss05CLIST.includes(ctn.cid)){
+                        if((pccApi.SS[1].comAutHT===false)&&(pccApi.SS[1].voyHTAut===true)&&(pccApi.SS[1].voyRU===true)){
+                            if(type === 'down'){
+                                for(let veh of ctn.trains){
+                                    executeDwn(veh)
+                                }
+                            }
+                            if(type === 'up'){
+                                for(let veh of ctn.trains){
+                                    executeUp(veh)
+                                }
+                            }
+                        }
+                    } else continue;
+                }
+            }
+        break;
+    }
+}
+
+function FSTrains(type,zone){
+    function executeDwn(veh){
+        if(veh.states.awakeMR===true){
+            veh.states.fsOk=2
+            veh.states.fuNoFS=2
+            veh.states.cmdFu=2
+            veh.states.reguTrain=false
+            veh.states.activeFU=true
+            veh.states.cmdTraction=false
+            let checkSpeedInter = setInterval(checkSpeed,100)
+            function checkSpeed(){
+                if(veh.states.speed===0){
+                    clearInterval(checkSpeedInter)
+                    veh.states.activeFI=true
+                    apiSave()
+                }
+            }
+        }
+    }
+    function executeUp(veh){
+        if(veh.states.awakeMR===true){
+            veh.states.fsOk=true
+            veh.states.fuNoFS=false
+            veh.states.cmdFu=false
+            veh.states.activeFU=false
+            veh.states.cmdTraction=true
+            veh.states.activeFI=false
+        }
+    }
+    switch(zone){
+        case 'SS04':
+            for(let sec of pccApi.SEC){
+                for(let ctn of sec.cantons){
+                    if(!(ss04CLIST.includes(ctn.cid))) continue;
+                    for(let veh of ctn.trains){
+                        if(type === 'down'){
+                            for(let veh of ctn.trains){
+                                executeDwn(veh)
+                            }
+                        }
+                        if(type === 'up'){
+                            for(let veh of ctn.trains){
+                                executeUp(veh)
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        break;
+        case 'SS05':
+            for(let sec of pccApi.SEC){
+                for(let ctn of sec.cantons){
+                    if(!(ss05CLIST.includes(ctn.cid))) continue;
+                    for(let veh of ctn.trains){
+                        if(type === 'down'){
+                            executeDwn(veh)
+                        }
+                        if(type === 'up'){
+                            executeUp(veh)
+                        }
+                    }
+                }
+            }
+        break;
+        case 'all':
+            for(let sec of pccApi.SEC){
+                for(let ctn of sec.cantons){
+                    if(ss04CLIST.includes(ctn.cid)){
+                        if((pccApi.SS[0].comCoupFS===false)&&(pccApi.SS[0].voyRU===true)){
+                            if(type === 'down'){
+                                for(let veh of ctn.trains){
+                                    executeDwn(veh)
+                                }
+                            }
+                            if(type === 'up'){
+                                for(let veh of ctn.trains){
+                                    executeUp(veh)
+                                }
+                            }
+                        }
+                    } else
+                    if(ss05CLIST.includes(ctn.cid)){
+                        if((pccApi.SS[1].comCoupFS===false)&&(pccApi.SS[0].voyRU===true)){
+                            if(type === 'down'){
+                                for(let veh of ctn.trains){
+                                    executeDwn(veh)
+                                }
+                            }
+                            if(type === 'up'){
+                                for(let veh of ctn.trains){
+                                    executeUp(veh)
+                                }
+                            }
+                        }
+                    } else continue;
+                }
+            }
+        break;
+    }
+}
 
 wss.on('connection', (ws, req) => {
     let newUUID;
@@ -334,44 +558,12 @@ wss.on('connection', (ws, req) => {
                         if (pccApi.voyFS===2) pccApi.voyFS=1;
                         if (pccApi.voyHTGAT===2) pccApi.voyHTGAT=1;
                         if (pccApi.voyFSGAT===2) pccApi.voyFSGAT=1;
-                        //VOYANTS SS
-                        /*console.log(pccApi.SS[0].voyDHTSS04)
-                        if (pccApi.SS[0].voyAlimSS04===2) pccApi.SS[0].voyAlimSS04=1;
-                        if (pccApi.SS[0].voyDHTSS04===2) pccApi.SS[0].voyDHTSS04=1;
-                        if (pccApi.SS[0].voyDISS04===2) pccApi.SS[0].voyDISS04=1;
-                        if (pccApi.SS[1].voyAlimSS05===2) pccApi.SS[1].voyAlimSS05=1;
-                        if (pccApi.SS[1].voyDHTSS05===2) pccApi.SS[1].voyDHTSS05=1;
-                        if (pccApi.SS[1].voyDISS05===2) pccApi.SS[1].voyDISS05=1;
-                        if (pccApi.SS[2].voyAlimSS06===2) pccApi.SS[2].voyAlimSS06=1;
-                        if (pccApi.SS[2].voyDHTSS06===2) pccApi.SS[2].voyDHTSS06=1;
-                        if (pccApi.SS[2].voyDISS06===2) pccApi.SS[2].voyDISS06=1;
-                        if (pccApi.SS[3].voyAlimSS07===2) pccApi.SS[3].voyAlimSS07=1;
-                        if (pccApi.SS[3].voyDHTSS07===2) pccApi.SS[3].voyDHTSS07=1;
-                        if (pccApi.SS[3].voyDISS07===2) pccApi.SS[3].voyDISS07=1;
-                        if (pccApi.SS[4].voyAlimSS08===2) pccApi.SS[4].voyAlimSS08=1;
-                        if (pccApi.SS[4].voyDHTSS08===2) pccApi.SS[4].voyDHTSS08=1;
-                        if (pccApi.SS[4].voyDISS08===2) pccApi.SS[4].voyDISS08=1;
-                        if (pccApi.SS[5].voyAlimSS09===2) pccApi.SS[5].voyAlimSS09=1;
-                        if (pccApi.SS[5].voyDHTSS09===2) pccApi.SS[5].voyDHTSS09=1;
-                        if (pccApi.SS[5].voyDISS09===2) pccApi.SS[5].voyDISS09=1;
-                        if (pccApi.SS[6].voyAlimSS10===2) pccApi.SS[6].voyAlimSS10=1;
-                        if (pccApi.SS[6].voyDHTSS10===2) pccApi.SS[6].voyDHTSS10=1;
-                        if (pccApi.SS[6].voyDISS10===2) pccApi.SS[6].voyDISS10=1;
-                        if (pccApi.SS[7].voyAlimSS11===2) pccApi.SS[7].voyAlimSS11=1;
-                        if (pccApi.SS[7].voyDHTSS11===2) pccApi.SS[7].voyDHTSS11=1;
-                        if (pccApi.SS[7].voyDISS11===2) pccApi.SS[7].voyDISS11=1;
-                        if (pccApi.SS[8].voyAlimSS12===2) pccApi.SS[8].voyAlimSS12=1;
-                        if (pccApi.SS[8].voyDHTSS12===2) pccApi.SS[8].voyDHTSS12=1;
-                        if (pccApi.SS[8].voyDISS12===2) pccApi.SS[8].voyDISS12=1;
-                        if (pccApi.SS[9].voyAlimSS13===2) pccApi.SS[9].voyAlimSS13=1;
-                        if (pccApi.SS[9].voyDHTSS13===2) pccApi.SS[9].voyDHTSS13=1;
-                        if (pccApi.SS[9].voyDISS13===2) pccApi.SS[9].voyDISS13=1;
-                        if (pccApi.SS[10].voyAlimSS14===2) pccApi.SS[10].voyAlimSS14=1;
-                        if (pccApi.SS[10].voyDHTSS14===2) pccApi.SS[10].voyDHTSS14=1;
-                        if (pccApi.SS[10].voyDISS14===2) pccApi.SS[10].voyDISS14=1;
-                        if (pccApi.SS[11].voyAlimSS15===2) pccApi.SS[11].voyAlimSS15=1;
-                        if (pccApi.SS[11].voyDHTSS15===2) pccApi.SS[11].voyDHTSS15=1;
-                        if (pccApi.SS[11].voyDISS15===2) pccApi.SS[11].voyDISS15=1;*/
+                        if (pccApi.voyCC===2) pccApi.voyCC=1;
+                        for (let ss of pccApi.SS){
+                            for(let prop of Object.keys(ss)){
+                                if(ss[prop]===2) ss[prop]=1
+                            }
+                        }
                         apiSave();
                         break;
                 }
@@ -385,47 +577,13 @@ wss.on('connection', (ws, req) => {
                             pccApi.comFSLine=false
                             if(pccApi.comAG===false){
                                 pccApi.voyFS=true
-                                for (let sec of pccApi.SEC){
-                                    for(let ctn of sec.cantons){
-                                        for(let veh of ctn.trains){
-                                            if(veh.states.awakeMR===true){
-                                                veh.states.fsOk=true
-                                                veh.states.fuNoFS=false
-                                                veh.states.cmdFu=false
-                                                veh.states.activeFU=false
-                                                veh.states.cmdTraction=true
-                                                veh.states.activeFI=false
-                                            }
-                                        }
-                                    }
-                                }
+                                FSTrains('up','all')
                             }
 
                         } else if(data.state===true){
                             pccApi.comFSLine=true
                             pccApi.voyFS=2
-                            for (let sec of pccApi.SEC){
-                                for(let ctn of sec.cantons){
-                                    for(let veh of ctn.trains){
-                                        if(veh.states.awakeMR===true){
-                                            veh.states.fsOk=2
-                                            veh.states.fuNoFS=2
-                                            veh.states.cmdFu=2
-                                            veh.states.reguTrain=false
-                                            veh.states.activeFU=true
-                                            veh.states.cmdTraction=false
-                                            let checkSpeedInter = setInterval(checkSpeed,100)
-                                            function checkSpeed(){
-                                                if(veh.states.speed===0){
-                                                    clearInterval(checkSpeedInter)
-                                                    veh.states.activeFI=true
-                                                    apiSave()
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            FSTrains('down','all')
                             apiSave();
                         }
                         if((pccApi.comAuth) && !(pccApi.comFSLine)){
@@ -457,7 +615,7 @@ wss.on('connection', (ws, req) => {
                             pccApi.comAuth=false
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=2
-                                for (let sec of pccApi.SEC){
+                                /*for (let sec of pccApi.SEC){
                                     for(let ctn of sec.cantons){
                                         for(let veh of ctn.trains){
                                             if(veh.states.awakeMR===true){
@@ -475,14 +633,15 @@ wss.on('connection', (ws, req) => {
                                             }
                                         }
                                     }
-                                }
+                                }*/
+                                HTTrains('down','all')
                                 apiSave();
                             }
                         } else if(data.state===true){
                             pccApi.comAuth=true
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=true
-                                for (let sec of pccApi.SEC){
+                                /*for (let sec of pccApi.SEC){
                                     for(let ctn of sec.cantons){
                                         for(let veh of ctn.trains){
                                             if(veh.states.awakeMR===true){
@@ -502,7 +661,8 @@ wss.on('connection', (ws, req) => {
                                             }
                                         }
                                     }
-                                }
+                                }*/
+                                HTTrains('up','all')
                                 apiSave();
                             }
                         }
@@ -649,32 +809,28 @@ wss.on('connection', (ws, req) => {
                             }
                             for (let ss of pccApi.SS){
                                 ss.voyAlim=true
-                                
                                 console.log(ss)
                                 console.log(pccApi)
                                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
                                     ss.voyHTAutABS=true
-                                    console.log('ouais 1')
                                 }
                                 if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
-                                    ss.voyHTAut=true
                                     ss.voyHT=true
-                                    console.log('ouais 2')
+                                }
+                                if((pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                                    ss.voyHTAut=true
                                 }
                                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
                                     ss.voyPA=true
-                                    console.log('ouais 3')
                                 }
                             }
                             pccApi.voyCC=false
                             if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(pccApi.SS[0].voyHT===true)&&(pccApi.SS[1].voyHT==true)){
                                 pccApi.voyHT=true
-                                console.log('ouais 4')
                             }
                             
                             if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(pccApi.SS[0].voyPA===true)&&(pccApi.SS[1].voyPA==true)&&(pccApi.comFSLine===false)&&(pccApi.voyALC===true)){
                                 pccApi.voyABS=true
-                                console.log('ouais 5')
                             }
                         }
                         break;
