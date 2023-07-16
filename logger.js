@@ -40,3 +40,11 @@ exports.identify = function (ws, len){
 exports.info = function (text){
     return console.log('\x1b[37m\x1b[44m[INFO]\x1b[0m '+text);
 }
+
+exports.metric = function (text,type){
+    if(type==='alert'){
+        return console.log('\x1b[37m[\x1b[36mMETRICS\x1b[37m]\x1b[0m '+text);
+    } else {
+        return console.log('\x1b[30m\x1b[43m[METRIC ALERT]\x1b[0m \x1b[33m'+text+'\x1b[0m');
+    }
+}

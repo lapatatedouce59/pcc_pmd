@@ -13,7 +13,6 @@ const wss = new WebSocket.Server({ port: 8081 });
     key: fs.readFileSync('/etc/letsencrypt/live/patate.ddns.net/privkey.pem')
 })
 
-
 const wss = new WebSocketServer({server});
 
 server.listen(8081, function listening() {
@@ -37,6 +36,13 @@ wss.addListener('listening',()=>{
 	    embeds: [embed],
     });
 })*/
+
+let startDate = 0
+let endDate = 0
+let paraDate = 0
+
+let msr = false
+
 const {setTimeout} = require('timers/promises')
 
 console.log('[V] WebSocket init on port 8081')
@@ -55,6 +61,25 @@ function apiSave(){
         content: pccApi
     }))
     logger.message('broadcast','NEW SERVER DATA => REFRESH')
+    endDate=Date.now()
+    if(msr===false){
+        msr=true
+        if((endDate-startDate)>5000){
+            logger.metric('Operation took '+(endDate-startDate) +'ms')
+        } else {
+            logger.metric('Operation took '+(endDate-startDate) +'ms','alert')
+        }
+        
+        paraDate=(endDate-startDate)
+        startDate=Date.now()
+    } else {
+        if((endDate-startDate)>5000){
+            logger.metric('Next operation took '+(endDate-startDate) +'ms')
+        } else {
+            logger.metric('Next operation took '+(endDate-startDate) +'ms','alert')
+        }
+        startDate=Date.now()
+    }
     //ws.send();
 }
 
@@ -416,6 +441,8 @@ wss.on('connection', (ws, req) => {
     newUUID = v4();
 
     ws.on('message', msg => {
+        startDate = Date.now()
+        msr=false
         let data = false;
         let op = 0;
         try{
