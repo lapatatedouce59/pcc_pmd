@@ -127,6 +127,26 @@ function HTTrains(type,zone){
     }
     switch(zone){
         case 'SS04':
+            var ss=pccApi.SS[0]
+            if(type==='down'){
+                ss.voyHTAut=2
+                ss.voyHT=2
+                ss.voyPA=2
+                
+            } else if(type==='up') {
+                if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                    ss.voyHTAutABS=true
+                }
+                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                    ss.voyHT=true
+                }
+                if((pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                    ss.voyHTAut=true
+                }
+                if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
+                    ss.voyPA=true
+                }
+            }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
                     if(!(ss04CLIST.includes(ctn.cid))) continue;
@@ -147,6 +167,25 @@ function HTTrains(type,zone){
             }
         break;
         case 'SS05':
+            var ss=pccApi.SS[1]
+            if(type==='down'){
+                ss.voyHTAut=2
+                ss.voyHT=2
+                ss.voyPA=2
+            } else if(type==='up') {
+                if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                    ss.voyHTAutABS=true
+                }
+                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                    ss.voyHT=true
+                }
+                if((pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                    ss.voyHTAut=true
+                }
+                if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
+                    ss.voyPA=true
+                }
+            }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
                     if(!(ss05CLIST.includes(ctn.cid))) continue;
@@ -162,11 +201,38 @@ function HTTrains(type,zone){
             }
         break;
         case 'all':
-            console.log(pccApi)
+            if(type==='down'){
+                let ss=pccApi.SS[0]
+                ss.voyHTAut=2
+                ss.voyHTAutABS=2
+                ss.voyHT=2
+                ss.voyPA=2
+                ss=pccApi.SS[1]
+                ss.voyHTAut=2
+                ss.voyHTAutABS=2
+                ss.voyHT=2
+                ss.voyPA=2
+            } else if(type==='up') {
+                for(let ss of pccApi.SS){
+                    if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                        ss.voyHTAutABS=true
+                    }
+                    if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                        ss.voyHT=true
+                    }
+                    if((pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                        ss.voyHTAut=true
+                    }
+                    if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
+                        ss.voyPA=true
+                    }
+                }
+            }
+            console.log('ABC')
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
                     if(ss04CLIST.includes(ctn.cid)){
-                        if((pccApi.SS[0].comAutHT===false)&&(pccApi.SS[0].voyHTAut===true)&&(pccApi.SS[0].voyRU===true)){
+                        if(/*(pccApi.SS[0].comAutHT===false)&&(pccApi.SS[0].voyHTAut===true)&&(pccApi.SS[0].voyRU===true)*/true){
                             if(type === 'down'){
                                 for(let veh of ctn.trains){
                                     executeDwn(veh)
@@ -180,7 +246,7 @@ function HTTrains(type,zone){
                         }
                     } else
                     if(ss05CLIST.includes(ctn.cid)){
-                        if((pccApi.SS[1].comAutHT===false)&&(pccApi.SS[1].voyHTAut===true)&&(pccApi.SS[1].voyRU===true)){
+                        if(/*(pccApi.SS[1].comAutHT===false)&&(pccApi.SS[1].voyHTAut===true)&&(pccApi.SS[1].voyRU===true)*/true){
                             if(type === 'down'){
                                 for(let veh of ctn.trains){
                                     executeDwn(veh)
@@ -230,6 +296,18 @@ function FSTrains(type,zone){
     }
     switch(zone){
         case 'SS04':
+            var ss=pccApi.SS[0]
+            if(type==='down'){
+                ss.voyFS=2
+                ss.voyPA=2
+            } else if(type==='up') {
+                if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
+                    ss.voyFS=true
+                }
+                if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
+                    ss.voyPA=true
+                }
+            }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
                     if(!(ss04CLIST.includes(ctn.cid))) continue;
@@ -250,6 +328,18 @@ function FSTrains(type,zone){
             }
         break;
         case 'SS05':
+            var ss=pccApi.SS[1]
+            if(type==='down'){
+                ss.voyFS=2
+                ss.voyPA=2
+            } else if(type==='up') {
+                if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
+                    ss.voyFS=true
+                }
+                if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
+                    ss.voyPA=true
+                }
+            }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
                     if(!(ss05CLIST.includes(ctn.cid))) continue;
@@ -265,10 +355,28 @@ function FSTrains(type,zone){
             }
         break;
         case 'all':
+            if(type==='down'){
+                let ss=pccApi.SS[0]
+                ss.voyFS=2
+                ss.voyPA=2
+                ss=pccApi.SS[1]
+                ss.voyFS=2
+                ss.voyPA=2
+            } else if(type==='up') {
+                for(let ss of pccApi.SS){
+                    if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
+                        ss.voyFS=true
+                    }
+                    if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
+                        ss.voyPA=true
+                    }
+                }
+            }
+            console.log('ABC')
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
                     if(ss04CLIST.includes(ctn.cid)){
-                        if((pccApi.SS[0].comCoupFS===false)&&(pccApi.SS[0].voyRU===true)){
+                        if(/*(pccApi.SS[0].comCoupFS===false)&&(pccApi.SS[0].voyRU===true)*/true){
                             if(type === 'down'){
                                 for(let veh of ctn.trains){
                                     executeDwn(veh)
@@ -282,7 +390,7 @@ function FSTrains(type,zone){
                         }
                     } else
                     if(ss05CLIST.includes(ctn.cid)){
-                        if((pccApi.SS[1].comCoupFS===false)&&(pccApi.SS[0].voyRU===true)){
+                        if(/*(pccApi.SS[1].comCoupFS===false)&&(pccApi.SS[0].voyRU===true)*/true){
                             if(type === 'down'){
                                 for(let veh of ctn.trains){
                                     executeDwn(veh)
@@ -419,7 +527,9 @@ wss.on('connection', (ws, req) => {
                         pccApi.voyFS=2
                         pccApi.voyHTGAT=2
                         pccApi.voyFSGAT=2
-                        for (let sec of pccApi.SEC){
+                        HTTrains('down','all')
+                        FSTrains('down','all')
+                        /*for (let sec of pccApi.SEC){
                             for(let ctn of sec.cantons){
                                 for(let veh of ctn.trains){
                                     if(veh.states.awakeMR===true){
@@ -450,10 +560,11 @@ wss.on('connection', (ws, req) => {
                                     }
                                 }
                             }
-                        }
+                        }*/
                         apiSave();
                         break;
                     case 'AGreset':
+                        if(!(pccApi.comAG===true)) break;
                         pccApi.comAG=false
                         console.log(pccApi.comAG)
                         if((pccApi.comAuth) && !(pccApi.comFSLine)){
@@ -473,6 +584,28 @@ wss.on('connection', (ws, req) => {
                         }
                         if(pccApi.comAuthGAT){
                             pccApi.voyHTGAT=true
+                        }
+                        for(let ss of pccApi.SS){
+                            if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
+                                ss.voyFS=true
+                            }
+                            if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
+                                ss.voyPA=true
+                            }
+                        }
+                        for(let ss of pccApi.SS){
+                            if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                                ss.voyHTAutABS=true
+                            }
+                            if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                                ss.voyHT=true
+                            }
+                            if((pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                                ss.voyHTAut=true
+                            }
+                            if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
+                                ss.voyPA=true
+                            }
                         }
                         for (let sec of pccApi.SEC){
                             for(let ctn of sec.cantons){
@@ -615,25 +748,6 @@ wss.on('connection', (ws, req) => {
                             pccApi.comAuth=false
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=2
-                                /*for (let sec of pccApi.SEC){
-                                    for(let ctn of sec.cantons){
-                                        for(let veh of ctn.trains){
-                                            if(veh.states.awakeMR===true){
-                                                veh.states.abs750=2
-                                                veh.states.btDelest=2
-                                                veh.states.trainBattery=2
-                                                veh.states.activeOnduls=false
-                                                veh.states.avarieOnduls=2
-                                                veh.states.trainLights=false
-                                                veh.states.trainHeating=false
-                                                veh.states.trainComp=false
-                                                veh.states.defTech=2
-                                                veh.states.defCvs=2
-                                                veh.states.cmdTraction=false
-                                            }
-                                        }
-                                    }
-                                }*/
                                 HTTrains('down','all')
                                 apiSave();
                             }
@@ -641,27 +755,6 @@ wss.on('connection', (ws, req) => {
                             pccApi.comAuth=true
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=true
-                                /*for (let sec of pccApi.SEC){
-                                    for(let ctn of sec.cantons){
-                                        for(let veh of ctn.trains){
-                                            if(veh.states.awakeMR===true){
-                                                veh.states.abs750=false
-                                                veh.states.btDelest=false
-                                                veh.states.trainBattery=false
-                                                veh.states.activeOnduls=true
-                                                veh.states.avarieOnduls=false
-                                                veh.states.trainLights=true
-                                                veh.states.trainHeating=true
-                                                veh.states.trainComp=true
-                                                veh.states.defTech=false
-                                                veh.states.defCvs=false
-                                                if(pccApi.voyFS===true){
-                                                    veh.states.cmdTraction=true
-                                                }
-                                            }
-                                        }
-                                    }
-                                }*/
                                 HTTrains('up','all')
                                 apiSave();
                             }
@@ -747,18 +840,6 @@ wss.on('connection', (ws, req) => {
                     case 'ARMPR-COM':
                         if(data.state===false){
                             pccApi.comArmPR=false
-                            /*pccApi.SS[0].voyDHTSS04=2;
-                            pccApi.SS[1].voyDHTSS05=2;
-                            pccApi.SS[2].voyDHTSS06=2;
-                            pccApi.SS[3].voyDHTSS07=2;
-                            pccApi.SS[4].voyDHTSS08=2;
-                            pccApi.SS[5].voyDHTSS09=2;
-                            pccApi.SS[6].voyDHTSS10=2;
-                            pccApi.SS[7].voyDHTSS11=2;
-                            pccApi.SS[8].voyDHTSS12=2;
-                            pccApi.SS[9].voyDHTSS13=2;
-                            pccApi.SS[10].voyDHTSS14=2;
-                            pccApi.SS[11].voyDHTSS15=2;*/
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
                                     if(!(ctns.hasOwnProperty('type'))) continue;
@@ -784,18 +865,6 @@ wss.on('connection', (ws, req) => {
                             pccApi.voyCC=2
                         } else if(data.state===true){
                             pccApi.comArmPR=true
-                            /*pccApi.SS[0].voyDHTSS04=true;
-                            pccApi.SS[1].voyDHTSS05=true;
-                            pccApi.SS[2].voyDHTSS06=true;
-                            pccApi.SS[3].voyDHTSS07=true;
-                            pccApi.SS[4].voyDHTSS08=true;
-                            pccApi.SS[5].voyDHTSS09=true;
-                            pccApi.SS[6].voyDHTSS10=true;
-                            pccApi.SS[7].voyDHTSS11=true;
-                            pccApi.SS[8].voyDHTSS12=true;
-                            pccApi.SS[9].voyDHTSS13=true;
-                            pccApi.SS[10].voyDHTSS14=true;
-                            pccApi.SS[11].voyDHTSS15=true;*/
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
                                     if(!(ctns.hasOwnProperty('type'))) continue;
@@ -832,6 +901,42 @@ wss.on('connection', (ws, req) => {
                             if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(pccApi.SS[0].voyPA===true)&&(pccApi.SS[1].voyPA==true)&&(pccApi.comFSLine===false)&&(pccApi.voyALC===true)){
                                 pccApi.voyABS=true
                             }
+                        }
+                        break;
+                    case 'AUTHTSS04-COM':
+                        if(data.state===false){
+                            pccApi.SS[0].comAutHT=false
+                            HTTrains('up','SS04')
+                        } else if(data.state===true){
+                            pccApi.SS[0].comAutHT=true
+                            HTTrains('down','SS04')
+                        }
+                        break;
+                    case 'AUTHTSS05-COM':
+                        if(data.state===false){
+                            pccApi.SS[1].comAutHT=false
+                            HTTrains('up','SS05')
+                        } else if(data.state===true){
+                            pccApi.SS[1].comAutHT=true
+                            HTTrains('down','SS05')
+                        }
+                        break;
+                    case 'COUPFSSS04-COM':
+                        if(data.state===false){
+                            pccApi.SS[0].comCoupFS=false
+                            FSTrains('up','SS04')
+                        } else if(data.state===true){
+                            pccApi.SS[0].comCoupFS=true
+                            FSTrains('down','SS04')
+                        }
+                        break;
+                    case 'COUPFSSS05-COM':
+                        if(data.state===false){
+                            pccApi.SS[1].comCoupFS=false
+                            FSTrains('up','SS05')
+                        } else if(data.state===true){
+                            pccApi.SS[1].comCoupFS=true
+                            FSTrains('down','SS05')
                         }
                         break;
                 }

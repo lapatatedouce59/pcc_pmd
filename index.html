@@ -268,12 +268,14 @@
     </div>
     <fieldset>
         <legend>Vue rapide des anomalies</legend>
-        <div id="listDef">
+        <div id="listDef" style="height: 200px; overflow-y:auto;">
 
         </div>
     </fieldset>
     <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
-    <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex;">
+    <div class="pltp" style="background-color: #DCDCDC; width: fit-content;">
+    <div style="height: fit-content;">
+    <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex; height: 654px;">
         <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
             <legend>GÉNÉRAL</legend>
             <table id="partieGenerale" style="text-align: center;">
@@ -348,35 +350,7 @@
                 </tr>
             </table>
         </fieldset>
-    </div><br>
-    <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex;">
-        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
-            <legend>PR</legend>
-            <input type="checkbox" id="comArmPR" class="com">
-            <label for="comArmPR" id="lcomArmPR" class="comLabel"></label><br>
-            <span>Armt. PR</span>
-        </fieldset>
-        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px; justify-content: center; flex-direction: column;display: inline-flex;">
-            <legend>DEF</legend>
-            <div>
-                <span id="voyCC" class="voy">CC</span>
-                <span id="voyPAL" class="voy">PAL</span>
-                <span id="voyAQU" class="voy">AQU</span>
-            </div>
-        </fieldset>
-        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
-            <legend>UCA</legend>
-            <input type="checkbox" id="comInhibUCA" class="com">
-            <label for="comInhibUCA" id="lcomInhibUCA" class="comLabel"></label><br>
-            <span>Inhib. UCA</span>
-        </fieldset>
-        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
-            <legend>SECU</legend>
-            <input type="checkbox" id="comIDPOTPAS" class="com">
-            <label for="comIDPOTPAS" id="lcomIDPOTPAS" class="comLabel"></label><br>
-            <span>IDPO/DSO tout PAS</span>
-        </fieldset>
-    </div><br>
+    </div>
     <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex;">
         <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
             <legend>SS</legend>
@@ -600,6 +574,36 @@
                 </tr>
             </table>
         </fieldset>
+    </div>
+    </div><br>
+    <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex; position: relative;">
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <legend>PR</legend>
+            <input type="checkbox" id="comArmPR" class="com">
+            <label for="comArmPR" id="lcomArmPR" class="comLabel"></label><br>
+            <span>Armt. PR</span>
+        </fieldset>
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px; justify-content: center; flex-direction: column;display: inline-flex;">
+            <legend>DEF</legend>
+            <div>
+                <span id="voyCC" class="voy">CC</span>
+                <span id="voyPAL" class="voy">PAL</span>
+                <span id="voyAQU" class="voy">AQU</span>
+            </div>
+        </fieldset>
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <legend>UCA</legend>
+            <input type="checkbox" id="comInhibUCA" class="com">
+            <label for="comInhibUCA" id="lcomInhibUCA" class="comLabel"></label><br>
+            <span>Inhib. UCA</span>
+        </fieldset>
+        <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
+            <legend>SECU</legend>
+            <input type="checkbox" id="comIDPOTPAS" class="com">
+            <label for="comIDPOTPAS" id="lcomIDPOTPAS" class="comLabel"></label><br>
+            <span>IDPO/DSO tout PAS</span>
+        </fieldset>
+    </div>
     </div>
     <br><span><button id="btnACQU">ACQUITTER</button></span>
     <br>

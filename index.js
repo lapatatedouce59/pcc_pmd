@@ -22,6 +22,11 @@ let comArmPR = document.getElementById('comArmPR')
 let comInhibUCA = document.getElementById('comInhibUCA')
 let comIDPOTPAS = document.getElementById('comIDPOTPAS')
 
+let comAutHTSS04 = document.getElementById('comAutHTSS04')
+let comAutHTSS05 = document.getElementById('comAutHTSS05')
+let comCoupFSSS04 = document.getElementById('comCoupFSSS04')
+let comCoupFSSS05 = document.getElementById('comCoupFSSS05')
+
 let trainAffect = document.getElementById('trainAffect')
 let btnForward = document.getElementById('forward')
 let btnDownward = document.getElementById('downward')
@@ -608,7 +613,14 @@ async function isWsRunning(){
                     let elemid = com.id
                     let elem = document.getElementById(elemid)
                     console.log("Commutateur " + com.id + " est " + data[elemid])
-                    com.checked = data[elemid]
+                    
+                    if(data[elemid]){
+                        com.checked = data[elemid]
+                    } else if(data.SS[0][elemid]) {
+                        for(let ss of data.SS){
+                            com.checked=ss[elemid]
+                        }
+                    }
                 }
                 //if(alreadyBeep===false){
                 if (blinkIntervalId.size >= 1) {
@@ -843,6 +855,59 @@ comArmPR.addEventListener("input", () => {
         window.actualRequest = actualRequest
     }
 })
+
+
+
+comAutHTSS04.addEventListener('input', ()=>{
+    actualRequest = JSON.stringify({
+        op: 202,
+        execute: "AUTHTSS04-COM",
+        state: comAutHTSS04.checked,
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+comAutHTSS05.addEventListener('input', ()=>{
+    actualRequest = JSON.stringify({
+        op: 202,
+        execute: "AUTHTSS05-COM",
+        state: comAutHTSS05.checked,
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+comCoupFSSS04.addEventListener('input', ()=>{
+    actualRequest = JSON.stringify({
+        op: 202,
+        execute: "COUPFSSS04-COM",
+        state: comCoupFSSS04.checked,
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+comCoupFSSS05.addEventListener('input', ()=>{
+    actualRequest = JSON.stringify({
+        op: 202,
+        execute: "COUPFSSS05-COM",
+        state: comCoupFSSS05.checked,
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+
+
+
+
+
+
+
+
 
 
 
