@@ -13,6 +13,10 @@
   "voyGAT": true,
   "voyABS": true,
   "comArmPR": true,
+  "ss": {
+    "ss04": true,
+    "ss05": true
+  },
   "SS": [
     {
       "name": "SS04",
@@ -48,75 +52,14 @@
   "PR": [
     {
       "name": "MSTO",
-      "AlimMSTO": true,
       "DHTMSTO": true,
-      "DIMSTO": false
+      "DJVSS04MSTO": true,
+      "DJVSS05MSTO": true
     },
     {
       "name": "GLARNER",
-      "AlimGLARNER": true,
       "DHTGLARNER": true,
-      "DIGLARNER": false
-    },
-    {
-      "name": "PT-CL",
-      "AlimPT-CL": true,
-      "DHTPT-CL": true,
-      "DIPT-CL": false
-    },
-    {
-      "name": "PT-CAR",
-      "AlimPT-CAR": true,
-      "DHTPT-CAR": true,
-      "DIPT-CAR": false
-    },
-    {
-      "name": "LABORDE",
-      "AlimLABORDE": true,
-      "DHTLABORDE": true,
-      "DILABORDE": false
-    },
-    {
-      "name": "OPERA",
-      "AlimOPERA": true,
-      "DHTOPERA": true,
-      "DIOPERA": false
-    },
-    {
-      "name": "CHA",
-      "AlimCHA": true,
-      "DHTCHA": true,
-      "DICHA": false
-    },
-    {
-      "name": "BASTILLE",
-      "AlimBASTILLE": true,
-      "DHTBASTILLE": true,
-      "DIBASTILLE": false
-    },
-    {
-      "name": "GDL",
-      "AlimGDL": true,
-      "DHTGDL": true,
-      "DIGDL": false
-    },
-    {
-      "name": "DIJON",
-      "AlimDIJON": true,
-      "DHTDIJON": true,
-      "DIDIJON": false
-    },
-    {
-      "name": "T.MESS",
-      "AlimT.MESS": true,
-      "DHTT.MESS": true,
-      "DIT.MESS": false
-    },
-    {
-      "name": "OLY",
-      "AlimOLY": true,
-      "DHTOLY": true,
-      "DIOLY": false
+      "DJVSS05GLANER": true
     }
   ],
   "comFSLine": false,
@@ -127,10 +70,31 @@
   "comAuth": true,
   "comAuthGAT": true,
   "comHT": true,
+  "ru": {
+    "101": true,
+    "102": true,
+    "201": true,
+    "202": true,
+    "301": true,
+    "302": true,
+    "401": true,
+    "402": true,
+    "501": true
+  },
+  "ectns": {
+    "101": true,
+    "102": true,
+    "201": true,
+    "202": true,
+    "301": true,
+    "302": true,
+    "401": true,
+    "402": true,
+    "501": true
+  },
   "SEC": [
     {
       "id": "1",
-      "states": {},
       "cantons": [
         {
           "cid": "c1101",
@@ -534,7 +498,7 @@
                 "defKIBS": false,
                 "tractionS1": false,
                 "tractionS2": false,
-                "cmdTraction": false,
+                "cmdTraction": true,
                 "activeOnduls": true,
                 "avarieOnduls": false,
                 "patEnr": false,

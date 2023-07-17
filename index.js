@@ -202,6 +202,52 @@ S2.addEventListener('load', () => {
     getCantonsInfoS2()
 })
 
+let elecInfo = false
+let ELEC = document.getElementById('elecSvg')
+ELEC.addEventListener('load', () => {
+    let elecSvgDoc = ELEC.contentDocument;
+    elecInfo = {
+        ctns: {
+            '101':[elecSvgDoc.getElementById('ce101a'),elecSvgDoc.getElementById('ce101b')],
+            '201':[elecSvgDoc.getElementById('ce201a'),elecSvgDoc.getElementById('ce201b')],
+            '301':[elecSvgDoc.getElementById('ce301a'),elecSvgDoc.getElementById('ce301b')],
+            '401':[elecSvgDoc.getElementById('ce401a'),elecSvgDoc.getElementById('ce401b')],
+            '501':[elecSvgDoc.getElementById('ce501a'),elecSvgDoc.getElementById('ce501b')],
+            '102':[elecSvgDoc.getElementById('ce102a'),elecSvgDoc.getElementById('ce102b')],
+            '202':[elecSvgDoc.getElementById('ce202a'),elecSvgDoc.getElementById('ce202b')],
+            '302':[elecSvgDoc.getElementById('ce302a'),elecSvgDoc.getElementById('ce302b')],
+            '402':[elecSvgDoc.getElementById('ce402a'),elecSvgDoc.getElementById('ce402b')]
+        },
+        ru: {
+            '101': elecSvgDoc.getElementById('r101'),
+            '201': elecSvgDoc.getElementById('r201'),
+            '301': elecSvgDoc.getElementById('r301'),
+            '401': elecSvgDoc.getElementById('r401'),
+            '501': elecSvgDoc.getElementById('r501'),
+            '102': elecSvgDoc.getElementById('r102'),
+            '202': elecSvgDoc.getElementById('r202'),
+            '302': elecSvgDoc.getElementById('r302'),
+            '402': elecSvgDoc.getElementById('r402')
+        },
+        ss: {
+            'ss04': [elecSvgDoc.getElementById('ss04'), elecSvgDoc.getElementById('ss04a'),elecSvgDoc.getElementById('ss04b'), elecSvgDoc.getElementById('ss04c'), elecSvgDoc.getElementById('ss04d'), elecSvgDoc.getElementById('ss04e')],
+            'ss05': [elecSvgDoc.getElementById('ss05'), elecSvgDoc.getElementById('ss05a'),elecSvgDoc.getElementById('ss05b'), elecSvgDoc.getElementById('ss05c'), elecSvgDoc.getElementById('ss05d')]
+        },
+        pr: {
+            'MSTO': {
+                "DHTMSTO": elecSvgDoc.getElementById('dhtMSTO'),
+                "DJVSS04MSTO": elecSvgDoc.getElementById('dvMSTOSS04'),
+                "DJVSS05MSTO": elecSvgDoc.getElementById('dvMSTOSS05')
+            },
+            'GLARNER':{
+                "DHTGLARNER": elecSvgDoc.getElementById('dhtGLA'),
+                "DJVSS05GLANER": elecSvgDoc.getElementById('dvGLASS05')
+            }
+        }
+    }
+    loadElectricalInfos()
+})
+
 
 sm.registerSound("bip", './src/pltp/snds/bip.mp3');
 sm.registerSound("join", './src/global/join.mp3');
@@ -505,12 +551,7 @@ async function isWsRunning(){
                     for(let ss of data.SS){
                         let name = ss.name //expected: SS04 ou SS05
                         for(let prop of Object.keys(ss)){
-                            console.log((prop+name)+' et '+elemid)
                             if(!(elemid===(prop+name))) continue;//si voyHTSS04 === voyHT + SS04
-                            console.log(ss)
-
-                            console.log(elemid)
-                            console.log(ss[prop])
                             if (ss[prop] === false) {
                                 console.log("Voyant " + elemid + " est faux")
                                 let elem = document.getElementById(elemid)
@@ -635,8 +676,9 @@ async function isWsRunning(){
                     sm.stopSound('bip')
                 }
                 //}
-                getCantonsInfo();
+                getCantonsInfo()
                 getCantonsInfoS2()
+                loadElectricalInfos()
             }
         })
     //})
@@ -956,19 +998,7 @@ btnDownward.addEventListener('click', () => {
 
 btnExp.addEventListener('click', () => {
     console.log('EXP')
-    /*console.log(_GLIST_[1])
-    console.log(canton_train.get('1'))
-    console.log(canton_train)*/
-    //console.log(JSON.parse(getCantonsInfo()))
-    console.log(_GLIST_[2].length)
-    console.log(_GLIST_[6].length)
-    for (let _CANTON_ in _GLIST_) {
-        if (typeof _GLIST_[_CANTON_].length === 'undefined') {
-            console.log((_CANTON_) + ' est un canton simple')
-        } else {
-            console.log(_CANTON_ + ' est une aiguille')
-        }
-    }
+    loadElectricalInfos()
 })
 
 btnSend.addEventListener('click', () => {
@@ -1579,6 +1609,71 @@ function getCantonsInfoS2() {
         }
     }
     return JSON.stringify(fresponse)
+}
+
+function loadElectricalInfos(){
+    console.log('LOADING ELECTRICAL CANTONS')
+    for(let ectns of Object.entries(elecInfo.ctns)){
+        let ctnsStatus = data.ectns[ectns[0]]
+        console.log(ctnsStatus)
+        switch(ctnsStatus){
+            case true:
+                for(let sectns of ectns[1]){
+                    sectns.style.stroke = '#FFDF35';
+                }
+            break;
+            case false:
+                for(let sectns of ectns[1]){
+                    sectns.style.stroke = '#FF5734';
+                }
+            break;
+        }
+    }
+    console.log('LOADING RUPTORS')
+    for(let ru of Object.entries(elecInfo.ru)){
+        let ruStatus = data.ru[ru[0]]
+        console.log(ruStatus)
+        switch(ruStatus){
+            case true:
+                ru[1].style.stroke = '#FFDF35';
+            break;
+            case false:
+                ru[1].style.stroke = '#FF5734';
+            break;
+        }
+    }
+    console.log('LOADING SS')
+    for(let ss of Object.entries(elecInfo.ss)){
+        let ssStatus = data.ss[ss[0]]
+        switch(ssStatus){
+            case true:
+                for(let ssBits of ss[1]){
+                    ssBits.style.stroke = '#FFDF35';
+                }
+            break;
+            case false:
+                for(let ssBits of ss[1]){
+                    ssBits.style.stroke = '#FF5734';
+                }
+            break;
+        }
+    }
+    console.log('LOADING PR')
+    let index = 0
+    for(let pr of Object.entries(elecInfo.pr)){
+        for(let prProps of Object.entries(pr[1])){
+            let propStatus=data.PR[index][prProps[0]]
+            switch(propStatus){
+                case true:
+                    prProps[1].style.stroke = '#FFDF35';
+                break;
+                case false:
+                    prProps[1].style.stroke = '#FF5734';
+                break;
+            }
+        }
+        index++
+    }
 }
 
 function verifyExistingTrain(id) {
