@@ -103,7 +103,9 @@ function isClientExisting(uuid){
 }
 //PREFAB FUNCTIONS
 let ss04CLIST = ['c1101','c1201','c1301','c1401','c1501','c2101','c2201','c2301','c2401','c2501']
+let ss04CELIST = ['101','201','301','401','501']
 let ss05CLIST = ['c1102','c1202','c1302','c1402','c2102','c2202','c2302','c2402']
+let ss05CELIST = ['102','202','302','402']
 function HTTrains(type,zone){
     function executeDwn(veh){
         if(veh.states.awakeMR===true){
@@ -157,7 +159,12 @@ function HTTrains(type,zone){
                 ss.voyHTAut=2
                 ss.voyHT=2
                 ss.voyPA=2
-                
+                pccApi.ss.ss04=false
+                for(let ectns of Object.entries(pccApi.ectns)){
+                    if(!(ss04CELIST.includes(ectns[0]))) continue;
+                    pccApi.ectns[ectns[0]]=false
+                }
+                pccApi.PR[0].DJVSS04MSTO=false
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
                     ss.voyHTAutABS=true
@@ -183,7 +190,9 @@ function HTTrains(type,zone){
                         }
                         if(type === 'up'){
                             for(let veh of ctn.trains){
-                                executeUp(veh)
+                                if((pccApi.SS[0].comAutHT===false)&&(pccApi.SS[0].voyHTAut===true)&&(pccApi.SS[0].voyRU===true)&&(pccApi.comAG===false)&&(pccApi.comArmPR===true)&&(pccApi.comAuth===true)){
+                                    executeUp(veh)
+                                }
                             }
                         }
                     }
@@ -197,6 +206,13 @@ function HTTrains(type,zone){
                 ss.voyHTAut=2
                 ss.voyHT=2
                 ss.voyPA=2
+                pccApi.ss.ss05=false
+                for(let ectns of Object.entries(pccApi.ectns)){
+                    if(!(ss05CELIST.includes(ectns[0]))) continue;
+                    pccApi.ectns[ectns[0]]=false
+                }
+                pccApi.PR[0].DJVSS05MSTO=false
+                pccApi.PR[1].DJVSS05GLANER=false
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
                     ss.voyHTAutABS=true
@@ -219,7 +235,9 @@ function HTTrains(type,zone){
                             executeDwn(veh)
                         }
                         if(type === 'up'){
-                            executeUp(veh)
+                            if((pccApi.SS[1].comAutHT===false)&&(pccApi.SS[1].voyHTAut===true)&&(pccApi.SS[1].voyRU===true)&&(pccApi.comAG===false)&&(pccApi.comArmPR===true)&&(pccApi.comAuth===true)){
+                                executeUp(veh)
+                            }
                         }
                     }
                 }
@@ -237,6 +255,14 @@ function HTTrains(type,zone){
                 ss.voyHTAutABS=2
                 ss.voyHT=2
                 ss.voyPA=2
+                pccApi.ss.ss04=false
+                pccApi.ss.ss05=false
+                for(let ectns of Object.entries(pccApi.ectns)){
+                    pccApi.ectns[ectns[0]]=false
+                }
+                pccApi.PR[0].DJVSS04MSTO=false
+                pccApi.PR[0].DJVSS05MSTO=false
+                pccApi.PR[1].DJVSS05GLANER=false
             } else if(type==='up') {
                 for(let ss of pccApi.SS){
                     if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
@@ -264,8 +290,10 @@ function HTTrains(type,zone){
                                 }
                             }
                             if(type === 'up'){
-                                for(let veh of ctn.trains){
-                                    executeUp(veh)
+                                if((pccApi.SS[0].comAutHT===false)&&(pccApi.SS[0].voyHTAut===true)&&(pccApi.SS[0].voyRU===true)&&(pccApi.comAG===false)&&(pccApi.comArmPR===true)&&(pccApi.comAuth===true)){
+                                    for(let veh of ctn.trains){
+                                        executeUp(veh)
+                                    }
                                 }
                             }
                         }
@@ -278,8 +306,10 @@ function HTTrains(type,zone){
                                 }
                             }
                             if(type === 'up'){
-                                for(let veh of ctn.trains){
-                                    executeUp(veh)
+                                if((pccApi.SS[1].comAutHT===false)&&(pccApi.SS[1].voyHTAut===true)&&(pccApi.SS[1].voyRU===true)&&(pccApi.comAG===false)&&(pccApi.comArmPR===true)&&(pccApi.comAuth===true)){
+                                    for(let veh of ctn.trains){
+                                        executeUp(veh)
+                                    }
                                 }
                             }
                         }
@@ -634,6 +664,27 @@ wss.on('connection', (ws, req) => {
                                 ss.voyPA=true
                             }
                         }
+                        let ss = pccApi.SS[0]
+                                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(pccApi.comArmPR===true)){
+                                    pccApi.ss.ss04=true
+                                    for(let ectns of Object.entries(pccApi.ectns)){
+                                        if(pccApi.ru[ectns[0]]===true){
+                                            pccApi.ectns[ectns[0]]=true
+                                        }
+                                    }
+                                    pccApi.PR[0].DJVSS04MSTO=true
+                                }
+                                ss = pccApi.SS[1]
+                                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(pccApi.comArmPR===true)){
+                                    pccApi.ss.ss05=true
+                                    for(let ectns of Object.entries(pccApi.ectns)){
+                                        if(pccApi.ru[ectns[0]]===true){
+                                            pccApi.ectns[ectns[0]]=true
+                                        }
+                                    }
+                                    pccApi.PR[0].DJVSS05MSTO=true
+                                    pccApi.PR[1].DJVSS05GLANER=true
+                                }
                         for (let sec of pccApi.SEC){
                             for(let ctn of sec.cantons){
                                 for(let veh of ctn.trains){
@@ -783,6 +834,29 @@ wss.on('connection', (ws, req) => {
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=true
                                 HTTrains('up','all')
+                                let ss = pccApi.SS[0]
+                                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(pccApi.comArmPR===true)){
+                                    pccApi.ss.ss04=true
+                                    for(let ectns of Object.entries(pccApi.ectns)){
+                                        if(!(ss04CELIST.includes(ectns[0]))) continue;
+                                        if(pccApi.ru[ectns[0]]===true){
+                                            pccApi.ectns[ectns[0]]=true
+                                        }
+                                    }
+                                    pccApi.PR[0].DJVSS04MSTO=true
+                                }
+                                ss = pccApi.SS[1]
+                                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(pccApi.comArmPR===true)){
+                                    pccApi.ss.ss05=true
+                                    for(let ectns of Object.entries(pccApi.ectns)){
+                                        if(!(ss05CELIST.includes(ectns[0]))) continue;
+                                        if(pccApi.ru[ectns[0]]===true){
+                                            pccApi.ectns[ectns[0]]=true
+                                        }
+                                    }
+                                    pccApi.PR[0].DJVSS05MSTO=true
+                                    pccApi.PR[1].DJVSS05GLANER=true
+                                }
                                 apiSave();
                             }
                         }
@@ -866,6 +940,8 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'ARMPR-COM':
                         if(data.state===false){
+                            pccApi.PR[0].DHTMSTO=false
+                            pccApi.PR[1].DHTGLARNER=false
                             pccApi.comArmPR=false
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
@@ -890,8 +966,11 @@ wss.on('connection', (ws, req) => {
                             pccApi.voyABS=2
                             pccApi.voyHT=2
                             pccApi.voyCC=2
+                            HTTrains('down','all')
                         } else if(data.state===true){
                             pccApi.comArmPR=true
+                            pccApi.PR[0].DHTMSTO=true
+                            pccApi.PR[1].DHTGLARNER=true
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
                                     if(!(ctns.hasOwnProperty('type'))) continue;
@@ -903,6 +982,29 @@ wss.on('connection', (ws, req) => {
                                     }
                                 }
                             }
+                            let ss = pccApi.SS[0]
+                                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                                    pccApi.ss.ss04=true
+                                    for(let ectns of Object.entries(pccApi.ectns)){
+                                        if(!(ss04CELIST.includes(ectns[0]))) continue;
+                                        if(pccApi.ru[ectns[0]]===true){
+                                            pccApi.ectns[ectns[0]]=true
+                                        }
+                                    }
+                                    pccApi.PR[0].DJVSS04MSTO=true
+                                }
+                                ss = pccApi.SS[1]
+                                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
+                                    pccApi.ss.ss05=true
+                                    for(let ectns of Object.entries(pccApi.ectns)){
+                                        if(!(ss05CELIST.includes(ectns[0]))) continue;
+                                        if(pccApi.ru[ectns[0]]===true){
+                                            pccApi.ectns[ectns[0]]=true
+                                        }
+                                    }
+                                    pccApi.PR[0].DJVSS05MSTO=true
+                                    pccApi.PR[1].DJVSS05GLANER=true
+                                }
                             for (let ss of pccApi.SS){
                                 ss.voyAlim=true
                                 console.log(ss)
@@ -928,12 +1030,24 @@ wss.on('connection', (ws, req) => {
                             if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(pccApi.SS[0].voyPA===true)&&(pccApi.SS[1].voyPA==true)&&(pccApi.comFSLine===false)&&(pccApi.voyALC===true)){
                                 pccApi.voyABS=true
                             }
+                            HTTrains('up','all')
                         }
                         break;
                     case 'AUTHTSS04-COM':
                         if(data.state===false){
                             pccApi.SS[0].comAutHT=false
                             HTTrains('up','SS04')
+                            let ss = pccApi.SS[0]
+                                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(pccApi.comArmPR===true)){
+                                    pccApi.ss.ss04=true
+                                    for(let ectns of Object.entries(pccApi.ectns)){
+                                        if(!(ss04CELIST.includes(ectns[0]))) continue;
+                                        if(pccApi.ru[ectns[0]]===true){
+                                            pccApi.ectns[ectns[0]]=true
+                                        }
+                                    }
+                                    pccApi.PR[0].DJVSS04MSTO=true
+                                }
                         } else if(data.state===true){
                             pccApi.SS[0].comAutHT=true
                             HTTrains('down','SS04')
@@ -943,6 +1057,18 @@ wss.on('connection', (ws, req) => {
                         if(data.state===false){
                             pccApi.SS[1].comAutHT=false
                             HTTrains('up','SS05')
+                                let ss = pccApi.SS[1]
+                                if((pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(pccApi.comArmPR===true)){
+                                    pccApi.ss.ss05=true
+                                    for(let ectns of Object.entries(pccApi.ectns)){
+                                        if(!(ss05CELIST.includes(ectns[0]))) continue;
+                                        if(pccApi.ru[ectns[0]]===true){
+                                            pccApi.ectns[ectns[0]]=true
+                                        }
+                                    }
+                                    pccApi.PR[0].DJVSS05MSTO=true
+                                    pccApi.PR[1].DJVSS05GLANER=true
+                                }
                         } else if(data.state===true){
                             pccApi.SS[1].comAutHT=true
                             HTTrains('down','SS05')
