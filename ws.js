@@ -3,6 +3,7 @@ const logger = require('./logger')
 const ogia = require('./OGIA')
 const gsa = require('./GSA')
 const fs = require('fs')
+const fetch = require("node-fetch");
 const https = require('https')
 console.log('[V] Library init logger and fs')
 console.log('[@] WebSocket init')
