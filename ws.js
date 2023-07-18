@@ -47,9 +47,7 @@ logUpdate('├ Defining socket...')
 const wss = new WebSocketServer({server});
 
 logUpdate('├ Starting server listening...')
-server.listen(8081, function listening() {
-    console.log('Address: ', wss.address());
-});
+server.listen(8081)
 
 logUpdate('├ Creating webhook...')
 const webhookToken = process.env.DISCORD_TOKEN
@@ -65,10 +63,13 @@ wss.addListener('listening',()=>{
 	    content: '',
 	    embeds: [embed],
     });
+    process.stdout.moveCursor(0, -1)
+    process.stdout.clearLine(1)
     logUpdate('\x1b[42m\x1b[37m├ CHARGÉ\x1b[0m')
+    console.log('\x1b[44m\x1b[37m└ PRÉPARATION TERMINÉE!\x1b[0m')
 })*/
-console.log('\x1b[44m\x1b[37m└ PRÉPARATION TERMINÉE!\x1b[0m')
 
+console.log('\x1b[44m\x1b[37m└ PRÉPARATION TERMINÉE!\x1b[0m')
 let startDate = 0
 let endDate = 0
 let paraDate = 0
