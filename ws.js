@@ -1,32 +1,61 @@
-console.log('[@] Library init')
-const logger = require('./logger')
-const ogia = require('./OGIA')
-const gsa = require('./GSA')
+console.log('\x1b[44m\x1b[37m┌ CHARGEMENT DES MODULES NODE\x1b[0m')
+console.log('├ Loading log-update...')
+const logUpdate = require('log-update')
+process.stdout.moveCursor(0, -1)
+process.stdout.clearLine(1)
+logUpdate('├ Loading fs...')
 const fs = require('fs')
+logUpdate('├ Loading timers/promises...')
+const {setTimeout} = require('timers/promises')
+logUpdate('├ Loading node-fetch...')
 const fetch = require("node-fetch");
+logUpdate('├ Loading https...')
 const https = require('https')
-console.log('[V] Library init logger and fs')
-console.log('[@] WebSocket init')
+logUpdate('├ Loading ws...')
 const {WebSocket, WebSocketServer} = require('ws');
+logUpdate('├ Loading uuid...')
+const {v4} = require('uuid')
+logUpdate('├ Loading discord.js...')
+const { EmbedBuilder, WebhookClient } = require('discord.js');
+logUpdate('├ Loading dotenv...')
+const dotenv = require('dotenv');
+dotenv.config();
+logUpdate('\x1b[42m\x1b[37m├ CHARGÉ\x1b[0m')
+console.log('\x1b[44m\x1b[37m├ CHARGEMENT DES MODULES PERSONELS\x1b[0m')
+console.log('├ Loading logger...')
+const logger = require('./logger')
+logUpdate('├ Loading OGIA...')
+const ogia = require('./OGIA')
+logUpdate('├ Loading GSA...')
+const gsa = require('./GSA')
+logUpdate('├ Loading server.json...')
+const pccApi=require('./server.json');
+logUpdate('\x1b[42m\x1b[37m├ CHARGÉ\x1b[0m')
+console.log('\x1b[44m\x1b[37m├ CHARGEMENT DU SERVEUR\x1b[0m')
+
+console.log('├ Loading socket...')
 const wss = new WebSocket.Server({ port: 8081 });
-/*const server = https.createServer({
+logUpdate('\x1b[42m\x1b[37m├ CHARGÉ\x1b[0m')
+/*
+console.log('├ Creating securised server...')
+const server = https.createServer({
     cert: fs.readFileSync('/etc/letsencrypt/live/patate.ddns.net/fullchain.pem'),
     key: fs.readFileSync('/etc/letsencrypt/live/patate.ddns.net/privkey.pem')
 })
 
+logUpdate('├ Defining socket...')
 const wss = new WebSocketServer({server});
 
+logUpdate('├ Starting server listening...')
 server.listen(8081, function listening() {
     console.log('Address: ', wss.address());
 });
 
-const dotenv = require('dotenv');
-dotenv.config();
-const { EmbedBuilder, WebhookClient } = require('discord.js');
+logUpdate('├ Creating webhook...')
 const webhookToken = process.env.DISCORD_TOKEN
 const webhookClient = new WebhookClient({ url: webhookToken });
 
-
+logUpdate('├ Sending message...')
 wss.addListener('listening',()=>{
     const embed = new EmbedBuilder()
 	    .setTitle('Status du PCC')
@@ -36,7 +65,9 @@ wss.addListener('listening',()=>{
 	    content: '',
 	    embeds: [embed],
     });
+    logUpdate('\x1b[42m\x1b[37m├ CHARGÉ\x1b[0m')
 })*/
+console.log('\x1b[44m\x1b[37m└ PRÉPARATION TERMINÉE!\x1b[0m')
 
 let startDate = 0
 let endDate = 0
@@ -44,14 +75,7 @@ let paraDate = 0
 
 let msr = false
 
-const {setTimeout} = require('timers/promises')
 
-console.log('[V] WebSocket init on port 8081')
-console.log('[@] Server Api init')
-const pccApi=require('./server.json');
-console.log('[V] Server Api init')
-
-const {v4} = require('uuid')
 const clients = {}
 
 function apiSave(){
@@ -476,6 +500,7 @@ wss.on('connection', (ws, req) => {
         msr=false
         let data = false;
         let op = 0;
+        if(!(data.op)) return;
         try{
             data = JSON.parse(msg);
             op = data.op;
@@ -487,9 +512,10 @@ wss.on('connection', (ws, req) => {
         
         switch(op){
             case 1 :
+                if(!((data.token)||(data.from))) return;
                 const verificationProcess = async() => {
                     let whitelist = ['383637400099880964']
-                    let chefs = ['383637400099880964']
+                    let chefs = ['383637400099880964','870004831744577677','620275174645956614','280638077008084992','348127629343195147','775325583626338316','747513013627519047','291632492622905354','1050875493458645013','269584519906983947','1040715219804098701','935952757716820009']
                     /*await setTimeout(function (){
                         let discordVerif = discord.getUserInfo(data.token)
                         console.log(discordVerif)
@@ -516,7 +542,8 @@ wss.on('connection', (ws, req) => {
                                         }
                                         wss.broadcast(JSON.stringify({
                                             op: 10,
-                                            content: { uuid: ws.id, uname: ws.usr.username }
+                                            joined: { uuid: ws.id, uname: ws.usr.username },
+                                            content: pccApi
                                         }))
                                         ws.send(JSON.stringify({ op: 2, uuid: ws.id, content: pccApi, uname:ws.usr.username, role:ws.role }))
                                         clients[ws.id]=ws
@@ -1942,7 +1969,7 @@ wss.on('connection', (ws, req) => {
 
                 if(data.sens === 1){
                     let train = JSON.parse(getCantonsInfo(data.train))
-                    console.log(train)
+                    
                     let _cantonIndex = parseFloat(train.cantonIndex)   
                     let _trainIndex = parseFloat(train.trainIndex)
                     let _secIndex = parseFloat(train.secIndex)
@@ -2314,7 +2341,7 @@ wss.on('connection', (ws, req) => {
 
                 } else if(data.sens === 2){
                     let train = JSON.parse(getCantonsInfo(data.train))
-                    console.log(train)
+                    
                     let _cantonIndex = parseFloat(train.cantonIndex)   
                     let _trainIndex = parseFloat(train.trainIndex)
                     let _secIndex = parseFloat(train.secIndex)
@@ -2860,7 +2887,8 @@ wss.on('connection', (ws, req) => {
         if(clients[ws.id]){
             wss.broadcast(JSON.stringify({
                 op: 11,
-                name: ws.usr.username
+                name: ws.usr.username,
+                content: pccApi
             }))
             delete clients[ws.id];
             logger.client(false,ws,Object.keys(clients).length);
@@ -2937,7 +2965,7 @@ function getStationsInfo(id){
 
             reponse.states=ctns.states
             for (let train of ctns.trains){
-                console.log(train)
+                
                 reponse.trains.push(train)
             }
         }

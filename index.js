@@ -300,184 +300,20 @@ async function isWsRunning(){
 
         window.WebSocket.addEventListener('message', msg => {
             data = JSON.parse(msg.data);
-            //console.log(data)
-            if (!data.op) {
-                let iteration = 0
-                let count = 0
-
-                for (let voy of document.getElementsByClassName('voy')) {
-                    let elemid = voy.id
-                    if (data[elemid] === false) {
-                        //console.log("Voyant "+voy.id+" est faux")
-                        let elem = document.getElementById(elemid)
-                        clearInterval(blinkIntervalId.get(elemid))
-                        blinkIntervalId.delete(elemid)
-                        clearInterval(beepIntervalId)
-                    } else
-                    if (data[elemid] === true) {
-                        //console.log('Voyant '+voy.id+' est vrai.')
-                        let elem = document.getElementById(elemid)
-                        elem.classList.toggle('ok')
-                        clearInterval(blinkIntervalId.get(elemid))
-                        blinkIntervalId.delete(elemid)
-                        clearInterval(beepIntervalId)
-                    } else
-                    if (data[elemid] === 1) {
-                        //console.log('Voyant '+voy.id+' est en anomalie.')
-                        let elem = document.getElementById(elemid)
-                        elem.classList.toggle('alarm')
-                        clearInterval(blinkIntervalId.get(elemid))
-                        blinkIntervalId.delete(elemid)
-                        clearInterval(beepIntervalId)
-                    } else
-                    if (data[elemid] === 2) {
-                        //console.log('Voyant '+voy.id+' est en anomalie.')
-                        let elem = document.getElementById(elemid)
-                        elem.classList.remove('ok')
-                        elem.classList.toggle('alarm')
-                        blinkIntervalId.set(elemid, setInterval(async function() {
-                            elem.classList.toggle('alarm')
-                        }, 500))
-                        console.log(blinkIntervalId.get(elemid))
-                        console.log(blinkIntervalId.size)
-                    }
-
-
-
-                    /*if (elemid.includes('SS')) {
-                        console.log(elemid)
-                        console.log(data.SS[count])
-                        console.log(data.SS[count][elemid])
-                        if (data.SS[count][elemid] === false) {
-                            console.log("Voyant " + voy.id + " est faux")
-                            let elem = document.getElementById(elemid)
-                            clearInterval(blinkIntervalId.get(elemid))
-                            blinkIntervalId.delete(elemid)
-                            clearInterval(beepIntervalId)
-                        } else
-                        if (data.SS[count][elemid] === true) {
-                            console.log('Voyant ' + voy.id + ' est vrai.')
-                            let elem = document.getElementById(elemid)
-                            elem.classList.toggle('ok')
-                            clearInterval(blinkIntervalId.get(elemid))
-                            blinkIntervalId.delete(elemid)
-                            clearInterval(beepIntervalId)
-                        } else
-                        if (data.SS[count][elemid] === 1) {
-                            //console.log('Voyant '+voy.id+' est en anomalie.')
-                            let elem = document.getElementById(elemid)
-                            elem.classList.toggle('alarm')
-                            clearInterval(blinkIntervalId.get(elemid))
-                            blinkIntervalId.delete(elemid)
-                            clearInterval(beepIntervalId)
-                        } else
-                        if (data.SS[count][elemid] === 2) {
-                            //console.log('Voyant '+voy.id+' est en anomalie.')
-                            let elem = document.getElementById(elemid)
-                            elem.classList.remove('ok')
-                            elem.classList.toggle('alarm')
-                            blinkIntervalId.set(elemid, setInterval(async function() {
-                                elem.classList.toggle('alarm')
-                            }, 500))
-                            console.log(blinkIntervalId.get(elemid))
-                            console.log(blinkIntervalId.size)
-                        }
-                        iteration++
-                        if (iteration === 3) {
-                            count++;
-                            iteration = 0
-                        }
-                    }*/
-                }
-
-                for (let com of document.getElementsByClassName('com')) {
-                    let elemid = com.id
-                    let elem = document.getElementById(elemid)
-                    if (data[elemid] === false) {
-                        console.log("Commutateur " + com.id + " est faux")
-                        elem.checked = false
-                    } else
-                    if (data[elemid] === true) {
-                        console.log('Commutateur ' + com.id + ' est vrai.')
-                        elem.checked = true
-                    }
-                }
-
-                //isWsRunning()
-
-                /*if(data.PR[elemid] === false){
-                    console.log("Voyant "+voy.id+" est faux")
-                    let elem = document.getElementById(elemid)
-                    clearInterval(blinkIntervalId.get(elemid))
-                    blinkIntervalId.delete(elemid)
-                    clearInterval(beepIntervalId)
-                } else
-                if (data[elemid] === true){
-                    console.log('Voyant '+voy.id+' est vrai.')
-                    let elem = document.getElementById(elemid)
-                    elem.classList.toggle('ok')
-                    clearInterval(blinkIntervalId.get(elemid))
-                    blinkIntervalId.delete(elemid)
-                    clearInterval(beepIntervalId)
-                } else
-                if (data[elemid] === 1){
-                    console.log('Voyant '+voy.id+' est en anomalie.')
-                    let elem = document.getElementById(elemid)
-                    elem.classList.toggle('alarm')
-                    clearInterval(blinkIntervalId.get(elemid))
-                    blinkIntervalId.delete(elemid)
-                    clearInterval(beepIntervalId)
-                }else
-                if (data[elemid] === 2){
-                    console.log('Voyant '+voy.id+' est en anomalie.')
-                    let elem = document.getElementById(elemid)
-                    elem.classList.remove('ok')
-                    elem.classList.toggle('alarm')
-                    blinkIntervalId.set(elemid, setInterval(async function(){
-                        elem.classList.toggle('alarm')
-                    }, 500))
-                    console.log(blinkIntervalId.get(elemid))
-                    console.log(blinkIntervalId.size)
-                }*/
-
-
-
-                if (blinkIntervalId.size >= 1) {
-                    sm.playSound('bip', 0.5)
-                    beepIntervalId = setInterval(async () => {
-                        sm.playSound('bip', 0.5)
-                        console.log('bip')
-                        //sm.stopFreq(2959)
-                    }, 1000)
-                } else {
-                    sm.stopSound('bip')
-                }
-            }
-
-            /*if(data.op===3){
-                console.log(uuid)
-                uuid=data.uuid
-                tiensCatherineTonUUID.innerHTML = uuid
-                window.WebSocket.send(JSON.stringify({
-                    op: 4,
-                    demande: 'TEST-UUID?',
-                    uuid: uuid
-                }))
-            }*/
-
             if(data.op===10){
-                let uuid=data.content.uuid
-                let newUserName=data.content.uname
+                let uuid=data.joined.uuid
+                let newUserName=data.joined.uname
+                data=data.content
                 toast.innerHTML='L\'utilisateur '+newUserName+' a rejoins le PCC avec l\'UUID '+uuid+' !'
                 sm.playSound('enter')
                 toast.className="show";
                 setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
-                
             }
 
             if(data.op===11){
                 toast.innerHTML=data.name+' a quitté la page.'
                 toast.className="show";
+                data=data.content
                 sm.playSound('left')
                 setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
             }
