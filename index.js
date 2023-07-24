@@ -41,8 +41,6 @@ setInterval(async function() {
     TEXTE_POUR_FAIRE_ATTENTION_SA_MERE.classList.toggle('warn')
 }, 500)
 
-let cantonsS1 = false
-
 let keystroke = []
 
 window.addEventListener('keydown', (e)=>{
@@ -96,7 +94,7 @@ window.addEventListener('keydown', (e)=>{
         waitABit()
     }
 })
-
+let cantonsS1 = false
 
 let S1 = document.getElementById('s1svg')
 S1.addEventListener('load', () => {
@@ -265,6 +263,8 @@ import sm from './sm.js'
 sm.init()
 
 let data = false
+
+let reloadInter = 0
 
 async function isWsRunning(){
     await sleep(500)
@@ -512,9 +512,17 @@ async function isWsRunning(){
                     sm.stopSound('bip')
                 }
                 //}
-                getCantonsInfo()
-                getCantonsInfoS2()
-                loadElectricalInfos()
+                /*if((elecInfo===false)||(cantonsS1===false)||(cantonsS2===false)){
+                    setInterval(reload, 250)
+                } else {
+                    clearInterval(reloadInter)
+                }*/
+                function reload(){
+                    getCantonsInfo()
+                    getCantonsInfoS2()
+                    loadElectricalInfos()
+                }
+                
             }
         })
     //})

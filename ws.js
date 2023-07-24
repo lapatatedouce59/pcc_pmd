@@ -501,22 +501,23 @@ wss.on('connection', (ws, req) => {
         msr=false
         let data = false;
         let op = 0;
-        if(!(data.op)) return;
+        
         try{
             data = JSON.parse(msg);
+            if(!(data.op)) return;
             op = data.op;
         } catch (error) {
             logger.error(error)
         }
-
+        
         if(op==='300') return;
         
         switch(op){
             case 1 :
                 if(!((data.token)||(data.from))) return;
                 const verificationProcess = async() => {
-                    let whitelist = ['383637400099880964']
-                    let chefs = ['383637400099880964','870004831744577677','620275174645956614','280638077008084992','348127629343195147','775325583626338316','747513013627519047','291632492622905354','1050875493458645013','269584519906983947','1040715219804098701','935952757716820009']
+                    let whitelist = ['383637400099880964','870004831744577677','620275174645956614','280638077008084992','348127629343195147','775325583626338316','747513013627519047','291632492622905354','1050875493458645013','269584519906983947','1040715219804098701','935952757716820009']
+                    let chefs = ['383637400099880964']
                     /*await setTimeout(function (){
                         let discordVerif = discord.getUserInfo(data.token)
                         console.log(discordVerif)
