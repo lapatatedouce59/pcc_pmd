@@ -140,7 +140,7 @@
             },
             {
               "code": "2402_2101",
-              "active": false,
+              "active": true,
               "mode": "SEL"
             },
             {
@@ -182,7 +182,7 @@
             },
             {
               "code": "1401_1501",
-              "active": false,
+              "active": true,
               "mode": "SEL"
             },
             {

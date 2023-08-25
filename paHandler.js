@@ -28,6 +28,67 @@ window.WebSocket.addEventListener('message', msg =>{
 
 async function updateFormat(pa){
     console.log('UPDATE INTENT FOR '+pa.id)
+    for(let itilist of pa.itis){
+        for(let itiv of Object.entries(itilist)){
+            for(let iti of itiv[1]){
+                if(iti.active){
+                    let presenceVoytd = document.getElementById(`presence[${iti.code}]td`)
+                    presenceVoytd.classList.add('ok')
+                    let presenceVoyspan = document.getElementById(`presence[${iti.code}]span`)
+                    presenceVoyspan.classList.add('ok')
+                }
+                console.log(iti.mode)
+                switch(iti.mode){
+                    
+                    case 'SEL':
+                        let presenceSel1 = document.getElementById(`presenceSel[${iti.code}]`)
+                        let presenceDes1 = document.getElementById(`presenceDes[${iti.code}]`)
+                        let presenceDu1 = document.getElementById(`presenceDu[${iti.code}]`)
+                        console.log(presenceSel1)
+                        presenceSel1.classList.remove('voyPresenceCmdOff')
+                        //presenceDes1.classList.remove('voyPresenceCmdOn')
+                        //presenceDu1.classList.remove('voyPresenceCmdOn')
+                        presenceSel1.classList.add('voyPresenceCmdOn')
+                        //presenceDes1.classList.add('voyPresenceCmdOff')
+                        //presenceSel1.classList.add('voyPresenceCmdOff')
+                        break;
+                    case 'DES':
+                        let presenceSel2 = document.getElementById(`presenceSel[${iti.code}]`)
+                        let presenceDes2 = document.getElementById(`presenceDes[${iti.code}]`)
+                        let presenceDu2 = document.getElementById(`presenceDu[${iti.code}]`)
+                        //presenceSel2.classList.remove('voyPresenceCmdOn')
+                        presenceDes2.classList.remove('voyPresenceCmdOff')
+                        //presenceDu2.classList.remove('voyPresenceCmdOn')
+                        //presenceSel2.classList.add('voyPresenceCmdOff')
+                        presenceDes2.classList.add('voyPresenceCmdOn')
+                        //presenceDu2.classList.add('voyPresenceCmdOff')
+                        break;
+                    case 'DU':
+                        let presenceSel3 = document.getElementById(`presenceSel[${iti.code}]`)
+                        let presenceDes3 = document.getElementById(`presenceDes[${iti.code}]`)
+                        let presenceDu3 = document.getElementById(`presenceDu[${iti.code}]`)
+                        //presenceSel3.classList.remove('voyPresenceCmdOn')
+                        //presenceDes3.classList.remove('voyPresenceCmdOn')
+                        presenceDu3.classList.remove('voyPresenceCmdOff')
+                        //presenceSel3.classList.add('voyPresenceCmdOff')
+                        //presenceDes3.classList.add('voyPresenceCmdOff')
+                        presenceDu3.classList.add('voyPresenceCmdOn')
+                        break;
+                    case false:
+                        let presenceSel4 = document.getElementById(`presenceSel[${iti.code}]`)
+                        let presenceDes4 = document.getElementById(`presenceDes[${iti.code}]`)
+                        let presenceDu4 = document.getElementById(`presenceDu[${iti.code}]`)
+                        presenceSel4.classList.remove('voyPresenceCmdOn')
+                        presenceDes4.classList.remove('voyPresenceCmdOn')
+                        presenceDu4.classList.remove('voyPresenceCmdOn')
+                        presenceSel4.classList.add('voyPresenceCmdOff')
+                        presenceDes4.classList.add('voyPresenceCmdOff')
+                        presenceDu4.classList.add('voyPresenceCmdOff')
+                        break;
+                }
+            }
+        }
+    }
 }
 
 function PaInfo(id){
@@ -138,11 +199,11 @@ async function initFormat(pa){
             let tdVoyPresence = document.createElement('td')
             tdVoyPresence.colSpan='3'
             tdVoyPresence.classList.add('voyItiState')
-            tdVoyPresence.id=`presence[${itis.code}]`
+            tdVoyPresence.id=`presence[${itis.code}]td`
 
             let presenceSpan = document.createElement('span')
             presenceSpan.classList.add('voyItiState')
-            presenceSpan.id=`presence[${itis.code}]`
+            presenceSpan.id=`presence[${itis.code}]span`
             presenceSpan.innerText=itis.code
 
             tdbtnSel.appendChild(btnSel)
@@ -253,11 +314,11 @@ async function initFormat(pa){
             let tdVoyPresence = document.createElement('td')
             tdVoyPresence.colSpan='3'
             tdVoyPresence.classList.add('voyItiState')
-            tdVoyPresence.id=`presence[${itis.code}]`
+            tdVoyPresence.id=`presence[${itis.code}]td`
 
             let presenceSpan = document.createElement('span')
             presenceSpan.classList.add('voyItiState')
-            presenceSpan.id=`presence[${itis.code}]`
+            presenceSpan.id=`presence[${itis.code}]span`
             presenceSpan.innerText=itis.code
 
             tdbtnSel.appendChild(btnSel)
