@@ -95,47 +95,155 @@
   "SEC": [
     {
       "id": "1",
-      "states":{
-        "zoneManoeuvre":false,
-        "tnitne":false,
-        "lstpas":true,
-        "discord":false
+      "ITI": [
+        {
+          "V1": [
+            {
+              "code": "2401_2501",
+              "active": true,
+              "mode": "SEL"
+            },
+            {
+              "code": "2501_2401",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1401_2401",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "2201_1201",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "2201_2401",
+              "active": true,
+              "mode": "SEL"
+            },
+            {
+              "code": "2401_2201",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "2101_2201",
+              "active": true,
+              "mode": "SEL"
+            },
+            {
+              "code": "2201_2101",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "2402_2101",
+              "active": false,
+              "mode": "SEL"
+            },
+            {
+              "code": "2101_2402",
+              "active": false,
+              "mode": false
+            }
+          ],
+          "V2": [
+            {
+              "code": "1101_1201",
+              "active": true,
+              "mode": "SEL"
+            },
+            {
+              "code": "1201_1101",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1201_2201",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "2401_1401",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1201_1401",
+              "active": true,
+              "mode": "SEL"
+            },
+            {
+              "code": "1401_1201",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1401_1501",
+              "active": false,
+              "mode": "SEL"
+            },
+            {
+              "code": "1501_1401",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1501_1102",
+              "active": true,
+              "mode": "SEL"
+            },
+            {
+              "code": "1102_1501",
+              "active": false,
+              "mode": false
+            }
+          ]
+        }
+      ],
+      "states": {
+        "zoneManoeuvre": false,
+        "tnitne": false,
+        "lstpas": true,
+        "discord": false
       },
       "cantons": [
         {
           "cid": "c1101",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         },
         {
           "cid": "c1201",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         },
         {
           "cid": "c1301",
           "position": "a2",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "dir": "up",
           "trains": []
@@ -143,7 +251,6 @@
         {
           "cid": "c1401",
           "trains": [],
-          
           "type": "quai",
           "name": "MSTO V1",
           "states": {
@@ -194,42 +301,40 @@
             "mapfActive": false,
             "mapfImp": false,
             "defOrderExec": false,
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           }
         },
         {
           "cid": "c1501",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
-          
         },
         {
           "cid": "c2101",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         },
         {
           "cid": "c2201",
-          
           "trains": [
             {
               "tid": "3",
@@ -418,49 +523,49 @@
             "mapfActive": false,
             "mapfImp": false,
             "defOrderExec": false,
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           }
         },
         {
           "cid": "c2301",
           "position": "a2",
           "dir": "up",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         },
         {
           "cid": "c2401",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         },
         {
           "cid": "c2501",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         }
@@ -468,22 +573,22 @@
     },
     {
       "id": "2",
-      "states":{
-        "zoneManoeuvre":false,
-        "tnitne":false,
-        "lstpas":true,
-        "discord":false
+      "states": {
+        "zoneManoeuvre": false,
+        "tnitne": false,
+        "lstpas": true,
+        "discord": false
       },
       "cantons": [
         {
           "cid": "c1102",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": [],
           "position": "r",
@@ -491,13 +596,13 @@
         },
         {
           "cid": "c1202",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "position": "a2",
           "dir": "up",
@@ -693,35 +798,35 @@
             "mapfActive": false,
             "mapfImp": false,
             "defOrderExec": false,
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           }
         },
         {
           "cid": "c1402",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         },
         {
           "cid": "c2102",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         },
@@ -776,23 +881,23 @@
             "mapfActive": false,
             "mapfImp": false,
             "defOrderExec": false,
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           }
         },
         {
           "cid": "c2302",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         },
@@ -800,26 +905,26 @@
           "cid": "c2402",
           "position": "r",
           "dir": "r",
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "trains": []
         },
         {
           "cid": "cGA2PAG",
           "trains": [],
-          "states":{
-            "selAcc":false,
-            "pzo":false,
-            "tcs":false,
-            "ldi":false,
-            "pdp":false,
-            "coupFs":false
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
           },
           "position": "a2",
           "dir": "up"
