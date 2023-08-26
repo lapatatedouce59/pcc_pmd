@@ -511,6 +511,7 @@ async function isWsRunning(){
                     console.log('y\'a un truc qui déconne')
                     sm.stopSound('bip')
                 }
+                reload()
                 //}
                 /*if((elecInfo===false)||(cantonsS1===false)||(cantonsS2===false)){
                     setInterval(reload, 250)

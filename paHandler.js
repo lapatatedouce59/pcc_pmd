@@ -18,15 +18,82 @@ window.WebSocket.addEventListener('message', msg =>{
                 opt.id=sec.id
                 selectMenuPa.appendChild(opt)
             }
+
+            let tempa=PaInfo('1')
+            initFormat(tempa)
+            updateFormat(tempa)
         }
-        let pa = PaInfo(selectMenuPa.value)
-        console.log(pa)
-        initFormat(pa)
-        updateFormat(pa)
+        let painfo = PaInfo(selectMenuPa.value)
+        updateFormat(painfo)
     }
+})
+let pa1dictionnary = false
+const pa1 = document.getElementById('pa1svg')
+pa1.addEventListener('load', () => {
+    let pa1svgDoc = pa1.contentDocument;
+    pa1dictionnary = {
+        cantons: {
+            'c1101': pa1svgDoc.getElementById('c1101'),
+            'c1201': pa1svgDoc.getElementById('c1201'),
+            'c1301': pa1svgDoc.getElementById('c1301'),
+            'c1401': pa1svgDoc.getElementById('c1401'),
+            'c1501': pa1svgDoc.getElementById('c1501'),
+            'c2101': pa1svgDoc.getElementById('c2101'),
+            'c2201': pa1svgDoc.getElementById('c2201'),
+            'c2301': pa1svgDoc.getElementById('c2301'),
+            'c2401': pa1svgDoc.getElementById('c2401'),
+            'c2501': pa1svgDoc.getElementById('c2501')
+        },
+        aiguilles: {
+            'c1': {
+                tracks:{
+                    'a1': pa1svgDoc.getElementById('c1a1'),
+                    'a2': pa1svgDoc.getElementById('c1a2'),
+                    'c1301n': pa1svgDoc.getElementById('c1301n'),
+                    'c2301n': pa1svgDoc.getElementById('c2301n')
+                },
+                arrows:{
+                    'up': pa1svgDoc.getElementById('c1up'),
+                    'down': pa1svgDoc.getElementById('c1dw')
+                }
+            }
+        },
+        arrows: {
+            '2401_2501':pa1svgDoc.getElementById('2401_2501'),
+            '2501_2401':pa1svgDoc.getElementById('2501_2401'),
+            '1401_2401':pa1svgDoc.getElementById('1401_2401'),
+            '2201_1201':pa1svgDoc.getElementById('2201_1201'),
+            '2201_2401':pa1svgDoc.getElementById('2201_2401'),
+            '2401_2201':pa1svgDoc.getElementById('2401_2201'),
+            '2101_2201':pa1svgDoc.getElementById('2101_2201'),
+            '2201_2101':pa1svgDoc.getElementById('2201_2101'),
+            '2402_2101':pa1svgDoc.getElementById('2402_2101'),
+            '2101_2402':pa1svgDoc.getElementById('2101_2402'),
+
+            '1101_1201':pa1svgDoc.getElementById('1101_1201'),
+            '1201_1101':pa1svgDoc.getElementById('1201_1101'),
+            '1201_2201':pa1svgDoc.getElementById('1201_2201'),
+            '2401_1401':pa1svgDoc.getElementById('2401_1401'),
+            '1201_1401':pa1svgDoc.getElementById('1201_1401'),
+            '1401_1201':pa1svgDoc.getElementById('1401_1201'),
+            '1401_1501':pa1svgDoc.getElementById('1401_1501'),
+            '1501_1401':pa1svgDoc.getElementById('1501_1401'),
+            '1501_1102':pa1svgDoc.getElementById('1501_1102'),
+            '1102_1501':pa1svgDoc.getElementById('1102_1501')
+        }
+    }
+    let pa = PaInfo("1")
+    loadItiTco(pa)
 })
 
 async function updateFormat(pa){
+    for(let elem of document.getElementsByClassName('VOYITIP')){
+        elem.classList.remove('voyPresenceCmdOn')
+        elem.classList.add('voyPresenceCmdOff')
+    }
+    for(let elem of document.getElementsByClassName('VOYITIV')){
+        elem.classList.remove('ok')
+    }
     console.log('UPDATE INTENT FOR '+pa.id)
     for(let itilist of pa.itis){
         for(let itiv of Object.entries(itilist)){
@@ -89,6 +156,7 @@ async function updateFormat(pa){
             }
         }
     }
+    loadItiTco(pa)
 }
 
 function PaInfo(id){
@@ -131,7 +199,7 @@ async function initFormat(pa){
             btnSel.value='SEL'
             btnSel.addEventListener('click', ()=>{
                 actualRequest = JSON.stringify({
-                    op: 204,
+                    op: 220,
                     execute: "SEL-BTN-ITI",
                     target: itis.code,
                     uuid: window.uuid
@@ -142,6 +210,7 @@ async function initFormat(pa){
 
             let tdVoySel = document.createElement('td')
             tdVoySel.classList.add('voyPresenceCmdOff')
+            tdVoySel.classList.add('VOYITIP')
             tdVoySel.id=`presenceSel[${itis.code}]`
 
             let tr2 = document.createElement('tr')
@@ -156,7 +225,7 @@ async function initFormat(pa){
             btnDes.value='DES'
             btnDes.addEventListener('click', ()=>{
                 actualRequest = JSON.stringify({
-                    op: 204,
+                    op: 220,
                     execute: "DES-BTN-ITI",
                     target: itis.code,
                     uuid: window.uuid
@@ -167,6 +236,7 @@ async function initFormat(pa){
 
             let tdVoyDes = document.createElement('td')
             tdVoyDes.classList.add('voyPresenceCmdOff')
+            tdVoyDes.classList.add('VOYITIP')
             tdVoyDes.id=`presenceDes[${itis.code}]`
 
             let tr3 = document.createElement('tr')
@@ -181,7 +251,7 @@ async function initFormat(pa){
             btnDu.value='DU'
             btnDu.addEventListener('click', ()=>{
                 actualRequest = JSON.stringify({
-                    op: 204,
+                    op: 220,
                     execute: "DU-BTN-ITI",
                     target: itis.code,
                     uuid: window.uuid
@@ -191,6 +261,7 @@ async function initFormat(pa){
             })
 
             let tdVoyDu = document.createElement('td')
+            tdVoyDu.classList.add('VOYITIP')
             tdVoyDu.classList.add('voyPresenceCmdOff')
             tdVoyDu.id=`presenceDu[${itis.code}]`
 
@@ -199,12 +270,14 @@ async function initFormat(pa){
             let tdVoyPresence = document.createElement('td')
             tdVoyPresence.colSpan='3'
             tdVoyPresence.classList.add('voyItiState')
+            tdVoyPresence.classList.add('VOYITIV')
             tdVoyPresence.id=`presence[${itis.code}]td`
 
             let presenceSpan = document.createElement('span')
             presenceSpan.classList.add('voyItiState')
             presenceSpan.id=`presence[${itis.code}]span`
             presenceSpan.innerText=itis.code
+            presenceSpan.classList.add('VOYITIV')
 
             tdbtnSel.appendChild(btnSel)
             tr1.appendChild(tdbtnSel)
@@ -246,7 +319,7 @@ async function initFormat(pa){
             btnSel.value='SEL'
             btnSel.addEventListener('click', ()=>{
                 actualRequest = JSON.stringify({
-                    op: 204,
+                    op: 220,
                     execute: "SEL-BTN-ITI",
                     target: itis.code,
                     uuid: window.uuid
@@ -256,6 +329,7 @@ async function initFormat(pa){
             })
 
             let tdVoySel = document.createElement('td')
+            tdVoySel.classList.add('VOYITIP')
             tdVoySel.classList.add('voyPresenceCmdOff')
             tdVoySel.id=`presenceSel[${itis.code}]`
 
@@ -271,7 +345,7 @@ async function initFormat(pa){
             btnDes.value='DES'
             btnDes.addEventListener('click', ()=>{
                 actualRequest = JSON.stringify({
-                    op: 204,
+                    op: 220,
                     execute: "DES-BTN-ITI",
                     target: itis.code,
                     uuid: window.uuid
@@ -281,6 +355,7 @@ async function initFormat(pa){
             })
 
             let tdVoyDes = document.createElement('td')
+            tdVoyDes.classList.add('VOYITIP')
             tdVoyDes.classList.add('voyPresenceCmdOff')
             tdVoyDes.id=`presenceDes[${itis.code}]`
 
@@ -296,7 +371,7 @@ async function initFormat(pa){
             btnDu.value='DU'
             btnDu.addEventListener('click', ()=>{
                 actualRequest = JSON.stringify({
-                    op: 204,
+                    op: 220,
                     execute: "DU-BTN-ITI",
                     target: itis.code,
                     uuid: window.uuid
@@ -306,6 +381,7 @@ async function initFormat(pa){
             })
 
             let tdVoyDu = document.createElement('td')
+            tdVoyDu.classList.add('VOYITIP')
             tdVoyDu.classList.add('voyPresenceCmdOff')
             tdVoyDu.id=`presenceDu[${itis.code}]`
 
@@ -315,10 +391,12 @@ async function initFormat(pa){
             tdVoyPresence.colSpan='3'
             tdVoyPresence.classList.add('voyItiState')
             tdVoyPresence.id=`presence[${itis.code}]td`
+            tdVoyPresence.classList.add('VOYITIV')
 
             let presenceSpan = document.createElement('span')
             presenceSpan.classList.add('voyItiState')
             presenceSpan.id=`presence[${itis.code}]span`
+            presenceSpan.classList.add('VOYITIV')
             presenceSpan.innerText=itis.code
 
             tdbtnSel.appendChild(btnSel)
@@ -338,6 +416,59 @@ async function initFormat(pa){
             controltable.appendChild(tr4)
             parentdiv.appendChild(controltable)
             masterDiv.appendChild(parentdiv)
+        }
+    }
+}
+
+function loadItiTco(pa){
+    console.log(pa)
+    for(let ctn of Object.entries(pa1dictionnary.cantons)){
+        ctn[1].style.fill = '#CDCDCD';
+        for(let ctns of pa.ctns){
+            if(!(ctns.cid===ctn[0])) continue;
+            if(ctns.trains.length>0){
+                ctn[1].style.fill = '#D9DD0E';
+            }
+        }
+        
+    }
+    for(let aig of Object.entries(pa1dictionnary.aiguilles.c1.tracks)){
+        aig[1].style.fill = '#CDCDCD';
+        for(let itil of Object.entries(pa.itis[0])){
+            for(let iti of Object.entries(itil[1])){
+                if(!(iti[1].active)) continue;
+                if((iti[1].code==='2201_2401')||(iti[1].code==='2401_2201')){
+                    if(!(aig[0]==='c2301n')) continue;
+                    aig[1].style.fill='#148FB6'
+                } else if((iti[1].code==='1201_1401')||(iti[1].code==='1401_1201')){
+                    if(!(aig[0]==='c1301n')) continue;
+                    aig[1].style.fill='#148FB6'
+                } else if((iti[1].code==='1201_2201')||(iti[1].code==='2201_1201')){
+                    if(!(aig[0]==='a2')) continue;
+                    aig[1].style.fill='#148FB6'
+                } else if((iti[1].code==='2401_1401')||(iti[1].code==='1401_2401')){
+                    if(!(aig[0]==='a1')) continue;
+                    aig[1].style.fill='#148FB6'
+                }
+            }
+        }
+
+    }
+    for(let aigArr of Object.entries(pa1dictionnary.aiguilles.c1.arrows)){
+        aigArr[1].style.fill = '#B1B1B1';
+    }
+    for(let arrows of Object.entries(pa1dictionnary.arrows)){
+        arrows[1].style.fill = '#9F9F9F'
+        for(let itil of Object.entries(pa.itis[0])){
+            for(let iti of Object.entries(itil[1])){
+                if(!(iti[1].code===arrows[0])) continue;
+                //console.log(iti[1])
+                if(iti[1].active===true){
+                    arrows[1].style.fill = '#00FF19';
+                } else if (iti[1].active===false){
+                    arrows[1].style.fill = '#9F9F9F';
+                }
+            }
         }
     }
 }

@@ -1949,7 +1949,69 @@ wss.on('connection', (ws, req) => {
                         refusDeprep()
                     }
                 }
-
+                break;
+            case 220:
+                if(data.execute==='SEL-BTN-ITI'){
+                    if(!(data.target)) return;
+                    for(let sec of pccApi.SEC){
+                        for(let itilist of Object.entries(sec.ITI[0])){
+                            for(let iti of itilist[1]){
+                                console.log(iti.code)
+                                if(iti.code===data.target){
+                                    const rpdelay = async() => {
+                                        iti.mode='SEL'
+                                        apiSave()
+                                        await setTimeout(2000)
+                                        iti.active=true
+                                        apiSave()
+                                    }
+                                    rpdelay()
+                                    return;
+                                } else continue;
+                            }
+                        }
+                    }
+                } else if(data.execute==='DES-BTN-ITI'){
+                    if(!(data.target)) return;
+                    for(let sec of pccApi.SEC){
+                        for(let itilist of Object.entries(sec.ITI[0])){
+                            for(let iti of itilist[1]){
+                                console.log(iti.code)
+                                if(iti.code===data.target){
+                                    const rpdelay = async() => {
+                                        iti.mode='DES'
+                                        apiSave()
+                                        await setTimeout(2000)
+                                        iti.mode=false
+                                        iti.active=false
+                                        apiSave()
+                                    }
+                                    rpdelay()
+                                    return;
+                                } else continue;
+                            }
+                        }
+                    }
+                } else if(data.execute==='DU-BTN-ITI'){
+                    if(!(data.target)) return;
+                    for(let sec of pccApi.SEC){
+                        for(let itilist of Object.entries(sec.ITI[0])){
+                            for(let iti of itilist[1]){
+                                console.log(iti.code)
+                                if(iti.code===data.target){
+                                    const rpdelay = async() => {
+                                        iti.mode='DU'
+                                        iti.mode=false
+                                        iti.active=false
+                                        apiSave()
+                                    }
+                                    rpdelay()
+                                    return;
+                                } else continue;
+                            }
+                        }
+                    }
+                }
                 break;
             case 400:
                 if(!isClientExisting(data.uuid)) return;
