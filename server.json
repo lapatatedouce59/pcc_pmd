@@ -125,7 +125,7 @@
             },
             {
               "code": "2401_2201",
-              "active": true,
+              "active": false,
               "mode": false
             },
             {
@@ -375,7 +375,7 @@
         },
         {
           "cid": "c1301",
-          "position": "a2",
+          "position": "r",
           "states": {
             "selAcc": false,
             "pzo": false,
@@ -384,7 +384,7 @@
             "pdp": false,
             "coupFs": false
           },
-          "dir": "up",
+          "dir": "r",
           "trains": []
         },
         {
@@ -533,8 +533,8 @@
         },
         {
           "cid": "c2301",
-          "position": "a2",
-          "dir": "up",
+          "position": "r",
+          "dir": "r",
           "states": {
             "selAcc": false,
             "pzo": false,

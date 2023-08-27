@@ -94,29 +94,33 @@ window.addEventListener('keydown', (e)=>{
         waitABit()
     }
 })
-let cantonsS1 = false
+let dictS1 = false
 
 let S1 = document.getElementById('s1svg')
 S1.addEventListener('load', () => {
     let s1svgDoc = S1.contentDocument;
-    cantonsS1 = {
-        1: s1svgDoc.getElementById('1'),
-        2: s1svgDoc.getElementById('2'),
-        3: [s1svgDoc.getElementById('3'), s1svgDoc.getElementById('4'), s1svgDoc.getElementById('5')],
-        4: s1svgDoc.getElementById('6'),
-        5: s1svgDoc.getElementById('7'),
-        6: s1svgDoc.getElementById('8'),
-        7: s1svgDoc.getElementById('9'),
-        8: [s1svgDoc.getElementById('10'), s1svgDoc.getElementById('11'), s1svgDoc.getElementById('12')],
-        9: s1svgDoc.getElementById('13'),
-        10: s1svgDoc.getElementById('14'),
-        aiguilles: [{
-            id: 'C1',
-            a1c1301: [s1svgDoc.getElementById('15'), s1svgDoc.getElementById('19')],
-            a1c2301: [s1svgDoc.getElementById('17'), s1svgDoc.getElementById('20')],
-            a2c1301: [s1svgDoc.getElementById('16'), s1svgDoc.getElementById('19')],
-            a2c2301: [s1svgDoc.getElementById('18'), s1svgDoc.getElementById('20')]
-        }],
+    dictS1 = {
+        cantons: {
+            'c1101': s1svgDoc.getElementById('1'),
+            'c1201': s1svgDoc.getElementById('2'),
+            'c1301': [s1svgDoc.getElementById('3'), s1svgDoc.getElementById('4'), s1svgDoc.getElementById('5')],
+            'c1401': s1svgDoc.getElementById('6'),
+            'c1501': s1svgDoc.getElementById('7'),
+            'c2101': s1svgDoc.getElementById('8'),
+            'c2201': s1svgDoc.getElementById('9'),
+            'c2301': [s1svgDoc.getElementById('10'), s1svgDoc.getElementById('11'), s1svgDoc.getElementById('12')],
+            'c2401': s1svgDoc.getElementById('13'),
+            'c2501': s1svgDoc.getElementById('14'),
+        },
+        aiguilles: [
+            {
+                id: 'C1',
+                a1c1301: [s1svgDoc.getElementById('15'), s1svgDoc.getElementById('19')],
+                a1c2301: [s1svgDoc.getElementById('17'), s1svgDoc.getElementById('20')],
+                a2c1301: [s1svgDoc.getElementById('16'), s1svgDoc.getElementById('19')],
+                a2c2301: [s1svgDoc.getElementById('18'), s1svgDoc.getElementById('20')]
+            }
+        ],
         arrows: [
             [s1svgDoc.getElementById('21'), s1svgDoc.getElementById('22')],
             [s1svgDoc.getElementById('23'), s1svgDoc.getElementById('24')]
@@ -338,7 +342,7 @@ async function isWsRunning(){
                 data = parsedJson
                 let iteration = 0
                 let count = 0
-
+                console.log(data)
                 for (let voy of document.getElementsByClassName('voy')) {
                     let elemid = voy.id
                     //console.log(parsedJson[elemid])
@@ -859,8 +863,7 @@ btnSend.addEventListener('click', () => {
 })
 
 btnReload.addEventListener('click', () => {
-    getCantonsInfo()
-    getCantonsInfoS2()
+    refreshTCO()
 })
 
 
@@ -871,257 +874,148 @@ function sleep(ms) {
     });
 }
 
-function getCantonsInfo() {
-    //data=data.content
-    console.log(data)
-    let _GLIST_ = cantonsS1
-    clearAllCantons('S1');
-    let fresponse = {
-        trains: []
+function getCantonsInfo(id) {
+    let response = { cid: false, sindex: false, cindex: false, trains:[], paItis:[], states: {}, station: Boolean}
+    for(let sec in data.SEC){
+        response.paItis=data.SEC[sec].ITI
+        for(let ctn in data.SEC[sec].cantons){
+            if (!(data.SEC[sec].cantons[ctn].cid===id)) continue;
+            response.cid=data.SEC[sec].cantons[ctn].cid
+            response.sindex=sec
+            response.cindex=ctn
+            response.states=data.SEC[sec].cantons[ctn].states
+            response.trains=data.SEC[sec].cantons[ctn].trains
+            if(data.SEC[sec].cantons[ctn].type){
+                if(data.SEC[sec].cantons[ctn].type==='quai') response.station=true;
+            }
+        }
     }
-    for (let _CANTON_ in _GLIST_) {
-        console.log(_CANTON_)
-        if (_CANTON_ === 'aiguilles') continue;
-        if (_CANTON_ === 'arrows') continue;
-        if (_CANTON_ === 'lights') continue;
-        if (_CANTON_ === 'screens') continue;
-        if (_CANTON_ === 'voys') continue;
-        _CANTON_--;
-        console.log('[❔] ARRAY[' + _CANTON_ + ']')
-        //fill des fleches de dir
-        let dir = data.SEC[0].cantons[2].dir;
-        if (dir === 'up') {
-            for (let bits in _GLIST_.arrows[0]) {
-                _GLIST_.arrows[0][bits].style.fill = '#66D264';
-            }
-            for (let bits in _GLIST_.arrows[1]) {
-                _GLIST_.arrows[1][bits].style.fill = '#707070';
-            }
-        } else if (dir === 'down') {
-            for (let bits in _GLIST_.arrows[1]) {
-                _GLIST_.arrows[1][bits].style.fill = '#66D264';
-            }
-            for (let bits in _GLIST_.arrows[0]) {
-                _GLIST_.arrows[0][bits].style.fill = '#707070';
-            }
-        } else {
-            for (let bits in _GLIST_.arrows[0]) {
-                _GLIST_.arrows[0][bits].style.fill = '#707070';
-            }
-            for (let bits in _GLIST_.arrows[1]) {
-                _GLIST_.arrows[1][bits].style.fill = '#707070';
-            }
-        }
-        if (data.SEC[0].cantons[_CANTON_].position === 'r') {
-            _GLIST_.voys['NOR'].setAttribute('href', '../ON.png');
-            _GLIST_.voys['A1Dev'].setAttribute('href', '../OFF.png')
-            _GLIST_.voys['A2Dev'].setAttribute('href', '../OFF.png')
-        } else if (data.SEC[0].cantons[_CANTON_].position === 'a1') {
-            _GLIST_.voys['NOR'].setAttribute('href', '../OFF.png');
-            _GLIST_.voys['A1Dev'].setAttribute('href', '../ON.png')
-            _GLIST_.voys['A2Dev'].setAttribute('href', '../OFF.png')
-        } else if (data.SEC[0].cantons[_CANTON_].position === 'a2') {
-            _GLIST_.voys['NOR'].setAttribute('href', '../OFF.png');
-            _GLIST_.voys['A1Dev'].setAttribute('href', '../OFF.png')
-            _GLIST_.voys['A2Dev'].setAttribute('href', '../ON.png')
-        }
-        //console.log(data.SEC[0]._GLIST_[0].trains[0]) EXEMPLE DE CHEMIN
-        if (data.SEC[0].cantons[_CANTON_].cid === 'c2201') {
-            if (data.SEC[0].cantons[_CANTON_].trains.length >= 1) {
-                _GLIST_.screens['2201'][1].textContent = data.SEC[0].cantons[_CANTON_].trains[0].tid
-                _GLIST_.screens['2201'][0].style.fill = '#3C0A0A'
-            } else {
-                _GLIST_.screens['2201'][1].textContent = ''
-                _GLIST_.screens['2201'][0].style.fill = '#000000'
-            }
-        }
+    return response;
+}
 
-        if (data.SEC[0].cantons[_CANTON_].cid === 'c1401') {
-            if (data.SEC[0].cantons[_CANTON_].trains.length >= 1) {
-                _GLIST_.screens['1401'][1].textContent = data.SEC[0].cantons[_CANTON_].trains[0].tid
-                _GLIST_.screens['1401'][0].style.fill = '#3C0A0A'
-            } else {
-                _GLIST_.screens['1401'][1].textContent = ''
-                _GLIST_.screens['1401'][0].style.fill = '#000000'
-            }
-        }
-        if (data.SEC[0].cantons[_CANTON_].trains.length >= 1) { //CANTON OCCUPE
-            console.log('[👉] canton ' + (_CANTON_ + 1) + ' occupé')
-            console.log(_GLIST_[_CANTON_ + 1])
-
-            if (typeof _GLIST_[_CANTON_ + 1].length === 'undefined') {
-                console.log((_CANTON_ + 1) + ' est un canton simple')
-                console.log('[🚫] canton ' + (_CANTON_ + 1) + ' occupé')
-                let CTARGET = _GLIST_[_CANTON_ + 1]
-                CTARGET.style.fill = '#E1A712';
-
-
-                console.log(_GLIST_.screens)
-
-
-
-            } else {
-                console.log((_CANTON_ + 1) + ' est une aiguille')
-                console.log('[🚫] aiguille ' + (_CANTON_ + 1) + ' occupé')
-
-                /*for(let bits in _GLIST_[_CANTON_+1]){
-                    console.log(_GLIST_[_CANTON_+1][bits])
-                    _GLIST_[_CANTON_+1][bits].style.fill='#E1A712'
-                }*/
-
-
-                if (data.SEC[0].cantons[_CANTON_].position === 'r') {
-                    clearAllCantons('S1', _CANTON_)
-                    for (let bits in _GLIST_[_CANTON_ + 1]) {
-                        console.log(_GLIST_[_CANTON_ + 1][bits])
-                        _GLIST_[_CANTON_ + 1][bits].style.fill = '#E1A712';
-                    }
-                } else if (data.SEC[0].cantons[_CANTON_].position === 'a1') {
-                    //clearAllCantons(_CANTON_, 'a1')
-                    switch (data.SEC[0].cantons[_CANTON_].cid) {
-                        case 'c1301':
-                            clearAllCantons('S1', _CANTON_)
-                            for (let bits in _GLIST_.aiguilles[0].a1c1301) {
-                                console.log(_GLIST_.aiguilles[0].a1c1301[bits])
-                                _GLIST_.aiguilles[0].a1c1301[bits].style.fill = '#E1A712';
-                            }
-                            break;
-                        case 'c2301':
-                            for (let bits in _GLIST_.aiguilles[0].a1c2301) {
-                                console.log(_GLIST_.aiguilles[0].a1c2301[bits])
-                                _GLIST_.aiguilles[0].a1c2301[bits].style.fill = '#E1A712';
-                            }
-                            break;
-                    }
-                } else if (data.SEC[0].cantons[_CANTON_].position === 'a2') {
-                    //clearAllCantons(_CANTON_, 'a2')
-                    switch (data.SEC[0].cantons[_CANTON_].cid) {
-                        case 'c1301':
-                            clearAllCantons('S1', _CANTON_)
-                            for (let bits in _GLIST_.aiguilles[0].a2c1301) {
-                                console.log(_GLIST_.aiguilles[0].a2c1301[bits])
-                                _GLIST_.aiguilles[0].a2c1301[bits].style.fill = '#E1A712';
-                            }
-                            break;
-                        case 'c2301':
-                            for (let bits in _GLIST_.aiguilles[0].a2c2301) {
-                                console.log(_GLIST_.aiguilles[0].a2c2301[bits])
-                                _GLIST_.aiguilles[0].a2c2301[bits].style.fill = '#E1A712';
-                            }
-                            break;
-                    }
-                }
-            }
-
-            for (let _SEC_ in data.SEC) {
-                for (let _TRAIN_ in data.SEC[_SEC_].cantons[_CANTON_].trains) {
-                    console.log(data.SEC[_SEC_].cantons[_CANTON_].trains[_TRAIN_]);
-                    let tid = data.SEC[_SEC_].cantons[_CANTON_].trains[_TRAIN_].tid;
-                    //canton_train.set(_TRAIN_, _CANTON_)
-                    console.log('_TRAIN_ ' + _TRAIN_ + " _CANTON_ " + _CANTON_)
-
-                    fresponse.trains.push({
-                        cantonId: data.SEC[_SEC_].cantons[_CANTON_].cid,
-                        cantonIndex: _CANTON_,
-                        trainId: tid,
-                        trainIndex: _TRAIN_,
-                        secId: data.SEC[_SEC_].id,
-                        secIndex: _SEC_
-                    })
-                }
-            }
-
-        } else {
-            if (typeof _GLIST_[_CANTON_ + 1].length === 'undefined') { //CANTON LIBRE
-                console.log((_CANTON_ + 1) + ' est un canton simple')
-                console.log('[🚫] canton ' + (_CANTON_ + 1) + ' libre')
-                let CTARGET = _GLIST_[_CANTON_ + 1]
-                CTARGET.style.fill = '#707070';
-            } else {
-                console.log((_CANTON_ + 1) + ' est une aiguille')
-                console.log('[🚫] aiguille ' + (_CANTON_ + 1) + ' libre')
-                console.log(data.SEC[0].cantons[_CANTON_])
-
-                if (data.SEC[0].cantons[_CANTON_].position === 'r') {
-                    console.log(data.SEC[0].cantons[_CANTON_].cid + ' en neutre')
-                    clearAllCantons('S1', _CANTON_)
-                    for (let bits in _GLIST_[_CANTON_ + 1]) {
-                        console.log(_GLIST_[_CANTON_ + 1][bits])
-                        _GLIST_[_CANTON_ + 1][bits].style.fill = '#66D264';
-                    }
-                    _GLIST_.lights.S1C1.setAttribute('href', '../V1S1_GREEN.png')
-                    _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_GREEN.png')
-                    _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_RED.png')
-                } else if (data.SEC[0].cantons[_CANTON_].position === 'a1') {
-                    clearAllCantons('S1', _CANTON_, 'deleteCenter')
-                    console.log(data.SEC[0].cantons[_CANTON_].cid + ' en aiguille a1')
-                    //clearAllCantons(_CANTON_, 'a1')
-                    switch (data.SEC[0].cantons[_CANTON_].cid) {
-                        case 'c1301':
-                            clearAllCantons('S1', _CANTON_)
-                            console.log(data.SEC[0].cantons[_CANTON_].cid + ' démarre son itération de peinture pour c1301 a1')
-                            for (let bits in _GLIST_.aiguilles[0].a1c1301) {
-                                console.log(_GLIST_.aiguilles[0].a1c1301[bits])
-                                _GLIST_.aiguilles[0].a1c1301[bits].style.fill = '#66D264';
-                            }
-                            break;
-                        case 'c2301':
-                            console.log(data.SEC[0].cantons[_CANTON_].cid + ' démarre son itération de peinture pour c2301 a1')
-                            for (let bits in _GLIST_.aiguilles[0].a1c2301) {
-                                console.log(_GLIST_.aiguilles[0].a1c2301[bits])
-                                _GLIST_.aiguilles[0].a1c2301[bits].style.fill = '#66D264';
-                            }
-                            break;
-                    }
-                    switch (data.SEC[0].cantons[_CANTON_].dir) {
-                        case 'up':
-                            _GLIST_.lights.S1C1.setAttribute('href', '../V1S1_RED.png')
-                            _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_RED.png')
-                            _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_RED.png')
-                            break;
-                        case 'down':
-                            _GLIST_.lights.S1C1.setAttribute('href', '../V1S1_RED.png')
-                            _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_RED.png')
-                            _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_GREEN.png')
-                    }
-
-                } else if (data.SEC[0].cantons[_CANTON_].position === 'a2') {
-                    clearAllCantons('S1', _CANTON_, 'deleteCenter')
-                    console.log(data.SEC[0].cantons[_CANTON_].cid + ' en aiguille a2')
-                    //clearAllCantons(_CANTON_, 'a2')
-                    switch (data.SEC[0].cantons[_CANTON_].cid) {
-                        case 'c1301':
-                            clearAllCantons('S1', _CANTON_)
-                            console.log(data.SEC[0].cantons[_CANTON_].cid + ' démarre son itération de peinture pour c1301 a2')
-                            for (let bits in _GLIST_.aiguilles[0].a2c1301) {
-                                console.log(_GLIST_.aiguilles[0].a2c1301[bits])
-                                _GLIST_.aiguilles[0].a2c1301[bits].style.fill = '#66D264';
-                            }
-                            break;
-                        case 'c2301':
-                            console.log(data.SEC[0].cantons[_CANTON_].cid + ' démarre son itération de peinture pour c2301 a2')
-                            for (let bits in _GLIST_.aiguilles[0].a2c2301) {
-                                console.log(_GLIST_.aiguilles[0].a2c2301[bits])
-                                _GLIST_.aiguilles[0].a2c2301[bits].style.fill = '#66D264';
-                            }
-                            break;
-                    }
-                    switch (data.SEC[0].cantons[_CANTON_].dir) {
-                        case 'up':
-                            _GLIST_.lights.S1C1.setAttribute('href', '../V1S1_GREEN.png')
-                            _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_RED.png')
-                            _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_RED.png')
-                            break;
-                        case 'down':
-                            _GLIST_.lights.S1C1.setAttribute('href', '../V1S1_RED.png')
-                            _GLIST_.lights.S2C1.setAttribute('href', '../V2S2_GREEN.png')
-                            _GLIST_.lights.S3C1.setAttribute('href', '../V1S1_RED.png')
-                    }
+/*function getItiInfo(cid){
+    for(let sec of data.SEC){
+        for(let itil of Object.entries(sec.ITI)){
+            for(let vitil of Object.entries(itil[1])){
+                for(let iti of vitil[1]){
+                    let ctnCode = cid.replace('c','')
+                    console.log(ctnCode)
+                    console.log(iti.code.search(ctnCode))
+                    if(!(iti.code.search(ctnCode))) continue;
+                    console.log(iti)
                 }
             }
         }
     }
-    return JSON.stringify(fresponse)
+}*/
+
+function refreshTCO(){
+    for(let ctn of Object.entries(dictS1.cantons)){
+        if(ctn[1].length===3){
+            for(let part of ctn[1]){
+                part.style.fill='#707070'
+            }
+        } else ctn[1].style.fill='#707070'
+    }
+    for(let aig of Object.entries(dictS1.aiguilles[0])){
+        if(aig[0]==='id') continue;
+        for(let part of aig[1]){
+            part.style.fill='#707070'
+        }
+    }
+    for(let sec of data.SEC){
+        if(sec.id==='2') continue;
+        for(let ctn of sec.cantons){
+            let ctninfo = getCantonsInfo(ctn.cid)
+            if((ctninfo.cid==='c1301')||(ctninfo.cid==='c2301')){
+                //console.log('lol')
+                for(let itil of Object.entries(sec.ITI)){
+                    for(let vitil of Object.entries(itil[1])){
+                        for(let iti of vitil[1]){
+                            //console.log(iti)
+                            if(((iti.code==='1201_1401')&&(iti.active))||((iti.code==='1401_1201')&&(iti.active))){
+                                if(ctn.cid==='c1301'){
+                                    console.log(ctn.trains.length)
+                                    if(ctn.trains.length>0){
+                                        for(let parts of dictS1.cantons.c1301){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    } else {
+                                        for(let parts of dictS1.cantons.c1301){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    }
+                                }
+                            } else if(((iti.code==='2201_2401')&&(iti.active))||((iti.code==='2401_2201')&&(iti.active))){
+                                if(ctn.cid==='c2301'){
+                                    if(ctn.trains.length>0){
+                                        for(let parts of dictS1.cantons.c2301){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    } else {
+                                        for(let parts of dictS1.cantons.c2301){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    }
+                                }
+                            } else if(((iti.code==='1201_2201')&&(iti.active))||((iti.code==='2201_1201')&&(iti.active))){
+                                console.log(ctn.trains.length)
+                                if(ctn.trains.length>0){
+                                    if(ctn.cid==='c1301'){
+                                        for(let parts of dictS1.aiguilles[0].a2c1301){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    } else if(ctn.cid==='c2301'){
+                                        for(let parts of dictS1.aiguilles[0].a2c2301){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    }
+                                } else {
+                                    if(ctn.cid==='c1301'){
+                                        for(let parts of dictS1.aiguilles[0].a2c1301){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    } else if(ctn.cid==='c2301'){
+                                        for(let parts of dictS1.aiguilles[0].a2c2301){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    }
+                                }
+                            } else if(((iti.code==='2401_1401')&&(iti.active))||((iti.code==='1401_2401')&&(iti.active))){
+                                if(ctn.trains.length>0){
+                                    if(ctn.cid==='c1301'){
+                                        for(let parts of dictS1.aiguilles[0].a1c1301){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    } else if(ctn.cid==='c2301'){
+                                        for(let parts of dictS1.aiguilles[0].a1c2301){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    }
+                                } else {
+                                    if(ctn.cid==='c1301'){
+                                        for(let parts of dictS1.aiguilles[0].a1c1301){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    } else if(ctn.cid==='c2301'){
+                                        for(let parts of dictS1.aiguilles[0].a1c2301){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    }
+                                }
+                            } else continue;
+                        }
+                    }
+                }
+            } else {
+                if(ctn.trains.length>0){
+                    console.log(dictS1.cantons)
+                    console.log(ctn.cid)
+                    dictS1.cantons[ctn.cid].style.fill='#E1A712'
+                }
+            }
+        }
+    }
 }
 
 function getCantonsInfoS2() {
@@ -1522,7 +1416,7 @@ function loadElectricalInfos(){
 }
 
 function verifyExistingTrain(id) {
-    console.log('-------IL EXISTE????---------')
+    /*console.log('-------IL EXISTE????---------')
     console.log('ON CHERCHE LE N° ' + id)
     let idArray = []
     let trains = JSON.parse(getCantonsInfo()) //ça foire ici
@@ -1542,7 +1436,7 @@ function verifyExistingTrain(id) {
     if (!(idArray.includes(id))) {
         return false
     }
-    console.log('ALLELUYA IL EXISTE')
+    console.log('ALLELUYA IL EXISTE')*/
     return true;
 }
 
@@ -1552,113 +1446,6 @@ function isDigit(n) {
     if (isNaN(TTARGET)) return false; //en gros c'est pas digit, c'est une lettre
     console.log(TTARGET)
     return true;
-}
-
-/**
- * Peint tout les _GLIST_ d'aiguille en gris afin de les reset
- * @param _CANTON_ il faut fournir l'iteration _canton_
- * @param exeption une aiguille qui ne sera pas reset
- */
-function clearAllCantons(list, _CANTON_, mode) {
-    let _GLIST_ = false
-    switch (list) {
-        case 'S1':
-            _GLIST_ = cantonsS1
-            if (!(mode)) {
-
-                console.log('ordre d\'effacement avec it ' + _CANTON_)
-                for (let bits in _GLIST_[_CANTON_ + 1]) {
-                    //console.log(_GLIST_[_CANTON_+1][bits])
-                    _GLIST_[_CANTON_ + 1][bits].style.fill = '#707070';
-                    console.log('effacage de ' + (_CANTON_ + 1))
-                }
-                /*if(!(_GLIST_.aiguilles)){
-                    alert('Le cache doit être vidé pour continuer, désolé :(')
-                    return;
-                }*/
-                for (let bits in _GLIST_.aiguilles[0].a1c1301) {
-                    //console.log(_GLIST_.aiguilles[0].a1c1301[bits])
-                    _GLIST_.aiguilles[0].a1c1301[bits].style.fill = '#707070'
-                }
-                for (let bits in _GLIST_.aiguilles[0].a1c2301) {
-                    //console.log(_GLIST_.aiguilles[0].a1c2301[bits])
-                    _GLIST_.aiguilles[0].a1c2301[bits].style.fill = '#707070'
-                }
-                for (let bits in _GLIST_.aiguilles[0].a2c1301) {
-                    //console.log(_GLIST_.aiguilles[0].a2c1301[bits])
-                    _GLIST_.aiguilles[0].a2c1301[bits].style.fill = '#707070'
-                }
-                for (let bits in _GLIST_.aiguilles[0].a2c2301) {
-                    //console.log(_GLIST_.aiguilles[0].a2c2301[bits])
-                    _GLIST_.aiguilles[0].a2c2301[bits].style.fill = '#707070'
-                }
-            } else {
-                if (mode === 'deleteCenter') {
-                    for (let bits in _GLIST_[3]) {
-                        _GLIST_[3][bits].style.fill = '#707070'; //suppression des couleurs sur les parallèles
-                    }
-
-                    for (let bits in _GLIST_[8]) {
-                        _GLIST_[8][bits].style.fill = '#707070'; //suppression des couleurs sur les parallèles
-                    }
-                }
-            }
-            break;
-        case 'S2':
-            _GLIST_ = cantonsS2
-            if (!(mode)) {
-
-                console.log('ordre d\'effacement avec it ' + _CANTON_)
-                for (let bits in _GLIST_[_CANTON_ + 1]) {
-                    //console.log(_GLIST_[_CANTON_+1][bits])
-                    _GLIST_[_CANTON_ + 1][bits].style.fill = '#707070';
-                    console.log('effacage de ' + (_CANTON_ + 1))
-                }
-                for (let bits in _GLIST_.aiguilles[0].a1c1102) {
-                    //console.log(_GLIST_.aiguilles[0].a1c1301[bits])
-                    _GLIST_.aiguilles[0].a1c1102[bits].style.fill = '#707070'
-                }
-                for (let bits in _GLIST_.aiguilles[0].a1c2402) {
-                    //console.log(_GLIST_.aiguilles[0].a1c2301[bits])
-                    _GLIST_.aiguilles[0].a1c2402[bits].style.fill = '#707070'
-                }
-                for (let bits in _GLIST_.aiguilles[0].a2c1202) {
-                    //console.log(_GLIST_.aiguilles[0].a2c1301[bits])
-                    _GLIST_.aiguilles[0].a2c1202[bits].style.fill = '#707070'
-                }
-                for (let bits in _GLIST_.aiguilles[0].a2cEND) {
-                    //console.log(_GLIST_.aiguilles[0].a2c2301[bits])
-                    _GLIST_.aiguilles[0].a2cEND[bits].style.fill = '#707070'
-                }
-            } else {
-                if (mode === 'deleteCenter') {
-                    for (let bits in _GLIST_[1]) {
-                        _GLIST_[1][bits].style.fill = '#707070'; //suppression des couleurs sur les parallèles
-                    }
-
-                    for (let bits in _GLIST_[2]) {
-                        _GLIST_[2][bits].style.fill = '#707070'; //suppression des couleurs sur les parallèles
-                    }
-
-                    for (let bits in _GLIST_[8]) {
-                        _GLIST_[8][bits].style.fill = '#707070'; //suppression des couleurs sur les parallèles
-                    }
-                    _GLIST_[10].style.fill = '#707070'; //suppression des couleurs sur les parallèles
-                } else if (mode === 'a1p') {
-                    for (let bits in _GLIST_[1]) {
-                        _GLIST_[1][bits].style.fill = '#707070'; //suppression des couleurs sur les parallèles
-                    }
-                    for (let bits in _GLIST_[8]) {
-                        _GLIST_[8][bits].style.fill = '#707070'; //suppression des couleurs sur les parallèles
-                    }
-                } else if (mode === 'a2p') {
-                    for (let bits in _GLIST_[2]) {
-                        _GLIST_[2][bits].style.fill = '#707070'; //suppression des couleurs sur les parallèles
-                    }
-                }
-            }
-            break;
-    }
 }
 
 copyConfig.addEventListener('click', () => {
