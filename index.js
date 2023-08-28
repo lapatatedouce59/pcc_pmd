@@ -937,25 +937,58 @@ function refreshTCO(){
             lights[1].setAttribute('href', '../signals/SM-RNT.png');
         }
         if(itiInfo('2201_2401')){
-            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-VT.png');
-            dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+            if(isOccupied('c2301')||isOccupied('c2401')){
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RT.png');
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+            } else {
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-VT.png');
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+            }
         } else if(itiInfo('2401_2201')){
-            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-VT.png');
-            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+            if(isOccupied('c2301')||isOccupied('c2201')){
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RT.png');
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+            } else {
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-VT.png');
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+            }
         } else if(itiInfo('2401_1401')){
-            dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-JT.png');
-            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
-            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
+            if(isOccupied('c2301')||isOccupied('c1401')){
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RT.png');
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
+            } else {
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-JT.png');
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
+            }
         } else if(itiInfo('2201_1201')){
-            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-JT.png');
-            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
-            dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+            if(isOccupied('c2301')||isOccupied('c1201')){
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RT.png');
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+            } else {
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-JT.png');
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+            }
         } else if(itiInfo('1201_1401')){
-            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-VT.png');
+            if(isOccupied('c2301')||isOccupied('c1401')){
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RT.png');
+            } else {
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-VT.png');
+            }
         } else if(itiInfo('1201_2201')){
-            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-JT.png');
-            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
-            dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+            if(isOccupied('c2301')||isOccupied('c2201')){
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RT.png');
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+            } else {
+                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-JT.png');
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+            }
+            
         }
 
         //? Gestion voyants
@@ -1530,7 +1563,7 @@ function verifyExistingTrain(id) {
 }
 
 function itiInfo(id){
-    if(!id) return console.error('[OGIA -> itiInfo] Aucun ID d\'iti indiqué!')
+    if(!id) return console.error('[itiInfo] Aucun ID d\'iti indiqué!')
     for(let sec of data.SEC){
         for(let itil of Object.entries(sec.ITI[0])){
             for(let iti of itil[1]){
@@ -1539,7 +1572,18 @@ function itiInfo(id){
             }
         }
     }
-    console.info('[OGIA -> itiInfo] Aucun itinéraire correspondant.')
+    console.info('itiInfo] Aucun itinéraire correspondant.')
+    return false;
+}
+
+function isOccupied(id){
+    if(!id) return console.error('[isOccupied] Aucun canton indiqué')
+    for(let sec of data.SEC){
+        for(let ctn of sec.cantons){
+            if(!(ctn.cid===id)) continue;
+            if(ctn.trains.length>0) return true;
+        }
+    }
     return false;
 }
 

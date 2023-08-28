@@ -452,10 +452,15 @@ function loadItiTco(pa){
                 }
             }
         }
-
     }
     for(let aigArr of Object.entries(pa1dictionnary.aiguilles.c1.arrows)){
         aigArr[1].style.fill = '#B1B1B1';
+    }
+    if((itiInfo('1201_2201'))||(itiInfo('1401_2401'))){
+        pa1dictionnary.aiguilles.c1.arrows.up.style.fill='#148FB6'
+    }
+    if((itiInfo('2201_1201'))||(itiInfo('2401_1401'))){
+        pa1dictionnary.aiguilles.c1.arrows.down.style.fill='#148FB6'
     }
     for(let arrows of Object.entries(pa1dictionnary.arrows)){
         arrows[1].style.fill = '#9F9F9F'
@@ -471,4 +476,18 @@ function loadItiTco(pa){
             }
         }
     }
+}
+
+function itiInfo(id){
+    if(!id) return console.error('[OGIA -> itiInfo] Aucun ID d\'iti indiqué!')
+    for(let sec of data.SEC){
+        for(let itil of Object.entries(sec.ITI[0])){
+            for(let iti of itil[1]){
+                if(!(iti.code===id)) continue;
+                return iti.active
+            }
+        }
+    }
+    console.info('[OGIA -> itiInfo] Aucun itinéraire correspondant.')
+    return false;
 }
