@@ -1,6 +1,14 @@
+let startLoad = Date.now()
+
 let btnACQU = document.getElementById('btnACQU')
 let btnAG = document.getElementById('btnAG')
 let btnAG2 = document.getElementById('btnAG2')
+
+let electricLoaded = false
+let dataLoaded = false
+let tco1Loaded = false
+let tco2Loaded = false
+
 
 let toast= document.getElementById('snackbar')
 
@@ -42,6 +50,8 @@ setInterval(async function() {
 }, 500)
 
 let keystroke = []
+
+
 
 window.addEventListener('keydown', (e)=>{
     keystroke.push(e.code)
@@ -146,7 +156,7 @@ S1.addEventListener('load', () => {
         }
 
     }
-    refreshTCO()
+    tco1Loaded=true
 })
 let cantonsS2 = false
 
@@ -201,7 +211,7 @@ S2.addEventListener('load', () => {
         }
 
     }
-    getCantonsInfoS2()
+    tco2Loaded=true
 })
 
 let elecInfo = false
@@ -247,7 +257,7 @@ ELEC.addEventListener('load', () => {
             }
         }
     }
-    loadElectricalInfos()
+    electricLoaded=true
 })
 
 
@@ -342,8 +352,7 @@ async function isWsRunning(){
                 data = parsedJson
                 let iteration = 0
                 let count = 0
-                console.log(data)
-                refreshTCO()
+                dataLoaded=true
                 for (let voy of document.getElementsByClassName('voy')) {
                     let elemid = voy.id
                     //console.log(parsedJson[elemid])
@@ -524,9 +533,10 @@ async function isWsRunning(){
                     clearInterval(reloadInter)
                 }*/
                 function reload(){
-                    getCantonsInfo()
-                    getCantonsInfoS2()
+                    //getCantonsInfo()
+                    //getCantonsInfoS2()
                     loadElectricalInfos()
+                    refreshTCO()
                 }
                 
             }
@@ -946,11 +956,11 @@ function refreshTCO(){
             }
         } else if(itiInfo('2401_2201')){
             if(isOccupied('c2301')||isOccupied('c2201')){
-                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RT.png');
-                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RT.png');
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
             } else {
-                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-VT.png');
-                dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-VT.png');
+                dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
             }
         } else if(itiInfo('2401_1401')){
             if(isOccupied('c2301')||isOccupied('c1401')){
@@ -1475,6 +1485,7 @@ function getCantonsInfoS2() {
 function loadElectricalInfos(){
     console.log('LOADING ELECTRICAL CANTONS')
     for(let ectns of Object.entries(elecInfo.ctns)){
+        console.log(data.ectns)
         let ctnsStatus = data.ectns[ectns[0]]
         console.log(ctnsStatus)
         switch(ctnsStatus){
@@ -1603,3 +1614,21 @@ let btnAdminAccess = document.getElementById('btnAdminAccess')
 btnAdminAccess.addEventListener('click',()=>{
     document.location.href='admin.html'
 })
+
+let loadCount = 0
+let verifFunc = ()=>{
+    loadCount++
+    console.log(loadCount)
+    if(loadCount===30){
+        document.location.reload()
+    }
+    if(dataLoaded&&electricLoaded&&tco1Loaded&&tco2Loaded){
+        console.log('resolved')
+        clearInterval(verifLoadInter)
+        loadElectricalInfos()
+        refreshTCO()
+        let endLoad = Date.now()
+        console.log('Pre-load in '+(endLoad-startLoad)+' ms.')
+    }
+}
+let verifLoadInter = setInterval(verifFunc,50)

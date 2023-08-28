@@ -94,6 +94,14 @@ async function updateFormat(pa){
     for(let elem of document.getElementsByClassName('VOYITIV')){
         elem.classList.remove('ok')
     }
+    for(let elem of document.getElementsByClassName('voyGestionItiState')){
+        elem.classList.remove('ok')
+        for(let sec of data.SEC){
+            if(sec.states[elem.id]){
+                elem.classList.add('ok')
+            }
+        }
+    }
     console.log('UPDATE INTENT FOR '+pa.id)
     for(let itilist of pa.itis){
         for(let itiv of Object.entries(itilist)){
@@ -491,3 +499,52 @@ function itiInfo(id){
     console.info('[OGIA -> itiInfo] Aucun itinéraire correspondant.')
     return false;
 }
+
+
+
+
+let btnRetV201 = document.getElementById('btnRetV201')
+let btnInjV201 = document.getElementById('btnInjV201')
+let btnRetV101 = document.getElementById('btnRetV101')
+let btnInjV101 = document.getElementById('btnInjV101')
+
+btnRetV201.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "RET-BTN-ITI",
+        target: "V201",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnInjV201.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "INJ-BTN-ITI",
+        target: "V201",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnRetV101.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "RET-BTN-ITI",
+        target: "V101",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnInjV101.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "INJ-BTN-ITI",
+        target: "V101",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})

@@ -1951,6 +1951,14 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 220:
+                if((pccApi.SEC[0].cantons[0].trains.length===0)||(pccApi.SEC[0].cantons[1].trains.length===0)){
+                    pccApi.SEC[0].states.retDispoV101=true
+                }
+                if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
+                    pccApi.SEC[0].states.injDispoV101=true
+                } else {
+                    pccApi.SEC[0].states.injDispoV101=false
+                }
                 if(data.execute==='SEL-BTN-ITI'){
                     if(!(data.target)) return;
                     for(let sec of pccApi.SEC){
@@ -2010,6 +2018,170 @@ wss.on('connection', (ws, req) => {
                                 } else continue;
                             }
                         }
+                    }
+                }
+                break;
+            case 221:
+                if((pccApi.SEC[0].cantons[0].trains.length===0)||(pccApi.SEC[0].cantons[1].trains.length===0)){
+                    pccApi.SEC[0].states.retDispoV101=true
+                }
+                if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
+                    pccApi.SEC[0].states.injDispoV101=true
+                } else {
+                    pccApi.SEC[0].states.injDispoV101=false
+                }
+                if(data.execute==='RET-BTN-ITI'){
+                    if(!(data.target)) return;
+                    if(data.target==='V201'){
+                        if(pccApi.SEC[0].cantons[9].trains.length>0) return;
+                        const rpdelay = async() => {
+                            changeItiState('sel','2201_2401')
+                            changeItiState('sel','2401_2501')
+
+                            changeItiState('des','2501_2401')
+                            changeItiState('des','2401_2201')
+                            changeItiState('des','2201_1201')
+                            changeItiState('des','2401_1401')
+                            changeItiState('des','1201_2201')
+                            changeItiState('des','2401_1401')
+                            apiSave()
+                            await setTimeout(2000)
+                            apiSave()
+                        }
+                        rpdelay()
+                        let endCycleIti = ()=>{
+                            if(pccApi.SEC[0].cantons[9].trains.length>0){
+                                clearInterval(endCycleInter)
+                                pccApi.SEC[0].states.injDispoV201=true
+                                pccApi.SEC[0].states.retDispoV201=false 
+                                apiSave()
+                            }
+                        }
+                        let endCycleInter = setInterval(endCycleIti,2000)
+                    }
+                    if(data.target==='V101'){
+                        if(pccApi.SEC[0].cantons[0].trains.length>0) return;
+                        const rpdelay = async() => {
+                            /*pccApi.SEC[0].ITI[0].V2[1].mode='SEL'
+                            pccApi.SEC[0].ITI[0].V1[3].mode='SEL'
+
+                            pccApi.SEC[0].ITI[0].V1[3].mode='DES'
+                            pccApi.SEC[0].ITI[0].V1[1].mode='DES'
+                            pccApi.SEC[0].ITI[0].V1[2].mode='DES'
+                            pccApi.SEC[0].ITI[0].V2[2].mode='DES'
+                            pccApi.SEC[0].ITI[0].V2[3].mode='DES'
+
+                            pccApi.SEC[0].ITI[0].V1[3].active=false
+                            pccApi.SEC[0].ITI[0].V1[1].active=false
+                            pccApi.SEC[0].ITI[0].V1[2].active=false
+                            pccApi.SEC[0].ITI[0].V2[2].active=false
+                            pccApi.SEC[0].ITI[0].V2[3].active=false
+                            pccApi.SEC[0].ITI[0].V2[1].active=false
+                            apiSave()
+                            await setTimeout(2000)
+                            pccApi.SEC[0].ITI[0].V1[0].active=true
+                            pccApi.SEC[0].ITI[0].V1[4].active=true
+
+                            pccApi.SEC[0].ITI[0].V1[3].mode=false
+                            pccApi.SEC[0].ITI[0].V1[2].mode=false
+                            pccApi.SEC[0].ITI[0].V1[1].mode=false
+                            pccApi.SEC[0].ITI[0].V2[2].mode=false
+                            pccApi.SEC[0].ITI[0].V2[1].mode=false
+                            pccApi.SEC[0].ITI[0].V2[3].mode=false
+                            apiSave()*/
+                            changeItiState('sel','2201_1201')
+                            changeItiState('sel','1201_1101')
+
+                            changeItiState('des','1401_2401')
+                            changeItiState('des','2401_1401')
+                            changeItiState('des','1201_2201')
+                            changeItiState('des','1101_1201')
+                            changeItiState('des','2201_2401')
+                            changeItiState('des','2401_2201')
+                            changeItiState('des','1201_1401')
+                            changeItiState('des','1401_1201')
+                            apiSave()
+                            await setTimeout(2000)
+                            apiSave()
+                        }
+                        rpdelay()
+                        let endCycleIti = ()=>{
+                            if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
+                                clearInterval(endCycleInter)
+                                pccApi.SEC[0].states.injDispoV101=true
+                                if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
+                                    pccApi.SEC[0].states.retDispoV101=true
+                                } else {
+                                    pccApi.SEC[0].states.retDispoV101=false
+                                }
+                                apiSave()
+                            }
+                        }
+                        let endCycleInter = setInterval(endCycleIti,2000)
+                    }
+                }
+                if(data.execute==='INJ-BTN-ITI'){
+                    if(!(data.target)) return;
+                    if(data.target==='V201'){
+                        if(pccApi.SEC[0].cantons[3].trains.length>0) return;
+                        const rpdelay = async() => {
+                            changeItiState('sel','2501_2401')
+                            changeItiState('sel','2401_1401')
+
+                            changeItiState('des','2401_2501')
+                            changeItiState('des','2401_2201')
+                            changeItiState('des','2201_2401')
+                            changeItiState('des','2201_1201')
+                            changeItiState('des','1201_2201')
+                            changeItiState('des','2401_1401')
+                            apiSave()
+                            await setTimeout(2000)
+                            apiSave()
+                        }
+                        rpdelay()
+                        let endCycleIti = ()=>{
+                            if(pccApi.SEC[0].cantons[3].trains.length>0){
+                                clearInterval(endCycleInter)
+                                pccApi.SEC[0].states.injDispoV201=false
+                                pccApi.SEC[0].states.retDispoV201=true 
+                                apiSave()
+                            }
+                        }
+                        let endCycleInter = setInterval(endCycleIti,2000)
+                    } else if(data.target==='V101'){
+                        if(pccApi.SEC[0].cantons[3].trains.length>0) return;
+                        const rpdelay = async() => {
+                            changeItiState('sel','1101_1201')
+                            changeItiState('sel','1201_1401')
+
+                            changeItiState('des','1401_1201')
+                            changeItiState('des','1201_1101')
+                            changeItiState('des','2201_1201')
+                            changeItiState('des','1201_2201')
+                            changeItiState('des','2401_1401')
+                            changeItiState('des','1401_2401')
+                            apiSave()
+                            await setTimeout(2000)
+                            apiSave()
+                        }
+                        rpdelay()
+                        let endCycleIti = ()=>{
+                            if((pccApi.SEC[0].cantons[3].trains.length>0)){
+                                clearInterval(endCycleInter)
+                                
+                                if((pccApi.SEC[0].cantons[1].trains.length>0)&&(pccApi.SEC[0].cantons[0].trains.length>0)){
+                                    pccApi.SEC[0].states.injDispoV101=true
+                                }
+                                if((pccApi.SEC[0].cantons[1].trains.length>0)||(pccApi.SEC[0].cantons[0].trains.length>0)){
+                                    pccApi.SEC[0].states.retDispoV101=true
+                                }
+                                if((pccApi.SEC[0].cantons[1].trains.length===0)&&(pccApi.SEC[0].cantons[0].trains.length===0)){
+                                    pccApi.SEC[0].states.injDispoV101=false
+                                }
+                                apiSave()
+                            }
+                        }
+                        let endCycleInter = setInterval(endCycleIti,2000)
                     }
                 }
                 break;
@@ -3035,4 +3207,40 @@ function getStationsInfo(id){
         }
     }
     return reponse;
+}
+
+function changeItiState(mode, code){
+    for(let sec of pccApi.SEC){
+        for(let itil of Object.entries(sec.ITI[0])){
+            for(let iti of itil[1]){
+                if(!(iti.code===code)) continue;
+                if(mode==='sel'){
+                    const rpdelay = async() => {
+                        iti.mode='SEL'
+                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                        await setTimeout(2000)
+                        iti.active=true
+                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                    }
+                    rpdelay()
+                } else if(mode==='des'){
+                    const rpdelay = async() => {
+                        iti.mode='DES'
+                        iti.active=false
+                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                        await setTimeout(2000)
+                        iti.mode=false
+                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                    }
+                    rpdelay()
+            
+                } else if(mode==='du'){
+                    iti.mode=false
+                    iti.active=false
+                    fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                } else return false;
+            }
+        }
+    }
+    return false;
 }
