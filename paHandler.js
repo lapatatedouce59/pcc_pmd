@@ -164,17 +164,56 @@ async function updateFormat(pa){
             }
         }
     }
+    for(let cycle of pa.cycles){
+        let cyclePresence = document.getElementById(`voyPresence${cycle.code}`)
+        let cycleImg = document.getElementById(`imgPresence${cycle.code}`)
+        if(cycle.sel){
+            cyclePresence.classList.add('voyPresenceCmdOn')
+            cyclePresence.classList.remove('voyPresenceCmdOff')
+        } else {
+            cyclePresence.classList.remove('voyPresenceCmdOn')
+            cyclePresence.classList.add('voyPresenceCmdOff')
+        }
+        if(cycle.active){
+            cycleImg.src=cycle.imgl
+        } else {
+            cycleImg.src=cycle.imgn
+        }
+    }
+
+    for(let voyHeader of document.getElementsByClassName('voyPaState')){
+        for(let sec of data.SEC){
+            if (!(sec.id==='1')) continue;
+            /*for(let state of Object.entries(sec.states)){
+                console.log(state)
+                let stateElem = state[1][voyHeader.id]
+                console.log(stateElem)
+                if(stateElem===true){
+                    voyHeader.classList.add('ok')
+                } else {
+                    voyHeader.classList.remove('ok')
+                }
+            }*/
+            let stateElem = sec.states[voyHeader.id]
+            if(stateElem===true){
+                voyHeader.classList.add('ok')
+            } else {
+                voyHeader.classList.remove('ok')
+            }
+        }
+    }
     loadItiTco(pa)
 }
 
 function PaInfo(id){
-    let reponse={id: null, states: Object, ctns: [], itis: []}
+    let reponse={id: null, states: Object, ctns: [], itis: [], cycles: []}
 
     for (let sec of data.SEC){
         if (!(sec.id===id)) continue;
         reponse.id=sec.id
         reponse.states=sec.states
         reponse.itis=sec.ITI
+        reponse.cycles=sec.CYCLES
         for (let ctns of sec.cantons){
             reponse.ctns.push(ctns)
         }
@@ -426,6 +465,55 @@ async function initFormat(pa){
             masterDiv.appendChild(parentdiv)
         }
     }
+    //? Creating cycle board
+    for(let sec of data.SEC){
+        if(!(sec.id==='1')) continue;
+        for(let cycles of sec.CYCLES){
+            console.log(cycles)
+            let tr = document.createElement('tr')
+            let td1 = document.createElement('td')
+            let cycleSelBtn = document.createElement('input')
+            cycleSelBtn.classList.add('btnControl')
+            cycleSelBtn.type='button'
+            cycleSelBtn.value='  '
+            cycleSelBtn.id=`btnSel${cycles.code}`
+            cycleSelBtn.addEventListener('click',()=>{
+                actualRequest = JSON.stringify({
+                    op: 222,
+                    execute: "SEL-BTN-CYCLE",
+                    target: cycles.code,
+                    uuid: window.uuid
+                })
+                window.WebSocket.send(actualRequest);
+                window.actualRequest = actualRequest
+            })
+
+            let td2=document.createElement('td')
+            td2.classList.add('voyPresenceCmdOff','VOYCYCLEP')
+            if(cycles.sel){
+                td2.classList.remove('voyPresenceCmdOff')
+                td2.classList.add('voyPresenceCmdOn')
+            }
+            td2.id=`voyPresence${cycles.code}`
+
+            let td3 = document.createElement('td')
+            td3.colSpan='5'
+            let statusImg = document.createElement('img')
+            if(cycles.active){
+                statusImg.src=cycles.imgl;
+            } else {
+                statusImg.src=cycles.imgn;
+            }
+            statusImg.id=`imgPresence${cycles.code}`
+
+            td1.appendChild(cycleSelBtn)
+            td3.appendChild(statusImg)
+            tr.appendChild(td1)
+            tr.appendChild(td2)
+            tr.appendChild(td3)
+            document.getElementById('masterTableCycles').appendChild(tr)
+        }
+    }
 }
 
 function loadItiTco(pa){
@@ -508,6 +596,9 @@ let btnInjV201 = document.getElementById('btnInjV201')
 let btnRetV101 = document.getElementById('btnRetV101')
 let btnInjV101 = document.getElementById('btnInjV101')
 
+let btnDesUrgIti = document.getElementById('btnDesUrgIti')
+let btnCancelCycles = document.getElementById('btnCancelCycles')
+
 btnRetV201.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 221,
@@ -543,6 +634,26 @@ btnInjV101.addEventListener('click', ()=>{
         op: 221,
         execute: "INJ-BTN-ITI",
         target: "V101",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnDesUrgIti.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 223,
+        execute: "DUG-BTN-ITI",
+        target: "1",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnCancelCycles.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 223,
+        execute: "CANCELCYCLES-BTN-ITI",
+        target: "1",
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);

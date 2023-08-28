@@ -26,6 +26,8 @@ console.log('├ Loading logger...')
 const logger = require('./logger')
 logUpdate('├ Loading OGIA...')
 const ogia = require('./OGIA')
+logUpdate('├ Loading OGDC...')
+const ogdc = require('./OGDC')
 logUpdate('├ Loading GSA...')
 const gsa = require('./GSA')
 logUpdate('├ Loading server.json...')
@@ -511,8 +513,10 @@ wss.on('connection', (ws, req) => {
         }
         
         if(op==='300') return;
-        
+        ongoingiti()
+        ongoingcycle()
         switch(op){
+            
             case 1 :
                 if(!((data.token)||(data.from))) return;
                 const verificationProcess = async() => {
@@ -1951,6 +1955,7 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 220:
+                ongoingiti()
                 if((pccApi.SEC[0].cantons[0].trains.length===0)||(pccApi.SEC[0].cantons[1].trains.length===0)){
                     pccApi.SEC[0].states.retDispoV101=true
                 }
@@ -2022,6 +2027,7 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 221:
+                ongoingiti()
                 if((pccApi.SEC[0].cantons[0].trains.length===0)||(pccApi.SEC[0].cantons[1].trains.length===0)){
                     pccApi.SEC[0].states.retDispoV101=true
                 }
@@ -2062,33 +2068,6 @@ wss.on('connection', (ws, req) => {
                     if(data.target==='V101'){
                         if(pccApi.SEC[0].cantons[0].trains.length>0) return;
                         const rpdelay = async() => {
-                            /*pccApi.SEC[0].ITI[0].V2[1].mode='SEL'
-                            pccApi.SEC[0].ITI[0].V1[3].mode='SEL'
-
-                            pccApi.SEC[0].ITI[0].V1[3].mode='DES'
-                            pccApi.SEC[0].ITI[0].V1[1].mode='DES'
-                            pccApi.SEC[0].ITI[0].V1[2].mode='DES'
-                            pccApi.SEC[0].ITI[0].V2[2].mode='DES'
-                            pccApi.SEC[0].ITI[0].V2[3].mode='DES'
-
-                            pccApi.SEC[0].ITI[0].V1[3].active=false
-                            pccApi.SEC[0].ITI[0].V1[1].active=false
-                            pccApi.SEC[0].ITI[0].V1[2].active=false
-                            pccApi.SEC[0].ITI[0].V2[2].active=false
-                            pccApi.SEC[0].ITI[0].V2[3].active=false
-                            pccApi.SEC[0].ITI[0].V2[1].active=false
-                            apiSave()
-                            await setTimeout(2000)
-                            pccApi.SEC[0].ITI[0].V1[0].active=true
-                            pccApi.SEC[0].ITI[0].V1[4].active=true
-
-                            pccApi.SEC[0].ITI[0].V1[3].mode=false
-                            pccApi.SEC[0].ITI[0].V1[2].mode=false
-                            pccApi.SEC[0].ITI[0].V1[1].mode=false
-                            pccApi.SEC[0].ITI[0].V2[2].mode=false
-                            pccApi.SEC[0].ITI[0].V2[1].mode=false
-                            pccApi.SEC[0].ITI[0].V2[3].mode=false
-                            apiSave()*/
                             changeItiState('sel','2201_1201')
                             changeItiState('sel','1201_1101')
 
@@ -2183,6 +2162,65 @@ wss.on('connection', (ws, req) => {
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
                     }
+                }
+                break;
+            case 222:
+                ongoingcycle()
+                if(data.execute==='SEL-BTN-CYCLE'){
+                    if(!(data.target)) return;
+                    for(let sec of pccApi.SEC){
+                        if(!(sec.id==='1')) continue;
+                        for(let cycle of sec.CYCLES){
+                            if(!(cycle.code===data.target)) continue;
+                            cycle.sel=true
+                            apiSave()
+                            sec.states.cycleOngoing=true
+                            let checkCycleClear = ()=>{
+                                if(!(pccApi.SEC[0].cantons[8].trains.length>0)){
+                                    clearInterval(checkCycleClearInter)
+                                    ogdc.startCycle(cycle.code, wss, true)
+                                    apiSave()
+                                }
+                            }
+                            let checkCycleClearInter = setInterval(checkCycleClear,2000)
+                        }
+                    }
+                }
+                break;
+            case 223:
+                if(data.execute==='CANCELCYCLES-BTN-ITI'){
+                    if(!(data.target)) return;
+                    for(let sec of pccApi.SEC){
+                        if(!(sec.id===data.target)) continue;
+                        for(let cycle of sec.CYCLES){
+                            cycle.active=false
+                            cycle.sel=false
+                        }
+                        sec.states.cycleOngoing=false
+                    }
+                    apiSave()
+                } else if(data.execute==='DUG-BTN-ITI'){
+                    if(!(data.target)) return;
+                    for(let sec of pccApi.SEC){
+                        if(!(sec.id===data.target)) continue;
+                        for(let itilist of Object.entries(sec.ITI[0])){
+                            for(let iti of itilist[1]){
+                                if(iti.code){
+                                    const rpdelay = async() => {
+                                        iti.mode='DES'
+                                        iti.active=false
+                                        apiSave()
+                                        await setTimeout(1000)
+                                        iti.mode=false
+                                        apiSave()
+                                    }
+                                    rpdelay()
+                                    ongoingiti()
+                                } else continue;
+                            }
+                        }
+                    }
+                    apiSave()
                 }
                 break;
             case 400:
@@ -3243,4 +3281,47 @@ function changeItiState(mode, code){
         }
     }
     return false;
+}
+
+function ongoingiti(){
+    for(let sec of pccApi.SEC){
+        let ongoing = []
+        if(!(sec.id==='1')) continue;
+        for(let itilist of Object.entries(sec.ITI[0])){
+            for(let iti of itilist[1]){
+                if(iti.active){
+                    ongoing.push(iti.code)
+                } else continue;
+            }
+        }
+        if(ongoing.length>0) {
+            sec.states.itiOngoing=true
+            apiSave()
+            return;
+        }
+        sec.states.itiOngoing=false
+        apiSave()
+    }
+    
+    return false;
+}
+
+function ongoingcycle(){
+    for(let sec of pccApi.SEC){
+        let ongoing = []
+        if(!(sec.id==='1')) continue;
+        for(let cycle of sec.CYCLES){
+            if(cycle.active){
+                ongoing.push(cycle.code)
+            }
+        }
+        if(ongoing.length>0) {sec.states.cycleOngoing=true
+            apiSave()
+            return;
+        }
+        sec.states.cycleOngoing=false
+        apiSave()
+    }
+    
+    
 }
