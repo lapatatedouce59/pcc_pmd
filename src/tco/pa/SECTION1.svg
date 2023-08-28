@@ -25,16 +25,16 @@
                 <rect width="50" height="18" transform="matrix(1 0 0 -1 52 138)" fill="#707070" name="1201" id="2"/>
                 <rect width="25" height="18" transform="matrix(1 0 0 -1 104 138)" fill="#707070" name="1301A" id="3"/>
                 
-                <image x= "104" y="140" href="../V1S1_GREEN.png" height="25" width="25" id="S1C1"/> <!--Feu en lui ^m-->
+                <image x= "104" y="140" href="../signals/SM-RNT.png" height="25" width="25" id="S1C1"/> <!--Feu en lui ^m-->
                 <image x= "104" y="160" href="../S1C1.png" height="25" width="18" id="eS1C1"/> <!--Etiquette de feu-->
-                <image x= "104" y="20" href="../V1S1_GREEN.png" height="25" width="25" id="S3C1"/>
+                <image x= "104" y="20" href="../signals/SM-RNT.png" height="25" width="25" id="S3C1"/>
                 <image x= "104" y="39" href="../S3C1.png" height="25" width="18" id="eS3C1"/>
-                <image x= "206" y="-27" href="../V2S2_GREEN.png" height="25" width="25" id="S2C1"/>
+                <image x= "206" y="-27" href="../signals/SM-VT.png" height="25" width="25" id="S2C1"/>
                 <image x= "213" y="-47" href="../S2C1.png" height="25" width="18" id="eS3C1"/>
 
-                <image x= "308" y="140" href="../V1S1_GREEN.png" height="25" width="25" id="S1C2"/>
+                <image x= "308" y="140" href="../signals/SM-VT.png" height="25" width="25" id="S1C2"/>
                 <image x= "308" y="160" href="../S1C2.png" height="25" width="18" id="eS1C2"/>
-                <image x= "335" y="140" href="../V1S1_GREEN.png" height="25" width="25" id="S3C2"/>
+                <image x= "335" y="140" href="../signals/SM-VT.png" height="25" width="25" id="S3C2"/>
                 <image x= "335" y="160" href="../S3C2.png" height="25" width="18" id="eS3C2"/>
 
                 <image x= "180" y="55" href="../C1.png" height="25" width="18" id="eC1"/>

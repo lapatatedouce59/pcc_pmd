@@ -146,7 +146,7 @@ S1.addEventListener('load', () => {
         }
 
     }
-    getCantonsInfo()
+    refreshTCO()
 })
 let cantonsS2 = false
 
@@ -343,6 +343,7 @@ async function isWsRunning(){
                 let iteration = 0
                 let count = 0
                 console.log(data)
+                refreshTCO()
                 for (let voy of document.getElementsByClassName('voy')) {
                     let elemid = voy.id
                     //console.log(parsedJson[elemid])
@@ -930,8 +931,69 @@ function refreshTCO(){
     }
     for(let sec of data.SEC){
         if(sec.id==='2') continue;
+
+        //? Gestion feux
+        for(let lights of Object.entries(dictS1.lights)){
+            lights[1].setAttribute('href', '../signals/SM-RNT.png');
+        }
+        if(itiInfo('2201_2401')){
+            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-VT.png');
+            dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+        } else if(itiInfo('2401_2201')){
+            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-VT.png');
+            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+        } else if(itiInfo('2401_1401')){
+            dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-JT.png');
+            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
+        } else if(itiInfo('2201_1201')){
+            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-JT.png');
+            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
+            dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+        } else if(itiInfo('1201_1401')){
+            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-VT.png');
+        } else if(itiInfo('1201_2201')){
+            dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-JT.png');
+            dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
+            dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
+        }
+
+        //? Gestion voyants
+        for(let voys of Object.entries(dictS1.voys)){
+            voys[1].setAttribute('href', '../OFF.png')
+        }
+        if((itiInfo('2201_2401'))){
+            dictS1.voys['NOR'].setAttribute('href', '../ON.png')
+        }
+        if(itiInfo('1201_1401')){
+            dictS1.voys['INSR'].setAttribute('href', '../ON.png')
+        }
+        if(itiInfo('2201_1201')){
+            dictS1.voys['GAR'].setAttribute('href', '../ON.png')
+        }
         for(let ctn of sec.cantons){
             let ctninfo = getCantonsInfo(ctn.cid)
+            if((ctninfo.cid==='c1401')||(ctninfo.cid==='c2201')){
+                if(ctn.cid==='c1401'){
+                    if(ctn.trains.length>0){
+                        dictS1.screens['1401'][0].style.fill = '#3C0A0A'
+                        dictS1.screens['1401'][1].textContent=ctn.trains[0].tid
+                    } else {
+                        dictS1.screens['1401'][0].style.fill = '#000'
+                        dictS1.screens['1401'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c2201'){
+                    if(ctn.trains.length>0){
+                        dictS1.screens['2201'][0].style.fill = '#3C0A0A'
+                        dictS1.screens['2201'][1].textContent=ctn.trains[0].tid
+                    } else {
+                        dictS1.screens['2201'][0].style.fill = '#000'
+                        dictS1.screens['2201'][1].textContent=''
+                    }
+                }
+                
+            }
             if((ctninfo.cid==='c1301')||(ctninfo.cid==='c2301')){
                 //console.log('lol')
                 for(let itil of Object.entries(sec.ITI)){
@@ -940,7 +1002,6 @@ function refreshTCO(){
                             //console.log(iti)
                             if(((iti.code==='1201_1401')&&(iti.active))||((iti.code==='1401_1201')&&(iti.active))){
                                 if(ctn.cid==='c1301'){
-                                    
                                     if(ctn.trains.length>0){
                                         for(let parts of dictS1.cantons.c1301){
                                             parts.style.fill='#E1A712'
@@ -964,6 +1025,7 @@ function refreshTCO(){
                                     }
                                 }
                             } else if(((iti.code==='1201_2201')&&(iti.active))||((iti.code==='2201_1201')&&(iti.active))){
+                                //? Gestion fleches
                                 if((iti.code==='1201_2201')&&(iti.active)){
                                     for(let arr of dictS1.arrows[0]){
                                         arr.style.fill='#66D264'
@@ -973,6 +1035,8 @@ function refreshTCO(){
                                         arr.style.fill='#66D264'
                                     }
                                 }
+                                dictS1.voys['A2Dev'].setAttribute('href', '../ON.png')
+                                //? Gestion colorimétrie des cantons et aiguilles
                                 if(ctn.trains.length>0){
                                     if(ctn.cid==='c1301'){
                                         for(let parts of dictS1.aiguilles[0].a2c1301){
@@ -995,6 +1059,7 @@ function refreshTCO(){
                                     }
                                 }
                             } else if(((iti.code==='2401_1401')&&(iti.active))||((iti.code==='1401_2401')&&(iti.active))){
+                                //? Gestion fleches
                                 if((iti.code==='1401_2401')&&(iti.active)){
                                     for(let arr of dictS1.arrows[0]){
                                         arr.style.fill='#66D264'
@@ -1004,6 +1069,8 @@ function refreshTCO(){
                                         arr.style.fill='#66D264'
                                     }
                                 }
+                                dictS1.voys['A1Dev'].setAttribute('href', '../ON.png')
+                                //? Gestion colorimétrie des cantons et aiguilles
                                 if(ctn.trains.length>0){
                                     if(ctn.cid==='c1301'){
                                         for(let parts of dictS1.aiguilles[0].a1c1301){
@@ -1460,6 +1527,20 @@ function verifyExistingTrain(id) {
     }
     console.log('ALLELUYA IL EXISTE')*/
     return true;
+}
+
+function itiInfo(id){
+    if(!id) return console.error('[OGIA -> itiInfo] Aucun ID d\'iti indiqué!')
+    for(let sec of data.SEC){
+        for(let itil of Object.entries(sec.ITI[0])){
+            for(let iti of itil[1]){
+                if(!(iti.code===id)) continue;
+                return iti.active
+            }
+        }
+    }
+    console.info('[OGIA -> itiInfo] Aucun itinéraire correspondant.')
+    return false;
 }
 
 function isDigit(n) {

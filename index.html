@@ -670,6 +670,43 @@
     <button id="sendCmd">SEND</button>
     <h3 id="attention" class="warn" style="transition: 400ms;">Ne pas faire avancer une rame sans respecter les feux!!!</h3>
 
+    <div class="format">
+        <div style="background-color: #44C1DC;">
+            <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des itinéraires et cycles</span><span><select id="selectMenuPa"></select></span>
+        </div>
+        <div class="part1PA" style="display: inline-flex; width: fit-content;">
+            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                <legend>RECALACUL DU CYCLE</legend>
+                <input type="button" class="btnControl" id="btnRazSeqPA" value="   " style="width: 10%;">
+                <table style="width: 90%;">
+                    <tr><td class="voyPaState" id="razSeq"><span id="razSeq" class="voyPaState">RAZ SEQ</span></td></tr>
+                </table>
+            </fieldset>
+            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                <legend>DES URGENCE ITIS</legend>
+                <input type="button" class="btnControl" id="btnDesUrgIti" value="   " style="width: 10%;">
+                <table style="width: 90%;">
+                    <tr><td class="voyPaState" id="itiOngoing"><span id="itiOngoing" class="voyPaState">ITINERAIRES EN COURS</span></td></tr>
+                </table>
+            </fieldset>
+            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                <legend>ANNULATION TOUT CYCLE</legend>
+                <input type="button" class="btnControl" id="btnCancelCycles" value="   " style="width: 10%;">
+                <table style="width: 90%;">
+                    <tr><td class="voyPaState" id="cycleOngoing"><span id="cycleOngoing" class="voyPaState">CYCLE EN COURS</span></td></tr>
+                </table>
+            </fieldset>
+        </div>
+        <div id="manualItiTop" style="display: inline-flex; width: 100%; align-items: center;">
+            
+        </div>
+        <div id="tcoItiPa">
+            <object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>
+        </div>
+        <div id="manualItiBot" style="display: inline-flex; width: 100%; align-items: center;">
+            
+        </div>
+    </div>
     <div id="fstation" class="format">
         <div id="stationhead" style="width: 100%; background-color: #5E5E5E; color: white;">
             <span><b>Gestion des quais</b></span><span> - EAS</span> <br>
@@ -1006,43 +1043,6 @@
                     <tr><td class="voyTrainState" id="activeTests" colspan="2"><span id="activeTests" class="voyTrainState">TESTS EN COURS</span></td><td class="voyTrainState" id="unvalidTest" colspan="2"><span id="unvalidTest" class="voyTrainState">TEST NON VALIDE</span></td></tr>
                 </table>
             </fieldset></span>
-        </div>
-    </div>
-    <div class="format">
-        <div style="background-color: #44C1DC;">
-            <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des itinéraires et cycles</span><span><select id="selectMenuPa"></select></span>
-        </div>
-        <div class="part1PA" style="display: inline-flex; width: fit-content;">
-            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                <legend>RECALACUL DU CYCLE</legend>
-                <input type="button" class="btnControl" id="btnRazSeqPA" value="   " style="width: 10%;">
-                <table style="width: 90%;">
-                    <tr><td class="voyPaState" id="razSeq"><span id="razSeq" class="voyPaState">RAZ SEQ</span></td></tr>
-                </table>
-            </fieldset>
-            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                <legend>DES URGENCE ITIS</legend>
-                <input type="button" class="btnControl" id="btnDesUrgIti" value="   " style="width: 10%;">
-                <table style="width: 90%;">
-                    <tr><td class="voyPaState" id="itiOngoing"><span id="itiOngoing" class="voyPaState">ITINERAIRES EN COURS</span></td></tr>
-                </table>
-            </fieldset>
-            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                <legend>ANNULATION TOUT CYCLE</legend>
-                <input type="button" class="btnControl" id="btnCancelCycles" value="   " style="width: 10%;">
-                <table style="width: 90%;">
-                    <tr><td class="voyPaState" id="cycleOngoing"><span id="cycleOngoing" class="voyPaState">CYCLE EN COURS</span></td></tr>
-                </table>
-            </fieldset>
-        </div>
-        <div id="manualItiTop" style="display: inline-flex; width: 100%; align-items: center;">
-            
-        </div>
-        <div id="tcoItiPa">
-            <object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>
-        </div>
-        <div id="manualItiBot" style="display: inline-flex; width: 100%; align-items: center;">
-            
         </div>
     </div>
 
