@@ -120,8 +120,8 @@
             },
             {
               "code": "2201_2401",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "2401_2201",
@@ -167,13 +167,13 @@
             },
             {
               "code": "2401_1401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1201_1401",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1401_1201",
@@ -232,6 +232,24 @@
             "pdp": false,
             "coupFs": false
           },
+          "trains": []
+        },
+        {
+          "cid": "c1301",
+          "position": "a1",
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          },
+          "dir": "up",
+          "trains": []
+        },
+        {
+          "cid": "c1401",
           "trains": [
             {
               "tid": "3",
@@ -371,25 +389,7 @@
                 "cptFu": 0
               }
             }
-          ]
-        },
-        {
-          "cid": "c1301",
-          "position": "r",
-          "states": {
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          },
-          "dir": "r",
-          "trains": []
-        },
-        {
-          "cid": "c1401",
-          "trains": [],
+          ],
           "type": "quai",
           "name": "MSTO V1",
           "states": {
@@ -533,8 +533,8 @@
         },
         {
           "cid": "c2301",
-          "position": "r",
-          "dir": "r",
+          "position": "a1",
+          "dir": "up",
           "states": {
             "selAcc": false,
             "pzo": false,
