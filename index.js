@@ -923,6 +923,11 @@ function refreshTCO(){
             part.style.fill='#707070'
         }
     }
+    for(let arrlist of dictS1.arrows){
+        for(let arr of arrlist){
+            arr.style.fill='#707070'
+        }
+    }
     for(let sec of data.SEC){
         if(sec.id==='2') continue;
         for(let ctn of sec.cantons){
@@ -935,7 +940,7 @@ function refreshTCO(){
                             //console.log(iti)
                             if(((iti.code==='1201_1401')&&(iti.active))||((iti.code==='1401_1201')&&(iti.active))){
                                 if(ctn.cid==='c1301'){
-                                    console.log(ctn.trains.length)
+                                    
                                     if(ctn.trains.length>0){
                                         for(let parts of dictS1.cantons.c1301){
                                             parts.style.fill='#E1A712'
@@ -959,7 +964,15 @@ function refreshTCO(){
                                     }
                                 }
                             } else if(((iti.code==='1201_2201')&&(iti.active))||((iti.code==='2201_1201')&&(iti.active))){
-                                console.log(ctn.trains.length)
+                                if((iti.code==='1201_2201')&&(iti.active)){
+                                    for(let arr of dictS1.arrows[0]){
+                                        arr.style.fill='#66D264'
+                                    }
+                                } else if((iti.code==='2201_1201')&&(iti.active)){
+                                    for(let arr of dictS1.arrows[1]){
+                                        arr.style.fill='#66D264'
+                                    }
+                                }
                                 if(ctn.trains.length>0){
                                     if(ctn.cid==='c1301'){
                                         for(let parts of dictS1.aiguilles[0].a2c1301){
@@ -982,6 +995,15 @@ function refreshTCO(){
                                     }
                                 }
                             } else if(((iti.code==='2401_1401')&&(iti.active))||((iti.code==='1401_2401')&&(iti.active))){
+                                if((iti.code==='1401_2401')&&(iti.active)){
+                                    for(let arr of dictS1.arrows[0]){
+                                        arr.style.fill='#66D264'
+                                    }
+                                } else if((iti.code==='2401_1401')&&(iti.active)){
+                                    for(let arr of dictS1.arrows[1]){
+                                        arr.style.fill='#66D264'
+                                    }
+                                }
                                 if(ctn.trains.length>0){
                                     if(ctn.cid==='c1301'){
                                         for(let parts of dictS1.aiguilles[0].a1c1301){
