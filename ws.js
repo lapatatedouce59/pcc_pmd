@@ -2041,6 +2041,7 @@ wss.on('connection', (ws, req) => {
                     if(data.target==='V201'){
                         if(pccApi.SEC[0].cantons[9].trains.length>0) return;
                         const rpdelay = async() => {
+                            pccApi.SEC[0].CYCLES[6].active=true
                             changeItiState('sel','2201_2401')
                             changeItiState('sel','2401_2501')
 
@@ -2059,7 +2060,8 @@ wss.on('connection', (ws, req) => {
                             if(pccApi.SEC[0].cantons[9].trains.length>0){
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[0].states.injDispoV201=true
-                                pccApi.SEC[0].states.retDispoV201=false 
+                                pccApi.SEC[0].states.retDispoV201=false
+                                pccApi.SEC[0].CYCLES[6].active=false
                                 apiSave()
                             }
                         }
@@ -2068,6 +2070,7 @@ wss.on('connection', (ws, req) => {
                     if(data.target==='V101'){
                         if(pccApi.SEC[0].cantons[0].trains.length>0) return;
                         const rpdelay = async() => {
+                            pccApi.SEC[0].CYCLES[2].active=true
                             changeItiState('sel','2201_1201')
                             changeItiState('sel','1201_1101')
 
@@ -2088,6 +2091,7 @@ wss.on('connection', (ws, req) => {
                             if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[0].states.injDispoV101=true
+                                pccApi.SEC[0].CYCLES[2].active=false
                                 if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
                                     pccApi.SEC[0].states.retDispoV101=true
                                 } else {
@@ -2104,6 +2108,7 @@ wss.on('connection', (ws, req) => {
                     if(data.target==='V201'){
                         if(pccApi.SEC[0].cantons[3].trains.length>0) return;
                         const rpdelay = async() => {
+                            pccApi.SEC[0].CYCLES[3].active=true
                             changeItiState('sel','2501_2401')
                             changeItiState('sel','2401_1401')
 
@@ -2123,6 +2128,7 @@ wss.on('connection', (ws, req) => {
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[0].states.injDispoV201=false
                                 pccApi.SEC[0].states.retDispoV201=true 
+                                pccApi.SEC[0].CYCLES[3].active=false
                                 apiSave()
                             }
                         }
@@ -2171,18 +2177,50 @@ wss.on('connection', (ws, req) => {
                     for(let sec of pccApi.SEC){
                         if(!(sec.id==='1')) continue;
                         for(let cycle of sec.CYCLES){
-                            if(!(cycle.code===data.target)) continue;
+                            if(!(cycle.code===data.target)){
+                                cycle.active=false
+                                cycle.sel=false
+                                continue;
+                            }
                             cycle.sel=true
                             apiSave()
                             sec.states.cycleOngoing=true
-                            let checkCycleClear = ()=>{
-                                if(!(pccApi.SEC[0].cantons[8].trains.length>0)){
-                                    clearInterval(checkCycleClearInter)
-                                    ogdc.startCycle(cycle.code, wss, true)
-                                    apiSave()
+                            if(cycle.code==='c1p1'){
+                                let secureCnt = 0
+                                let checkCycleClear = ()=>{
+                                    secureCnt++
+                                    if(secureCnt===5){
+                                        clearInterval(checkCycleClearInter)
+                                        cycle.sel=false
+                                        apiSave()
+                                        return;
+                                    }
+                                    if(!(pccApi.SEC[0].cantons[8].trains.length>0)){
+                                        clearInterval(checkCycleClearInter)
+                                        ogdc.startCycle(cycle.code, wss, true)
+                                        apiSave()
+                                    }
                                 }
+                                let checkCycleClearInter = setInterval(checkCycleClear,2000)
                             }
-                            let checkCycleClearInter = setInterval(checkCycleClear,2000)
+                            if(cycle.code==='c2p1'){
+                                let secureCnt = 0
+                                let checkCycleClear = ()=>{
+                                    secureCnt++
+                                    if(secureCnt===5){
+                                        clearInterval(checkCycleClearInter)
+                                        cycle.sel=false
+                                        apiSave()
+                                        return;
+                                    }
+                                    if(!(pccApi.SEC[0].cantons[1].trains.length>0)){
+                                        clearInterval(checkCycleClearInter)
+                                        ogdc.startCycle(cycle.code, wss, true)
+                                        apiSave()
+                                    }
+                                }
+                                let checkCycleClearInter = setInterval(checkCycleClear,2000)
+                            }
                         }
                     }
                 }

@@ -963,7 +963,7 @@ function refreshTCO(){
                 dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
             }
         } else if(itiInfo('2401_1401')){
-            if(isOccupied('c2301')||isOccupied('c1401')){
+            if(isOccupied('c2301')||isOccupied('c1401')||isOccupied('c1301')){
                 dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RT.png');
                 dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
                 dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
@@ -973,7 +973,7 @@ function refreshTCO(){
                 dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
             }
         } else if(itiInfo('2201_1201')){
-            if(isOccupied('c2301')||isOccupied('c1201')){
+            if(isOccupied('c2301')||isOccupied('c1201')||isOccupied('c1301')){
                 dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RT.png');
                 dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RNT.png');
                 dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');
@@ -989,7 +989,7 @@ function refreshTCO(){
                 dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-VT.png');
             }
         } else if(itiInfo('1201_2201')){
-            if(isOccupied('c2301')||isOccupied('c2201')){
+            if(isOccupied('c2301')||isOccupied('c2201')||isOccupied('c1301')){
                 dictS1.lights['S1C1'].setAttribute('href', '../signals/SM-RT.png');
                 dictS1.lights['S2C1'].setAttribute('href', '../signals/SM-RNT.png');
                 dictS1.lights['S3C1'].setAttribute('href', '../signals/SM-RNT.png');

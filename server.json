@@ -113,7 +113,7 @@
         {
           "code": "c3p1",
           "imgn": "./src/formats/cycles/pa1/c3.png",
-          "imgl": "./src/formats/cycles/pa1/c3it.png",
+          "imgl": "./src/formats/cycles/pa1/c3lit.png",
           "active": false,
           "sel": false
         },
@@ -163,8 +163,8 @@
             },
             {
               "code": "2501_2401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1401_2401",
@@ -210,8 +210,8 @@
           "V2": [
             {
               "code": "1101_1201",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1201_1101",
@@ -225,7 +225,7 @@
             },
             {
               "code": "2401_1401",
-              "active": false,
+              "active": true,
               "mode": false
             },
             {
@@ -271,7 +271,7 @@
         "retDispoV101": true,
         "injDispoV101": false,
         "razSeq": false,
-        "itiOngoing": false,
+        "itiOngoing": true,
         "cycleOngoing": false
       },
       "cantons": [
@@ -315,75 +315,6 @@
         },
         {
           "cid": "c1401",
-          "trains": [],
-          "type": "quai",
-          "name": "MSTO V1",
-          "states": {
-            "doorsOpened": false,
-            "doorsClosed": true,
-            "doorsOpenedPAS": false,
-            "doorsClosedPAS": true,
-            "defPartOuvPP": false,
-            "defPartFerPP": false,
-            "defTotOuvPP": false,
-            "defTotFerPP": false,
-            "doorsOpenedWithoutTrain": false,
-            "activeObs": false,
-            "doorsObstacle": false,
-            "condemnedDoor": false,
-            "openedEDoors": false,
-            "lockedEDoors": true,
-            "openedPEQ": false,
-            "lockedPEQ": true,
-            "unlockedPMS": false,
-            "engagedPMS": false,
-            "manualExpKeyEng": false,
-            "maintKeyEng": false,
-            "manuelPPOpening": false,
-            "manuelPPClosing": false,
-            "departAuth": false,
-            "departForce": false,
-            "HLP": false,
-            "DSO": true,
-            "IDPOAlreadyActiveByPLTP": false,
-            "PLTPIDPOInhibed": false,
-            "IDPOAlreadyActiveByALC": false,
-            "ALCIDPOInhibed": false,
-            "alimDef": false,
-            "actualTime": 23,
-            "afdActive": false,
-            "cancelAfd": false,
-            "VVTS1": false,
-            "vvtS1AlreadyOn": false,
-            "VVTS2": false,
-            "vvtS2AlreadyOn": false,
-            "depaActive": false,
-            "defDepa": false,
-            "idpfActive": false,
-            "impIdpf": false,
-            "istaActive": false,
-            "istaBlock": false,
-            "mapfActive": false,
-            "mapfImp": false,
-            "defOrderExec": false,
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          }
-        },
-        {
-          "cid": "c1501",
-          "states": {
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          },
           "trains": [
             {
               "tid": "3",
@@ -523,7 +454,76 @@
                 "cptFu": 0
               }
             }
-          ]
+          ],
+          "type": "quai",
+          "name": "MSTO V1",
+          "states": {
+            "doorsOpened": false,
+            "doorsClosed": true,
+            "doorsOpenedPAS": false,
+            "doorsClosedPAS": true,
+            "defPartOuvPP": false,
+            "defPartFerPP": false,
+            "defTotOuvPP": false,
+            "defTotFerPP": false,
+            "doorsOpenedWithoutTrain": false,
+            "activeObs": false,
+            "doorsObstacle": false,
+            "condemnedDoor": false,
+            "openedEDoors": false,
+            "lockedEDoors": true,
+            "openedPEQ": false,
+            "lockedPEQ": true,
+            "unlockedPMS": false,
+            "engagedPMS": false,
+            "manualExpKeyEng": false,
+            "maintKeyEng": false,
+            "manuelPPOpening": false,
+            "manuelPPClosing": false,
+            "departAuth": false,
+            "departForce": false,
+            "HLP": false,
+            "DSO": true,
+            "IDPOAlreadyActiveByPLTP": false,
+            "PLTPIDPOInhibed": false,
+            "IDPOAlreadyActiveByALC": false,
+            "ALCIDPOInhibed": false,
+            "alimDef": false,
+            "actualTime": 23,
+            "afdActive": false,
+            "cancelAfd": false,
+            "VVTS1": false,
+            "vvtS1AlreadyOn": false,
+            "VVTS2": false,
+            "vvtS2AlreadyOn": false,
+            "depaActive": false,
+            "defDepa": false,
+            "idpfActive": false,
+            "impIdpf": false,
+            "istaActive": false,
+            "istaBlock": false,
+            "mapfActive": false,
+            "mapfImp": false,
+            "defOrderExec": false,
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          }
+        },
+        {
+          "cid": "c1501",
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          },
+          "trains": []
         },
         {
           "cid": "c2101",
@@ -669,8 +669,8 @@
             },
             {
               "code": "2201_2401",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "2401_2201",
@@ -716,18 +716,18 @@
             },
             {
               "code": "2401_1401",
-              "active": false,
+              "active": true,
               "mode": false
             },
             {
               "code": "1201_1401",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1401_1201",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1401_1501",
