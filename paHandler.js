@@ -1,7 +1,8 @@
 let data=false
 let actualRequest=false
+let selectMenuPa = document.getElementById('selectMenuPa')
+let selected = false
 window.WebSocket.addEventListener('message', msg =>{
-    let selectMenuPa = document.getElementById('selectMenuPa')
     data = JSON.parse(msg.data);
     if ((data.op===300)||(data.op===2)){
         let op = data.op
@@ -19,72 +20,22 @@ window.WebSocket.addEventListener('message', msg =>{
                 selectMenuPa.appendChild(opt)
             }
 
-            let tempa=PaInfo('1')
+            let tempa=PaInfo(selected||'1')
             initFormat(tempa)
-            updateFormat(tempa)
+            //updateFormat(tempa)
         }
-        let painfo = PaInfo(selectMenuPa.value)
+        let painfo = PaInfo(selected||'1')
         updateFormat(painfo)
     }
 })
-let pa1dictionnary = false
-const pa1 = document.getElementById('pa1svg')
-pa1.addEventListener('load', () => {
-    let pa1svgDoc = pa1.contentDocument;
-    pa1dictionnary = {
-        cantons: {
-            'c1101': pa1svgDoc.getElementById('c1101'),
-            'c1201': pa1svgDoc.getElementById('c1201'),
-            'c1301': pa1svgDoc.getElementById('c1301'),
-            'c1401': pa1svgDoc.getElementById('c1401'),
-            'c1501': pa1svgDoc.getElementById('c1501'),
-            'c2101': pa1svgDoc.getElementById('c2101'),
-            'c2201': pa1svgDoc.getElementById('c2201'),
-            'c2301': pa1svgDoc.getElementById('c2301'),
-            'c2401': pa1svgDoc.getElementById('c2401'),
-            'c2501': pa1svgDoc.getElementById('c2501')
-        },
-        aiguilles: {
-            'c1': {
-                tracks:{
-                    'a1': pa1svgDoc.getElementById('c1a1'),
-                    'a2': pa1svgDoc.getElementById('c1a2'),
-                    'c1301n': pa1svgDoc.getElementById('c1301n'),
-                    'c2301n': pa1svgDoc.getElementById('c2301n')
-                },
-                arrows:{
-                    'up': pa1svgDoc.getElementById('c1up'),
-                    'down': pa1svgDoc.getElementById('c1dw')
-                }
-            }
-        },
-        arrows: {
-            '2401_2501':pa1svgDoc.getElementById('2401_2501'),
-            '2501_2401':pa1svgDoc.getElementById('2501_2401'),
-            '1401_2401':pa1svgDoc.getElementById('1401_2401'),
-            '2201_1201':pa1svgDoc.getElementById('2201_1201'),
-            '2201_2401':pa1svgDoc.getElementById('2201_2401'),
-            '2401_2201':pa1svgDoc.getElementById('2401_2201'),
-            '2101_2201':pa1svgDoc.getElementById('2101_2201'),
-            '2201_2101':pa1svgDoc.getElementById('2201_2101'),
-            '2402_2101':pa1svgDoc.getElementById('2402_2101'),
-            '2101_2402':pa1svgDoc.getElementById('2101_2402'),
-
-            '1101_1201':pa1svgDoc.getElementById('1101_1201'),
-            '1201_1101':pa1svgDoc.getElementById('1201_1101'),
-            '1201_2201':pa1svgDoc.getElementById('1201_2201'),
-            '2401_1401':pa1svgDoc.getElementById('2401_1401'),
-            '1201_1401':pa1svgDoc.getElementById('1201_1401'),
-            '1401_1201':pa1svgDoc.getElementById('1401_1201'),
-            '1401_1501':pa1svgDoc.getElementById('1401_1501'),
-            '1501_1401':pa1svgDoc.getElementById('1501_1401'),
-            '1501_1102':pa1svgDoc.getElementById('1501_1102'),
-            '1102_1501':pa1svgDoc.getElementById('1102_1501')
-        }
-    }
-    let pa = PaInfo("1")
-    loadItiTco(pa)
+selectMenuPa.addEventListener('input', ()=>{
+    selected=selectMenuPa.value
+    let pa = PaInfo(selected)
+    initFormat(pa)
 })
+let pa1dictionnary = false
+let pa2dictionnary = false
+
 
 async function updateFormat(pa){
     for(let elem of document.getElementsByClassName('VOYITIP')){
@@ -202,11 +153,14 @@ async function updateFormat(pa){
             }
         }
     }
+
+    console.log('MAJ 1')
     loadItiTco(pa)
 }
 
 function PaInfo(id){
-    let reponse={id: null, states: Object, ctns: [], itis: [], cycles: []}
+    console.log(id)
+    let reponse={id: null||'1', states: Object, ctns: [], itis: [], cycles: []}
 
     for (let sec of data.SEC){
         if (!(sec.id===id)) continue;
@@ -218,15 +172,157 @@ function PaInfo(id){
             reponse.ctns.push(ctns)
         }
     }
+    console.log(reponse)
     return reponse;
 }
 
 async function initFormat(pa){
+    for(let divs of document.getElementsByClassName('paFormatAmovible')){
+        if(divs.id===`paFormatAmovible${pa.id}`){
+            divs.style.display='inline'
+        } else {
+            divs.style.display='none'
+        }
+    }
+    document.getElementById(`manualItiTop${pa.id}`).innerHTML=''
+    document.getElementById(`manualItiBot${pa.id}`).innerHTML=''
+    console.log('erase '+pa.id)
+    document.getElementById(`masterTableCycles${pa.id}`).innerHTML=''
+    console.log(pa.id)
+    if (pa.id==='1'){
+        let tcoItiPa = document.getElementById('tcoItiPa1')
+        tcoItiPa.innerHTML=''
+        let tcoobj = document.createElement('object')
+        tcoobj.data="src/formats/TCOPA1.svg"
+        tcoobj.id="pa1svg"
+        tcoobj.type="image/svg+xml"
+        tcoItiPa.appendChild(tcoobj)
+        tcoobj.addEventListener('load', () => {
+            let pa1svgDoc = tcoobj.contentDocument;
+            pa1dictionnary = {
+                cantons: {
+                    'c1101': pa1svgDoc.getElementById('c1101'),
+                    'c1201': pa1svgDoc.getElementById('c1201'),
+                    'c1301': pa1svgDoc.getElementById('c1301'),
+                    'c1401': pa1svgDoc.getElementById('c1401'),
+                    'c1501': pa1svgDoc.getElementById('c1501'),
+                    'c2101': pa1svgDoc.getElementById('c2101'),
+                    'c2201': pa1svgDoc.getElementById('c2201'),
+                    'c2301': pa1svgDoc.getElementById('c2301'),
+                    'c2401': pa1svgDoc.getElementById('c2401'),
+                    'c2501': pa1svgDoc.getElementById('c2501')
+                },
+                aiguilles: {
+                    'c1': {
+                        tracks:{
+                            'a1': pa1svgDoc.getElementById('c1a1'),
+                            'a2': pa1svgDoc.getElementById('c1a2'),
+                            'c1301n': pa1svgDoc.getElementById('c1301n'),
+                            'c2301n': pa1svgDoc.getElementById('c2301n')
+                        },
+                        arrows:{
+                            'up': pa1svgDoc.getElementById('c1up'),
+                            'down': pa1svgDoc.getElementById('c1dw')
+                        }
+                    }
+                },
+                arrows: {
+                    '2401_2501':pa1svgDoc.getElementById('2401_2501'),
+                    '2501_2401':pa1svgDoc.getElementById('2501_2401'),
+                    '1401_2401':pa1svgDoc.getElementById('1401_2401'),
+                    '2201_1201':pa1svgDoc.getElementById('2201_1201'),
+                    '2201_2401':pa1svgDoc.getElementById('2201_2401'),
+                    '2401_2201':pa1svgDoc.getElementById('2401_2201'),
+                    '2101_2201':pa1svgDoc.getElementById('2101_2201'),
+                    '2201_2101':pa1svgDoc.getElementById('2201_2101'),
+                    '2402_2101':pa1svgDoc.getElementById('2402_2101'),
+                    '2101_2402':pa1svgDoc.getElementById('2101_2402'),
+
+                    '1101_1201':pa1svgDoc.getElementById('1101_1201'),
+                    '1201_1101':pa1svgDoc.getElementById('1201_1101'),
+                    '1201_2201':pa1svgDoc.getElementById('1201_2201'),
+                    '2401_1401':pa1svgDoc.getElementById('2401_1401'),
+                    '1201_1401':pa1svgDoc.getElementById('1201_1401'),
+                    '1401_1201':pa1svgDoc.getElementById('1401_1201'),
+                    '1401_1501':pa1svgDoc.getElementById('1401_1501'),
+                    '1501_1401':pa1svgDoc.getElementById('1501_1401'),
+                    '1501_1102':pa1svgDoc.getElementById('1501_1102'),
+                    '1102_1501':pa1svgDoc.getElementById('1102_1501')
+                }
+            }
+            console.log('MAJ 2')
+            loadItiTco(pa)
+        })
+    } else if (pa.id==='2'){
+        let tcoItiPa = document.getElementById('tcoItiPa2')
+        tcoItiPa.innerHTML=''
+        let tcoobj = document.createElement('object')
+        tcoobj.data="src/formats/TCOPA2.svg"
+        tcoobj.id="pa1svg"
+        tcoobj.type="image/svg+xml"
+        tcoItiPa.appendChild(tcoobj)
+        tcoobj.addEventListener('load', () => {
+            let pa2svgDoc = tcoobj.contentDocument;
+            pa2dictionnary = {
+                cantons: {
+                    'c1101': pa2svgDoc.getElementById('c1101'),
+                    'c1201': pa2svgDoc.getElementById('c1201'),
+                    'c1301': pa2svgDoc.getElementById('c1301'),
+                    'c1401': pa2svgDoc.getElementById('c1401'),
+                    'c1501': pa2svgDoc.getElementById('c1501'),
+                    'c2101': pa2svgDoc.getElementById('c2101'),
+                    'c2201': pa2svgDoc.getElementById('c2201'),
+                    'c2301': pa2svgDoc.getElementById('c2301'),
+                    'c2401': pa2svgDoc.getElementById('c2401'),
+                    'c2501': pa2svgDoc.getElementById('c2501')
+                },
+                aiguilles: {
+                    'c1': {
+                        tracks:{
+                            'a1': pa2svgDoc.getElementById('c1a1'),
+                            'a2': pa2svgDoc.getElementById('c1a2'),
+                            'c1301n': pa2svgDoc.getElementById('c1301n'),
+                            'c2301n': pa2svgDoc.getElementById('c2301n')
+                        },
+                        arrows:{
+                            'up': pa2svgDoc.getElementById('c1up'),
+                            'down': pa2svgDoc.getElementById('c1dw')
+                        }
+                    }
+                },
+                arrows: {
+                    '2401_2501':pa2svgDoc.getElementById('2401_2501'),
+                    '2501_2401':pa2svgDoc.getElementById('2501_2401'),
+                    '1401_2401':pa2svgDoc.getElementById('1401_2401'),
+                    '2201_1201':pa2svgDoc.getElementById('2201_1201'),
+                    '2201_2401':pa2svgDoc.getElementById('2201_2401'),
+                    '2401_2201':pa2svgDoc.getElementById('2401_2201'),
+                    '2101_2201':pa2svgDoc.getElementById('2101_2201'),
+                    '2201_2101':pa2svgDoc.getElementById('2201_2101'),
+                    '2402_2101':pa2svgDoc.getElementById('2402_2101'),
+                    '2101_2402':pa2svgDoc.getElementById('2101_2402'),
+
+                    '1101_1201':pa2svgDoc.getElementById('1101_1201'),
+                    '1201_1101':pa2svgDoc.getElementById('1201_1101'),
+                    '1201_2201':pa2svgDoc.getElementById('1201_2201'),
+                    '2401_1401':pa2svgDoc.getElementById('2401_1401'),
+                    '1201_1401':pa2svgDoc.getElementById('1201_1401'),
+                    '1401_1201':pa2svgDoc.getElementById('1401_1201'),
+                    '1401_1501':pa2svgDoc.getElementById('1401_1501'),
+                    '1501_1401':pa2svgDoc.getElementById('1501_1401'),
+                    '1501_1102':pa2svgDoc.getElementById('1501_1102'),
+                    '1102_1501':pa2svgDoc.getElementById('1102_1501')
+                }
+            }
+            console.log('MAJ 2')
+            loadItiTco(pa)
+        })
+    }
     //?  Creating action board
     for(let itilist of pa.itis){
         for(let itis of itilist.V1){
             console.log(itis)
-            let masterDiv=document.getElementById('manualItiTop')
+            let masterDiv=document.getElementById(`manualItiTop${pa.id}`)
 
             let parentdiv = document.createElement('div')
             parentdiv.style.backgroundColor='#E6E6E6'
@@ -346,7 +442,7 @@ async function initFormat(pa){
         }
         for(let itis of itilist.V2){
             console.log(itis)
-            let masterDiv=document.getElementById('manualItiBot')
+            let masterDiv=document.getElementById(`manualItiBot${pa.id}`)
 
             let parentdiv = document.createElement('div')
             parentdiv.style.backgroundColor='#E6E6E6'
@@ -467,7 +563,8 @@ async function initFormat(pa){
     }
     //? Creating cycle board
     for(let sec of data.SEC){
-        if(!(sec.id==='1')) continue;
+        if(!(sec.id===pa.id)) continue;
+        //document.getElementById(`masterTableCycles${pa.id}`).innerHTML=''
         for(let cycles of sec.CYCLES){
             console.log(cycles)
             let tr = document.createElement('tr')
@@ -511,13 +608,15 @@ async function initFormat(pa){
             tr.appendChild(td1)
             tr.appendChild(td2)
             tr.appendChild(td3)
-            document.getElementById('masterTableCycles').appendChild(tr)
+            document.getElementById(`masterTableCycles${pa.id}`).appendChild(tr)
         }
     }
+    updateFormat(pa)
 }
 
 function loadItiTco(pa){
     console.log(pa)
+    if(pa1dictionnary===false) return;
     for(let ctn of Object.entries(pa1dictionnary.cantons)){
         ctn[1].style.fill = '#CDCDCD';
         for(let ctns of pa.ctns){
@@ -643,7 +742,7 @@ btnDesUrgIti.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 223,
         execute: "DUG-BTN-ITI",
-        target: "1",
+        target: selectMenuPa.value,
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
@@ -653,7 +752,7 @@ btnCancelCycles.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 223,
         execute: "CANCELCYCLES-BTN-ITI",
-        target: "1",
+        target: selectMenuPa.value,
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);

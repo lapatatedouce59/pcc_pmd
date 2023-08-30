@@ -163,8 +163,8 @@
             },
             {
               "code": "2501_2401",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1401_2401",
@@ -178,8 +178,8 @@
             },
             {
               "code": "2201_2401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2401_2201",
@@ -198,8 +198,8 @@
             },
             {
               "code": "2402_2101",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2101_2402",
@@ -210,8 +210,8 @@
           "V2": [
             {
               "code": "1101_1201",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1201_1101",
@@ -225,7 +225,7 @@
             },
             {
               "code": "2401_1401",
-              "active": true,
+              "active": false,
               "mode": false
             },
             {
@@ -648,108 +648,171 @@
         {
           "V1": [
             {
-              "code": "2401_2501",
+              "code": "2302_2101",
               "active": false,
               "mode": false
             },
             {
-              "code": "2501_2401",
-              "active": true,
-              "mode": "SEL"
-            },
-            {
-              "code": "1401_2401",
+              "code": "2101_2302",
               "active": false,
               "mode": false
             },
             {
-              "code": "2201_1201",
+              "code": "1202_2101",
               "active": false,
               "mode": false
             },
             {
-              "code": "2201_2401",
+              "code": "2202_2302",
               "active": false,
               "mode": false
             },
             {
-              "code": "2401_2201",
+              "code": "2302_2202",
               "active": false,
               "mode": false
             },
             {
-              "code": "2101_2201",
-              "active": true,
-              "mode": "SEL"
-            },
-            {
-              "code": "2201_2101",
+              "code": "2102_2202",
               "active": false,
               "mode": false
             },
             {
-              "code": "2402_2101",
-              "active": true,
-              "mode": "SEL"
+              "code": "2202_2102",
+              "active": false,
+              "mode": false
             },
             {
-              "code": "2101_2402",
+              "code": "2603_2102",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "2102_2603",
               "active": false,
               "mode": false
             }
           ],
           "V2": [
             {
-              "code": "1101_1201",
-              "active": true,
-              "mode": "SEL"
-            },
-            {
-              "code": "1201_1101",
+              "code": "1501_1202",
               "active": false,
               "mode": false
             },
             {
-              "code": "1201_2201",
-              "active": false,
-              "mode": false
-            },
-            {
-              "code": "2401_1401",
-              "active": true,
-              "mode": false
-            },
-            {
-              "code": "1201_1401",
-              "active": false,
-              "mode": false
-            },
-            {
-              "code": "1401_1201",
+              "code": "1202_1501",
               "active": true,
               "mode": "SEL"
             },
             {
-              "code": "1401_1501",
-              "active": true,
-              "mode": "SEL"
-            },
-            {
-              "code": "1501_1401",
+              "code": "1102_1302",
               "active": false,
               "mode": false
             },
             {
-              "code": "1501_1102",
+              "code": "2101_1202",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1302_1102",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1202_2101",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1102_PAG1",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "PAG1_1102",
               "active": true,
               "mode": "SEL"
             },
             {
-              "code": "1102_1501",
+              "code": "1302_1402",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1402_1302",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1402_1103",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1103_1402",
               "active": false,
               "mode": false
             }
           ]
+        }
+      ],
+      "CYCLES": [
+        {
+          "code": "c1p2",
+          "imgn": "./src/formats/cycles/pa2/c1.png",
+          "imgl": "./src/formats/cycles/pa2/c1lit.png",
+          "active": false,
+          "sel": false
+        },
+        {
+          "code": "c2p2",
+          "imgn": "./src/formats/cycles/pa2/c2.png",
+          "imgl": "./src/formats/cycles/pa2/c2lit.png",
+          "active": false,
+          "sel": false
+        },
+        {
+          "code": "c3p2",
+          "imgn": "./src/formats/cycles/pa2/c3.png",
+          "imgl": "./src/formats/cycles/pa2/c3lit.png",
+          "active": false,
+          "sel": false
+        },
+        {
+          "code": "c4p2",
+          "imgn": "./src/formats/cycles/pa2/c4.png",
+          "imgl": "./src/formats/cycles/pa2/c4lit.png",
+          "active": false,
+          "sel": false
+        },
+        {
+          "code": "c5p2",
+          "imgn": "./src/formats/cycles/pa2/c5.png",
+          "imgl": "./src/formats/cycles/pa2/c5lit.png",
+          "active": false,
+          "sel": false
+        },
+        {
+          "code": "c6p2",
+          "imgn": "./src/formats/cycles/pa2/c6.png",
+          "imgl": "./src/formats/cycles/pa2/c6lit.png",
+          "active": false,
+          "sel": false
+        },
+        {
+          "code": "c7p2",
+          "imgn": "./src/formats/cycles/pa2/c7.png",
+          "imgl": "./src/formats/cycles/pa2/c7lit.png",
+          "active": false,
+          "sel": false
+        },
+        {
+          "code": "c8p2",
+          "imgn": "./src/formats/cycles/pa2/c8.png",
+          "imgl": "./src/formats/cycles/pa2/c8lit.png",
+          "active": false,
+          "sel": false
         }
       ],
       "cantons": [
@@ -783,6 +846,73 @@
         },
         {
           "cid": "c1302",
+          "trains": [],
+          "type": "quai",
+          "name": "STO V1",
+          "states": {
+            "doorsOpened": true,
+            "doorsClosed": false,
+            "doorsOpenedPAS": true,
+            "doorsClosedPAS": false,
+            "defPartOuvPP": false,
+            "defPartFerPP": false,
+            "defTotOuvPP": false,
+            "defTotFerPP": false,
+            "doorsOpenedWithoutTrain": false,
+            "activeObs": false,
+            "doorsObstacle": false,
+            "condemnedDoor": false,
+            "openedEDoors": false,
+            "lockedEDoors": true,
+            "openedPEQ": false,
+            "lockedPEQ": true,
+            "unlockedPMS": false,
+            "engagedPMS": false,
+            "manualExpKeyEng": false,
+            "maintKeyEng": false,
+            "manuelPPOpening": false,
+            "manuelPPClosing": false,
+            "departAuth": false,
+            "departForce": false,
+            "HLP": false,
+            "DSO": true,
+            "IDPOAlreadyActiveByPLTP": false,
+            "IDPOAlreadyActiveByALC": false,
+            "alimDef": false,
+            "actualTime": 10,
+            "afdActive": false,
+            "cancelAfd": false,
+            "VVTS1": false,
+            "vvtS1AlreadyOn": false,
+            "VVTS2": false,
+            "vvtS2AlreadyOn": false,
+            "depaActive": false,
+            "defDepa": false,
+            "idpfActive": false,
+            "impIdpf": false,
+            "istaActive": false,
+            "istaBlock": false,
+            "mapfActive": false,
+            "mapfImp": false,
+            "defOrderExec": false,
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          }
+        },
+        {
+          "cid": "c1402",
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          },
           "trains": [
             {
               "tid": "2",
@@ -922,74 +1052,7 @@
                 "cptFu": 0
               }
             }
-          ],
-          "type": "quai",
-          "name": "STO V1",
-          "states": {
-            "doorsOpened": true,
-            "doorsClosed": false,
-            "doorsOpenedPAS": true,
-            "doorsClosedPAS": false,
-            "defPartOuvPP": false,
-            "defPartFerPP": false,
-            "defTotOuvPP": false,
-            "defTotFerPP": false,
-            "doorsOpenedWithoutTrain": false,
-            "activeObs": false,
-            "doorsObstacle": false,
-            "condemnedDoor": false,
-            "openedEDoors": false,
-            "lockedEDoors": true,
-            "openedPEQ": false,
-            "lockedPEQ": true,
-            "unlockedPMS": false,
-            "engagedPMS": false,
-            "manualExpKeyEng": false,
-            "maintKeyEng": false,
-            "manuelPPOpening": false,
-            "manuelPPClosing": false,
-            "departAuth": false,
-            "departForce": false,
-            "HLP": false,
-            "DSO": true,
-            "IDPOAlreadyActiveByPLTP": false,
-            "IDPOAlreadyActiveByALC": false,
-            "alimDef": false,
-            "actualTime": 10,
-            "afdActive": false,
-            "cancelAfd": false,
-            "VVTS1": false,
-            "vvtS1AlreadyOn": false,
-            "VVTS2": false,
-            "vvtS2AlreadyOn": false,
-            "depaActive": false,
-            "defDepa": false,
-            "idpfActive": false,
-            "impIdpf": false,
-            "istaActive": false,
-            "istaBlock": false,
-            "mapfActive": false,
-            "mapfImp": false,
-            "defOrderExec": false,
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          }
-        },
-        {
-          "cid": "c1402",
-          "states": {
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          },
-          "trains": []
+          ]
         },
         {
           "cid": "c2102",
@@ -1104,7 +1167,15 @@
         },
         {
           "cid": "cGPAG1",
-          "trains": []
+          "trains": [],
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          }
         }
       ]
     }
