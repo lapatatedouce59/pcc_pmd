@@ -75,7 +75,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
             apiSave()
             return true;
         } else                  //?    SECTION 2
-        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1202" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a2"){
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1202" && itiInfo('1102_PAG1')){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[8].cid)
             pccApi.SEC[_secIndex].cantons[8].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
@@ -86,7 +86,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
             apiSave()
             return true;
         } else
-        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2402" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="down" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c2402" && itiInfo('2101_1202')){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[0].cid)
             pccApi.SEC[_secIndex].cantons[0].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
@@ -131,7 +131,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
             apiSave()
             return true;
         } else            //? SECTION 2
-        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1102" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a1"){
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="c1102" && itiInfo('1202_2101')){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[7].cid)
             pccApi.SEC[_secIndex].cantons[7].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
@@ -145,7 +145,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
         logger.info('[OGIA] L\'OGIA n\'a pas trouvé d\'itinéraire valide.')
         return false;
     } else if(voie==='GAT'){
-        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="cGA2PAG" && pccApi.SEC[_secIndex].cantons[_cantonIndex].dir=="up" && pccApi.SEC[_secIndex].cantons[_cantonIndex].position==="a2"){
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==="cGA2PAG" && itiInfo('PAG1_1102')){
             logger.info('Mouvement pris en charge par l\'OGIA')
             console.log('Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[1].cid)
             pccApi.SEC[_secIndex].cantons[1].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )

@@ -100,8 +100,8 @@
           "code": "c1p1",
           "imgn": "./src/formats/cycles/pa1/c1.png",
           "imgl": "./src/formats/cycles/pa1/c1lit.png",
-          "active": false,
-          "sel": false
+          "active": true,
+          "sel": true
         },
         {
           "code": "c2p1",
@@ -272,7 +272,7 @@
         "injDispoV101": false,
         "razSeq": false,
         "itiOngoing": true,
-        "cycleOngoing": false
+        "cycleOngoing": true
       },
       "cantons": [
         {
@@ -317,12 +317,11 @@
           "cid": "c1401",
           "trains": [
             {
-              "tid": "3",
-              "name": "Léo",
+              "tid": "2",
+              "name": "Jean Marc",
               "states": {
                 "doorsOpenedPV": false,
-                "doorsClosedPV": false,
-                "trainSecurised": false,
+                "doorsClosedPV": true,
                 "inZOPP": false,
                 "failedStop": false,
                 "secureStop": false,
@@ -337,6 +336,7 @@
                 "defCdeFerPV": false,
                 "obstalceActive": false,
                 "longTrain": false,
+                "trainSecurised": false,
                 "TMSActive": true,
                 "EVACActive": false,
                 "defTech": false,
@@ -642,7 +642,8 @@
         "zoneManoeuvre": false,
         "tnitne": false,
         "lstpas": true,
-        "discord": false
+        "discord": false,
+        "cycleOngoing": false
       },
       "ITI": [
         {
@@ -701,8 +702,8 @@
             },
             {
               "code": "1202_1501",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1102_1302",
@@ -716,11 +717,6 @@
             },
             {
               "code": "1302_1102",
-              "active": false,
-              "mode": false
-            },
-            {
-              "code": "1202_2101",
               "active": false,
               "mode": false
             },
@@ -913,13 +909,129 @@
             "pdp": false,
             "coupFs": false
           },
+          "trains": []
+        },
+        {
+          "cid": "c2102",
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          },
+          "trains": []
+        },
+        {
+          "cid": "c2202",
+          "trains": [],
+          "type": "quai",
+          "name": "STO V2",
+          "states": {
+            "doorsOpened": false,
+            "doorsClosed": true,
+            "doorsOpenedPAS": true,
+            "doorsClosedPAS": false,
+            "defPartOuvPP": false,
+            "defPartFerPP": false,
+            "defTotOuvPP": false,
+            "defTotFerPP": false,
+            "doorsOpenedWithoutTrain": false,
+            "activeObs": false,
+            "doorsObstacle": false,
+            "condemnedDoor": false,
+            "openedEDoors": false,
+            "lockedEDoors": true,
+            "openedPEQ": false,
+            "lockedPEQ": true,
+            "unlockedPMS": false,
+            "engagedPMS": false,
+            "manualExpKeyEng": false,
+            "maintKeyEng": false,
+            "manuelPPOpening": false,
+            "manuelPPClosing": false,
+            "departAuth": false,
+            "departForce": false,
+            "HLP": false,
+            "DSO": true,
+            "IDPOAlreadyActiveByPLTP": false,
+            "IDPOAlreadyActiveByALC": false,
+            "alimDef": false,
+            "actualTime": 10,
+            "afdActive": false,
+            "cancelAfd": false,
+            "VVTS1": false,
+            "vvtS1AlreadyOn": false,
+            "VVTS2": false,
+            "vvtS2AlreadyOn": false,
+            "depaActive": false,
+            "defDepa": false,
+            "idpfActive": false,
+            "impIdpf": false,
+            "istaActive": false,
+            "istaBlock": false,
+            "mapfActive": false,
+            "mapfImp": false,
+            "defOrderExec": false,
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          }
+        },
+        {
+          "cid": "c2302",
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          },
+          "trains": []
+        },
+        {
+          "cid": "c2402",
+          "position": "r",
+          "dir": "r",
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          },
+          "trains": []
+        },
+        {
+          "cid": "cGA2PAG",
+          "trains": [],
+          "states": {
+            "selAcc": false,
+            "pzo": false,
+            "tcs": false,
+            "ldi": false,
+            "pdp": false,
+            "coupFs": false
+          },
+          "position": "a2",
+          "dir": "up"
+        },
+        {
+          "cid": "cGPAG1",
           "trains": [
             {
-              "tid": "2",
-              "name": "Jean Marc",
+              "tid": "3",
+              "name": "Léo",
               "states": {
                 "doorsOpenedPV": false,
-                "doorsClosedPV": true,
+                "doorsClosedPV": false,
+                "trainSecurised": false,
                 "inZOPP": false,
                 "failedStop": false,
                 "secureStop": false,
@@ -934,7 +1046,6 @@
                 "defCdeFerPV": false,
                 "obstalceActive": false,
                 "longTrain": false,
-                "trainSecurised": false,
                 "TMSActive": true,
                 "EVACActive": false,
                 "defTech": false,
@@ -1052,122 +1163,7 @@
                 "cptFu": 0
               }
             }
-          ]
-        },
-        {
-          "cid": "c2102",
-          "states": {
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          },
-          "trains": []
-        },
-        {
-          "cid": "c2202",
-          "trains": [],
-          "type": "quai",
-          "name": "STO V2",
-          "states": {
-            "doorsOpened": false,
-            "doorsClosed": true,
-            "doorsOpenedPAS": true,
-            "doorsClosedPAS": false,
-            "defPartOuvPP": false,
-            "defPartFerPP": false,
-            "defTotOuvPP": false,
-            "defTotFerPP": false,
-            "doorsOpenedWithoutTrain": false,
-            "activeObs": false,
-            "doorsObstacle": false,
-            "condemnedDoor": false,
-            "openedEDoors": false,
-            "lockedEDoors": true,
-            "openedPEQ": false,
-            "lockedPEQ": true,
-            "unlockedPMS": false,
-            "engagedPMS": false,
-            "manualExpKeyEng": false,
-            "maintKeyEng": false,
-            "manuelPPOpening": false,
-            "manuelPPClosing": false,
-            "departAuth": false,
-            "departForce": false,
-            "HLP": false,
-            "DSO": true,
-            "IDPOAlreadyActiveByPLTP": false,
-            "IDPOAlreadyActiveByALC": false,
-            "alimDef": false,
-            "actualTime": 10,
-            "afdActive": false,
-            "cancelAfd": false,
-            "VVTS1": false,
-            "vvtS1AlreadyOn": false,
-            "VVTS2": false,
-            "vvtS2AlreadyOn": false,
-            "depaActive": false,
-            "defDepa": false,
-            "idpfActive": false,
-            "impIdpf": false,
-            "istaActive": false,
-            "istaBlock": false,
-            "mapfActive": false,
-            "mapfImp": false,
-            "defOrderExec": false,
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          }
-        },
-        {
-          "cid": "c2302",
-          "states": {
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          },
-          "trains": []
-        },
-        {
-          "cid": "c2402",
-          "position": "r",
-          "dir": "r",
-          "states": {
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          },
-          "trains": []
-        },
-        {
-          "cid": "cGA2PAG",
-          "trains": [],
-          "states": {
-            "selAcc": false,
-            "pzo": false,
-            "tcs": false,
-            "ldi": false,
-            "pdp": false,
-            "coupFs": false
-          },
-          "position": "a2",
-          "dir": "up"
-        },
-        {
-          "cid": "cGPAG1",
-          "trains": [],
+          ],
           "states": {
             "selAcc": false,
             "pzo": false,

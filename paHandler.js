@@ -265,53 +265,55 @@ async function initFormat(pa){
             let pa2svgDoc = tcoobj.contentDocument;
             pa2dictionnary = {
                 cantons: {
-                    'c1101': pa2svgDoc.getElementById('c1101'),
-                    'c1201': pa2svgDoc.getElementById('c1201'),
-                    'c1301': pa2svgDoc.getElementById('c1301'),
-                    'c1401': pa2svgDoc.getElementById('c1401'),
-                    'c1501': pa2svgDoc.getElementById('c1501'),
-                    'c2101': pa2svgDoc.getElementById('c2101'),
-                    'c2201': pa2svgDoc.getElementById('c2201'),
-                    'c2301': pa2svgDoc.getElementById('c2301'),
-                    'c2401': pa2svgDoc.getElementById('c2401'),
-                    'c2501': pa2svgDoc.getElementById('c2501')
+                    'c1102': pa2svgDoc.getElementById('c1102'),
+                    'c1202': pa2svgDoc.getElementById('c1202'),
+                    'c1302': pa2svgDoc.getElementById('c1302'),
+                    'c1402': pa2svgDoc.getElementById('c1402'),
+                    'c2102': pa2svgDoc.getElementById('c2102'),
+                    'c2202': pa2svgDoc.getElementById('c2202'),
+                    'c2302': pa2svgDoc.getElementById('c2302'),
+                    'c2402': pa2svgDoc.getElementById('c2402'),
+                    'cGPAG1': pa2svgDoc.getElementById('cGPAG1'),
+                    'cGA2PAG': pa2svgDoc.getElementById('cGA2PAG')
                 },
                 aiguilles: {
-                    'c1': {
+                    'c2': {
                         tracks:{
-                            'a1': pa2svgDoc.getElementById('c1a1'),
-                            'a2': pa2svgDoc.getElementById('c1a2'),
-                            'c1301n': pa2svgDoc.getElementById('c1301n'),
-                            'c2301n': pa2svgDoc.getElementById('c2301n')
+                            'a1': pa2svgDoc.getElementById('c2a1'),
+                            'a2': pa2svgDoc.getElementById('c2a2'),
+                            'c1102n': pa2svgDoc.getElementById('c1102n'),
+                            'c2402n': pa2svgDoc.getElementById('c2402n'),
+                            'c1202n': pa2svgDoc.getElementById('c1202n')
                         },
                         arrows:{
-                            'up': pa2svgDoc.getElementById('c1up'),
-                            'down': pa2svgDoc.getElementById('c1dw')
+                            'a1up': pa2svgDoc.getElementById('c2a1up'),
+                            'a1down': pa2svgDoc.getElementById('c2a1dw'),
+                            'a2up': pa2svgDoc.getElementById('c2a2up'),
+                            'a2down': pa2svgDoc.getElementById('c2a2dw')
                         }
                     }
                 },
                 arrows: {
-                    '2401_2501':pa2svgDoc.getElementById('2401_2501'),
-                    '2501_2401':pa2svgDoc.getElementById('2501_2401'),
-                    '1401_2401':pa2svgDoc.getElementById('1401_2401'),
-                    '2201_1201':pa2svgDoc.getElementById('2201_1201'),
-                    '2201_2401':pa2svgDoc.getElementById('2201_2401'),
-                    '2401_2201':pa2svgDoc.getElementById('2401_2201'),
-                    '2101_2201':pa2svgDoc.getElementById('2101_2201'),
-                    '2201_2101':pa2svgDoc.getElementById('2201_2101'),
-                    '2402_2101':pa2svgDoc.getElementById('2402_2101'),
-                    '2101_2402':pa2svgDoc.getElementById('2101_2402'),
-
-                    '1101_1201':pa2svgDoc.getElementById('1101_1201'),
-                    '1201_1101':pa2svgDoc.getElementById('1201_1101'),
-                    '1201_2201':pa2svgDoc.getElementById('1201_2201'),
-                    '2401_1401':pa2svgDoc.getElementById('2401_1401'),
-                    '1201_1401':pa2svgDoc.getElementById('1201_1401'),
-                    '1401_1201':pa2svgDoc.getElementById('1401_1201'),
-                    '1401_1501':pa2svgDoc.getElementById('1401_1501'),
-                    '1501_1401':pa2svgDoc.getElementById('1501_1401'),
-                    '1501_1102':pa2svgDoc.getElementById('1501_1102'),
-                    '1102_1501':pa2svgDoc.getElementById('1102_1501')
+                    '2202_2102':pa2svgDoc.getElementById('2202_2102'),
+                    '2302_2202':pa2svgDoc.getElementById('2302_2202'),
+                    '2102_2603':pa2svgDoc.getElementById('2102_2603'),
+                    '1302_1402':pa2svgDoc.getElementById('1302_1402'),
+                    '1402_1103':pa2svgDoc.getElementById('1402_1103'),
+                    '1102_1302':pa2svgDoc.getElementById('1102_1302'),
+                    '1501_1202':pa2svgDoc.getElementById('1501_1202'),
+                    '2302_2101':pa2svgDoc.getElementById('2302_2101'),
+                    '1302_1102':pa2svgDoc.getElementById('1302_1102'),
+                    '1202_1501':pa2svgDoc.getElementById('1202_1501'),
+                    '2101_2302':pa2svgDoc.getElementById('2101_2302'),
+                    '2102_2202':pa2svgDoc.getElementById('2102_2202'),
+                    '2202_2302':pa2svgDoc.getElementById('2202_2302'),
+                    '2603_2102':pa2svgDoc.getElementById('2603_2102'),
+                    '1402_1302':pa2svgDoc.getElementById('1402_1302'),
+                    '1103_1402':pa2svgDoc.getElementById('1103_1402'),
+                    '2101_1202':pa2svgDoc.getElementById('2101_1202'),
+                    '1102_PAG1':pa2svgDoc.getElementById('1102_PAG1'),
+                    '1202_1501':pa2svgDoc.getElementById('1202_1501'),
+                    'PAG1_1102':pa2svgDoc.getElementById('PAG1_1102')
                 }
             }
             console.log('MAJ 2')
@@ -616,57 +618,124 @@ async function initFormat(pa){
 
 function loadItiTco(pa){
     console.log(pa)
-    if(pa1dictionnary===false) return;
-    for(let ctn of Object.entries(pa1dictionnary.cantons)){
-        ctn[1].style.fill = '#CDCDCD';
-        for(let ctns of pa.ctns){
-            if(!(ctns.cid===ctn[0])) continue;
-            if(ctns.trains.length>0){
-                ctn[1].style.fill = '#D9DD0E';
+    if(pa.id==='1'){
+        if(pa1dictionnary===false) return;
+        for(let ctn of Object.entries(pa1dictionnary.cantons)){
+            ctn[1].style.fill = '#CDCDCD';
+            for(let ctns of pa.ctns){
+                if(!(ctns.cid===ctn[0])) continue;
+                if(ctns.trains.length>0){
+                    ctn[1].style.fill = '#D9DD0E';
+                }
             }
+            
         }
-        
-    }
-    for(let aig of Object.entries(pa1dictionnary.aiguilles.c1.tracks)){
-        aig[1].style.fill = '#CDCDCD';
-        for(let itil of Object.entries(pa.itis[0])){
-            for(let iti of Object.entries(itil[1])){
-                if(!(iti[1].active)) continue;
-                if((iti[1].code==='2201_2401')||(iti[1].code==='2401_2201')){
-                    if(!(aig[0]==='c2301n')) continue;
-                    aig[1].style.fill='#148FB6'
-                } else if((iti[1].code==='1201_1401')||(iti[1].code==='1401_1201')){
-                    if(!(aig[0]==='c1301n')) continue;
-                    aig[1].style.fill='#148FB6'
-                } else if((iti[1].code==='1201_2201')||(iti[1].code==='2201_1201')){
-                    if(!(aig[0]==='a2')) continue;
-                    aig[1].style.fill='#148FB6'
-                } else if((iti[1].code==='2401_1401')||(iti[1].code==='1401_2401')){
-                    if(!(aig[0]==='a1')) continue;
-                    aig[1].style.fill='#148FB6'
+        for(let aig of Object.entries(pa1dictionnary.aiguilles.c1.tracks)){
+            aig[1].style.fill = '#CDCDCD';
+            for(let itil of Object.entries(pa.itis[0])){
+                for(let iti of Object.entries(itil[1])){
+                    if(!(iti[1].active)) continue;
+                    if((iti[1].code==='2201_2401')||(iti[1].code==='2401_2201')){
+                        if(!(aig[0]==='c2301n')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='1201_1401')||(iti[1].code==='1401_1201')){
+                        if(!(aig[0]==='c1301n')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='1201_2201')||(iti[1].code==='2201_1201')){
+                        if(!(aig[0]==='a2')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='2401_1401')||(iti[1].code==='1401_2401')){
+                        if(!(aig[0]==='a1')) continue;
+                        aig[1].style.fill='#148FB6'
+                    }
                 }
             }
         }
-    }
-    for(let aigArr of Object.entries(pa1dictionnary.aiguilles.c1.arrows)){
-        aigArr[1].style.fill = '#B1B1B1';
-    }
-    if((itiInfo('1201_2201'))||(itiInfo('1401_2401'))){
-        pa1dictionnary.aiguilles.c1.arrows.up.style.fill='#148FB6'
-    }
-    if((itiInfo('2201_1201'))||(itiInfo('2401_1401'))){
-        pa1dictionnary.aiguilles.c1.arrows.down.style.fill='#148FB6'
-    }
-    for(let arrows of Object.entries(pa1dictionnary.arrows)){
-        arrows[1].style.fill = '#9F9F9F'
-        for(let itil of Object.entries(pa.itis[0])){
-            for(let iti of Object.entries(itil[1])){
-                if(!(iti[1].code===arrows[0])) continue;
-                //console.log(iti[1])
-                if(iti[1].active===true){
-                    arrows[1].style.fill = '#00FF19';
-                } else if (iti[1].active===false){
-                    arrows[1].style.fill = '#9F9F9F';
+        for(let aigArr of Object.entries(pa1dictionnary.aiguilles.c1.arrows)){
+            aigArr[1].style.fill = '#B1B1B1';
+        }
+        if((itiInfo('1201_2201'))||(itiInfo('1401_2401'))){
+            pa1dictionnary.aiguilles.c1.arrows.up.style.fill='#148FB6'
+        }
+        if((itiInfo('2201_1201'))||(itiInfo('2401_1401'))){
+            pa1dictionnary.aiguilles.c1.arrows.down.style.fill='#148FB6'
+        }
+        for(let arrows of Object.entries(pa1dictionnary.arrows)){
+            arrows[1].style.fill = '#9F9F9F'
+            for(let itil of Object.entries(pa.itis[0])){
+                for(let iti of Object.entries(itil[1])){
+                    if(!(iti[1].code===arrows[0])) continue;
+                    //console.log(iti[1])
+                    if(iti[1].active===true){
+                        arrows[1].style.fill = '#00FF19';
+                    } else if (iti[1].active===false){
+                        arrows[1].style.fill = '#9F9F9F';
+                    }
+                }
+            }
+        }
+    } else if(pa.id==='2'){
+        if(pa2dictionnary===false) return;
+        for(let ctn of Object.entries(pa2dictionnary.cantons)){
+            ctn[1].style.fill = '#CDCDCD';
+            for(let ctns of pa.ctns){
+                if(!(ctns.cid===ctn[0])) continue;
+                if(ctns.trains.length>0){
+                    ctn[1].style.fill = '#D9DD0E';
+                }
+            }
+            
+        }
+        for(let aig of Object.entries(pa2dictionnary.aiguilles.c2.tracks)){
+            aig[1].style.fill = '#CDCDCD';
+            for(let itil of Object.entries(pa.itis[0])){
+                for(let iti of Object.entries(itil[1])){
+                    if(!(iti[1].active)) continue;
+                    if((iti[1].code==='1501_1202')||(iti[1].code==='1202_1501')){
+                        if(!(aig[0]==='c1102n')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='2302_2101')||(iti[1].code==='2101_2302')){
+                        if(!(aig[0]==='c2402n')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='1102_1302')||(iti[1].code==='1302_1102')){
+                        if(!(aig[0]==='c1202n')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='1102_PAG1')||(iti[1].code==='PAG1_1102')){
+                        if(!(aig[0]==='a2')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='2101_1202')||(iti[1].code==='1202_2101')){
+                        if(!(aig[0]==='a1')) continue;
+                        aig[1].style.fill='#148FB6'
+                    }
+                }
+            }
+        }
+        for(let aigArr of Object.entries(pa2dictionnary.aiguilles.c2.arrows)){
+            aigArr[1].style.fill = '#B1B1B1';
+        }
+        if(itiInfo('2101_1202')){
+            pa2dictionnary.aiguilles.c2.arrows.a1down.style.fill='#148FB6'
+        }
+        if(itiInfo('1202_2101')){
+            pa2dictionnary.aiguilles.c2.arrows.a1up.style.fill='#148FB6'
+        }
+        if(itiInfo('1102_PAG1')){
+            pa2dictionnary.aiguilles.c2.arrows.a2down.style.fill='#148FB6'
+        }
+        if(itiInfo('PAG1_1102')){
+            pa2dictionnary.aiguilles.c2.arrows.a2up.style.fill='#148FB6'
+        }
+        for(let arrows of Object.entries(pa2dictionnary.arrows)){
+            arrows[1].style.fill = '#9F9F9F'
+            for(let itil of Object.entries(pa.itis[0])){
+                for(let iti of Object.entries(itil[1])){
+                    if(!(iti[1].code===arrows[0])) continue;
+                    //console.log(iti[1])
+                    if(iti[1].active===true){
+                        arrows[1].style.fill = '#00FF19';
+                    } else if (iti[1].active===false){
+                        arrows[1].style.fill = '#9F9F9F';
+                    }
                 }
             }
         }

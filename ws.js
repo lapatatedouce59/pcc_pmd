@@ -1969,7 +1969,7 @@ wss.on('connection', (ws, req) => {
                     for(let sec of pccApi.SEC){
                         for(let itilist of Object.entries(sec.ITI[0])){
                             for(let iti of itilist[1]){
-                                console.log(iti.code)
+                                //console.log(iti.code)
                                 if(iti.code===data.target){
                                     const rpdelay = async() => {
                                         iti.mode='SEL'
@@ -1989,7 +1989,7 @@ wss.on('connection', (ws, req) => {
                     for(let sec of pccApi.SEC){
                         for(let itilist of Object.entries(sec.ITI[0])){
                             for(let iti of itilist[1]){
-                                console.log(iti.code)
+                                //console.log(iti.code)
                                 if(iti.code===data.target){
                                     const rpdelay = async() => {
                                         iti.mode='DES'
@@ -2010,7 +2010,7 @@ wss.on('connection', (ws, req) => {
                     for(let sec of pccApi.SEC){
                         for(let itilist of Object.entries(sec.ITI[0])){
                             for(let iti of itilist[1]){
-                                console.log(iti.code)
+                                //console.log(iti.code)
                                 if(iti.code===data.target){
                                     const rpdelay = async() => {
                                         iti.mode='DU'
@@ -2244,13 +2244,14 @@ wss.on('connection', (ws, req) => {
                         for(let itilist of Object.entries(sec.ITI[0])){
                             for(let iti of itilist[1]){
                                 if(iti.code){
+                                    //if(!(iti.active)) continue;
                                     const rpdelay = async() => {
                                         iti.mode='DES'
                                         iti.active=false
-                                        apiSave()
+                                        if(iti.code==='1103_1402') apiSave()
                                         await setTimeout(1000)
                                         iti.mode=false
-                                        apiSave()
+                                        if(iti.code==='1103_1402') apiSave()
                                     }
                                     rpdelay()
                                     ongoingiti()
@@ -2258,7 +2259,6 @@ wss.on('connection', (ws, req) => {
                             }
                         }
                     }
-                    apiSave()
                 }
                 break;
             case 400:
