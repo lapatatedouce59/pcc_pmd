@@ -1110,9 +1110,24 @@ function refreshTCO(){
         if(itiInfo('2201_1201')){
             dictS1.voys['GAR'].setAttribute('href', '../ON.png')
         }
+        if(itiInfo('2302_2101')&&itiInfo('1501_1202')){
+            dictS2.voys['NORA1'].setAttribute('href', '../ON.png')
+        }
+        if(itiInfo('1102_1302')){
+            dictS2.voys['NORA2'].setAttribute('href', '../ON.png')
+        }
+        if(cycleInfo('c6p2')){
+            dictS2.voys['ENT'].setAttribute('href', '../ON.png')
+        }
+        if(cycleInfo('c7p2')||cycleInfo('c2p2')){
+            dictS2.voys['DEP'].setAttribute('href', '../ON.png')
+        }
+        if(cycleInfo('c1p2')){
+            dictS2.voys['SP'].setAttribute('href', '../ON.png')
+        }
         for(let ctn of sec.cantons){
             let ctninfo = getCantonsInfo(ctn.cid)
-            if((ctninfo.cid==='c1401')||(ctninfo.cid==='c2201')){
+            if((ctninfo.cid==='c1401')||(ctninfo.cid==='c2201')||(ctninfo.cid==='cGPAG1')||(ctninfo.cid==='c2202')||(ctninfo.cid==='c1302')){
                 if(ctn.cid==='c1401'){
                     if(ctn.trains.length>0){
                         dictS1.screens['1401'][0].style.fill = '#3C0A0A'
@@ -1131,7 +1146,33 @@ function refreshTCO(){
                         dictS1.screens['2201'][1].textContent=''
                     }
                 }
-                
+                if(ctn.cid==='cGPAG1'){
+                    if(ctn.trains.length>0){
+                        dictS2.screens['PAG1'][0].style.fill = '#3C0A0A'
+                        dictS2.screens['PAG1'][1].textContent=ctn.trains[0].tid
+                    } else {
+                        dictS2.screens['PAG1'][0].style.fill = '#000'
+                        dictS2.screens['PAG1'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c2202'){
+                    if(ctn.trains.length>0){
+                        dictS2.screens['2202'][0].style.fill = '#3C0A0A'
+                        dictS2.screens['2202'][1].textContent=ctn.trains[0].tid
+                    } else {
+                        dictS2.screens['2202'][0].style.fill = '#000'
+                        dictS2.screens['2202'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c1302'){
+                    if(ctn.trains.length>0){
+                        dictS2.screens['1302'][0].style.fill = '#3C0A0A'
+                        dictS2.screens['1302'][1].textContent=ctn.trains[0].tid
+                    } else {
+                        dictS2.screens['1302'][0].style.fill = '#000'
+                        dictS2.screens['1302'][1].textContent=''
+                    }
+                }
             }
             if((ctninfo.cid==='c1301')||(ctninfo.cid==='c2301')){
                 //console.log('lol')
@@ -1471,6 +1512,19 @@ function itiInfo(id){
         }
     }
     console.info('itiInfo] Aucun itinéraire correspondant.')
+    return false;
+}
+
+function cycleInfo(id){
+    if(!id) return console.error('[cycleInfo] Aucun ID de cycle indiqué!')
+    for(let sec of data.SEC){
+        for(let cycle of sec.CYCLES){
+            if(!(cycle.code===id)) continue;
+            if(!(cycle.active)) continue;
+            return true;
+        }
+    }
+    console.info('[cycleInfo] Aucun cycle correspondant.')
     return false;
 }
 

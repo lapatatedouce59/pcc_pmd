@@ -513,8 +513,7 @@ wss.on('connection', (ws, req) => {
         }
         
         if(op==='300') return;
-        ongoingiti()
-        ongoingcycle()
+        periodicUpdateVoy()
         switch(op){
             
             case 1 :
@@ -2102,6 +2101,32 @@ wss.on('connection', (ws, req) => {
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
                     }
+                    if(data.target==='GLA'){
+                        if(pccApi.SEC[0].cantons[9].trains.length>0) return;
+                        const rpdelay = async() => {
+                            pccApi.SEC[1].CYCLES[6].active=true
+                            changeItiState('sel','1501_1202')
+                            changeItiState('sel','1102_PAG1')
+
+                            changeItiState('des','PAG1_1102')
+                            changeItiState('des','1202_1501')
+                            changeItiState('des','1202_2101')
+                            changeItiState('des','2101_1202')
+                            apiSave()
+                            await setTimeout(2000)
+                            apiSave()
+                        }
+                        rpdelay()
+                        let endCycleIti = ()=>{
+                            if(pccApi.SEC[1].cantons[9].trains.length>0){
+                                clearInterval(endCycleInter)
+                                pccApi.SEC[1].states.entreeDispoGla=true
+                                pccApi.SEC[1].CYCLES[6].active=false
+                                apiSave()
+                            }
+                        }
+                        let endCycleInter = setInterval(endCycleIti,2000)
+                    }
                 }
                 if(data.execute==='INJ-BTN-ITI'){
                     if(!(data.target)) return;
@@ -2167,15 +2192,40 @@ wss.on('connection', (ws, req) => {
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
+                    } else if(data.target==='GLA'){
+                        if(pccApi.SEC[0].cantons[5].trains.length>0) return;
+                        const rpdelay = async() => {
+                            pccApi.SEC[1].CYCLES[5].active=true
+                            changeItiState('sel','PAG1_1102')
+                            changeItiState('sel','1202_2101')
+
+                            changeItiState('des','1102_PAG1')
+                            changeItiState('des','2101_1202')
+                            changeItiState('des','1501_1202')
+                            changeItiState('des','1202_1501')
+                            changeItiState('des','2301_2101')
+                            changeItiState('des','2101_2302')
+                            apiSave()
+                            await setTimeout(2000)
+                            apiSave()
+                        }
+                        rpdelay()
+                        let endCycleIti = ()=>{
+                            if((pccApi.SEC[0].cantons[5].trains.length>0)){
+                                clearInterval(endCycleInter)
+                                pccApi.SEC[1].CYCLES[7].active=false
+                                pccApi.SEC[1].states.entreeDispoGla=false
+                                apiSave()
+                            }
+                        }
+                        let endCycleInter = setInterval(endCycleIti,2000)
                     }
                 }
                 break;
             case 222:
-                ongoingcycle()
                 if(data.execute==='SEL-BTN-CYCLE'){
                     if(!(data.target)) return;
                     for(let sec of pccApi.SEC){
-                        if(!(sec.id==='1')) continue;
                         for(let cycle of sec.CYCLES){
                             if(!(cycle.code===data.target)){
                                 cycle.active=false
@@ -2221,6 +2271,44 @@ wss.on('connection', (ws, req) => {
                                 }
                                 let checkCycleClearInter = setInterval(checkCycleClear,2000)
                             }
+                            if(cycle.code==='c1p2'){
+                                let secureCnt = 0
+                                let checkCycleClear = ()=>{
+                                    secureCnt++
+                                    if(secureCnt===5){
+                                        clearInterval(checkCycleClearInter)
+                                        cycle.sel=false
+                                        apiSave()
+                                        return;
+                                    }
+                                    if(pccApi.SEC[0].cantons[5].trains.length===0){
+                                        console.log('iti '+cycle.code+' activated')
+                                        clearInterval(checkCycleClearInter)
+                                        ogdc.startCycle(cycle.code, wss, true)
+                                        apiSave()
+                                    }
+                                }
+                                let checkCycleClearInter = setInterval(checkCycleClear,2000)
+                            }
+                            if(cycle.code==='c2p2'){
+                                let secureCnt = 0
+                                let checkCycleClear = ()=>{
+                                    secureCnt++
+                                    if(secureCnt===5){
+                                        clearInterval(checkCycleClearInter)
+                                        cycle.sel=false
+                                        apiSave()
+                                        return;
+                                    }
+                                    if(pccApi.SEC[0].cantons[5].trains.length===0){
+                                        console.log('iti '+cycle.code+' activated')
+                                        clearInterval(checkCycleClearInter)
+                                        ogdc.startCycle(cycle.code, wss, true)
+                                        apiSave()
+                                    }
+                                }
+                                let checkCycleClearInter = setInterval(checkCycleClear,2000)
+                            }
                         }
                     }
                 }
@@ -2236,6 +2324,7 @@ wss.on('connection', (ws, req) => {
                         }
                         sec.states.cycleOngoing=false
                     }
+                    periodicUpdateVoy()
                     apiSave()
                 } else if(data.execute==='DUG-BTN-ITI'){
                     if(!(data.target)) return;
@@ -2248,13 +2337,17 @@ wss.on('connection', (ws, req) => {
                                     const rpdelay = async() => {
                                         iti.mode='DES'
                                         iti.active=false
-                                        if(iti.code==='1103_1402') apiSave()
+                                        if(iti.code==='1103_1402'||iti.code==='1102_1501') apiSave()
                                         await setTimeout(1000)
                                         iti.mode=false
-                                        if(iti.code==='1103_1402') apiSave()
+                                        
+                                        if(iti.code==='1103_1402'||iti.code==='1102_1501') {
+                                            periodicUpdateVoy()
+                                            apiSave()
+                                        }
                                     }
                                     rpdelay()
-                                    ongoingiti()
+                                    
                                 } else continue;
                             }
                         }
@@ -3324,7 +3417,6 @@ function changeItiState(mode, code){
 function ongoingiti(){
     for(let sec of pccApi.SEC){
         let ongoing = []
-        if(!(sec.id==='1')) continue;
         for(let itilist of Object.entries(sec.ITI[0])){
             for(let iti of itilist[1]){
                 if(iti.active){
@@ -3334,11 +3426,11 @@ function ongoingiti(){
         }
         if(ongoing.length>0) {
             sec.states.itiOngoing=true
-            apiSave()
+            //apiSave()
             return;
         }
         sec.states.itiOngoing=false
-        apiSave()
+        //apiSave()
     }
     
     return false;
@@ -3347,19 +3439,59 @@ function ongoingiti(){
 function ongoingcycle(){
     for(let sec of pccApi.SEC){
         let ongoing = []
-        if(!(sec.id==='1')) continue;
         for(let cycle of sec.CYCLES){
             if(cycle.active){
                 ongoing.push(cycle.code)
             }
         }
         if(ongoing.length>0) {sec.states.cycleOngoing=true
-            apiSave()
+            //apiSave()
             return;
         }
         sec.states.cycleOngoing=false
-        apiSave()
+        //apiSave()
     }
     
     
+}
+
+
+function periodicUpdateVoy(){
+    ongoingiti()
+    ongoingcycle()
+    if(pccApi.SEC[0].cantons[9].trains.length>0){
+        pccApi.SEC[0].states.injDispoV201=true
+        pccApi.SEC[0].states.retDispoV201=false
+    }
+    if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
+        pccApi.SEC[0].states.injDispoV101=true
+        if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
+            pccApi.SEC[0].states.retDispoV101=true
+        } else {
+            pccApi.SEC[0].states.retDispoV101=false
+        }
+    }
+    if(pccApi.SEC[0].cantons[9].trains.length===0){
+        pccApi.SEC[0].states.injDispoV201=false
+        pccApi.SEC[0].states.retDispoV201=true 
+    }
+    if((pccApi.SEC[0].cantons[1].trains.length>0)&&(pccApi.SEC[0].cantons[0].trains.length>0)){
+        pccApi.SEC[0].states.injDispoV101=true
+    }
+    if((pccApi.SEC[0].cantons[1].trains.length>0)||(pccApi.SEC[0].cantons[0].trains.length>0)){
+        pccApi.SEC[0].states.retDispoV101=true
+    }
+    if((pccApi.SEC[0].cantons[1].trains.length===0)&&(pccApi.SEC[0].cantons[0].trains.length===0)){
+        pccApi.SEC[0].states.injDispoV101=false
+    }
+    if(pccApi.SEC[1].cantons[9].trains.length===0){
+        pccApi.SEC[1].states.sortieDispoGla=true
+    }
+    if(pccApi.SEC[1].cantons[9].trains.length===0){
+        pccApi.SEC[1].states.sortieDispoGla=true
+        pccApi.SEC[1].states.entreeDispoGla=false
+    } else {
+        pccApi.SEC[1].states.sortieDispoGla=false
+        pccApi.SEC[1].states.entreeDispoGla=true
+    }
 }

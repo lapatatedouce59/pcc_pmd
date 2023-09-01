@@ -134,7 +134,7 @@ async function updateFormat(pa){
 
     for(let voyHeader of document.getElementsByClassName('voyPaState')){
         for(let sec of data.SEC){
-            if (!(sec.id==='1')) continue;
+            if (!(sec.id===pa.id)) continue;
             /*for(let state of Object.entries(sec.states)){
                 console.log(state)
                 let stateElem = state[1][voyHeader.id]
@@ -743,7 +743,7 @@ function loadItiTco(pa){
 }
 
 function itiInfo(id){
-    if(!id) return console.error('[OGIA -> itiInfo] Aucun ID d\'iti indiqué!')
+    if(!id) return console.error('[itiInfo] Aucun ID d\'iti indiqué!')
     for(let sec of data.SEC){
         for(let itil of Object.entries(sec.ITI[0])){
             for(let iti of itil[1]){
@@ -752,9 +752,11 @@ function itiInfo(id){
             }
         }
     }
-    console.info('[OGIA -> itiInfo] Aucun itinéraire correspondant.')
+    console.info('[itiInfo] Aucun itinéraire correspondant.')
     return false;
 }
+
+
 
 
 
@@ -763,6 +765,8 @@ let btnRetV201 = document.getElementById('btnRetV201')
 let btnInjV201 = document.getElementById('btnInjV201')
 let btnRetV101 = document.getElementById('btnRetV101')
 let btnInjV101 = document.getElementById('btnInjV101')
+let btnSortieGla = document.getElementById('btnSortieGla')
+let btnEntreeGla = document.getElementById('btnEntreeGla')
 
 let btnDesUrgIti = document.getElementById('btnDesUrgIti')
 let btnCancelCycles = document.getElementById('btnCancelCycles')
@@ -807,6 +811,29 @@ btnInjV101.addEventListener('click', ()=>{
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
 })
+btnSortieGla.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "RET-BTN-ITI",
+        target: "GLA",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnEntreeGla.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "INJ-BTN-ITI",
+        target: "GLA",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+
+
 btnDesUrgIti.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 223,

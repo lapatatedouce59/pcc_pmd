@@ -43,7 +43,6 @@ exports.startCycle = function (code, wss, cycleTrigger) {
     };
 
     for(let sec of pccApi.SEC){
-        if(!(sec.id==='1')) continue;
         for(let cycle of sec.CYCLES){
             if(!(cycle.code===code)) continue;
             if(code==='c1p1'){
@@ -65,9 +64,9 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                     if((pccApi.SEC[0].cantons[8].trains.length>0)){
                         clearInterval(suiteCycleInter)
                         let cycleClear = ()=>{
-                            if((pccApi.SEC[0].cantons[8].trains.length>0)){
+                            if((pccApi.SEC[0].cantons[8].trains.length>0)&&(pccApi.SEC[0].cantons[3].trains.length===0)){
                                 clearInterval(cycleClearInter)
-                                if((pccApi.SEC[0].cantons[3].trains.length===0)){
+                                if(true){
                                     const rpdelay2 = async() => {
                                         changeItiState('sel','2401_1401')
                         
@@ -145,6 +144,133 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                     if((cycleTrigger) && (cycle.active)){
                                         let resetCycle = ()=>{
                                             if((pccApi.SEC[0].cantons[6].trains.length>0)){
+                                                clearInterval(resetCycleInter)
+                                                exports.startCycle(code, wss, true)
+                                            }
+                                        }
+                                        let resetCycleInter = setInterval(resetCycle,2000)
+                                        apiSave()
+                                    }
+                                }
+                            }
+                        }
+                        let cycleClearInter = setInterval(cycleClear,2000)
+                        apiSave()
+                    }
+                }
+                let suiteCycleInter = setInterval(suiteCycle,2000)
+            }
+
+            if(code==='c1p2'){
+                cycle.active=true
+                const rpdelay = async() => {
+                    changeItiState('sel','2202_2302')
+                    changeItiState('sel','2302_2101')
+                    changeItiState('sel','2402_2101')
+    
+                    changeItiState('des','2302_2202')
+                    changeItiState('des','2101_2302')
+                    changeItiState('des','2101_2402')
+                    changeItiState('des','2101_1202')
+                    changeItiState('des','1202_2101')
+                    await setTimeout(100)
+                    apiSave()
+                    await setTimeout(2000)
+                    apiSave()
+                }
+                rpdelay()
+                let suiteCycle = ()=>{
+                    if((pccApi.SEC[0].cantons[5].trains.length>0)){
+                        clearInterval(suiteCycleInter)
+                        let cycleClear = ()=>{
+                            if((pccApi.SEC[0].cantons[5].trains.length>0)){
+                                clearInterval(cycleClearInter)
+                                if((pccApi.SEC[1].cantons[2].trains.length===0)){
+                                    const rpdelay2 = async() => {
+                                        changeItiState('sel','2101_2402')
+                                        changeItiState('sel','2101_1202')
+                                        changeItiState('sel','1102_1302')
+                        
+                                        changeItiState('des','2402_2101')
+                                        changeItiState('des','2302_2101')
+                                        changeItiState('des','1202_2101')
+                                        changeItiState('des','1302_1102')
+                                        changeItiState('des','PAG1_1102')
+                                        changeItiState('des','1102_PAG1')
+                                        changeItiState('des','1202_1501')
+                                        changeItiState('des','1501_1202')
+                                        await setTimeout(100)
+                                        apiSave()
+                                        await setTimeout(2000)
+                                        apiSave()
+                                    }
+                                    rpdelay2()
+                                    if((cycleTrigger) && (cycle.active)){
+                                        let resetCycle = ()=>{
+                                            if((pccApi.SEC[1].cantons[2].trains.length>0)){
+                                                clearInterval(resetCycleInter)
+                                                exports.startCycle(code, wss, true)
+                                            }
+                                        }
+                                        let resetCycleInter = setInterval(resetCycle,2000)
+                                        apiSave()
+                                    }
+                                }
+                            }
+                        }
+                        let cycleClearInter = setInterval(cycleClear,2000)
+                        apiSave()
+                    }
+                }
+                let suiteCycleInter = setInterval(suiteCycle,2000)
+            }
+            if(code==='c2p2'){
+                cycle.active=true
+                const rpdelay = async() => {
+                    changeItiState('sel','2202_2302')
+                    changeItiState('sel','2302_2101')
+                    changeItiState('sel','2402_2101')
+    
+                    changeItiState('des','2302_2202')
+                    changeItiState('des','2101_2302')
+                    changeItiState('des','2101_2402')
+                    changeItiState('des','2101_1202')
+                    changeItiState('des','1202_2101')
+                    await setTimeout(100)
+                    apiSave()
+                    await setTimeout(2000)
+                    apiSave()
+                }
+                rpdelay()
+                let suiteCycle = ()=>{
+                    if((pccApi.SEC[0].cantons[5].trains.length>0)){
+                        clearInterval(suiteCycleInter)
+                        let cycleClear = ()=>{
+                            if((pccApi.SEC[0].cantons[5].trains.length>0)){
+                                clearInterval(cycleClearInter)
+                                if((pccApi.SEC[1].cantons[9].trains.length===0)){
+                                    const rpdelay2 = async() => {
+                                        changeItiState('sel','2101_2402')
+                                        changeItiState('sel','2101_1202')
+                                        changeItiState('sel','1102_PAG1')
+                        
+                                        changeItiState('des','2402_2101')
+                                        changeItiState('des','2302_2101')
+                                        changeItiState('des','1202_2101')
+                                        changeItiState('des','1302_1102')
+                                        changeItiState('des','PAG1_1102')
+                                        changeItiState('des','1102_1302')
+                                        changeItiState('des','1202_1501')
+                                        changeItiState('des','1501_1202')
+                                        await setTimeout(100)
+                                        apiSave()
+                                        await setTimeout(2000)
+                                        apiSave()
+                                    }
+                                    rpdelay2()
+                                    if((cycleTrigger) && (cycle.active)){
+                                        let resetCycle = ()=>{
+                                            if((pccApi.SEC[1].cantons[9].trains.length>0)){
                                                 clearInterval(resetCycleInter)
                                                 exports.startCycle(code, wss, true)
                                             }
