@@ -961,6 +961,12 @@ function refreshTCO(){
             arr.style.fill='#707070'
         }
     }
+    for(let voys of Object.entries(dictS1.voys)){
+        voys[1].setAttribute('href', '../OFF.png')
+    }
+    for(let voys of Object.entries(dictS2.voys)){
+        voys[1].setAttribute('href', '../OFF.png')
+    }
     for(let sec of data.SEC){
         //? Gestion feux S1
         for(let lights of Object.entries(dictS1.lights)){
@@ -1095,12 +1101,6 @@ function refreshTCO(){
         }
 
         //? Gestion voyants
-        for(let voys of Object.entries(dictS1.voys)){
-            voys[1].setAttribute('href', '../OFF.png')
-        }
-        for(let voys of Object.entries(dictS2.voys)){
-            voys[1].setAttribute('href', '../OFF.png')
-        }
         if((itiInfo('2201_2401'))){
             dictS1.voys['NOR'].setAttribute('href', '../ON.png')
         }
@@ -1511,7 +1511,7 @@ function itiInfo(id){
             }
         }
     }
-    console.info('itiInfo] Aucun itinéraire correspondant.')
+    //console.info('itiInfo] Aucun itinéraire correspondant.')
     return false;
 }
 
@@ -1524,7 +1524,7 @@ function cycleInfo(id){
             return true;
         }
     }
-    console.info('[cycleInfo] Aucun cycle correspondant.')
+    //console.info('[cycleInfo] Aucun cycle correspondant.')
     return false;
 }
 
