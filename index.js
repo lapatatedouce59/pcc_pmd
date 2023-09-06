@@ -925,6 +925,12 @@ function getCantonsInfo(id) {
 }*/
 
 function refreshTCO(){
+    for(let voys of Object.entries(dictS1.voys)){
+        voys[1].setAttribute('href', '../OFF.png')
+    }
+    for(let voys of Object.entries(dictS2.voys)){
+        voys[1].setAttribute('href', '../OFF.png')
+    }
     for(let ctn of Object.entries(dictS1.cantons)){
         if(ctn[1].length===3){
             for(let part of ctn[1]){
@@ -961,12 +967,7 @@ function refreshTCO(){
             arr.style.fill='#707070'
         }
     }
-    for(let voys of Object.entries(dictS1.voys)){
-        voys[1].setAttribute('href', '../OFF.png')
-    }
-    for(let voys of Object.entries(dictS2.voys)){
-        voys[1].setAttribute('href', '../OFF.png')
-    }
+    
     for(let sec of data.SEC){
         //? Gestion feux S1
         for(let lights of Object.entries(dictS1.lights)){
@@ -1559,7 +1560,6 @@ btnAdminAccess.addEventListener('click',()=>{
 let loadCount = 0
 let verifFunc = ()=>{
     loadCount++
-    console.log(loadCount)
     if(loadCount===30){
         document.location.reload()
     }
@@ -1570,6 +1570,12 @@ let verifFunc = ()=>{
         refreshTCO()
         let endLoad = Date.now()
         console.log('Pre-load in '+(endLoad-startLoad)+' ms.')
+        actualRequest = JSON.stringify({
+            op: 15,
+            time: (endLoad-startLoad)
+        })
+        window.actualRequest = actualRequest
+        window.WebSocket.send(actualRequest)
     }
 }
 let verifLoadInter = setInterval(verifFunc,50)

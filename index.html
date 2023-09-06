@@ -97,6 +97,17 @@
             font-family: Arial, Helvetica, sans-serif;
             transition: 500ms;
         }
+        .voyPaFormat{
+            background-color: #CCCCCC;
+            transition: 500ms;
+            font-size: 15px;
+        }
+        td.voyPaFormat{
+            border: #848484 solid;
+            border-width: 1px;
+            font-family: Arial, Helvetica, sans-serif;
+            transition: 500ms;
+        }
         .voyPresenceCmdOn{
             width: 20px;
             background-color: #00EF35;
@@ -663,12 +674,11 @@
         <h2 style="color:rgb(0, 0, 0);"><- S2 S1-></h2>
     <div class="tco" style="height: 650px;">
         <div class="ligne" style="height: 1200px; position: relative; pointer-events: none;">
-            <span><object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object></span><span><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep"></object></span><span><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg"></object></span><br>
-            
+            <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep"></object><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg"></object>
         </div>
-        <div class="elec">
-            <object data="src/tco/elec/ELEC.svg" type="image/svg+xml" id="elecSvg" style="position: relative; top: -85vh;"></object>
-        </div>
+    </div>
+    <div class="elec">
+        <object data="src/tco/elec/ELEC.svg" type="image/svg+xml" id="elecSvg" style="position: relative; top: -25vh;"></object>
     </div>
     <button id="downward">S2</button>
     <button id="forward">S1</button>
@@ -708,7 +718,7 @@
                 </table>
             </fieldset>
         </div>
-        <div class="paFormatAmovible" id="paFormatAmovible1">
+        <div class="itiFormatAmovible" id="itiFormatAmovible1">
             
             <div id="manualItiTop1" style="display: inline-flex; width: 100%; align-items: center;">
             
@@ -750,7 +760,7 @@
                 
             </div>
         </div>
-        <div class="paFormatAmovible" id="paFormatAmovible2">
+        <div class="itiFormatAmovible" id="itiFormatAmovible2">
             <div id="manualItiTop2" style="display: inline-flex; width: 100%; align-items: center;">
             
             </div>
@@ -779,6 +789,62 @@
                 </div>
             </div>
             <div id="manualItiBot2" style="display: inline-flex; width: 100%; align-items: center;">
+                
+            </div>
+        </div>
+    </div>
+    <div class="format">
+        <div style="background-color: #5E5E5E;">
+            <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des PA</span><span><select id="selectMenuPaFormat"></select></span><button id="paFormAcq">ACQUITTER</button>
+        </div>
+        <div class="paFormatAmovible" id="paFormatAmovible1">
+            
+            <div id="ctnStateTop1" style="display: inline; width: 100%; align-items: center;">
+                <table>
+                    <tr>
+                        <td class="voyPaFormat"></td>
+                    </tr>
+                </table>
+            </div>
+            <div style="display: inline-flex;">
+                <div style="padding: 10px;">
+                    <fieldset>
+                        <legend>GESTION GARAGES VOIE 2</legend>
+                        <table style="width: 100%; text-align: center;">
+                            <h2>PA 1</h2>
+                        </table>
+                    </fieldset>
+                </div>
+                <div id="tcoFormPa1">
+                    <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                </div>
+            </div>
+            <div id="ctnStateBot1" style="display: inline-flex; width: 100%; align-items: center;">
+                
+            </div>
+        </div>
+        <div class="paFormatAmovible" id="paFormatAmovible2">
+            <div id="ctnStateTop2" style="display: inline; width: 100%; align-items: center;">
+                <table>
+                    <tr>
+                        <td class="voyPaFormat"></td>
+                    </tr>
+                </table>
+            </div>
+            <div style="display: inline-flex;">
+                <div style="padding: 10px;">
+                    <fieldset>
+                        <legend>GESTION GARAGES VOIE 2</legend>
+                        <table style="width: 100%; text-align: center;">
+                            <h2>PA 2</h2>
+                        </table>
+                    </fieldset>
+                </div>
+                <div id="tcoFormPa2">
+                    <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                </div>
+            </div>
+            <div id="ctnStateBot2" style="display: inline-flex; width: 100%; align-items: center;">
                 
             </div>
         </div>
@@ -1138,5 +1204,7 @@
     <script src="./trainHandler.js" type="module"></script>
 
     <script src="./paHandler.js" type="module"></script>
+
+    <script src="./itiHandler.js" type="module"></script>
 </body>
 </html>

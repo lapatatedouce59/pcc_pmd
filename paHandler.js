@@ -1,7 +1,11 @@
 let data=false
 let actualRequest=false
-let selectMenuPa = document.getElementById('selectMenuPa')
+let selectMenuPa = document.getElementById('selectMenuPaFormat')
 let selected = false
+import sm from './sm.js'
+sm.init()
+
+sm.registerSound('def', './src/formats/default.mp3')
 window.WebSocket.addEventListener('message', msg =>{
     data = JSON.parse(msg.data);
     if ((data.op===300)||(data.op===2)){
@@ -36,8 +40,11 @@ selectMenuPa.addEventListener('input', ()=>{
 let pa1dictionnary = false
 let pa2dictionnary = false
 
-
+let defaultSoundInter=false
 async function updateFormat(pa){
+    let defList = []
+    document.getElementById(`ctnStateTop${pa.id}`).innerHTML=''
+    document.getElementById(`ctnStateBot${pa.id}`).innerHTML=''
     for(let elem of document.getElementsByClassName('VOYITIP')){
         elem.classList.remove('voyPresenceCmdOn')
         elem.classList.add('voyPresenceCmdOff')
@@ -54,97 +61,11 @@ async function updateFormat(pa){
         }
     }
     console.log('UPDATE INTENT FOR '+pa.id)
-    for(let itilist of pa.itis){
-        for(let itiv of Object.entries(itilist)){
-            for(let iti of itiv[1]){
-                if(iti.active){
-                    let presenceVoytd = document.getElementById(`presence[${iti.code}]td`)
-                    presenceVoytd.classList.add('ok')
-                    let presenceVoyspan = document.getElementById(`presence[${iti.code}]span`)
-                    presenceVoyspan.classList.add('ok')
-                }
-                console.log(iti.mode)
-                switch(iti.mode){
-                    
-                    case 'SEL':
-                        let presenceSel1 = document.getElementById(`presenceSel[${iti.code}]`)
-                        let presenceDes1 = document.getElementById(`presenceDes[${iti.code}]`)
-                        let presenceDu1 = document.getElementById(`presenceDu[${iti.code}]`)
-                        console.log(presenceSel1)
-                        presenceSel1.classList.remove('voyPresenceCmdOff')
-                        //presenceDes1.classList.remove('voyPresenceCmdOn')
-                        //presenceDu1.classList.remove('voyPresenceCmdOn')
-                        presenceSel1.classList.add('voyPresenceCmdOn')
-                        //presenceDes1.classList.add('voyPresenceCmdOff')
-                        //presenceSel1.classList.add('voyPresenceCmdOff')
-                        break;
-                    case 'DES':
-                        let presenceSel2 = document.getElementById(`presenceSel[${iti.code}]`)
-                        let presenceDes2 = document.getElementById(`presenceDes[${iti.code}]`)
-                        let presenceDu2 = document.getElementById(`presenceDu[${iti.code}]`)
-                        //presenceSel2.classList.remove('voyPresenceCmdOn')
-                        presenceDes2.classList.remove('voyPresenceCmdOff')
-                        //presenceDu2.classList.remove('voyPresenceCmdOn')
-                        //presenceSel2.classList.add('voyPresenceCmdOff')
-                        presenceDes2.classList.add('voyPresenceCmdOn')
-                        //presenceDu2.classList.add('voyPresenceCmdOff')
-                        break;
-                    case 'DU':
-                        let presenceSel3 = document.getElementById(`presenceSel[${iti.code}]`)
-                        let presenceDes3 = document.getElementById(`presenceDes[${iti.code}]`)
-                        let presenceDu3 = document.getElementById(`presenceDu[${iti.code}]`)
-                        //presenceSel3.classList.remove('voyPresenceCmdOn')
-                        //presenceDes3.classList.remove('voyPresenceCmdOn')
-                        presenceDu3.classList.remove('voyPresenceCmdOff')
-                        //presenceSel3.classList.add('voyPresenceCmdOff')
-                        //presenceDes3.classList.add('voyPresenceCmdOff')
-                        presenceDu3.classList.add('voyPresenceCmdOn')
-                        break;
-                    case false:
-                        let presenceSel4 = document.getElementById(`presenceSel[${iti.code}]`)
-                        let presenceDes4 = document.getElementById(`presenceDes[${iti.code}]`)
-                        let presenceDu4 = document.getElementById(`presenceDu[${iti.code}]`)
-                        presenceSel4.classList.remove('voyPresenceCmdOn')
-                        presenceDes4.classList.remove('voyPresenceCmdOn')
-                        presenceDu4.classList.remove('voyPresenceCmdOn')
-                        presenceSel4.classList.add('voyPresenceCmdOff')
-                        presenceDes4.classList.add('voyPresenceCmdOff')
-                        presenceDu4.classList.add('voyPresenceCmdOff')
-                        break;
-                }
-            }
-        }
-    }
-    for(let cycle of pa.cycles){
-        let cyclePresence = document.getElementById(`voyPresence${cycle.code}`)
-        let cycleImg = document.getElementById(`imgPresence${cycle.code}`)
-        if(cycle.sel){
-            cyclePresence.classList.add('voyPresenceCmdOn')
-            cyclePresence.classList.remove('voyPresenceCmdOff')
-        } else {
-            cyclePresence.classList.remove('voyPresenceCmdOn')
-            cyclePresence.classList.add('voyPresenceCmdOff')
-        }
-        if(cycle.active){
-            cycleImg.src=cycle.imgl
-        } else {
-            cycleImg.src=cycle.imgn
-        }
-    }
 
     for(let voyHeader of document.getElementsByClassName('voyPaState')){
         for(let sec of data.SEC){
             if (!(sec.id===pa.id)) continue;
-            /*for(let state of Object.entries(sec.states)){
-                console.log(state)
-                let stateElem = state[1][voyHeader.id]
-                console.log(stateElem)
-                if(stateElem===true){
-                    voyHeader.classList.add('ok')
-                } else {
-                    voyHeader.classList.remove('ok')
-                }
-            }*/
+
             let stateElem = sec.states[voyHeader.id]
             if(stateElem===true){
                 voyHeader.classList.add('ok')
@@ -153,8 +74,44 @@ async function updateFormat(pa){
             }
         }
     }
+    for(let sec of data.SEC){
+        if (!(sec.id===pa.id)) continue;
+        for(let ctn of sec.cantons){
+            for(let states of Object.entries(ctn.states)){
+                if(states[1]===2){
+                    if(!((states[0]==='pzo')||(states[0]==='coupFs')||(states[0]==='tcs')||(states[0]==='ldi')||(states[0]==='pdp')||(states[0]==='selAcc'))) continue;
+                    let text = document.createElement('span')
+                    text.style.color='#C50000'
+                    text.innerText=`${ctn.cid} >>> alarme ${states[0]}`
+                    let br = document.createElement('br')
+                    document.getElementById(`ctnStateTop${pa.id}`).appendChild(text)
+                    document.getElementById(`ctnStateTop${pa.id}`).appendChild(br)
+                }
+            }
+        }
+    }
 
-    console.log('MAJ 1')
+    for(let sec of data.SEC){
+        for(let ctn of sec.cantons){
+            for(let states of Object.entries(ctn.states)){
+                if(states[1]===2){
+                    if(!((states[0]==='pzo')||(states[0]==='coupFs')||(states[0]==='tcs')||(states[0]==='ldi')||(states[0]==='pdp')||(states[0]==='selAcc'))) continue;
+                    defList.push(ctn.cid)
+                }
+            }
+        }
+    }
+
+    
+    clearInterval(defaultSoundInter)
+    if(defList.length>0){
+        defaultSoundInter=setInterval( ()=> {
+            sm.playSound('def')
+        },1000)
+    } else {
+        sm.stopSound('def')
+        clearInterval(defaultSoundInter)
+    }
     loadItiTco(pa)
 }
 
@@ -184,17 +141,15 @@ async function initFormat(pa){
             divs.style.display='none'
         }
     }
-    document.getElementById(`manualItiTop${pa.id}`).innerHTML=''
-    document.getElementById(`manualItiBot${pa.id}`).innerHTML=''
-    console.log('erase '+pa.id)
-    document.getElementById(`masterTableCycles${pa.id}`).innerHTML=''
-    console.log(pa.id)
+    document.getElementById(`ctnStateTop${pa.id}`).innerHTML=''
+    document.getElementById(`ctnStateBot${pa.id}`).innerHTML=''
+
     if (pa.id==='1'){
-        let tcoItiPa = document.getElementById('tcoItiPa1')
+        let tcoItiPa = document.getElementById('tcoFormPa1')
         tcoItiPa.innerHTML=''
         let tcoobj = document.createElement('object')
-        tcoobj.data="src/formats/TCOPA1.svg"
-        tcoobj.id="pa1svg"
+        tcoobj.data="src/formats/TCOPA1FORM.svg"
+        tcoobj.id="paForm1svg"
         tcoobj.type="image/svg+xml"
         tcoItiPa.appendChild(tcoobj)
         tcoobj.addEventListener('load', () => {
@@ -225,40 +180,17 @@ async function initFormat(pa){
                             'down': pa1svgDoc.getElementById('c1dw')
                         }
                     }
-                },
-                arrows: {
-                    '2401_2501':pa1svgDoc.getElementById('2401_2501'),
-                    '2501_2401':pa1svgDoc.getElementById('2501_2401'),
-                    '1401_2401':pa1svgDoc.getElementById('1401_2401'),
-                    '2201_1201':pa1svgDoc.getElementById('2201_1201'),
-                    '2201_2401':pa1svgDoc.getElementById('2201_2401'),
-                    '2401_2201':pa1svgDoc.getElementById('2401_2201'),
-                    '2101_2201':pa1svgDoc.getElementById('2101_2201'),
-                    '2201_2101':pa1svgDoc.getElementById('2201_2101'),
-                    '2402_2101':pa1svgDoc.getElementById('2402_2101'),
-                    '2101_2402':pa1svgDoc.getElementById('2101_2402'),
-
-                    '1101_1201':pa1svgDoc.getElementById('1101_1201'),
-                    '1201_1101':pa1svgDoc.getElementById('1201_1101'),
-                    '1201_2201':pa1svgDoc.getElementById('1201_2201'),
-                    '2401_1401':pa1svgDoc.getElementById('2401_1401'),
-                    '1201_1401':pa1svgDoc.getElementById('1201_1401'),
-                    '1401_1201':pa1svgDoc.getElementById('1401_1201'),
-                    '1401_1501':pa1svgDoc.getElementById('1401_1501'),
-                    '1501_1401':pa1svgDoc.getElementById('1501_1401'),
-                    '1501_1102':pa1svgDoc.getElementById('1501_1102'),
-                    '1102_1501':pa1svgDoc.getElementById('1102_1501')
                 }
             }
             console.log('MAJ 2')
             loadItiTco(pa)
         })
     } else if (pa.id==='2'){
-        let tcoItiPa = document.getElementById('tcoItiPa2')
+        let tcoItiPa = document.getElementById('tcoFormPa2')
         tcoItiPa.innerHTML=''
         let tcoobj = document.createElement('object')
-        tcoobj.data="src/formats/TCOPA2.svg"
-        tcoobj.id="pa1svg"
+        tcoobj.data="src/formats/TCOPA2FORM.svg"
+        tcoobj.id="paForm2svg"
         tcoobj.type="image/svg+xml"
         tcoItiPa.appendChild(tcoobj)
         tcoobj.addEventListener('load', () => {
@@ -292,326 +224,11 @@ async function initFormat(pa){
                             'a2down': pa2svgDoc.getElementById('c2a2dw')
                         }
                     }
-                },
-                arrows: {
-                    '2202_2102':pa2svgDoc.getElementById('2202_2102'),
-                    '2302_2202':pa2svgDoc.getElementById('2302_2202'),
-                    '2102_2603':pa2svgDoc.getElementById('2102_2603'),
-                    '1302_1402':pa2svgDoc.getElementById('1302_1402'),
-                    '1402_1103':pa2svgDoc.getElementById('1402_1103'),
-                    '1102_1302':pa2svgDoc.getElementById('1102_1302'),
-                    '1501_1202':pa2svgDoc.getElementById('1501_1202'),
-                    '2302_2101':pa2svgDoc.getElementById('2302_2101'),
-                    '1302_1102':pa2svgDoc.getElementById('1302_1102'),
-                    '1202_1501':pa2svgDoc.getElementById('1202_1501'),
-                    '2101_2302':pa2svgDoc.getElementById('2101_2302'),
-                    '2102_2202':pa2svgDoc.getElementById('2102_2202'),
-                    '2202_2302':pa2svgDoc.getElementById('2202_2302'),
-                    '2603_2102':pa2svgDoc.getElementById('2603_2102'),
-                    '1402_1302':pa2svgDoc.getElementById('1402_1302'),
-                    '1103_1402':pa2svgDoc.getElementById('1103_1402'),
-                    '2101_1202':pa2svgDoc.getElementById('2101_1202'),
-                    '1102_PAG1':pa2svgDoc.getElementById('1102_PAG1'),
-                    '1202_1501':pa2svgDoc.getElementById('1202_1501'),
-                    'PAG1_1102':pa2svgDoc.getElementById('PAG1_1102')
                 }
             }
             console.log('MAJ 2')
             loadItiTco(pa)
         })
-    }
-    //?  Creating action board
-    for(let itilist of pa.itis){
-        for(let itis of itilist.V1){
-            console.log(itis)
-            let masterDiv=document.getElementById(`manualItiTop${pa.id}`)
-
-            let parentdiv = document.createElement('div')
-            parentdiv.style.backgroundColor='#E6E6E6'
-
-            let controltable = document.createElement('table')
-            controltable.style.margin='5px'
-
-            let tr1 = document.createElement('tr')
-
-            let tdbtnSel = document.createElement('td')
-            tdbtnSel.colSpan='2'
-
-            let btnSel = document.createElement('input')
-            btnSel.type='button'
-            btnSel.classList.add('btnControl')
-            btnSel.id=`btnSel[${itis.code}]`
-            btnSel.value='SEL'
-            btnSel.addEventListener('click', ()=>{
-                actualRequest = JSON.stringify({
-                    op: 220,
-                    execute: "SEL-BTN-ITI",
-                    target: itis.code,
-                    uuid: window.uuid
-                })
-                window.WebSocket.send(actualRequest);
-                window.actualRequest = actualRequest
-            })
-
-            let tdVoySel = document.createElement('td')
-            tdVoySel.classList.add('voyPresenceCmdOff')
-            tdVoySel.classList.add('VOYITIP')
-            tdVoySel.id=`presenceSel[${itis.code}]`
-
-            let tr2 = document.createElement('tr')
-
-            let tdbtnDes = document.createElement('td')
-            tdbtnDes.colSpan='2'
-
-            let btnDes = document.createElement('input')
-            btnDes.type='button'
-            btnDes.classList.add('btnControl')
-            btnDes.id=`btnDes[${itis.code}]`
-            btnDes.value='DES'
-            btnDes.addEventListener('click', ()=>{
-                actualRequest = JSON.stringify({
-                    op: 220,
-                    execute: "DES-BTN-ITI",
-                    target: itis.code,
-                    uuid: window.uuid
-                })
-                window.WebSocket.send(actualRequest);
-                window.actualRequest = actualRequest
-            })
-
-            let tdVoyDes = document.createElement('td')
-            tdVoyDes.classList.add('voyPresenceCmdOff')
-            tdVoyDes.classList.add('VOYITIP')
-            tdVoyDes.id=`presenceDes[${itis.code}]`
-
-            let tr3 = document.createElement('tr')
-
-            let tdbtnDu = document.createElement('td')
-            tdbtnDu.colSpan='2'
-
-            let btnDu = document.createElement('input')
-            btnDu.type='button'
-            btnDu.classList.add('btnControl')
-            btnDu.id=`btnDu[${itis.code}]`
-            btnDu.value='DU'
-            btnDu.addEventListener('click', ()=>{
-                actualRequest = JSON.stringify({
-                    op: 220,
-                    execute: "DU-BTN-ITI",
-                    target: itis.code,
-                    uuid: window.uuid
-                })
-                window.WebSocket.send(actualRequest);
-                window.actualRequest = actualRequest
-            })
-
-            let tdVoyDu = document.createElement('td')
-            tdVoyDu.classList.add('VOYITIP')
-            tdVoyDu.classList.add('voyPresenceCmdOff')
-            tdVoyDu.id=`presenceDu[${itis.code}]`
-
-            let tr4 = document.createElement('tr')
-
-            let tdVoyPresence = document.createElement('td')
-            tdVoyPresence.colSpan='3'
-            tdVoyPresence.classList.add('voyItiState')
-            tdVoyPresence.classList.add('VOYITIV')
-            tdVoyPresence.id=`presence[${itis.code}]td`
-
-            let presenceSpan = document.createElement('span')
-            presenceSpan.classList.add('voyItiState')
-            presenceSpan.id=`presence[${itis.code}]span`
-            presenceSpan.innerText=itis.code
-            presenceSpan.classList.add('VOYITIV')
-
-            tdbtnSel.appendChild(btnSel)
-            tr1.appendChild(tdbtnSel)
-            tr1.appendChild(tdVoySel)
-            tdbtnDes.appendChild(btnDes)
-            tr2.appendChild(tdbtnDes)
-            tr2.appendChild(tdVoyDes)
-            tdbtnDu.appendChild(btnDu)
-            tr3.appendChild(tdbtnDu)
-            tr3.appendChild(tdVoyDu)
-            tdVoyPresence.appendChild(presenceSpan)
-            tr4.appendChild(tdVoyPresence)
-            controltable.appendChild(tr1)
-            controltable.appendChild(tr2)
-            controltable.appendChild(tr3)
-            controltable.appendChild(tr4)
-            parentdiv.appendChild(controltable)
-            masterDiv.appendChild(parentdiv)
-        }
-        for(let itis of itilist.V2){
-            console.log(itis)
-            let masterDiv=document.getElementById(`manualItiBot${pa.id}`)
-
-            let parentdiv = document.createElement('div')
-            parentdiv.style.backgroundColor='#E6E6E6'
-
-            let controltable = document.createElement('table')
-            controltable.style.margin='5px'
-
-            let tr1 = document.createElement('tr')
-
-            let tdbtnSel = document.createElement('td')
-            tdbtnSel.colSpan='2'
-
-            let btnSel = document.createElement('input')
-            btnSel.type='button'
-            btnSel.classList.add('btnControl')
-            btnSel.id=`btnSel[${itis.code}]`
-            btnSel.value='SEL'
-            btnSel.addEventListener('click', ()=>{
-                actualRequest = JSON.stringify({
-                    op: 220,
-                    execute: "SEL-BTN-ITI",
-                    target: itis.code,
-                    uuid: window.uuid
-                })
-                window.WebSocket.send(actualRequest);
-                window.actualRequest = actualRequest
-            })
-
-            let tdVoySel = document.createElement('td')
-            tdVoySel.classList.add('VOYITIP')
-            tdVoySel.classList.add('voyPresenceCmdOff')
-            tdVoySel.id=`presenceSel[${itis.code}]`
-
-            let tr2 = document.createElement('tr')
-
-            let tdbtnDes = document.createElement('td')
-            tdbtnDes.colSpan='2'
-
-            let btnDes = document.createElement('input')
-            btnDes.type='button'
-            btnDes.classList.add('btnControl')
-            btnDes.id=`btnDes[${itis.code}]`
-            btnDes.value='DES'
-            btnDes.addEventListener('click', ()=>{
-                actualRequest = JSON.stringify({
-                    op: 220,
-                    execute: "DES-BTN-ITI",
-                    target: itis.code,
-                    uuid: window.uuid
-                })
-                window.WebSocket.send(actualRequest);
-                window.actualRequest = actualRequest
-            })
-
-            let tdVoyDes = document.createElement('td')
-            tdVoyDes.classList.add('VOYITIP')
-            tdVoyDes.classList.add('voyPresenceCmdOff')
-            tdVoyDes.id=`presenceDes[${itis.code}]`
-
-            let tr3 = document.createElement('tr')
-
-            let tdbtnDu = document.createElement('td')
-            tdbtnDu.colSpan='2'
-
-            let btnDu = document.createElement('input')
-            btnDu.type='button'
-            btnDu.classList.add('btnControl')
-            btnDu.id=`btnDu[${itis.code}]`
-            btnDu.value='DU'
-            btnDu.addEventListener('click', ()=>{
-                actualRequest = JSON.stringify({
-                    op: 220,
-                    execute: "DU-BTN-ITI",
-                    target: itis.code,
-                    uuid: window.uuid
-                })
-                window.WebSocket.send(actualRequest);
-                window.actualRequest = actualRequest
-            })
-
-            let tdVoyDu = document.createElement('td')
-            tdVoyDu.classList.add('VOYITIP')
-            tdVoyDu.classList.add('voyPresenceCmdOff')
-            tdVoyDu.id=`presenceDu[${itis.code}]`
-
-            let tr4 = document.createElement('tr')
-
-            let tdVoyPresence = document.createElement('td')
-            tdVoyPresence.colSpan='3'
-            tdVoyPresence.classList.add('voyItiState')
-            tdVoyPresence.id=`presence[${itis.code}]td`
-            tdVoyPresence.classList.add('VOYITIV')
-
-            let presenceSpan = document.createElement('span')
-            presenceSpan.classList.add('voyItiState')
-            presenceSpan.id=`presence[${itis.code}]span`
-            presenceSpan.classList.add('VOYITIV')
-            presenceSpan.innerText=itis.code
-
-            tdbtnSel.appendChild(btnSel)
-            tr1.appendChild(tdbtnSel)
-            tr1.appendChild(tdVoySel)
-            tdbtnDes.appendChild(btnDes)
-            tr2.appendChild(tdbtnDes)
-            tr2.appendChild(tdVoyDes)
-            tdbtnDu.appendChild(btnDu)
-            tr3.appendChild(tdbtnDu)
-            tr3.appendChild(tdVoyDu)
-            tdVoyPresence.appendChild(presenceSpan)
-            tr4.appendChild(tdVoyPresence)
-            controltable.appendChild(tr1)
-            controltable.appendChild(tr2)
-            controltable.appendChild(tr3)
-            controltable.appendChild(tr4)
-            parentdiv.appendChild(controltable)
-            masterDiv.appendChild(parentdiv)
-        }
-    }
-    //? Creating cycle board
-    for(let sec of data.SEC){
-        if(!(sec.id===pa.id)) continue;
-        //document.getElementById(`masterTableCycles${pa.id}`).innerHTML=''
-        for(let cycles of sec.CYCLES){
-            console.log(cycles)
-            let tr = document.createElement('tr')
-            let td1 = document.createElement('td')
-            let cycleSelBtn = document.createElement('input')
-            cycleSelBtn.classList.add('btnControl')
-            cycleSelBtn.type='button'
-            cycleSelBtn.value='  '
-            cycleSelBtn.id=`btnSel${cycles.code}`
-            cycleSelBtn.addEventListener('click',()=>{
-                actualRequest = JSON.stringify({
-                    op: 222,
-                    execute: "SEL-BTN-CYCLE",
-                    target: cycles.code,
-                    uuid: window.uuid
-                })
-                window.WebSocket.send(actualRequest);
-                window.actualRequest = actualRequest
-            })
-
-            let td2=document.createElement('td')
-            td2.classList.add('voyPresenceCmdOff','VOYCYCLEP')
-            if(cycles.sel){
-                td2.classList.remove('voyPresenceCmdOff')
-                td2.classList.add('voyPresenceCmdOn')
-            }
-            td2.id=`voyPresence${cycles.code}`
-
-            let td3 = document.createElement('td')
-            td3.colSpan='5'
-            let statusImg = document.createElement('img')
-            if(cycles.active){
-                statusImg.src=cycles.imgl;
-            } else {
-                statusImg.src=cycles.imgn;
-            }
-            statusImg.id=`imgPresence${cycles.code}`
-
-            td1.appendChild(cycleSelBtn)
-            td3.appendChild(statusImg)
-            tr.appendChild(td1)
-            tr.appendChild(td2)
-            tr.appendChild(td3)
-            document.getElementById(`masterTableCycles${pa.id}`).appendChild(tr)
-        }
     }
     updateFormat(pa)
 }
@@ -620,15 +237,22 @@ function loadItiTco(pa){
     console.log(pa)
     if(pa.id==='1'){
         if(pa1dictionnary===false) return;
-        for(let ctn of Object.entries(pa1dictionnary.cantons)){
-            ctn[1].style.fill = '#CDCDCD';
+        for(let ctno of Object.entries(pa1dictionnary.cantons)){
+            ctno[1].style.fill = '#CDCDCD';
             for(let ctns of pa.ctns){
-                if(!(ctns.cid===ctn[0])) continue;
+                if(!(ctns.cid===ctno[0])) continue;
                 if(ctns.trains.length>0){
-                    ctn[1].style.fill = '#D9DD0E';
+                    ctno[1].style.fill = '#D9DD0E';
+                }
+                for(let states of Object.entries(ctns.states)){
+                    if(states[1]===2){
+                        if(!((states[0]==='pzo')||(states[0]==='coupFs')||(states[0]==='tcs')||(states[0]==='ldi')||(states[0]==='pdp')||(states[0]==='selAcc'))) continue;
+                        if(pa.id==='1'){
+                            pa1dictionnary.cantons[ctns.cid].style.fill='#C50000'
+                        }
+                    }
                 }
             }
-            
         }
         for(let aig of Object.entries(pa1dictionnary.aiguilles.c1.tracks)){
             aig[1].style.fill = '#CDCDCD';
@@ -660,20 +284,6 @@ function loadItiTco(pa){
         if((itiInfo('2201_1201'))||(itiInfo('2401_1401'))){
             pa1dictionnary.aiguilles.c1.arrows.down.style.fill='#148FB6'
         }
-        for(let arrows of Object.entries(pa1dictionnary.arrows)){
-            arrows[1].style.fill = '#9F9F9F'
-            for(let itil of Object.entries(pa.itis[0])){
-                for(let iti of Object.entries(itil[1])){
-                    if(!(iti[1].code===arrows[0])) continue;
-                    //console.log(iti[1])
-                    if(iti[1].active===true){
-                        arrows[1].style.fill = '#00FF19';
-                    } else if (iti[1].active===false){
-                        arrows[1].style.fill = '#9F9F9F';
-                    }
-                }
-            }
-        }
     } else if(pa.id==='2'){
         if(pa2dictionnary===false) return;
         for(let ctn of Object.entries(pa2dictionnary.cantons)){
@@ -682,6 +292,14 @@ function loadItiTco(pa){
                 if(!(ctns.cid===ctn[0])) continue;
                 if(ctns.trains.length>0){
                     ctn[1].style.fill = '#D9DD0E';
+                }
+                for(let states of Object.entries(ctns.states)){
+                    if(states[1]===2){
+                        if(!((states[0]==='pzo')||(states[0]==='coupFs')||(states[0]==='tcs')||(states[0]==='ldi')||(states[0]==='pdp')||(states[0]==='selAcc'))) continue;
+                        if(pa.id==='2'){
+                            pa2dictionnary.cantons[ctns.cid].style.fill='#C50000'
+                        }
+                    }
                 }
             }
             
@@ -725,20 +343,6 @@ function loadItiTco(pa){
         if(itiInfo('PAG1_1102')){
             pa2dictionnary.aiguilles.c2.arrows.a2up.style.fill='#148FB6'
         }
-        for(let arrows of Object.entries(pa2dictionnary.arrows)){
-            arrows[1].style.fill = '#9F9F9F'
-            for(let itil of Object.entries(pa.itis[0])){
-                for(let iti of Object.entries(itil[1])){
-                    if(!(iti[1].code===arrows[0])) continue;
-                    //console.log(iti[1])
-                    if(iti[1].active===true){
-                        arrows[1].style.fill = '#00FF19';
-                    } else if (iti[1].active===false){
-                        arrows[1].style.fill = '#9F9F9F';
-                    }
-                }
-            }
-        }
     }
 }
 
@@ -756,98 +360,10 @@ function itiInfo(id){
     return false;
 }
 
-
-
-
-
-
-let btnRetV201 = document.getElementById('btnRetV201')
-let btnInjV201 = document.getElementById('btnInjV201')
-let btnRetV101 = document.getElementById('btnRetV101')
-let btnInjV101 = document.getElementById('btnInjV101')
-let btnSortieGla = document.getElementById('btnSortieGla')
-let btnEntreeGla = document.getElementById('btnEntreeGla')
-
-let btnDesUrgIti = document.getElementById('btnDesUrgIti')
-let btnCancelCycles = document.getElementById('btnCancelCycles')
-
-btnRetV201.addEventListener('click', ()=>{
+document.getElementById('paFormAcq').addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
-        op: 221,
-        execute: "RET-BTN-ITI",
-        target: "V201",
-        uuid: window.uuid
-    })
-    window.WebSocket.send(actualRequest);
-    window.actualRequest = actualRequest
-})
-btnInjV201.addEventListener('click', ()=>{
-    actualRequest = JSON.stringify({
-        op: 221,
-        execute: "INJ-BTN-ITI",
-        target: "V201",
-        uuid: window.uuid
-    })
-    window.WebSocket.send(actualRequest);
-    window.actualRequest = actualRequest
-})
-btnRetV101.addEventListener('click', ()=>{
-    actualRequest = JSON.stringify({
-        op: 221,
-        execute: "RET-BTN-ITI",
-        target: "V101",
-        uuid: window.uuid
-    })
-    window.WebSocket.send(actualRequest);
-    window.actualRequest = actualRequest
-})
-btnInjV101.addEventListener('click', ()=>{
-    actualRequest = JSON.stringify({
-        op: 221,
-        execute: "INJ-BTN-ITI",
-        target: "V101",
-        uuid: window.uuid
-    })
-    window.WebSocket.send(actualRequest);
-    window.actualRequest = actualRequest
-})
-btnSortieGla.addEventListener('click', ()=>{
-    actualRequest = JSON.stringify({
-        op: 221,
-        execute: "RET-BTN-ITI",
-        target: "GLA",
-        uuid: window.uuid
-    })
-    window.WebSocket.send(actualRequest);
-    window.actualRequest = actualRequest
-})
-btnEntreeGla.addEventListener('click', ()=>{
-    actualRequest = JSON.stringify({
-        op: 221,
-        execute: "INJ-BTN-ITI",
-        target: "GLA",
-        uuid: window.uuid
-    })
-    window.WebSocket.send(actualRequest);
-    window.actualRequest = actualRequest
-})
-
-
-
-btnDesUrgIti.addEventListener('click', ()=>{
-    actualRequest = JSON.stringify({
-        op: 223,
-        execute: "DUG-BTN-ITI",
-        target: selectMenuPa.value,
-        uuid: window.uuid
-    })
-    window.WebSocket.send(actualRequest);
-    window.actualRequest = actualRequest
-})
-btnCancelCycles.addEventListener('click', ()=>{
-    actualRequest = JSON.stringify({
-        op: 223,
-        execute: "CANCELCYCLES-BTN-ITI",
+        op: 224,
+        execute: "AQC-BTN",
         target: selectMenuPa.value,
         uuid: window.uuid
     })

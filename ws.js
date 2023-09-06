@@ -604,6 +604,10 @@ wss.on('connection', (ws, req) => {
                 goEncoreAttendre()
                 console.log('Serveur envoyée.')
                 break;*/
+            case 15:
+                ws.loaded=data.time
+                logger.confirm(ws.usr.username + ' loaded.')
+                break;
             case 200 :
                 if(!isClientExisting(data.uuid)) return;
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
@@ -2354,6 +2358,21 @@ wss.on('connection', (ws, req) => {
                     }
                 }
                 break;
+            case 224:
+                if(data.execute==='AQC-BTN'){
+                    if(!(data.target)) return;
+                    for(let sec of pccApi.SEC){
+                        if(!(sec.id===data.target)) continue;
+                        for(let ctn of sec.cantons){
+                            for(let state of Object.entries(ctn.states)){
+                                if(!((state[0]==='pzo')||(state[0]==='coupFs')||(state[0]==='tcs')||(state[0]==='ldi')||(state[0]==='pdp')||(state[0]==='selAcc'))) continue;
+                                ctn.states[state[0]]=false
+                            }
+                        }
+                    }
+                    apiSave()
+                }
+                break;
             case 400:
                 if(!isClientExisting(data.uuid)) return;
                 class Aiguille {
@@ -3296,6 +3315,10 @@ wss.on('connection', (ws, req) => {
                 content: pccApi
             }))
             delete clients[ws.id];
+            if(!ws.loaded){
+                logger.error(ws.usr.username+' leaved without loading!')
+            }
+            
             logger.client(false,ws,Object.keys(clients).length);
             apiSave()
         }

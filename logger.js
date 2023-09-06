@@ -37,6 +37,8 @@ exports.identify = function (ws, len){
     return console.log(`\x1b[37m[\x1b[32m⁂ \x1b[37m] ${ws.usr.username} s'est connecté avec l'IP ${ws.ip}. Rôle ${ws.role}. Désormais ${len} utilisateurs. UUID ${ws.id}`);
 }
 
+
+
 exports.info = function (text){
     return console.log('\x1b[37m\x1b[44m[INFO]\x1b[0m '+text);
 }
