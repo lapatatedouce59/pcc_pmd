@@ -68,6 +68,18 @@
                 <rect x="232.5" y="142" width="72" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc1401"/>
                 <text class="rame" x="262" y="162" id="txtSc1401">TEST</text>
 
+                <rect x="2" y="-31" width="47" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc2501"/>
+                <text class="rame" x="22" y="-11" id="txtSc2501">TEST</text>
+
+                <rect x="54" y="-31" width="47" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc2401"/>
+                <text class="rame" x="74" y="-11" id="txtSc2401">TEST</text>
+
+                <rect x="2" y="142" width="47" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc1101"/>
+                <text class="rame" x="22" y="162" id="txtSc1101">TEST</text>
+
+                <rect x="54" y="142" width="47" height="27" fill="#FFDF35" stroke="#363636" stroke-width="3" id="sc1201"/>
+                <text class="rame" x="74" y="162" id="txtSc1201">TEST</text>
+
                 <rect x="218" y="50" width="101" height="36" fill="#3A3A3A"/>
                 <text class="station" x="243" y="65">Mairie de</text>
                 <text class="station" x="237" y="80">Saint-Ouen</text>

@@ -144,7 +144,11 @@ S1.addEventListener('load', () => {
         },
         screens: {
             '2201': [s1svgDoc.getElementById('sc2201'), s1svgDoc.getElementById('txtSc2201')],
-            '1401': [s1svgDoc.getElementById('sc1401'), s1svgDoc.getElementById('txtSc1401')]
+            '1401': [s1svgDoc.getElementById('sc1401'), s1svgDoc.getElementById('txtSc1401')],
+            '1101': [s1svgDoc.getElementById('sc1101'), s1svgDoc.getElementById('txtSc1101')],
+            '1201': [s1svgDoc.getElementById('sc1201'), s1svgDoc.getElementById('txtSc1201')],
+            '2401': [s1svgDoc.getElementById('sc2401'), s1svgDoc.getElementById('txtSc2401')],
+            '2501': [s1svgDoc.getElementById('sc2501'), s1svgDoc.getElementById('txtSc2501')]
         },
         voys: {
             'NOR': s1svgDoc.getElementById('voyC1Nor'),
@@ -1194,7 +1198,7 @@ function refreshTCO(){
         }
         for(let ctn of sec.cantons){
             let ctninfo = getCantonsInfo(ctn.cid)
-            if((ctninfo.cid==='c1401')||(ctninfo.cid==='c2201')||(ctninfo.cid==='cGPAG1')||(ctninfo.cid==='c2202')||(ctninfo.cid==='c1302')){
+            if((ctninfo.cid==='c1401')||(ctninfo.cid==='c2201')||(ctninfo.cid==='cGPAG1')||(ctninfo.cid==='c2202')||(ctninfo.cid==='c1302')||(ctninfo.cid==='c1101')||(ctninfo.cid==='c1201')||(ctninfo.cid==='c2401')||(ctninfo.cid==='c2501')){
                 if(ctn.cid==='c1401'){
                     if(ctn.trains.length>0){
                         dictS1.screens['1401'][0].style.fill = '#3C0A0A'
@@ -1238,6 +1242,43 @@ function refreshTCO(){
                     } else {
                         dictS2.screens['1302'][0].style.fill = '#000'
                         dictS2.screens['1302'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c1101'){
+                    if(ctn.trains.length>0){
+                        dictS1.screens['1101'][0].style.fill = '#3C0A0A'
+                        dictS1.screens['1101'][1].textContent=ctn.trains[0].tid
+                    } else {
+                        dictS1.screens['1101'][0].style.fill = '#000'
+                        dictS1.screens['1101'][1].textContent=''
+                    }
+                }
+                
+                if(ctn.cid==='c2401'){
+                    if(ctn.trains.length>0){
+                        dictS1.screens['2401'][0].style.fill = '#3C0A0A'
+                        dictS1.screens['2401'][1].textContent=ctn.trains[0].tid
+                    } else {
+                        dictS1.screens['2401'][0].style.fill = '#000'
+                        dictS1.screens['2401'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c2501'){
+                    if(ctn.trains.length>0){
+                        dictS1.screens['2501'][0].style.fill = '#3C0A0A'
+                        dictS1.screens['2501'][1].textContent=ctn.trains[0].tid
+                    } else {
+                        dictS1.screens['2501'][0].style.fill = '#000'
+                        dictS1.screens['2501'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c1201'){
+                    if(ctn.trains.length>0){
+                        dictS1.screens['1201'][0].style.fill = '#3C0A0A'
+                        dictS1.screens['1201'][1].textContent=ctn.trains[0].tid
+                    } else {
+                        dictS1.screens['1201'][0].style.fill = '#000'
+                        dictS1.screens['1201'][1].textContent=''
                     }
                 }
             }
