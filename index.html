@@ -24,6 +24,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PCC PMD</title>
     <style>
+        .svgobj{
+            height: fit-content;
+        }
         body{
             margin: 0;
         }
@@ -303,6 +306,8 @@
             background-color: #EF0000;
             color: white;
         }
+
+        
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 </head>
@@ -673,22 +678,26 @@
     <h2 style="color:rgb(0, 0, 0);">merci de pas faire planter le wss, sinon notifiez moi sur discord - Patate Douce</h2>
         <h2 style="color:rgb(0, 0, 0);"><- S2 S1-></h2>
     <div class="tco" style="height: 650px;">
-        <div class="ligne" style="height: 1200px; position: relative; pointer-events: none;">
-            <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep"></object><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg"></object>
+        <div class="ligne" style="height: 500px; position: relative; pointer-events: none;">
+            <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg" class="svgobj"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep" class="svgobj"></object><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg" class="svgobj"></object>
+        </div>
+        <div class="elec" style="position: relative; top: -100px;">
+            <object data="src/tco/elec/ELEC.svg" type="image/svg+xml" id="elecSvg"></object>
         </div>
     </div>
-    <div class="elec">
-        <object data="src/tco/elec/ELEC.svg" type="image/svg+xml" id="elecSvg" style="position: relative; top: -25vh;"></object>
+    
+    <div>
+        <button id="downward">S2</button>
+        <button id="forward">S1</button>
+    
+        <input type="text" id="trainAffect" placeholder="train">
+        <button id="experiment">EXPERIENCE</button>
+        <button id="reload">RELOAD (en cas de non-load)</button>
+        <br>
+        <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
+        <button id="sendCmd">SEND</button>
     </div>
-    <button id="downward">S2</button>
-    <button id="forward">S1</button>
-
-    <input type="text" id="trainAffect" placeholder="train">
-    <button id="experiment">EXPERIENCE</button>
-    <button id="reload">RELOAD (en cas de non-load)</button>
-    <br>
-    <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
-    <button id="sendCmd">SEND</button>
+    
     <h3 id="attention" class="warn" style="transition: 400ms;">Ne pas faire avancer une rame sans respecter les feux!!!</h3>
 
     <div class="format">
