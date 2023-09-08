@@ -1465,6 +1465,24 @@ wss.on('connection', (ws, req) => {
                     stationObj.states.DSO=false
                     apiSave()
                 } else
+                if (data.execute==='SSO-ON-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.SSO=true
+                    apiSave()
+                } else
+                if (data.execute==='SSO-OFF-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+
+                    stationObj.states.SSO=false
+                    apiSave()
+                } else
                 if (data.execute==='INHIBPLTPIDPO-BTN'){
                     if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)

@@ -8,6 +8,8 @@ let trainNumber = document.getElementById('trainNumber')
 
 let btnActiveHLP = document.getElementById('btnActiveHLP')
 let btnActiveDSO = document.getElementById('btnActiveDSO')
+let btnActiveSSO = document.getElementById('btnActiveSSO')
+let btnInactiveSSO = document.getElementById('btnInactiveSSO')
 let btnInactiveHLP = document.getElementById('btnInactiveHLP')
 let btnInactiveDSO = document.getElementById('btnInactiveDSO')
 let btnIhibIDPOPLTP = document.getElementById('btnIhibIDPOPLTP')
@@ -749,6 +751,28 @@ btnInactiveDSO.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 204,
         execute: "DSO-OFF-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnActiveSSO.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "SSO-ON-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnInactiveSSO.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "SSO-OFF-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: window.uuid
     })

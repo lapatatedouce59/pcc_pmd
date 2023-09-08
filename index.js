@@ -153,7 +153,21 @@ S1.addEventListener('load', () => {
             'GAR': s1svgDoc.getElementById('voyC1Gar'),
             'INSR': s1svgDoc.getElementById('voyC1Insr'),
             'AUTO': s1svgDoc.getElementById('voyC1Auto')
-        }
+        },
+        stationVoy:[
+            {
+                'name': "c1401",
+                'dso': s1svgDoc.getElementById('dsoMSTOV1'),
+                'sso': s1svgDoc.getElementById('ssoMSTOV1'),
+                'voy': s1svgDoc.getElementById('voyMSTOV1')
+            },
+            {
+                'name': "c2201",
+                'dso': s1svgDoc.getElementById('dsoMSTOV2'),
+                'sso': s1svgDoc.getElementById('ssoMSTOV2'),
+                'voy': s1svgDoc.getElementById('voyMSTOV2')
+            }
+        ]
 
     }
     tco1Loaded=true
@@ -212,7 +226,21 @@ S2.addEventListener('load', () => {
             'DEP': s2svgDoc.getElementById('voyC2DEP'),
             'AUTO': s2svgDoc.getElementById('voyC2Auto'),
             'SP': s2svgDoc.getElementById('voyC2SP')
-        }
+        },
+        stationVoy:[
+            {
+                'name': "c1302",
+                'dso': s2svgDoc.getElementById('dsoSTOV1'),
+                'sso': s2svgDoc.getElementById('ssoSTOV1'),
+                'voy': s2svgDoc.getElementById('voySTOV1')
+            },
+            {
+                'name': "c2202",
+                'dso': s2svgDoc.getElementById('dsoSTOV2'),
+                'sso': s2svgDoc.getElementById('ssoSTOV2'),
+                'voy': s2svgDoc.getElementById('voySTOV2')
+            }
+        ]
 
     }
     tco2Loaded=true
@@ -930,6 +958,44 @@ function refreshTCO(){
     }
     for(let voys of Object.entries(dictS2.voys)){
         voys[1].setAttribute('href', '../OFF.png')
+    }
+    for(let sta of dictS1.stationVoy){
+        for(let sec of data.SEC){
+            if(!(sec.id==='1')) continue;
+            for(let ctn of sec.cantons){
+                if(!(ctn.cid===sta.name)) continue;
+                console.log('hey!')
+                if(ctn.states.DSO===true){
+                    sta.dso.setAttribute('href', '../DSO_ON.png')
+                } else {
+                    sta.dso.setAttribute('href', '../DSO_OFF.png')
+                }
+                if(ctn.states.SSO===true){
+                    sta.sso.setAttribute('href', '../SSO_ON.png')
+                } else {
+                    sta.sso.setAttribute('href', '../SSO_OFF.png')
+                }
+            }
+        }
+    }
+
+    for(let sta of dictS2.stationVoy){
+        for(let sec of data.SEC){
+            if(!(sec.id==='2')) continue;
+            for(let ctn of sec.cantons){
+                if(!(ctn.cid===sta.name)) continue;
+                if(ctn.states.DSO===true){
+                    sta.dso.setAttribute('href', '../DSO_ON.png')
+                } else {
+                    sta.dso.setAttribute('href', '../DSO_OFF.png')
+                }
+                if(ctn.states.SSO===true){
+                    sta.sso.setAttribute('href', '../SSO_ON.png')
+                } else {
+                    sta.sso.setAttribute('href', '../SSO_OFF.png')
+                }
+            }
+        }
     }
     for(let ctn of Object.entries(dictS1.cantons)){
         if(ctn[1].length===3){

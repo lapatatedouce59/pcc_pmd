@@ -344,7 +344,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": true,
+            "DSO": false,
             "SSO": false,
             "status": false,
             "IDPOAlreadyActiveByPLTP": false,
@@ -817,7 +817,7 @@
                 "patEnr": false,
                 "neutralManip": false,
                 "activeFU": false,
-                "activeFI": false,
+                "activeFI": true,
                 "defFN": false,
                 "defFU": false,
                 "permBrake": false,
@@ -965,7 +965,7 @@
             "departForce": false,
             "HLP": false,
             "DSO": true,
-            "SSO": false,
+            "SSO": true,
             "status": false,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
@@ -1142,7 +1142,7 @@
                 "patEnr": false,
                 "neutralManip": false,
                 "activeFU": false,
-                "activeFI": false,
+                "activeFI": true,
                 "defFN": false,
                 "defFU": false,
                 "permBrake": false,
@@ -1193,14 +1193,14 @@
       "id": 1,
       "name": "Défaut Éclairage",
       "user": "patatedouce.dev",
-      "date": "5/7/2023, 21h17 - 5/7/2023, 21h18",
-      "now": 1688584638699,
+      "date": "8/9/2023, 11h19 - 8/9/2023, 11h20",
+      "now": 1694164799616,
       "state": "Terminé",
       "showState": false,
       "target": {
         "tIndex": "0",
-        "cIndex": "6",
-        "sIndex": "0"
+        "cIndex": "9",
+        "sIndex": "1"
       },
       "targetType": "train"
     },
@@ -1208,14 +1208,14 @@
       "id": 2,
       "name": "Défaut Éclairage",
       "user": "patatedouce.dev",
-      "date": "5/7/2023, 21h19 - 5/7/2023, 21h20",
-      "now": 1688584771485,
+      "date": "8/9/2023, 11h20 - 8/9/2023, 11h20",
+      "now": 1694164811312,
       "state": "Terminé",
       "showState": false,
       "target": {
         "tIndex": "0",
-        "cIndex": "6",
-        "sIndex": "0"
+        "cIndex": "9",
+        "sIndex": "1"
       },
       "targetType": "train"
     },
@@ -1223,14 +1223,14 @@
       "id": 3,
       "name": "Défaut Éclairage",
       "user": "patatedouce.dev",
-      "date": "5/7/2023, 21h21 - 5/7/2023, 21h21",
-      "now": 1688584865237,
+      "date": "8/9/2023, 11h20 - 8/9/2023, 11h20",
+      "now": 1694164816981,
       "state": "Terminé",
       "showState": false,
       "target": {
         "tIndex": "0",
-        "cIndex": "6",
-        "sIndex": "0"
+        "cIndex": "2",
+        "sIndex": "1"
       },
       "targetType": "train"
     },
@@ -1238,8 +1238,8 @@
       "id": 4,
       "name": "Défaut Éclairage",
       "user": "patatedouce.dev",
-      "date": "5/7/2023, 21h21 - 5/7/2023, 21h21",
-      "now": 1688584875599,
+      "date": "8/9/2023, 11h20 - 8/9/2023, 11h20",
+      "now": 1694164818019,
       "state": "Terminé",
       "showState": false,
       "target": {
@@ -1251,121 +1251,16 @@
     },
     {
       "id": 5,
-      "name": "Ouv. PV défectueuse",
-      "user": "patatedouce.dev",
-      "date": "5/7/2023, 21h21 - 5/7/2023, 21h22",
-      "now": 1688584906328,
-      "state": "Terminé",
-      "showState": false,
-      "target": {
-        "tIndex": "0",
-        "cIndex": "6",
-        "sIndex": "0"
-      },
-      "targetType": "train"
-    },
-    {
-      "id": 6,
-      "name": "Pneu crevé",
-      "user": "patatedouce.dev",
-      "date": "5/7/2023, 21h23 - 5/7/2023, 21h23",
-      "now": 1688584990341,
-      "state": "Terminé",
-      "showState": false,
-      "target": {
-        "tIndex": "0",
-        "cIndex": "2",
-        "sIndex": "1"
-      },
-      "targetType": "train"
-    },
-    {
-      "id": 7,
-      "name": "Rupture attelage",
-      "user": "patatedouce.dev",
-      "date": "5/7/2023, 21h23 - 5/7/2023, 21h24",
-      "now": 1688585020076,
-      "state": "Terminé",
-      "showState": false,
-      "target": {
-        "tIndex": "0",
-        "cIndex": "2",
-        "sIndex": "1"
-      },
-      "targetType": "train"
-    },
-    {
-      "id": 8,
       "name": "Défaut Éclairage",
       "user": "patatedouce.dev",
-      "date": "5/7/2023, 21h24 - 5/7/2023, 21h24",
-      "now": 1688585058084,
+      "date": "8/9/2023, 11h20 - 8/9/2023, 11h20",
+      "now": 1694164818648,
       "state": "Terminé",
       "showState": false,
       "target": {
         "tIndex": "0",
         "cIndex": "2",
         "sIndex": "1"
-      },
-      "targetType": "train"
-    },
-    {
-      "id": 9,
-      "name": "Défaut Éclairage",
-      "user": "patatedouce.dev",
-      "date": "11/7/2023, 23h44 - 11/7/2023, 23h44",
-      "now": 1689111841389,
-      "state": "Terminé",
-      "showState": false,
-      "target": {
-        "tIndex": "0",
-        "cIndex": "6",
-        "sIndex": "0"
-      },
-      "targetType": "train"
-    },
-    {
-      "id": 10,
-      "name": "Pneu crevé",
-      "user": "patatedouce.dev",
-      "date": "11/7/2023, 23h44 - 11/7/2023, 23h45",
-      "now": 1689111869936,
-      "state": "Terminé",
-      "showState": false,
-      "target": {
-        "tIndex": "0",
-        "cIndex": "6",
-        "sIndex": "0"
-      },
-      "targetType": "train"
-    },
-    {
-      "id": 11,
-      "name": "Ouv. PV défectueuse",
-      "user": "patatedouce.dev",
-      "date": "11/7/2023, 23h46 - 11/7/2023, 23h49",
-      "now": 1689111963378,
-      "state": "Terminé",
-      "showState": false,
-      "target": {
-        "tIndex": "0",
-        "cIndex": "2",
-        "sIndex": "1"
-      },
-      "targetType": "train"
-    },
-    {
-      "id": 12,
-      "name": "Pneu crevé",
-      "user": "patatedouce.dev",
-      "date": "11/7/2023, 23h50 - 12/7/2023, 0h4",
-      "now": 1689112255291,
-      "state": "Terminé",
-      "showState": false,
-      "target": {
-        "tIndex": "0",
-        "cIndex": "6",
-        "sIndex": "0"
       },
       "targetType": "train"
     }
