@@ -9,6 +9,16 @@ logUpdate('├ Loading timers/promises...')
 const {setTimeout} = require('timers/promises')
 logUpdate('├ Loading node-fetch...')
 const fetch = require("node-fetch");
+/*logUpdate('├ Loading cluster...')
+const {Worker} = require('node:cluster');
+logUpdate('├ Loading cluster...')
+const {numCPUs} = require('node:os').availableParallelism()
+logUpdate('├ Loading cluster...')
+const {process} = require('node:process');*/
+/*logUpdate('├ Loading worker_threads...')
+const {Worker} = require('worker_threads')
+logUpdate('├ Building worker_thread...')
+const worker1 = new Worker('./periodic_cluster.js')*/
 logUpdate('├ Loading https...')
 const https = require('https')
 logUpdate('├ Loading ws...')
@@ -78,36 +88,67 @@ let paraDate = 0
 
 let msr = false
 
+let work = false
+let workerInter = 0
 
 const clients = {}
 
 function apiSave(){
-    fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-
-    wss.broadcast(JSON.stringify({
-        op: 300,
-        content: pccApi
-    }))
-    logger.message('broadcast','NEW SERVER DATA => REFRESH')
-    endDate=Date.now()
-    if(msr===false){
-        msr=true
-        if((endDate-startDate)>5000){
-            logger.metric('Operation took '+(endDate-startDate) +'ms')
-        } else {
-            logger.metric('Operation took '+(endDate-startDate) +'ms','alert')
-        }
-        
-        paraDate=(endDate-startDate)
-        startDate=Date.now()
-    } else {
-        if((endDate-startDate)>5000){
-            logger.metric('Next operation took '+(endDate-startDate) +'ms')
-        } else {
-            logger.metric('Next operation took '+(endDate-startDate) +'ms','alert')
-        }
-        startDate=Date.now()
+    async function periodicUpdateVoy(){
+        ongoingiti()
+        checkStationTrainsPresence()
+        ongoingcycle()
+        updateItiFormVoys()
     }
+    periodicUpdateVoy()
+    let fx = setInterval(()=>{
+    if(f1===true&&f2===true&&f3===true&&f4===true){
+        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+        clearInterval(fx)
+        f1=false
+        f2=false
+        f3=false
+        f4=false
+        console.log('finished, sending back')
+        work=true
+    }
+    },10)
+    console.log('apisave called')
+    
+    workerInter=setInterval(()=>{
+        //console.log(work)
+        if(work===false) return;
+        clearInterval(workerInter)
+
+        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+
+        wss.broadcast(JSON.stringify({
+            op: 300,
+            content: pccApi
+        }))
+        logger.message('broadcast','NEW SERVER DATA => REFRESH')
+        endDate=Date.now()
+        if(msr===false){
+            msr=true
+            if((endDate-startDate)>5000){
+                logger.metric('Operation took '+(endDate-startDate) +'ms')
+            } else {
+                logger.metric('Operation took '+(endDate-startDate) +'ms','alert')
+            }
+        
+            paraDate=(endDate-startDate)
+            startDate=Date.now()
+        } else {
+            if((endDate-startDate)>5000){
+                logger.metric('Next operation took '+(endDate-startDate) +'ms')
+            } else {
+                logger.metric('Next operation took '+(endDate-startDate) +'ms','alert')
+            }
+            startDate=Date.now()
+        }
+    },10)
+    
+    
     //ws.send();
 }
 
@@ -512,10 +553,16 @@ wss.on('connection', (ws, req) => {
             logger.error(error)
         }
         
+
         if(op==='300') return;
-        periodicUpdateVoy()
+        work=false
+        
+        /*worker1.postMessage("MAJ");
+        console.log('sent to worker')
+        worker1.on('message', ()=>{
+            work=true
+        })*/
         switch(op){
-            
             case 1 :
                 if(!((data.token)||(data.from))) return;
                 const verificationProcess = async() => {
@@ -1976,7 +2023,6 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 220:
-                ongoingiti()
                 if((pccApi.SEC[0].cantons[0].trains.length===0)||(pccApi.SEC[0].cantons[1].trains.length===0)){
                     pccApi.SEC[0].states.retDispoV101=true
                 }
@@ -2048,7 +2094,6 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 221:
-                ongoingiti()
                 if((pccApi.SEC[0].cantons[0].trains.length===0)||(pccApi.SEC[0].cantons[1].trains.length===0)){
                     pccApi.SEC[0].states.retDispoV101=true
                 }
@@ -2344,9 +2389,8 @@ wss.on('connection', (ws, req) => {
                             cycle.active=false
                             cycle.sel=false
                         }
-                        sec.states.cycleOngoing=false
+                        //sec.states.cycleOngoing=false
                     }
-                    periodicUpdateVoy()
                     apiSave()
                 } else if(data.execute==='DUG-BTN-ITI'){
                     if(!(data.target)) return;
@@ -2364,7 +2408,6 @@ wss.on('connection', (ws, req) => {
                                         iti.mode=false
                                         
                                         if(iti.code==='1103_1402'||iti.code==='1102_1501') {
-                                            periodicUpdateVoy()
                                             apiSave()
                                         }
                                     }
@@ -2438,7 +2481,7 @@ wss.on('connection', (ws, req) => {
                                 console.log(trainCopy)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2473,7 +2516,7 @@ wss.on('connection', (ws, req) => {
                                 }
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2497,7 +2540,7 @@ wss.on('connection', (ws, req) => {
                                 }
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2530,7 +2573,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2561,7 +2604,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2594,7 +2637,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2623,7 +2666,7 @@ wss.on('connection', (ws, req) => {
                                         trainCopy.states.inZOPP=false
                                     }
                                     pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                    console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                    
                                     pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                         logger.confirm('Mouvement effectué avec succès')
@@ -2654,7 +2697,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2679,7 +2722,7 @@ wss.on('connection', (ws, req) => {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
                                     name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
                                 } )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2712,7 +2755,7 @@ wss.on('connection', (ws, req) => {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
                                     name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
                                 } )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2738,7 +2781,7 @@ wss.on('connection', (ws, req) => {
                                         tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
                                         name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
                                     } )
-                                    console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                    
                                     pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                         logger.confirm('Mouvement effectué avec succès')
@@ -2768,7 +2811,7 @@ wss.on('connection', (ws, req) => {
                                     tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
                                     name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
                                 } )
-                                console.log(pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2810,7 +2853,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2826,7 +2869,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -2844,7 +2886,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2867,7 +2908,6 @@ wss.on('connection', (ws, req) => {
                                 }
 
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2883,7 +2923,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2900,7 +2939,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2932,7 +2970,7 @@ wss.on('connection', (ws, req) => {
                                 }
 
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2965,7 +3003,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2995,7 +3033,7 @@ wss.on('connection', (ws, req) => {
                                     }
     
                                     pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                    console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                    
                                     pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                         logger.confirm('Mouvement effectué avec succès')
@@ -3027,7 +3065,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -3058,7 +3096,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -3091,7 +3129,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -3120,7 +3158,7 @@ wss.on('connection', (ws, req) => {
                                 }
     
                                     pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                    console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                    
                                     pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                         logger.confirm('Mouvement effectué avec succès')
@@ -3152,7 +3190,7 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains[_trainIndex])
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -3455,7 +3493,13 @@ function changeItiState(mode, code){
     return false;
 }
 
+let f1 = false
+let f2 = false
+let f3 = false
+let f4 = false
+
 function ongoingiti(){
+    console.log('FUNC 1 CALLED')
     for(let sec of pccApi.SEC){
         let ongoing = []
         for(let itilist of Object.entries(sec.ITI[0])){
@@ -3467,17 +3511,16 @@ function ongoingiti(){
         }
         if(ongoing.length>0) {
             sec.states.itiOngoing=true
-            //apiSave()
-            return;
+        } else {
+            sec.states.itiOngoing=false
         }
-        sec.states.itiOngoing=false
-        //apiSave()
     }
-    
+    f1=true
     return false;
 }
 
 function ongoingcycle(){
+    console.log('FUNC 2 CALLED')
     for(let sec of pccApi.SEC){
         let ongoing = []
         for(let cycle of sec.CYCLES){
@@ -3485,21 +3528,62 @@ function ongoingcycle(){
                 ongoing.push(cycle.code)
             }
         }
-        if(ongoing.length>0) {sec.states.cycleOngoing=true
-            //apiSave()
-            return;
+        if(ongoing.length>0) {
+            sec.states.cycleOngoing=true
+        } else {
+            sec.states.cycleOngoing=false
         }
-        sec.states.cycleOngoing=false
-        //apiSave()
+        console.log(sec.states.cycleOngoing)
     }
     
-    
+    f2=true
 }
 
+function checkStationTrainsPresence(){
+    console.log('FUNC 3 CALLED')
+    for(let sec of pccApi.SEC){
+        for(let ctn of sec.cantons){
+            if(ctn.hasOwnProperty('type')){
+                if(ctn.trains.length>0 && (ctn.states.status===false||ctn.states.status==='def')){
+                    ctn.states.status='valid'
+                }
+                if(ctn.trains.length>0){
+                    if((ctn.states.status==='valid'||ctn.states.status==='def') && ctn.trains[0].states.trainInscrit){
+                        ctn.states.status='inscrit'
+                    }
+                }
+                
+                if((ctn.states.status==='inscrit'||ctn.states.status==='def') && ctn.states.doorsOpened){
+                    ctn.states.status='sharing'
+                }
+                if((ctn.states.status==='sharing'||ctn.states.status==='def') && ctn.states.doorsClosed){
+                    ctn.states.status='inscrit'
+                }
+                if(ctn.trains.length>0){
+                    if((ctn.states.status==='inscrit'||ctn.states.status==='def') && ctn.trains[0].states.trainInscrit===false){
+                        ctn.states.status='departure'
+                    }
+                }
+                
+                if(ctn.trains.length===0){
+                    ctn.states.status=false
+                }
+                let defList = []
+                for(let states of Object.entries(ctn.states)){
+                    if(!(states[1]===2)) continue;
+                    defList.push(states[0])
+                }
+                if(defList.length>0){
+                    ctn.states.status='def'
+                }
+            }
+        }
+    }
+    f3=true
+}
 
-function periodicUpdateVoy(){
-    ongoingiti()
-    ongoingcycle()
+function updateItiFormVoys(){
+    console.log('FUNC 4 CALLED')
     if(pccApi.SEC[0].cantons[9].trains.length>0){
         pccApi.SEC[0].states.injDispoV201=true
         pccApi.SEC[0].states.retDispoV201=false
@@ -3535,4 +3619,5 @@ function periodicUpdateVoy(){
         pccApi.SEC[1].states.sortieDispoGla=false
         pccApi.SEC[1].states.entreeDispoGla=true
     }
+    f4=true
 }

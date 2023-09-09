@@ -968,7 +968,6 @@ function refreshTCO(){
             if(!(sec.id==='1')) continue;
             for(let ctn of sec.cantons){
                 if(!(ctn.cid===sta.name)) continue;
-                console.log('hey!')
                 if(ctn.states.DSO===true){
                     sta.dso.setAttribute('href', '../DSO_ON.png')
                 } else {
@@ -978,6 +977,40 @@ function refreshTCO(){
                     sta.sso.setAttribute('href', '../SSO_ON.png')
                 } else {
                     sta.sso.setAttribute('href', '../SSO_OFF.png')
+                }
+                if(ctn.states.status===false){
+                    sta.voy.style.fill='#6B6B6B'
+                } else if(ctn.states.status==='valid'){
+                    sta.voy.style.fill='#377BFF'
+                } else if(ctn.states.status==='inscrit'){
+                    sta.voy.style.fill='#37DBFF'
+                } else if(ctn.states.status==='sharing'){
+                    sta.voy.style.fill='#FFFFFF'
+                } else if(ctn.states.status==='departure'){
+                    sta.voy.style.fill='#FFE500'
+                } else if(ctn.states.status==='def'){
+                    let cnt = 0
+                    let intervalId = setInterval(async()=>{
+                        sta.voy.style.fill='#FF0000'
+                        await sleep(200)
+                        sta.voy.style.fill='#6B6B6B'
+                        await sleep(200)
+                        cnt++
+                        if(cnt===30){
+                            clearInterval(intervalId)
+                            if(ctn.states.status===false){
+                                sta.voy.style.fill='#6B6B6B'
+                            } else if(ctn.states.status==='valid'){
+                                sta.voy.style.fill='#377BFF'
+                            } else if(ctn.states.status==='inscrit'){
+                                sta.voy.style.fill='#37DBFF'
+                            } else if(ctn.states.status==='sharing'){
+                                sta.voy.style.fill='#FFFFFF'
+                            } else if(ctn.states.status==='departure'){
+                                sta.voy.style.fill='#FFE500'
+                            }
+                        }
+                    },400)
                 }
             }
         }
