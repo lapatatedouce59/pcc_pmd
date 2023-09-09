@@ -2,6 +2,9 @@ let data=false
 let actualRequest=false
 let selectMenuPa = document.getElementById('selectMenuPaFormat')
 let selected = false
+let fileIntervals=[]
+const blinkIntervalId = new Map()
+let blinkIdReturn = 0
 import sm from './sm.js'
 sm.init()
 
@@ -21,6 +24,7 @@ window.WebSocket.addEventListener('message', msg =>{
                 opt.value=sec.id
                 opt.classList='paOpt'
                 opt.id=sec.id
+                opt.setAttribute('name', `paOpt${sec.id}`)
                 selectMenuPa.appendChild(opt)
             }
 
@@ -30,8 +34,10 @@ window.WebSocket.addEventListener('message', msg =>{
         }
         let painfo = PaInfo(selected||'1')
         updateFormat(painfo)
+        gerardMontreMoiLesDefautsDuPaStp()
     }
 })
+
 selectMenuPa.addEventListener('input', ()=>{
     selected=selectMenuPa.value
     let pa = PaInfo(selected)
@@ -41,17 +47,74 @@ let pa1dictionnary = false
 let pa2dictionnary = false
 
 let defaultSoundInter=false
+
+let defList=false
+
+let listDef = document.getElementById('listDef')
+function gerardMontreMoiLesDefautsDuPaStp(){
+
+    for(let paOpt of document.getElementsByClassName('paOpt')){
+        paOpt.innerText=paOpt.id
+        paOpt.classList.remove('alarm')
+    }
+    //listDef.innerHTML=''
+    //clearInterval(beepIntervalId)
+    sm.stopSound('gong')
+    let defList2=[]
+    let anoList=[]
+
+    for (let sec of data.SEC){
+        for(let statea of Object.entries(sec.states)){
+            if(!(statea[1]===1 || statea[1]===2)) continue;
+            if(statea[1]===1){
+                defList2.push(sec.id)
+            }
+            if(statea[1]===2){
+                anoList.push({id: sec.id, name: sec.id, def: statea[0]})
+            }
+        }
+        for(let ctn of sec.cantons){
+            for(let state of Object.entries(ctn.states)){
+                if(!(state[1]===1 || state[1]===2)) continue;
+                if(state[1]===1){
+                    defList2.push(sec.id)
+                }
+                if(state[1]===2){
+                    anoList.push({id: sec.id, name: ctn.cid, def: state[0]})
+                }
+            }
+        }
+    }
+
+    for (let tr of defList2){
+        console.log('def '+tr)
+        let elem = document.getElementsByName(`paOpt${tr}`)
+        elem[0].innerText='🟥' +tr
+    }
+    for (let tr of anoList){
+        if(!(tr.def==='ldi'||tr.def==='pzo'||tr.def==='tcs'||tr.def==='pdp'||tr.def==='coupFs'||tr.def==='zoneManoeuvre1'||tr.def==='tnitne1'||tr.def==='lstpas1'||tr.def==='discord1'||tr.def==='zoneManoeuvre2'||tr.def==='tnitne2'||tr.def==='lstpas2'||tr.def==='discord2')) continue;
+        let defDiv = document.createElement('div')
+        defDiv.id=tr.name+'DEF'
+        let tName = document.createElement('mark')
+        tName.innerText='PA '+tr.id
+        let cName = document.createElement('strong')
+        cName.innerText=' '+tr.name
+        let defName = document.createElement('span')
+        defName.innerText=' '+tr.def
+        defDiv.appendChild(tName)
+        defDiv.appendChild(cName)
+        defDiv.appendChild(defName)
+        listDef.appendChild(defDiv)
+        let elem = document.getElementsByName(`paOpt${tr.id}`)
+        elem[0].classList.add('alarm')
+    }
+}
+
 async function updateFormat(pa){
-    let defList = []
+    defList=[]
     document.getElementById(`ctnStateTop${pa.id}`).innerHTML=''
     document.getElementById(`ctnStateBot${pa.id}`).innerHTML=''
-    for(let elem of document.getElementsByClassName('VOYITIP')){
-        elem.classList.remove('voyPresenceCmdOn')
-        elem.classList.add('voyPresenceCmdOff')
-    }
-    for(let elem of document.getElementsByClassName('VOYITIV')){
-        elem.classList.remove('ok')
-    }
+    //gerardMontreMoiLesDefautsDuPaStp()
     for(let elem of document.getElementsByClassName('voyGestionItiState')){
         elem.classList.remove('ok')
         for(let sec of data.SEC){
@@ -100,10 +163,72 @@ async function updateFormat(pa){
                 }
             }
         }
+        for(let state of Object.entries(sec.states)){
+            if(state[1]===2){
+                if(!(state[0]==='zoneManoeuvre1'||state[0]==='tnitne1'||state[0]==='lstpas1'||state[0]==='discord1'||state[0]==='zoneManoeuvre2'||state[0]==='tnitne2'||state[0]==='lstpas2'||state[0]==='discord2')) continue;
+                defList.push(sec.id)
+            }
+        }
     }
+    for(let interval of fileIntervals){
+        if(interval===defaultSoundInter) continue;
+        clearInterval(interval)
+    }
+    
+    for (let voy of document.getElementsByClassName('voyPaFormat')){
+        let elemid = voy.id
 
+        for(let sec of data.SEC){
+            //for(let state of Object.entries(sec.states)){
+                if(!(sec.states[elemid])) continue;
+                switch(sec.states[elemid]){
+                    case false:
+                        console.log(elemid+' faux.')
+                        voy.classList.remove('ok')
+                        voy.classList.remove('alarm')
+                        blinkIdReturn = blinkIntervalId.get(elemid)
+                        clearInterval(blinkIdReturn)
+                        clearInterval(blinkIdReturn-1)
+                        blinkIntervalId.delete(elemid)
+                        break;
+                    case true:
+                        console.log(elemid+' true.')
+                        voy.classList.toggle('ok', true)
+                        voy.classList.remove('alarm')
+                        blinkIdReturn = blinkIntervalId.get(elemid)
+                        clearInterval(blinkIdReturn)
+                        clearInterval(blinkIdReturn-1)
+                        blinkIntervalId.delete(elemid)
+                        break;
+                    case 1:
+                        console.log(elemid+' Alarme')
+                        voy.classList.remove('ok')
+                        voy.classList.toggle('alarm', true)
+                        blinkIdReturn = blinkIntervalId.get(elemid)
+                        clearInterval(blinkIdReturn)
+                        clearInterval(blinkIdReturn-1)
+                        blinkIntervalId.delete(elemid)
+                        break;
+                    case 2:
+                        console.log(elemid+' Anomalie')
+                        voy.classList.remove('ok')
+                        voy.classList.toggle('alarm',true)
+                        let blinkId = setInterval(async function() {
+                            voy.classList.toggle('alarm')
+                        }, 500)
+                        if(blinkId>=10000) alert('blinkId>=10000, relancer la page!')
+                        console.log(blinkId)
+                        blinkIntervalId.set(elemid, blinkId)
+                        console.log(blinkIntervalId)
+                        fileIntervals.push(blinkId)
+                        break;
+                }
+            //}
+        }
+    }
     
     clearInterval(defaultSoundInter)
+    console.log(defList)
     if(defList.length>0){
         defaultSoundInter=setInterval( ()=> {
             sm.playSound('def')
@@ -134,6 +259,7 @@ function PaInfo(id){
 }
 
 async function initFormat(pa){
+    //gerardMontreMoiLesDefautsDuPaStp()
     for(let divs of document.getElementsByClassName('paFormatAmovible')){
         if(divs.id===`paFormatAmovible${pa.id}`){
             divs.style.display='inline'

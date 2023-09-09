@@ -262,10 +262,10 @@
         }
       ],
       "states": {
-        "zoneManoeuvre": false,
-        "tnitne": false,
-        "lstpas": true,
-        "discord": false,
+        "zoneManoeuvre1": 1,
+        "tnitne1": false,
+        "lstpas1": true,
+        "discord1": false,
         "retDispoV201": true,
         "injDispoV201": false,
         "retDispoV101": true,
@@ -643,10 +643,10 @@
     {
       "id": "2",
       "states": {
-        "zoneManoeuvre": false,
-        "tnitne": false,
-        "lstpas": true,
-        "discord": false,
+        "zoneManoeuvre2": false,
+        "tnitne2": false,
+        "lstpas2": 1,
+        "discord2": false,
         "cycleOngoing": false,
         "sortieDispoGla": false,
         "entreeDispoGla": true,

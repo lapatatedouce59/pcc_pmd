@@ -2424,6 +2424,11 @@ wss.on('connection', (ws, req) => {
                     if(!(data.target)) return;
                     for(let sec of pccApi.SEC){
                         if(!(sec.id===data.target)) continue;
+                        for(let state of Object.entries(sec.states)){
+                            if(!(state[1]===2)) continue;
+                            console.log('FOO')
+                            sec.states[state[0]]=1
+                        }
                         for(let ctn of sec.cantons){
                             for(let state of Object.entries(ctn.states)){
                                 if(!((state[0]==='pzo')||(state[0]==='coupFs')||(state[0]==='tcs')||(state[0]==='ldi')||(state[0]==='pdp')||(state[0]==='selAcc'))) continue;
