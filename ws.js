@@ -123,7 +123,7 @@ function apiSave(){
         }
         if(ovse.coupFS==='RETABLISSEMENT'){
             ovse.coupFS=false
-            FSTrains('up', 'all') //! probleme dans la fonction? elle appelle en continu apiSave()
+            FSTrains('up', 'all')
         }
 
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
@@ -2432,8 +2432,11 @@ wss.on('connection', (ws, req) => {
                         if(!(sec.id===data.target)) continue;
                         for(let state of Object.entries(sec.states)){
                             if(!(state[1]===2)) continue;
-                            console.log('FOO')
-                            sec.states[state[0]]=1
+                            if(state[0]==='zoneManoeuvre1'||state[0]==='zoneManoeuvre2'){
+                                sec.states[state[0]]=false
+                            } else {
+                                sec.states[state[0]]=1
+                            }
                         }
                         for(let ctn of sec.cantons){
                             for(let state of Object.entries(ctn.states)){

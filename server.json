@@ -262,7 +262,7 @@
         }
       ],
       "states": {
-        "zoneManoeuvre1": 1,
+        "zoneManoeuvre1": false,
         "tnitne1": false,
         "lstpas1": true,
         "discord1": false,

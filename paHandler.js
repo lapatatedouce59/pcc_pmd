@@ -184,7 +184,7 @@ async function updateFormat(pa){
 
         for(let sec of data.SEC){
             //for(let state of Object.entries(sec.states)){
-                if(!(sec.states[elemid])) continue;
+                //if(!(sec.states[elemid])) continue;
                 switch(sec.states[elemid]){
                     case false:
                         console.log(elemid+' faux.')
