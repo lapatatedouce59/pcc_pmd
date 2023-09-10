@@ -95,6 +95,7 @@ const clients = {}
 
 function apiSave(){
     async function periodicUpdateVoy(){
+        detectLDI()
         ongoingiti()
         checkStationTrainsPresence()
         ongoingcycle()
@@ -102,7 +103,7 @@ function apiSave(){
     }
     periodicUpdateVoy()
     let fx = setInterval(()=>{
-    if(f1===true&&f2===true&&f3===true&&f4===true){
+    if(f1===true&&f2===true&&f3===true&&f4===true&&f5===true){
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
         clearInterval(fx)
         f1=false
@@ -3502,9 +3503,9 @@ let f1 = false
 let f2 = false
 let f3 = false
 let f4 = false
+let f5 = false
 
 function ongoingiti(){
-    console.log('FUNC 1 CALLED')
     for(let sec of pccApi.SEC){
         let ongoing = []
         for(let itilist of Object.entries(sec.ITI[0])){
@@ -3525,7 +3526,6 @@ function ongoingiti(){
 }
 
 function ongoingcycle(){
-    console.log('FUNC 2 CALLED')
     for(let sec of pccApi.SEC){
         let ongoing = []
         for(let cycle of sec.CYCLES){
@@ -3545,7 +3545,6 @@ function ongoingcycle(){
 }
 
 function checkStationTrainsPresence(){
-    console.log('FUNC 3 CALLED')
     for(let sec of pccApi.SEC){
         for(let ctn of sec.cantons){
             if(ctn.hasOwnProperty('type')){
@@ -3588,7 +3587,6 @@ function checkStationTrainsPresence(){
 }
 
 function updateItiFormVoys(){
-    console.log('FUNC 4 CALLED')
     if(pccApi.SEC[0].cantons[9].trains.length>0){
         pccApi.SEC[0].states.injDispoV201=true
         pccApi.SEC[0].states.retDispoV201=false
@@ -3625,4 +3623,106 @@ function updateItiFormVoys(){
         pccApi.SEC[1].states.entreeDispoGla=true
     }
     f4=true
+}
+//? Ajout des cantons de reference pour les alarmes cantons (ldi)
+function giveMapIndexForIti(code){
+    let itiArrayC1Dev = ['1201_2201','2201_1201','2401_1401','1401_2401']
+    let itiArrayC1NorV1 = ['1401_1201','1201_1401']
+    let itiArrayC1NorV2 = ['2401_2201','2201_2401']
+
+    let itiArrayC2Dev = ['2101_1202','1202_2101']
+    let itiArrayC2BDev = ['1102_PAG1','PAG1_1102']
+    let itiArrayC2NorV1 = ['1501_1202','1202_1501']
+    let itiArrayC2NorV2 = ['2302_2101','2101_2302']
+    let itiArrayC2BNor = ['1102_1302','1302_1102']
+
+
+
+    if(!(code)) return;
+    if(itiArrayC1Dev.includes(code)) return 'C1Dev';
+    if(itiArrayC1NorV1.includes(code)) return 'C1NorV1';
+    if(itiArrayC1NorV2.includes(code)) return 'C1NorV2';
+
+    if(itiArrayC2Dev.includes(code)) return 'C2Dev';
+    if(itiArrayC2BDev.includes(code)) return 'C2BDev';
+    if(itiArrayC2NorV1.includes(code)) return 'C2NorV1';
+    if(itiArrayC2NorV2.includes(code)) return 'C2NorV2';
+    if(itiArrayC2BNor.includes(code)) return 'C2BNor';
+
+    return false;
+}
+function isItiAnAigOne(code){
+    if(!(code)) return;
+    let gmifi = giveMapIndexForIti(code)
+
+    if(!(gmifi===false)) return true;
+    return false;
+}
+function isItiActive(code){
+    if(!code) return console.error('[isItiActive] Aucun code d\'iti indiqué!')
+    for(let sec of pccApi.SEC){
+        for(let itil of Object.entries(sec.ITI[0])){
+            for(let iti of itil[1]){
+                if(!(iti.code===code)) continue;
+                return iti.active
+            }
+        }
+    }
+    console.info('[itiInfo] Aucun itinéraire correspondant.')
+    return false;
+}
+
+let itiAigMap = new Map()
+//s1
+itiAigMap.set('C1Dev',['c1301','c2301'])
+itiAigMap.set('C1NorV1',['c1301'])
+itiAigMap.set('C1NorV2',['c2301'])
+//s2
+itiAigMap.set('C2Dev',['c1102','c2402'])
+itiAigMap.set('C2BDev',['c1202'])
+itiAigMap.set('C2NorV1',['c1102'])
+itiAigMap.set('C2NorV2',['c2402'])
+itiAigMap.set('C2BNor',['c1202'])
+
+function returnCtnIteration(cid){
+    for(let sec of pccApi.SEC){
+        for(let ctn of sec.cantons){
+            if(!(ctn.cid===cid)) continue;
+            return ctn;
+        }
+    }
+    return false;
+}
+
+
+function detectLDI(){
+    for(let sec of pccApi.SEC){
+        for(let itil of Object.entries(sec.ITI[0])){
+            for(let iti of itil[1]){
+                if(isItiAnAigOne(iti.code)){
+                    let itiParts = iti.code.split('_')
+                    if(isItiActive(`${itiParts[1]}_${itiParts[0]}`)&&isItiActive(iti.code)){
+                        let ctnToAlarm = itiAigMap.get(giveMapIndexForIti(iti.code))
+                        for(let ctn of ctnToAlarm){
+                            if(itiParts[0]==='PAG1') itiParts[0]='cGPAG1'
+                            if(itiParts[1]==='PAG1') itiParts[1]='cGPAG1'
+                            let actualCtn = returnCtnIteration(ctn)
+                            actualCtn.states.ldi = 2
+                        }
+                    }
+                } else {
+                    let itiParts = iti.code.split('_')
+                    if(isItiActive(`${itiParts[1]}_${itiParts[0]}`)&&isItiActive(iti.code)){
+                        if(itiParts[0]==='PAG1') itiParts[0]='cGPAG1'
+                        if(itiParts[1]==='PAG1') itiParts[1]='cGPAG1'
+                        let ctn1 = returnCtnIteration(`c${itiParts[0]}`)
+                        let ctn2 = returnCtnIteration(`c${itiParts[1]}`)
+                        ctn1.states.ldi=2
+                        ctn2.states.ldi=2
+                    }
+                }
+            }
+        }
+    }
+    f5=true
 }

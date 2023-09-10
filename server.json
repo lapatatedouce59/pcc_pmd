@@ -158,8 +158,8 @@
           "V1": [
             {
               "code": "2401_2501",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2501_2401",
@@ -173,8 +173,8 @@
             },
             {
               "code": "2201_1201",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2201_2401",
@@ -271,7 +271,7 @@
         "retDispoV101": true,
         "injDispoV101": false,
         "razSeq": false,
-        "itiOngoing": false,
+        "itiOngoing": true,
         "cycleOngoing": false
       },
       "cantons": [

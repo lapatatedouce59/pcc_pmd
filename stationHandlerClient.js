@@ -252,6 +252,7 @@ function yaUnDefautQQPart(){
             if(typeof data.SEC[sec].cantons[ctns].type === 'undefined') continue;
             for(const property of Object.entries(data.SEC[sec].cantons[ctns].states)){
                 if(!(property[1] === 1 || property[1] === 2)) continue;
+                if(property[0]==='ldi'||property[0]==='pzo'||property[0]==='tcs'||property[0]==='pdp'||property[0]==='coupFs') continue;
                 if(property[1] === 1){
                     defList.push(data.SEC[sec].cantons[ctns].name)
                 }
