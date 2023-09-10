@@ -1,6 +1,11 @@
 let data=false
 let actualRequest=false
 let selectMenuPa = document.getElementById('selectMenuPaFormat')
+let checkMuteGong = document.getElementById('checkMuteGong')
+checkMuteGong.addEventListener('input', ()=>{
+    let pa = PaInfo(selected)
+    updateFormat(pa)
+})
 let selected = false
 let fileIntervals=[]
 const blinkIntervalId = new Map()
@@ -23,7 +28,6 @@ window.WebSocket.addEventListener('message', msg =>{
                 opt.innerHTML=sec.id
                 opt.value=sec.id
                 opt.classList='paOpt'
-                opt.id=sec.id
                 opt.setAttribute('name', `paOpt${sec.id}`)
                 selectMenuPa.appendChild(opt)
             }
@@ -229,7 +233,7 @@ async function updateFormat(pa){
     
     clearInterval(defaultSoundInter)
     console.log(defList)
-    if(defList.length>0){
+    if(defList.length>0 && checkMuteGong.checked===false){
         defaultSoundInter=setInterval( ()=> {
             sm.playSound('def')
         },1000)
@@ -375,6 +379,9 @@ function loadItiTco(pa){
                         if(!((states[0]==='pzo')||(states[0]==='coupFs')||(states[0]==='tcs')||(states[0]==='ldi')||(states[0]==='pdp')||(states[0]==='selAcc'))) continue;
                         if(pa.id==='1'){
                             pa1dictionnary.cantons[ctns.cid].style.fill='#C50000'
+                        }
+                        if(pa.id==='2'){
+                            pa2dictionnary.cantons[ctns.cid].style.fill='#C50000'
                         }
                     }
                 }
