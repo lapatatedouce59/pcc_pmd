@@ -178,8 +178,8 @@
             },
             {
               "code": "2201_2401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2401_2201",
@@ -230,8 +230,8 @@
             },
             {
               "code": "1201_1401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1401_1201",
@@ -271,7 +271,7 @@
         "retDispoV101": true,
         "injDispoV101": false,
         "razSeq": false,
-        "itiOngoing": false,
+        "itiOngoing": true,
         "cycleOngoing": false
       },
       "cantons": [
@@ -321,7 +321,7 @@
               "name": "Léo",
               "states": {
                 "doorsOpenedPV": false,
-                "doorsClosedPV": true,
+                "doorsClosedPV": false,
                 "trainSecurised": false,
                 "inZOPP": false,
                 "failedStop": false,
@@ -807,8 +807,8 @@
             },
             {
               "code": "1202_2101",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2202_2302",
@@ -1261,6 +1261,21 @@
         "tIndex": "0",
         "cIndex": "2",
         "sIndex": "1"
+      },
+      "targetType": "train"
+    },
+    {
+      "id": 6,
+      "name": "Défaut Éclairage",
+      "user": "patatedouce.dev",
+      "date": "12/9/2023, 21h54 - 12/9/2023, 21h57",
+      "now": 1694548487279,
+      "state": "Terminé",
+      "showState": false,
+      "target": {
+        "tIndex": "0",
+        "cIndex": "6",
+        "sIndex": "0"
       },
       "targetType": "train"
     }

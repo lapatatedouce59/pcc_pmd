@@ -9,6 +9,37 @@ let dataLoaded = false
 let tco1Loaded = false
 let tco2Loaded = false
 
+//? LOAD FORMAT SELECT
+let formatSelect = document.getElementById('formatSelect')
+let groupFormatPA = document.getElementById('groupFormatPA')
+let fstation = document.getElementById('fstation')
+let ftrain = document.getElementById('ftrain')
+let zebiTaRienSelectionne = document.getElementById('zebiTaRienSelectionne')
+
+groupFormatPA.style.display='none'
+fstation.style.display='none'
+ftrain.style.display='none'
+
+formatSelect.addEventListener('input', ()=>{
+    zebiTaRienSelectionne.style.display='none'
+    if(formatSelect.value==='groupFormatPA'){
+        fstation.style.display='none'
+        ftrain.style.display='none'
+        groupFormatPA.style.display='inline'
+    }
+    if(formatSelect.value==='fstation'){
+        groupFormatPA.style.display='none'
+        ftrain.style.display='none'
+        fstation.style.display='inline'
+    }
+    if(formatSelect.value==='ftrain'){
+        groupFormatPA.style.display='none'
+        ftrain.style.display='inline'
+        fstation.style.display='none'
+    }
+
+})
+
 
 let toast= document.getElementById('snackbar')
 
@@ -890,11 +921,6 @@ btnDownward.addEventListener('click', () => {
         window.actualRequest = actualRequest
         console.log('Ordre 400 pour le train ' + TTARGET)
     }
-})
-
-btnExp.addEventListener('click', () => {
-    console.log('EXP')
-    loadElectricalInfos()
 })
 
 btnSend.addEventListener('click', () => {

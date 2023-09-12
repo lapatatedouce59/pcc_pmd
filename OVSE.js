@@ -267,7 +267,8 @@ function detectAZM(){
                             sec.states.zoneManoeuvre2=2
                         }
                         defUCA.push(ctn.cid)
-                        if(exports.f9=true) exports.f9=false
+                        exports.f9=false
+                        exports.callCounts++
                         askForFsCoup()
                     }
                 }
@@ -294,7 +295,8 @@ function detectTNE(){
                     } else if(sec.id==='2'){
                         sec.states.tnitne2=2
                     }
-                    if(exports.f9=true) exports.f9=false
+                    exports.f9=false
+                    exports.callCounts++
                     askForFsCoup()
                     defs.push(ctn.cid)
                 }
@@ -320,10 +322,13 @@ function detectTNE(){
 
 
 exports.done=false
+exports.callCounts=0
+exports.actualCount=0
 function askForFsCoup(){
+    exports.actualCount++
     exports.coupFS=true
     pccApi.voyUCA=2
-    exports.f9=true
+    if(exports.callCounts===exports.actualCount) exports.f9=true
 }
 
 function retablissementUCA(){

@@ -124,16 +124,6 @@
             background-color: #CCCCCC;
             transition: 500ms;
         }
-        .voyStationInfo{
-            color: white;
-            background-color: #8B8B8B;
-            transition: 500ms;
-        }
-        .voyStationOthers{
-            color: white;
-            background-color: #8B8B8B;
-            transition: 500ms;
-        }
         .voyStationTrain{
             color: black;
             background-color: #CCCCCC;
@@ -148,17 +138,17 @@
         }
         .tco{
             background-color: #1C1C1C;
-            height: calc(1730px/4);
-            width: calc(7203px/4);
+            /*height: calc(1730px/4);*/
+            /*width: calc(7203px/4);*/
         }
         .warn{
             background-color: #EF0000;
             color: white;
             transition: 400ms;
         }
-        .format{
+        /*.format{
             background-color: #DCDCDC;
-        }
+        }*/
         .btnControl{
             background-color: #495BFE;
             width: 100%;
@@ -307,22 +297,64 @@
             color: white;
         }
 
+        select#formatSelect{
+            width: 200px;
+            height: 420px;
+            text-align: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        select#formatSelect>option{
+            display: flexbox;
+            font-size: 50px;
+            height: 100px;
+            padding: 0px;
+            padding-top: 25px;
+            background-color: #495BFE;
+            border: #0117dc solid 5px;
+        }
+        #formatContainer{
+            border: #1C1C1C solid 5px;
+            margin: 10px;
+            background-color: #DCDCDC;
+            width: 1320px;
+        }
+        #MASTERHEAD{
+            background-color: #1C1C1C;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100%;
+            padding: 20px;
+        }
+        #head1{
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+        }
+
         
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="MASTERHEAD">
+        <div id="head1">
+            <img src="./src/global/Paris_transit_icons_-_Métro_14.svg.png" style="height: 50px;"><img src="./src/global/logo new.png" style="height: 50px;"><h1>PCC Multijoueur</h1>
+        </div>
+        <div style="color: #A6A6A6;">
+            <div class="user">
+                Connecté en tant que: <span id="uname">indéfini</span>
+            </div>
+            <div class="user">
+                Votre UUID: <span id="uuidLigne">indéfini</span>
+            </div>
+            <div class="user">
+                Votre rôle: <span id="roleOP">indéfini</span>
+            </div>
+        </div>
+    </div>
     <script src="./connexion.js"></script>
-    <button id="btnAdminAccess">ACCEDER AU PANNEL ADMIN</button>
-    <div class="user">
-        Connecté en tant que: <span id="uname">indéfini</span>
-    </div>
-    <div class="user">
-        Votre UUID: <span id="uuidLigne">indéfini</span>
-    </div>
-    <div class="user">
-        Votre rôle: <span id="roleOP">indéfini</span>
-    </div>
+    <button id="btnAdminAccess" style="display: none;">ACCEDER AU PANNEL ADMIN</button>
     <fieldset>
         <legend>Vue rapide des anomalies</legend>
         <div id="listDef" style="height: 200px; overflow-y:auto;">
@@ -330,6 +362,26 @@
         </div>
     </fieldset>
     <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
+    <div class="tco" style="height: 100%; width: 100%;">
+        <div class="ligne" style="height: 500px; position: relative; pointer-events: none;">
+            <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg" class="svgobj"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep" class="svgobj"></object><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg" class="svgobj"></object>
+        </div>
+        <div class="elec" style="position: relative; top: -100px;">
+            <object data="src/tco/elec/ELEC.svg" type="image/svg+xml" id="elecSvg"></object>
+        </div>
+    </div>
+    
+    <div>
+        <button id="downward"><-</button>
+        <button id="forward">-></button>
+    
+        <input type="text" id="trainAffect" placeholder="train">
+        <button id="reload">RELOAD (en cas de non-load)</button>
+        <br>
+        <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
+        <button id="sendCmd">SEND</button>
+    </div>
+    <br>
     <div class="pltp" style="background-color: #DCDCDC; width: fit-content;">
     <div style="height: fit-content;">
     <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex; height: 654px;">
@@ -665,210 +717,713 @@
     <br><span><button id="btnACQU">ACQUITTER</button></span>
     <br>
     <span><button id="btnAG2">rétablir</button></span>
-    <br>
-    <span> <input type="checkbox" id="comArmPR" class="com" checked> Armt. PR </span>
-    <br>
-    <br>
-    <span> <input type="checkbox" id="comInhibUCA" class="com"> Inhib. UCA </span>
-    <br>
-    <span> <input type="checkbox" id="comIDPOTPAS" class="com"> IDPO tout PAS </span>
-    <br>
     
-    <h2 style="color:rgb(0, 0, 0);">c'est qu'une page de test, il peut y avoir des bugs</h2>
-    <h2 style="color:rgb(0, 0, 0);">merci de pas faire planter le wss, sinon notifiez moi sur discord - Patate Douce</h2>
-        <h2 style="color:rgb(0, 0, 0);"><- S2 S1-></h2>
-    <div class="tco" style="height: 650px;">
-        <div class="ligne" style="height: 500px; position: relative; pointer-events: none;">
-            <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg" class="svgobj"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep" class="svgobj"></object><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg" class="svgobj"></object>
-        </div>
-        <div class="elec" style="position: relative; top: -100px;">
-            <object data="src/tco/elec/ELEC.svg" type="image/svg+xml" id="elecSvg"></object>
-        </div>
-    </div>
-    
-    <div>
-        <button id="downward">S2</button>
-        <button id="forward">S1</button>
-    
-        <input type="text" id="trainAffect" placeholder="train">
-        <button id="experiment">EXPERIENCE</button>
-        <button id="reload">RELOAD (en cas de non-load)</button>
-        <br>
-        <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
-        <button id="sendCmd">SEND</button>
-    </div>
-    
-    <h3 id="attention" class="warn" style="transition: 400ms;">Ne pas faire avancer une rame sans respecter les feux!!!</h3>
+    <h3 id="attention" class="warn" style="transition: 400ms;">Respecter les feux et les itinéraires!</h3>
 
-    <div class="format">
-        <div style="background-color: #44C1DC;">
-            <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des itinéraires et cycles</span><span><select id="selectMenuPa"></select></span>
+    <div id="menuSelectFormat" style="display: inline-flex;">
+        <div>
+            <select name="formatSelect" id="formatSelect" multiple>
+                <option value="ftrain">Trains</option>
+                <option value="fstation">Quais</option>
+                <option value="groupFormatPA">PA</option>
+            </select>
         </div>
-        <div class="part1PA" style="display: inline-flex; width: fit-content;">
-            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                <legend>RECALACUL DU CYCLE</legend>
-                <input type="button" class="btnControl" id="btnRazSeqPA" value="   " style="width: 10%;">
-                <table style="width: 90%;">
-                    <tr><td class="voyPaState" id="razSeq"><span id="razSeq" class="voyPaState">RAZ SEQ</span></td></tr>
-                </table>
-            </fieldset>
-            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                <legend>DES URGENCE ITIS</legend>
-                <input type="button" class="btnControl" id="btnDesUrgIti" value="   " style="width: 10%;">
-                <table style="width: 90%;">
-                    <tr><td class="voyPaState" id="itiOngoing"><span id="itiOngoing" class="voyPaState">ITINERAIRES EN COURS</span></td></tr>
-                </table>
-            </fieldset>
-            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                <legend>ANNULATION TOUT CYCLE</legend>
-                <input type="button" class="btnControl" id="btnCancelCycles" value="   " style="width: 10%;">
-                <table style="width: 90%;">
-                    <tr><td class="voyPaState" id="cycleOngoing"><span id="cycleOngoing" class="voyPaState">CYCLE EN COURS</span></td></tr>
-                </table>
-            </fieldset>
-        </div>
-        <div class="itiFormatAmovible" id="itiFormatAmovible1">
-            
-            <div id="manualItiTop1" style="display: inline-flex; width: 100%; align-items: center;">
-            
+        <div id="formatContainer">
+            <h1 id="zebiTaRienSelectionne">Aucun format sélectionné.</h1>
+            <div id="fstation" class="format">
+                <div id="stationhead" style="width: 100%; background-color: #5E5E5E; color: white;">
+                    <span><b>Gestion des quais</b></span><span> - EAS</span> <br>
+                    <span id="quaiTitle"></span>
+                </div>
+                <div style="display: inline-flex;">
+                    <div>
+                        <fieldset style="width: 20%; display: inline-block;">
+                            <legend>Sectionner une station</legend>
+                            <select name="stationSelect" id="stationSelect" multiple size="10">
+                                <option value="O">CHOISIR STATION</option>
+                            </select> <br>
+                            <input type="button" value="ACQUITTER" id="btnAcquitStation">
+                        </fieldset>
+                    </div>
+                    <div>
+                        <fieldset style="width: 20%; display: inline-block;">
+                            <legend>ACTIONS TEST (PMS)</legend>
+                            <input type="button" value="Ouvrir PP" id="btnOpenPP">
+                            <input type="button" value="Fermer PP" id="btnClosePP"><br>
+                            <input type="checkbox" id="ckbUnlockPMS" class="comFormat"><span>Ouvrir le PMS</span><br>
+                            <input type="checkbox" id="ckbManualExploit" class="comFormat"><span>Clé exploitation manuelle</span><br>
+                            <input type="checkbox" id="ckbMaintenance" class="comFormat"><span>Clé maintenance</span><br>
+                            <input type="button" value="Autor. Départ" id="btnAuthDepart"><input type="button" value="RAZ" id="btnResetAuthDepart">
+                            <input type="button" value="Forcage" id="btnForceDepart"><br>
+                            <input type="button" value="Ouvrir PV" id="btnOpenPV">
+                            <input type="button" value="Fermer PV" id="btnClosePV"> <br>
+                            <input type="checkbox" id="ckbZopp" class="comFormat"><span>Train en ZOPP</span><br>
+                            <input type="checkbox" id="ckbSafe" class="comFormat"><span>Train inscrit</span><br>
+                            <input type="checkbox" id="ckbObsVeh" class="comFormat"><span>Obstacle Portes Train</span><br>
+                            <input type="text" id="trainOrderAffect" placeholder="Train concerné...">
+                        </fieldset>
+                    </div>
+                    <div>
+                        <fieldset style="width: 50%; display: inline-block;">
+                            <legend>ANOMALIES</legend>
+                            <input type="button" value="DEFAUT PARTIEL OUVERTURE PP" id="btnPartialPPOpeningInc">
+                            <input type="button" value="DEFAUT PARTIEL FERMETURE PP" id="btnPartialPPClosingInc"> <br>
+                            <input type="button" value="DEFAUT TOTAL OUVERTURE PP" id="btnTotalPPOpeningInc">
+                            <input type="button" value="DEFAUT TOTAL FERMETURE PP" id="btnTotalPPClosingInc"> <br>
+                            <input type="button" value="EVACUATION" id="btnEvac">
+                            <input type="button" value="APPEL PCC" id="btnEmCall"><input type="button" value="ACQUITTER APPEL" id="btnAcqEmCall"> <br>
+                            <input type="checkbox" id="ckbObs" class="comFormat"><span>Obstacle Portes</span><br>
+                            <input type="button" value="RAZ" id="btnReset">
+                        </fieldset>
+                    </div>
+                </div>
+                <div id="stationState" style="width: 1200px;">
+                    <span><fieldset style="width: 45%; display: inline-table; text-align: center;">
+                        <legend>Quai</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyStationState" id="doorsOpened"><span id="doorsOpened" class="voyStationState">PP OUVERTES</span></td><td class="voyStationState" id="doorsClosed"><span id="doorsClosed" class="voyStationState">PP FERMÉES</span></td></tr>
+                            <tr><td class="voyStationState" id="doorsOpenedPAS"><span id="doorsOpenedPAS" class="voyStationState">CDE. OUV. PP PAS</span></td><td class="voyStationState" id="doorsClosedPAS"><span id="doorsClosedPAS" class="voyStationState">CDE. FER. PP PAS</span></td></tr>
+                            <tr><td class="voyStationState" id="defPartOuvPP"><span id="defPartOuvPP" class="voyStationState">DEF. PART. OUV. PP</span></td><td class="voyStationState" id="defPartFerPP"><span id="defPartFerPP" class="voyStationState">DEF. PART. FER. PP</span></td></tr>
+                            <tr><td class="voyStationState" id="defTotOuvPP"><span id="defTotOuvPP" class="voyStationState">DEF. TOT. OUV. PP</span></td><td class="voyStationState" id="defTotFerPP"><span id="defTotFerPP" class="voyStationState">DEF. TOT. FER. PP</span></td></tr>
+                            <tr><td colspan="2" class="voyStationState" id="doorsOpenedWithoutTrain"><span id="doorsOpenedWithoutTrain" class="voyStationState">PP OUV. SANS TRAIN EN ZOPP</span></td></tr>
+                            <tr><td colspan="2" class="voyStationState" id="doorsObstacle"><span id="doorsObstacle" class="voyStationState">DETECTION OBSTACLE</span></td></tr>
+                            <tr><td colspan="2" class="voyStationState" id="condemnedDoor"><span id="condemnedDoor" class="voyStationState">PP CONDAMNE PAR CLÉ</span></td></tr>
+                            <tr><td class="voyStationState" id="openedEDoors"><span id="openedEDoors" class="voyStationState">PS OUVERTE</span></td><td class="voyStationState" id="lockedEDoors"><span id="lockedEDoors" class="voyStationState">PS VEROUILLÉES</span></td></tr>
+                            <tr><td class="voyStationState" id="openedPEQ"><span id="openedPEQ" class="voyStationState">PEQ OUVERTE</span></td><td class="voyStationState" id="lockedPEQ"><span id="lockedPEQ" class="voyStationState">PEQ VEROUILLÉES</span></td></tr>
+                            <tr><td class="voyStationState" id="unlockedPMS"><span id="unlockedPMS" class="voyStationState">PMS DEVEROUILLÉ</span></td><td class="voyStationState" id="engagedPMS"><span id="engagedPMS" class="voyStationState">PMS ENGAGÉ</span></td></tr>
+                            <tr><td colspan="2" class="voyStationState" id="manualExpKeyEng"><span id="manualExpKeyEng" class="voyStationState">CLE EXPLOITATION MANUELLE ENGAGÉE</span></td></tr>
+                            <tr><td colspan="2" class="voyStationState" id="maintKeyEng"><span id="maintKeyEng" class="voyStationState">CLE MAINTENANCE ENGAGÉE</span></td></tr>
+                            <tr><td colspan="2" class="voyStationState" id="manuelPPOpening"><span id="manuelPPOpening" class="voyStationState">CDE MANUELLE OUV. PP</span></td></tr>
+                            <tr><td colspan="2" class="voyStationState" id="manuelPPClosing"><span id="manuelPPClosing" class="voyStationState">CDE MANUELLE FER. PP</span></td></tr>
+                            <tr><td class="voyStationState" id="departAuth"><span id="departAuth" class="voyStationState">AUTOR. DÉPART</span></td><td class="voyStationState" id="departForce"><span id="departForce" class="voyStationState">FORCAGE DÉPART</span></td></tr>
+                            <tr><td colspan="2" class="voyStationState" id="activeRA"><span id="activeRA" class="voyStationState">RA ACTIF</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style=" display: inline-table; text-align: center;">
+                        <legend>Train</legend>
+                        <table style= "height: 100%;">
+                            <tbody>
+                                <tr><th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th></tr>
+                                <tr><td class="voyStationTrain" id="doorsOpenedPV" colspan="3" width="50%"><span id="doorsOpenedPV" class="voyStationTrain">PV OUVERTES</span></td><td class="voyStationTrain" id="doorsClosedPV" colspan="3" width="50%"><span id="doorsClosedPV" class="voyStationTrain">PV FERMÉES</span></td></tr>
+                                <tr><td class="voyStationTrain" id="trainSecurised" colspan="3" width="50%"><span id="trainSecurised" class="voyStationTrain">VÉHICULE INSCRIT</span></td><td class="voyStationTrain" id="inZOPP" colspan="3" width="50%"><span id="inZOPP" class="voyStationTrain">TRAIN EN ZOPP</span></td></tr>
+                                <tr><td colspan="6" id="failedStop" class="voyStationTrain"><span id="failedStop" class="voyStationTrain">STATION RATÉE (POST ZOPP)</span></td></tr>
+                                <tr><td colspan="6" id="secureStop" class="voyStationTrain"><span id="secureStop" class="voyStationTrain">ARRÊT SECOURS (PRE ZOPP)</span></td></tr>
+                                <tr><td class="voyStationTrain" id="trainEssai" colspan="3" width="50%"><span id="trainEssai" class="voyStationTrain">TRAIN EN ESSAI</span></td><td class="voyStationTrain" id="trainIOP" colspan="3" width="50%"><span id="trainIOP" class="voyStationTrain">TRAIN EN IOP</span></td></tr>
+                                <tr><td colspan="2" width="33%"><input type="button" class="btnControl" value="ACTIF" id="btnActiveHLP"></td><td class="voyStationState" id="HLP" colspan="2" width="33%"><span id="HLP" class="voyStationState">HLP</span></td><td colspan="2" width="33%"><input type="button" id="btnInactiveHLP" class="btnControl" value="INACTIF"></td></tr>
+                                <tr><td colspan="6" id="forbiddenStart" class="voyStationTrain"><span id="forbiddenStart" class="voyStationTrain">INTERDICTION DÉPART VÉHICULE</span></td></tr>
+                                <tr><td class="voyStationTrain" id="trainEvac" colspan="3" width="50%"><span id="trainEvac" class="voyStationTrain">EVACUATION</span></td><td class="voyStationTrain" id="trainEmCall" colspan="3" width="50%"><span id="trainEmCall" class="voyStationTrain">APPEL PHONIE</span></td></tr>
+                                <tr><td class="voyStationTrain" id="lsvDef" colspan="3" width="50%"><span id="lsvDef" class="voyStationTrain">DÉFAUT LSV</span></td><td class="voyStationTrain" id="blockDef" colspan="3" width="50%"><span id="blockDef" class="voyStationTrain">DÉFAUT BLOCAGE</span></td></tr>
+                                <tr><td colspan="2" width="33%"><input type="button" class="btnControl" value="ACTIF" id="btnActiveDSO"></td><td class="voyStationState" colspan="2" width="33%" id="DSO"><span id="DSO" class="voyStationState">DSO/IDPO</span></td><td colspan="2" width="33%"><input type="button" id="btnInactiveDSO" class="btnControl" value="INACTIF"></td></tr>
+                                <tr><td class="voyStationState" id="IDPOAlreadyActiveByPLTP" colspan="4"><span id="IDPOAlreadyActiveByPLTP" class="voyStationState">IDPO ACTIF PAR PLTP</span></td><td colspan="2"><input type="button" id="btnIhibIDPOPLTP" class="btnControl" value="INHIB"></td></tr>
+                                <tr><td class="voyStationState" id="IDPOAlreadyActiveByALC" colspan="4"><span id="IDPOAlreadyActiveByALC" class="voyStationState">IDPO ACTIF PAR ALC/SECU AUTO</span></td><td colspan="2"><input type="button" id="btnIhibIDPOALC" class="btnControl" value="INHIB"></td></tr>
+                                <tr><td colspan="2" width="33%"><input type="button" class="btnControl" value="ACTIF" id="btnActiveSSO"></td><td class="voyStationState" colspan="2" width="33%" id="SSO"><span id="SSO" class="voyStationState">SSO</span></td><td colspan="2" width="33%"><input type="button" id="btnInactiveSSO" class="btnControl" value="INACTIF"></td></tr>
+                                <tr><td class="voyStationTrain" id="defCdeOuvPV" colspan="3" width="50%"><span id="defCdeOuvPV" class="voyStationTrain">DEF. CDE. OUV. PV</span></td><td class="voyStationTrain" id="defCdeFerPV" colspan="3" width="50%"><span id="defCdeFerPV" class="voyStationTrain">DEF. CDE. FER. PV</span></td></tr>
+                                <tr><td colspan="6" id="alimDef" class="voyStationState"><span id="alimDef" class="voyStationState">DÉFAUT ALIMENTATION</span></td></tr>
+                                <tr><td colspan="2" width="33%"><input type="text" value="" id="newTime" placeholder="TEMPS D'ARRÊT EN STATION"></td><td colspan="2" width="33%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="2" width="33%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>
+                                <tr><td colspan="2" width="33%"><span>Identification train:</span></td><td colspan="2" width="33%"><input type="text" id="trainNumber" disabled></td><td colspan="2" width="33%" id="longTrain" class="voyStationTrain"><span id="longTrain" class="voyStationTrain">TRAIN LONG</span></td></tr>
+        
+                                <!--<tr><td colspan="3" width="50%">Temps d’arrêt quai:<span></span></td><td width="%" colspan="1"><input type="text" value="10" id="newTime"></td><td colspan="1" width="18%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="1" width="18%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>-->
+                            </tbody>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 77%; text-align: center;">
+                        <legend>Commandes</legend>
+                        <table style= "height: 100%; width: 100%;">
+                            <tbody>
+                                <tr><th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th></tr>
+                                <tr><td><input type="button" class="btnControl" value="AFD" id="btnAFD"></td><td colspan="2" id="afdActive" class="voyStationState"><span id="afdActive" class="voyStationState">AUTORISATION FORCAGE DÉPART</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZAFD"></td><td colspan="2" id="cancelAfd" class="voyStationState"><span id="cancelAfd" class="voyStationState">ANNULATION OPÉRATION</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" value="VVT S1" id="btnVVTS1"></td><td colspan="2" id="VVTS1" class="voyStationState"><span id="VVTS1" class="voyStationState">LIM. VIT. VENTS TRAVAUX SENS 1</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZVVTS1"></td><td colspan="1" id="vvtS1AlreadyOn" class="voyStationState"><span id="vvtS1AlreadyOn" class="voyStationState">VITESSE PRÉSENTE PAR PAS</span></td><td><input type="button" class="btnControl" value="INHIB" id="btnInhibVVTS1"></td></tr>
+                                <tr><td><input type="button" class="btnControl" value="VVT S2" id="btnVVTS2"></td><td colspan="2" id="VVTS2" class="voyStationState"><span id="VVTS2" class="voyStationState">LIM. VIT. VENTS TRAVAUX SENS 2</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZVVTS2"></td><td colspan="1" id="vvtS2AlreadyOn" class="voyStationState"><span id="vvtS2AlreadyOn" class="voyStationState">VITESSE PRÉSENTE PAR PAS</span></td><td><input type="button" class="btnControl" value="INHIB" id="btnInhibVVTS2"></td></tr>
+                                <tr><td><input type="button" class="btnControl" value="DEPA" id="btnDEPA"></td><td colspan="2" id="depaActive" class="voyStationState"><span id="depaActive" class="voyStationState">DÉPART IMMEDIAT</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZdepa"></td><td colspan="2" id="defDepa" class="voyStationState"><span id="defDepa" class="voyStationState">DÉFAUT DÉPART</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" value="IDPF" id="btnIDPF"></td><td colspan="2" id="idpfActive" class="voyStationState"><span id="idpfActive" class="voyStationState">INTER. DÉPART PORTES FERMEES</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZidpf"></td><td colspan="2" id="impIdpf" class="voyStationState"><span id="impIdpf" class="voyStationState">IDPF IMPOSSIBLE</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" value="ISTA" id="btnISTA"></td><td colspan="2" id="istaActive" class="voyStationState"><span id="istaActive" class="voyStationState">INTER. ARRÊT STATION</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZista"></td><td colspan="2" id="istaBlock" class="voyStationState"><span id="istaBlock" class="voyStationState">BLOCAGE AUTO PAR ALC/UCA</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" value="MAPF" id="btnMAPF"></td><td colspan="2" id="mapfActive" class="voyStationState"><span id="mapfActive" class="voyStationState">MAINT. ARRÊT PORTES FERMÉES</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZmapf"></td><td colspan="2" id="mapfImp" class="voyStationState"><span id="mapfImp" class="voyStationState">MAPF IMPOSSIBLE</span></td></tr>
+                                <tr><td colspan="6" class="voyStationState" id="defOrderExec"><span class="voyStationState" id="defOrderExec">DÉFAUT EXECUTION ORDRE</span></td></tr>
+        
+                                <!--<tr><td colspan="3" width="50%">Temps d’arrêt quai:<span></span></td><td width="%" colspan="1"><input type="text" value="10" id="newTime"></td><td colspan="1" width="18%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="1" width="18%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>-->
+                            </tbody>
+                        </table>
+                    </fieldset></span>
+                </div>
             </div>
-            <div style="display: inline-flex;">
-                <div style="padding: 10px;">
-                    <fieldset>
-                        <legend>GESTION GARAGES VOIE 2</legend>
-                        <table style="width: 100%; text-align: center;">
-                            <tr><td id="retDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV201">RET DISPONIBLE</span></td></tr>
-                            <tr><td><input type="button" class="btnControl" id="btnRetV201" value="RETRAIT"></td></tr>
-                            <tr><td id="injDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV201">INJ DISPONIBLE</span></td></tr>
-                            <tr><td><input type="button" class="btnControl" id="btnInjV201" value="INJECTION"></td></tr>
-                        </table>
-                    </fieldset>
-                    <fieldset style="margin-top: 20px;">
-                        <legend>GESTION GARAGES VOIE 1</legend>
-                        <table style="width: 100%; text-align: center;">
-                            <tr><td id="retDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV101">RET DISPONIBLE</span></td></tr>
-                            <tr><td><input type="button" class="btnControl" id="btnRetV101" value="RETRAIT"></td></tr>
-                            <tr><td id="injDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV101">INJ DISPONIBLE</span></td></tr>
-                            <tr><td><input type="button" class="btnControl" id="btnInjV101" value="INJECTION"></td></tr>
-                        </table>
-                    </fieldset>
+            <div id="ftrain" class="format" style=" align-items: center;">
+                <div id="trainhead" style="width: 100%; background-color: #5E5E5E; color: white;">
+                    
+                    <span><b>Gestion des trains</b></span> <br>
+                    <span id="trainTitle"></span>
                 </div>
-                <div id="tcoItiPa1">
-                    <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                <fieldset style="width: 20%; display: inline-block;">
+                    <legend>Sectionner un train</legend>
+                    <select name="trainSelect" id="trainSelect" multiple size="10">
+                        <option value="O">CHOISIR TRAIN</option>
+                    </select> <br>
+                    <input type="button" value="ACQUITTER" id="btnAcquitTrain">
+                </fieldset>
+                <fieldset style="width: 20%; display: inline-block;">
+                    <legend>ACTIONS</legend>
+                    <span><input type="button" id="fuCreate" value="Créer FU"></span> <span><input type="button" id="fuReleave" value="Lever FU"></span>
+                </fieldset>
+                <br>
+                <div id="trainHead" style="width: 100%;">
+                    <table>
+                        <tr>
+                            <td style="font-family: Arial, Helvetica, sans-serif;"><span>Rame:</span></td><td><input id="trainNumberTrain" disabled value="-" style="width: 30%;"></td>
+                            <td style="font-family: Arial, Helvetica, sans-serif;"><span>Canton:</span></td><td><input id="trainCanton" disabled value="-" style="width: 30%;"></td>
+                            <td style="font-family: Arial, Helvetica, sans-serif;"><span>Associé:</span></td><td><input id="trainAsso" disabled value="-" style="width: 30%;"></td>
+                            <td style="font-family: Arial, Helvetica, sans-serif;"><span>Vitesse:</span></td><td><input id="trainSpeed" disabled value="-" style="width: 30%;"></td>
+                        </tr>
+                        <tr>
+                            <td style="font-family: Arial, Helvetica, sans-serif;"><span>Etat:</span></td><td><input id="trainState" disabled value="-" style="width: 30%;"></td>
+                            <td style="font-family: Arial, Helvetica, sans-serif;"><span>PA:</span></td><td><input id="trainGSec" disabled value="-" style="width: 30%;"></td>
+                            <td style="font-family: Arial, Helvetica, sans-serif;"><span>Mission:</span></td><td><input id="trainMission" disabled value="-" style="width: 30%;"></td>
+                        </tr>
+                    </table>
                 </div>
-                <div style="padding: 10px;">
-                    <fieldset>
-                        <legend>Demandes de cycles</legend>
-                        <table style="width: 100%; text-align: center;" id="masterTableCycles1">
+                <div id="trainState">
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>Alarmes</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyTrainState" id="TMSActive"><span id="TMSActive" class="voyTrainState">TMS</span></td></tr>
+                            <tr><td class="voyTrainState" id="EVACActive"><span id="EVACActive" class="voyTrainState">ÉVACUATION</span></td></tr>
+                            <tr><td class="voyTrainState" id="defTech"><span id="defTech" class="voyTrainState">DEF. TECHNIQUE</span></td></tr>
+                            <tr><td class="voyTrainState" id="defLtpa"><span id="defLtpa" class="voyTrainState">DEF. LTPA</span></td></tr>
+                            <tr><td class="voyTrainState" id="tneHorsZGAT"><span id="tneHorsZGAT" class="voyTrainState">TNE/TNI HORS ZGAT</span></td></tr>
+                            <tr><td class="voyTrainState"><span class="voyTrainState">-</span></td></tr>
+                            <tr><td class="voyTrainState"><span class="voyTrainState">-</span></td></tr>
+                            <tr><td class="voyTrainState"><span class="voyTrainState">-</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>FU</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyTrainState" id="fuKSEPO"><span id="fuKSEPO" class="voyTrainState">FU K.SE.PO</span></td></tr>
+                            <tr><td class="voyTrainState" id="fuSurvitesse"><span id="fuSurvitesse" class="voyTrainState">FU SURVITESSE</span></td></tr>
+                            <tr><td class="voyTrainState" id="fuDiscMob"><span id="fuDiscMob" class="voyTrainState">FU DISC. MOBILITE</span></td></tr>
+                            <tr><td class="voyTrainState" id="fuVacma"><span id="fuVacma" class="voyTrainState">FU VACMA</span></td></tr>
+                            <tr><td class="voyTrainState" id="fuKPAMN"><span id="fuKPAMN" class="voyTrainState">FU KPAMN</span></td></tr>
+                            <tr><td class="voyTrainState" id="fuPil"><span id="fuPil" class="voyTrainState">FU PILOTE</span></td></tr>
+                            <tr><td class="voyTrainState" id="fuObsColl"><span id="fuObsColl" class="voyTrainState">FU OBS/COLL</span></td></tr>
+                            <tr><td class="voyTrainState" id="fuNoFS"><span id="fuNoFS" class="voyTrainState">FU ABS. FS</span></td></tr>
+                            <tr><td class="voyTrainState" id="fuRuptAtt"><span id="fuRuptAtt" class="voyTrainState">FU RUPT. ATTELAGE</span></td></tr>
+                            <tr><td class="voyTrainState" id="testAuto"><span id="testAuto" class="voyTrainState">TEST AUTO</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>Energie</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyTrainState" id="defCvs"><span id="defCvs" class="voyTrainState">DÉFAUT CVS</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainBattery"><span id="trainBattery" class="voyTrainState">TRAIN EN BATTERIE</span></td></tr>
+                            <tr><td class="voyTrainState" id="btDelest"><span id="btDelest" class="voyTrainState">DELESTAGE BT</span></td></tr>
+                            <tr><td class="voyTrainState" id="defDistBt"><span id="defDistBt" class="voyTrainState">DEF. DIST. BT</span></td></tr>
+                            <tr><td class="voyTrainState" id="defPart750"><span id="defPart750" class="voyTrainState">DEFAUT PART. DJ 750V</span></td></tr>
+                            <tr><td class="voyTrainState" id="abs750"><span id="abs750" class="voyTrainState">ABSENCE 750V</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainPAT"><span id="trainPAT" class="voyTrainState">TRAIN SUR PAT</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>Echange</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyTrainState" id="defPartOuvPV" colspan="3"><span id="defPartOuvPV" class="voyTrainState">DEF. PARTIEL OUV. PV</span></td></tr>
+                            <tr><td class="voyTrainState" id="defTotOuvPV" colspan="3"><span id="defTotOuvPV" class="voyTrainState">DEF. TOTAL OUV. PV</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainInscrit" colspan="3"><span id="trainInscrit" class="voyTrainState">TRAIN INSCRIT</span></td></tr>
+                            <tr><td class="voyTrainState" id="evacUitp" colspan="3"><span id="evacUitp" class="voyTrainState">ÉVACUATION UITP</span></td></tr>
+                            <tr><td colspan="1"><input type="button" value="IOP" class="btnControl" id="btnIop"></td><td class="voyTrainState" id="IOP" colspan="1"><span id="IOP" class="voyTrainState">IOP</span></td><td colspan="1"><input type="button" value="RAZ" class="btnControl" id="btnRazIop"></td></tr>
+                            <tr><td colspan="3"><input type="button" value="SEL. ESSAI" class="btnControl" id="btnSelEssai"></td></tr>
+                            <tr><td class="voyTrainState" id="trainEssai" colspan="3"><span id="trainEssai" class="voyTrainState">TRAIN EN ESSAI</span></td></tr>
+                            <tr><td colspan="3"><input type="button" value="EXE. ESSAI" class="btnControl" id="btnExeEssai"></td></tr>
+                            <tr><td colspan="3"><input type="button" value="RAZ. ESSAI" class="btnControl" id="btnRazEssai"></td></tr>
+                            <tr><td class="voyTrainState" id="nullSpeed" colspan="3"><span id="nullSpeed" class="voyTrainState">VITESSE NULLE</span></td></tr>
+                            <tr><td class="voyTrainState" id="selOuvDroite" colspan="3"><span id="selOuvDroite" class="voyTrainState">SEL. OUV. DROITE</span></td></tr>
+                            <tr><td class="voyTrainState" id="selOuvGauche" colspan="3"><span id="selOuvGauche" class="voyTrainState">SEL. OUV. GAUCHE</span></td></tr>
+                            <tr><td class="voyTrainState" id="blockedTrain" colspan="3"><span id="blockedTrain" class="voyTrainState">RAME BLOQUÉE</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>DCA</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td colspan="3"><input type="button" value="RESET DCA" class="btnControl" id="btnResetDCA"></td></tr>
+                            <tr><td class="voyTrainState" id="defDCA" colspan="3"><span id="defDCA" class="voyTrainState">DÉFAUT DCA</span></td></tr>
+                            <tr><td class="voyTrainState" id="cmdOuvPortesTrain" colspan="3"><span id="cmdOuvPortesTrain" class="voyTrainState">CMD. OUV. PORTES</span></td></tr>
+                            <tr><td class="voyTrainState" id="opl" colspan="3"><span id="opl" class="voyTrainState">OUV. PORTES. LIGNE</span></td></tr>
+                            <tr><td class="voyTrainState" id="lvsTrain" colspan="3"><span id="lvsTrain" class="voyTrainState">LIAISON VEH. STATION</span></td></tr>
+                            <tr><td class="voyTrainState" id="seqDemTrain" colspan="3"><span id="seqDemTrain" class="voyTrainState">SÉQ. DÉMMARAGE</span></td></tr>
+                            <tr><td class="voyTrainState" id="asmd" colspan="3"><span id="asmd" class="voyTrainState">0.8 ASMD</span></td></tr>
+                            <tr><td class="voyTrainState" id="v0pas" colspan="3"><span id="v0pas" class="voyTrainState">P0 PAS</span></td></tr>
+                            <tr><td class="voyTrainState" id="cmdFu" colspan="3"><span id="cmdFu" class="voyTrainState">COMMANDE FU</span></td></tr>
+                            <tr><td colspan="2"><span>Compt. FU:</span></td><td class="voyTrainState" id="fuCount" colspan="1" style="width: 30%;"><input class="voyTrainState" id="fuCountInput" class="voyTrainState" value="" disabled style="width: 30%;"></td></tr>
+                            <tr><td colspan="3"><input type="button" value="ACQ. COMPTEUR FU" class="btnControl" id="btnAcqComptFu"></td></tr>
+                            <tr><td class="voyTrainState" id="fsOk" colspan="3"><span id="fsOk" class="voyTrainState">FS VALIDE</span></td></tr>
+                            <tr><td class="voyTrainState" id="fuFranch" colspan="3"><span id="fuFranch" class="voyTrainState">FU FRANCHISSEMENT</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>MISSION</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td colspan="3"><input type="button" value="RAZ MISSION" class="btnControl" id="btnRazMission"></td></tr>
+                            <tr><td colspan="3"><input type="button" value="INHIB. CYCLES/SEQ" class="btnControl" id="btnInhibCycle"></td></tr>
+                            <tr><td colspan="3"><input type="button" value="ITI. MANUEL" class="btnControl" id="btnInhibCycle"></td></tr>
+                            <tr><td class="voyTrainState" id="inhibedCycleSeq" colspan="3"><span id="inhibedCycleSeq" class="voyTrainState">CYCLE/SEQ INHIB.</span></td></tr>
+                            <tr><td class="voyTrainState" id="autoIti" colspan="3"><span id="autoIti" class="voyTrainState">ITI. AUTOMATIQUES</span></td></tr>
+                            <tr><td colspan="3"><input type="button" value="APP. CMD. SEQ" class="btnControl" id="btnAppCmdSeq"></td></tr>
+                            <tr><td class="voyTrainState" id="defAppSeq" colspan="3"><span id="defAppSeq" class="voyTrainState">DEF. APP. SEQ.</span></td></tr>
+                            <tr><td><select name="selectMission" id="selectMission" style="width: 100%;"><option value="EXPLT1-T2">EXPL T1-T2</option></select></td></tr>
+                            <tr><td colspan="3"><input type="button" value="APP. MISSION" class="btnControl" id="btnAppMission"></td></tr>
+                            <tr><td class="voyTrainState" id="activeMission" colspan="3"><span id="activeMission" class="voyTrainState">MISSION EN COURS</span></td></tr>
+                            <tr><td class="voyTrainState" id="waitingMission" colspan="3"><span id="waitingMission" class="voyTrainState">ATTENTE MISSION</span></td></tr>
+                            <tr><td class="voyTrainState" id="defExeMission" colspan="3"><span id="defExeMission" class="voyTrainState">DEF. EXE. MISSION</span></td></tr>
+                            <tr><td class="voyTrainState" id="canceledMission" colspan="3"><span id="canceledMission" class="voyTrainState">MISSION ANNULÉE</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>ÉVITEMENT</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td colspan="2"><input type="button" value="RAZ AUTORISATIONS" class="btnControl" id="btnRazAuth"></td></tr>
+                            <tr><td colspan="2"><input type="button" value="AUT. ZONE OCCUPE" class="btnControl" id="btnAuthOccupedZone"></td></tr>
+                            <tr><td class="voyTrainState" id="autorisedTrain" colspan="2"><span id="autorisedTrain" class="voyTrainState">TRAIN AUTORISE</span></td></tr>
+                            <tr><td colspan="2"><input type="button" value="FORCAGE FS" class="btnControl" id="btnForceFS"></td></tr>
+                            <tr><td class="voyTrainState" id="fsForce" colspan="2"><span id="fsForce" class="voyTrainState">FS FORCÉE</span></td></tr>
+                            <tr><td colspan="2"><input type="button" value="SEL. SEQ. ACC." class="btnControl" id="btnSelSeqAcc"></td></tr>
+                            <tr><td colspan="1"><input type="button" value="SEL. AV." class="btnControl" id="btnSelAccAv"></td><td colspan="1"><input type="button" value="SEL. AR." class="btnControl" id="btnSelAccAr"></td></tr>
+                            <tr><td colspan="2"><input type="button" value="EXE. SEQ. ACC." class="btnControl" id="btnExeSeqAcc"></td></tr>
+                            <tr><td class="voyTrainState" id="execAcc" colspan="2"><span id="execAcc" class="voyTrainState">ÉXECUTION ACC.</span></td></tr>
+                            <tr><td class="voyTrainState" id="accosting" colspan="2"><span id="accosting" class="voyTrainState">ACC. EN COURS</span></td></tr>
+                            <tr><td class="voyTrainState" id="endAcc" colspan="2"><span id="endAcc" class="voyTrainState">FIN MISSION ACC.</span></td></tr>
+                            <tr><td class="voyTrainState" id="prodPert" colspan="2"><span id="prodPert" class="voyTrainState">PROG. PERTURBE</span></td></tr>
+                            <tr><td class="voyTrainState" id="modeDegr" colspan="2"><span id="modeDegr" class="voyTrainState">MODE DEGRADÉ</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                </div>
+                <div id="trainState">
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>AUXILIAIRES</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyTrainState" id="trainLights" colspan="2"><span id="trainLights" class="voyTrainState">ÉCLAIRAGE</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainHeating" colspan="2"><span id="trainHeating" class="voyTrainState">CHAUFFAGE</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainFans" colspan="2"><span id="trainFans" class="voyTrainState">VENTILLATION</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainSmoke" colspan="2"><span id="trainSmoke" class="voyTrainState">FUMÉE</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainEstinguisher" colspan="2"><span id="trainEstinguisher" class="voyTrainState">EXTINCTEUR</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainTempBrakes" colspan="2"><span id="trainTempBrakes" class="voyTrainState">TEMP. FREINS</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainComp" colspan="2"><span id="trainComp" class="voyTrainState">COMPRESSEUR</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainSusp" colspan="2"><span id="trainSusp" class="voyTrainState">SUSPENSIONS</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainKSA" colspan="2"><span id="trainKSA" class="voyTrainState">KSA ACTIONNÉ</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainDefSupportWheels" colspan="2"><span id="trainDefSupportWheels" class="voyTrainState">PNEU PORTEUR</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainDefGuideWheels" colspan="2"><span id="trainDefGuideWheels" class="voyTrainState">PNEU GUIDE</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainFrott" colspan="2"><span id="trainFrott" class="voyTrainState">FROTTEURS</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>EXPLOITATION</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyTrainState" id="autoTrain" colspan="2"><span id="autoTrain" class="voyTrainState">TRAIN EN CAI</span></td></tr>
+                            <tr><td class="voyTrainState" id="manuTrain" colspan="2"><span id="manuTrain" class="voyTrainState">TRAIN COMMUTE CM</span></td></tr>
+                            <tr><td class="voyTrainState" id="doubleTrain" colspan="2"><span id="doubleTrain" class="voyTrainState">RAME DOUBLE</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainSOS" colspan="2"><span id="trainSOS" class="voyTrainState">DÉTRESSE</span></td></tr>
+                            <tr><td class="voyTrainState" id="trainPilot" colspan="2"><span id="trainPilot" class="voyTrainState">VÉHICULE PILOTE</span></td></tr>
+                            <tr><td class="voyTrainState" id="defSynthVoc" colspan="2"><span id="defSynthVoc" class="voyTrainState">DEF. SYNTH. VOCALE</span></td></tr>
+                            <tr><td class="voyTrainState" id="reguTrain" colspan="2"><span id="reguTrain" class="voyTrainState">RAME REGULÉE</span></td></tr>
+                            <tr><td class="voyTrainState" id="defLectBal" colspan="2"><span id="defLectBal" class="voyTrainState">DEF. LECTURE. BALISE</span></td></tr>
+                            <tr><td class="voyTrainState" id="defKIBS" colspan="2"><span id="defKIBS" class="voyTrainState">KIBS ACTIF</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
+                        <legend>EXPLOITATION</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyTrainState" id="tractionS1" colspan="2"><span id="tractionS1" class="voyTrainState">TRACTION SENS 1</span></td></tr>
+                            <tr><td class="voyTrainState" id="tractionS2" colspan="2"><span id="tractionS2" class="voyTrainState">TRACTION SENS 2</span></td></tr>
+                            <tr><td class="voyTrainState" id="cmdTraction" colspan="2"><span id="cmdTraction" class="voyTrainState">CMD. TRACTION</span></td></tr>
+                            <tr><td class="voyTrainState" id="activeOnduls" colspan="2"><span id="activeOnduls" class="voyTrainState">ONDULEURS EN FONC.</span></td></tr>
+                            <tr><td class="voyTrainState" id="avarieOnduls" colspan="2"><span id="avarieOnduls" class="voyTrainState">AVARIE ONDULEUR</span></td></tr>
+                            <tr><td class="voyTrainState" id="patEnr" colspan="2"><span id="patEnr" class="voyTrainState">PATINAGE/ENRAYAGE</span></td></tr>
+                            <tr><td class="voyTrainState" id="neutralManip" colspan="2"><span id="neutralManip" class="voyTrainState">MANIP. NEUTRE</span></td></tr>
+                            <tr><td class="voyTrainState" id="activeFU" colspan="2"><span id="activeFU" class="voyTrainState">FU ACTIF</span></td></tr>
+                            <tr><td class="voyTrainState" id="activeFI" colspan="2"><span id="activeFI" class="voyTrainState">FI ACTIFS</span></td></tr>
+                            <tr><td class="voyTrainState" id="defFN" colspan="2"><span id="defFN" class="voyTrainState">DÉFAUT FN</span></td></tr>
+                            <tr><td class="voyTrainState" id="defFU" colspan="2"><span id="defFU" class="voyTrainState">DÉFAUT FU</span></td></tr>
+                            <tr><td class="voyTrainState" id="permBrake" colspan="2"><span id="permBrake" class="voyTrainState">FREIN PERMANENT</span></td></tr>
+                            <tr><td class="voyTrainState" id="activeFMS" colspan="2"><span id="activeFMS" class="voyTrainState">FMS ACTIONNE</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 25%; display: inline-table; text-align: center;">
+                        <legend>VITESSE</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyTrainState" id="vitModifTrain" colspan="3" style="width: 50%;"><span id="vitModifTrain" class="voyTrainState">VIT. MODIFIÉE TRAIN</span></td><td class="voyTrainState" id="vitModifSta" colspan="3" style="width: 50%;"><span id="vitModifSta" class="voyTrainState">VIT. MODIFIÉE STATION</span></td></tr>
+                            <tr><td class="voyTrainState" id="vitModifPAS" colspan="3"><span id="vitModifPAS" class="voyTrainState">VIT. MODIFIÉE PAS</span></td><td colspan="3"><input type="button" value="INHIB. VITESSES AUTRES" class="btnControl" id="btnInhibVit"></td></tr>
+                            <tr><td colspan="1"><input type="button" value="0.8" class="btnControl" id="btnCmd08ms"></td><td class="voyTrainState" id="cmd08ms" colspan="2"><span id="cmd08ms" class="voyTrainState">0.8 M/S</span></td><td class="voyTrainState" id="waitLectBal" colspan="3"><span id="waitLectBal" class="voyTrainState">ATTENTE LECTURE BALISE</span></td></tr>
+                            <tr><td colspan="1"><input type="button" value="0" class="btnControl" id="btnCmd0ms"></td><td class="voyTrainState" id="cmd0ms" colspan="2"><span id="cmd0ms" class="voyTrainState">0 M/S</span></td><td colspan="3"><input type="button" value="DEMARRAGE SECOURS" class="btnControl" id="btnODS"></td></tr>
+                            <tr><td colspan="1"><input type="button" value="5" class="btnControl" id="btnCmd5ms"></td><td class="voyTrainState" id="cmd5ms" colspan="2"><span id="cmd5ms" class="voyTrainState">5 M/S</span></td><td class="voyTrainState" id="defTelec" colspan="3"><span id="defTelec" class="voyTrainState">DEF. TÉLÉCOMMANDE</span></td></tr>
+                            <tr><td colspan="1"><input type="button" value="10" class="btnControl" id="btnCmd10ms"></td><td class="voyTrainState" id="cmd10ms" colspan="2"><span id="cmd10ms" class="voyTrainState">10 M/S</span></td><td class="voyTrainState" id="survTelec" colspan="3"><span id="survTelec" class="voyTrainState">SURVITESSE COMMANDE</span></td></tr>
+                            <tr><td colspan="3"><input type="button" value="RAZ VITESSE" class="btnControl" id="btnRazVit"></td><td class="voyTrainState" id="forbCommand" colspan="3"><span id="forbCommand" class="voyTrainState">COMMANDE INTERDITE</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                    <span><fieldset style="width: 25%; display: inline-table; text-align: center;">
+                        <legend>PREPARATION</legend>
+                        <table style="width: 100%; height: 100%;">
+                            <tr><td class="voyTrainState" id="awakeMR" colspan="2"><span id="awakeMR" class="voyTrainState">MR RÉVEILLÉ</span></td><td class="voyTrainState" id="pretTrain" colspan="2"><span id="pretTrain" class="voyTrainState">TRAIN PRÊT</span></td></tr>
+                            <tr><td style="width: 25%;"><input type="button" value="ÉVEIL" class="btnControl" id="btnEveil"></td><td style="width: 25%;"><input type="button" value="ENDORM." class="btnControl" id="btnEndorm"></td><td style="width: 25%;"><input type="button" value="PRÉP." class="btnControl" id="btnPrep"></td><td style="width: 25%;"><input type="button" value="DÉPREP." class="btnControl" id="btnDeprep"></td></tr>
+                            <tr><td class="voyTrainState" id="defEveil" colspan="2"><span id="defEveil" class="voyTrainState">DÉFAUT ÉVEIL</span></td><td class="voyTrainState" id="deprepTrain" colspan="2"><span id="deprepTrain" class="voyTrainState">DÉPRÉPARATION</span></td></tr>
+                            <tr><td class="voyTrainState" id="defEndorm" colspan="2"><span id="defEndorm" class="voyTrainState">DÉFAUT ENDORMISSEMENT</span></td><td class="voyTrainState" id="defDeprep" colspan="2"><span id="defDeprep" class="voyTrainState">DÉFAUT DÉPREP.</span></td></tr>
+                            <tr><td class="voyTrainState" id="echecPrep" colspan="2"><span id="echecPrep" class="voyTrainState">ÉCHEC PRÉP.</span></td><td class="voyTrainState" id="refusDeprep" colspan="2"><span id="refusDeprep" class="voyTrainState">REFUS DÉPREP</span></td></tr>
+                            <tr><td class="voyTrainState" id="validTests" colspan="2"><span id="validTests" class="voyTrainState">TESTS VALIDES</span></td><td class="voyTrainState" id="echecTestFU" colspan="2"><span id="echecTestFU" class="voyTrainState">TEST FU A L'ECHEC</span></td></tr>
+                            <tr><td class="voyTrainState" id="activeTests" colspan="2"><span id="activeTests" class="voyTrainState">TESTS EN COURS</span></td><td class="voyTrainState" id="unvalidTest" colspan="2"><span id="unvalidTest" class="voyTrainState">TEST NON VALIDE</span></td></tr>
+                        </table>
+                    </fieldset></span>
+                </div>
+            </div>
+            <div id="groupFormatPA">
+                <div class="format">
+                    <div style="background-color: #44C1DC;">
+                        <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des itinéraires et cycles</span><span><select id="selectMenuPa"></select></span>
+                    </div>
+                    <div class="part1PA" style="display: inline-flex; width: fit-content;">
+                        <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                            <legend>RECALACUL DU CYCLE</legend>
+                            <input type="button" class="btnControl" id="btnRazSeqPA" value="   " style="width: 10%;">
+                            <table style="width: 90%;">
+                                <tr><td class="voyPaState" id="razSeq"><span id="razSeq" class="voyPaState">RAZ SEQ</span></td></tr>
+                            </table>
+                        </fieldset>
+                        <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                            <legend>DES URGENCE ITIS</legend>
+                            <input type="button" class="btnControl" id="btnDesUrgIti" value="   " style="width: 10%;">
+                            <table style="width: 90%;">
+                                <tr><td class="voyPaState" id="itiOngoing"><span id="itiOngoing" class="voyPaState">ITINERAIRES EN COURS</span></td></tr>
+                            </table>
+                        </fieldset>
+                        <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                            <legend>ANNULATION TOUT CYCLE</legend>
+                            <input type="button" class="btnControl" id="btnCancelCycles" value="   " style="width: 10%;">
+                            <table style="width: 90%;">
+                                <tr><td class="voyPaState" id="cycleOngoing"><span id="cycleOngoing" class="voyPaState">CYCLE EN COURS</span></td></tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div class="itiFormatAmovible" id="itiFormatAmovible1">
+                        
+                        <div id="manualItiTop1" style="display: inline-flex; width: 100%; align-items: center;">
+                        
+                        </div>
+                        <div style="display: inline-flex;">
+                            <div style="padding: 10px;">
+                                <fieldset>
+                                    <legend>GESTION GARAGES VOIE 2</legend>
+                                    <table style="width: 100%; text-align: center;">
+                                        <tr><td id="retDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV201">RET DISPONIBLE</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" id="btnRetV201" value="RETRAIT"></td></tr>
+                                        <tr><td id="injDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV201">INJ DISPONIBLE</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" id="btnInjV201" value="INJECTION"></td></tr>
+                                    </table>
+                                </fieldset>
+                                <fieldset style="margin-top: 20px;">
+                                    <legend>GESTION GARAGES VOIE 1</legend>
+                                    <table style="width: 100%; text-align: center;">
+                                        <tr><td id="retDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV101">RET DISPONIBLE</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" id="btnRetV101" value="RETRAIT"></td></tr>
+                                        <tr><td id="injDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV101">INJ DISPONIBLE</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" id="btnInjV101" value="INJECTION"></td></tr>
+                                    </table>
+                                </fieldset>
+                            </div>
+                            <div id="tcoItiPa1">
+                                <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                            </div>
+                            <div style="padding: 10px;">
+                                <fieldset>
+                                    <legend>Demandes de cycles</legend>
+                                    <table style="width: 100%; text-align: center;" id="masterTableCycles1">
+                                        
+                                    </table>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id="manualItiBot1" style="display: inline-flex; width: 100%; align-items: center;">
                             
-                        </table>
-                    </fieldset>
+                        </div>
+                    </div>
+                    <div class="itiFormatAmovible" id="itiFormatAmovible2">
+                        <div id="manualItiTop2" style="display: inline-flex; width: 100%; align-items: center;">
+                        
+                        </div>
+                        <div style="display: inline-flex;">
+                            <div style="padding: 10px;">
+                                <fieldset style="margin-top: 20px;">
+                                    <legend>GESTION GLARNER</legend>
+                                    <table style="width: 100%; text-align: center;">
+                                        <tr><td id="sortieDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="sortieDispoGla">SORTIE DISPO</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" id="btnSortieGla" value="SORTIE"></td></tr>
+                                        <tr><td id="entreeDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="entreeDispoGla">ENTRÉE DISPO</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" id="btnEntreeGla" value="ENTRÉE"></td></tr>
+                                    </table>
+                                </fieldset>
+                            </div>
+                            <div id="tcoItiPa2">
+                                
+                            </div>
+                            <div style="padding: 10px;">
+                                <fieldset>
+                                    <legend>Demandes de cycles</legend>
+                                    <table style="width: 100%; text-align: center;" id="masterTableCycles2">
+                                        
+                                    </table>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div id="manualItiBot2" style="display: inline-flex; width: 100%; align-items: center;">
+                            
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div id="manualItiBot1" style="display: inline-flex; width: 100%; align-items: center;">
-                
+                <div class="format">
+                    <div style="background-color: #5E5E5E;">
+                        <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des PA</span><span><select id="selectMenuPaFormat"></select></span><button id="paFormAcq">ACQUITTER</button><input type="checkbox" id="checkMuteGong"><span style="color: white;">Inhiber avertisseur</span>
+                    </div>
+                    <div class="paFormatAmovible" id="paFormatAmovible1">
+                        
+                        <div id="ctnStateTop1" style="display: inline; width: 100%; align-items: center;">
+                            
+                        </div>
+                        <div style="display: inline-flex;">
+                            <div style="padding: 10px;">
+                                <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
+                                    <legend>UCA</legend>
+                                    <table style="width: 100%; text-align: center;">
+                                        <tr>
+                                            <td class="voyPaFormat" id="zoneManoeuvre1"><span class="voyPaFormat" id="zoneManoeuvre1">ZONE MANOEUVRE</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="voyPaFormat" id="tnitne1"><span class="voyPaFormat" id="tnitne1">TNI/TNE</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="voyPaFormat" id="lstpas1"><span class="voyPaFormat" id="lstpas1">LTPAS</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="voyPaFormat" id="discord1"><span class="voyPaFormat" id="discord1">DISCORDANCE</span></td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </div>
+                            <div id="tcoFormPa1">
+                                <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                            </div>
+                        </div>
+                        <div id="ctnStateBot1" style="display: inline-flex; width: 100%; align-items: center;">
+                            
+                        </div>
+                    </div>
+                    <div class="paFormatAmovible" id="paFormatAmovible2">
+                        <div id="ctnStateTop2" style="display: inline; width: 100%; align-items: center;">
+                            
+                        </div>
+                        <div style="display: inline-flex;">
+                            <div style="padding: 10px;">
+                                <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
+                                    <legend>UCA</legend>
+                                    <table style="width: 100%; text-align: center;">
+                                        <tr>
+                                            <td class="voyPaFormat" id="zoneManoeuvre2"><span class="voyPaFormat" id="zoneManoeuvre2">ZONE MANOEUVRE</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="voyPaFormat" id="tnitne2"><span class="voyPaFormat" id="tnitne2">TNI/TNE</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="voyPaFormat" id="lstpas2"><span class="voyPaFormat" id="lstpas2">LTPAS</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="voyPaFormat" id="discord2"><span class="voyPaFormat" id="discord2">DISCORDANCE</span></td>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </div>
+                            <div id="tcoFormPa2">
+                                <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                            </div>
+                        </div>
+                        <div id="ctnStateBot2" style="display: inline-flex; width: 100%; align-items: center;">
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="itiFormatAmovible" id="itiFormatAmovible2">
-            <div id="manualItiTop2" style="display: inline-flex; width: 100%; align-items: center;">
-            
+    </div>
+
+    <!--<div id="groupFormatPA">
+        <div class="format">
+            <div style="background-color: #44C1DC;">
+                <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des itinéraires et cycles</span><span><select id="selectMenuPa"></select></span>
             </div>
-            <div style="display: inline-flex;">
-                <div style="padding: 10px;">
-                    <fieldset style="margin-top: 20px;">
-                        <legend>GESTION GLARNER</legend>
-                        <table style="width: 100%; text-align: center;">
-                            <tr><td id="sortieDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="sortieDispoGla">SORTIE DISPO</span></td></tr>
-                            <tr><td><input type="button" class="btnControl" id="btnSortieGla" value="SORTIE"></td></tr>
-                            <tr><td id="entreeDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="entreeDispoGla">ENTRÉE DISPO</span></td></tr>
-                            <tr><td><input type="button" class="btnControl" id="btnEntreeGla" value="ENTRÉE"></td></tr>
-                        </table>
-                    </fieldset>
+            <div class="part1PA" style="display: inline-flex; width: fit-content;">
+                <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                    <legend>RECALACUL DU CYCLE</legend>
+                    <input type="button" class="btnControl" id="btnRazSeqPA" value="   " style="width: 10%;">
+                    <table style="width: 90%;">
+                        <tr><td class="voyPaState" id="razSeq"><span id="razSeq" class="voyPaState">RAZ SEQ</span></td></tr>
+                    </table>
+                </fieldset>
+                <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                    <legend>DES URGENCE ITIS</legend>
+                    <input type="button" class="btnControl" id="btnDesUrgIti" value="   " style="width: 10%;">
+                    <table style="width: 90%;">
+                        <tr><td class="voyPaState" id="itiOngoing"><span id="itiOngoing" class="voyPaState">ITINERAIRES EN COURS</span></td></tr>
+                    </table>
+                </fieldset>
+                <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                    <legend>ANNULATION TOUT CYCLE</legend>
+                    <input type="button" class="btnControl" id="btnCancelCycles" value="   " style="width: 10%;">
+                    <table style="width: 90%;">
+                        <tr><td class="voyPaState" id="cycleOngoing"><span id="cycleOngoing" class="voyPaState">CYCLE EN COURS</span></td></tr>
+                    </table>
+                </fieldset>
+            </div>
+            <div class="itiFormatAmovible" id="itiFormatAmovible1">
+                
+                <div id="manualItiTop1" style="display: inline-flex; width: 100%; align-items: center;">
+                
                 </div>
-                <div id="tcoItiPa2">
+                <div style="display: inline-flex;">
+                    <div style="padding: 10px;">
+                        <fieldset>
+                            <legend>GESTION GARAGES VOIE 2</legend>
+                            <table style="width: 100%; text-align: center;">
+                                <tr><td id="retDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV201">RET DISPONIBLE</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" id="btnRetV201" value="RETRAIT"></td></tr>
+                                <tr><td id="injDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV201">INJ DISPONIBLE</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" id="btnInjV201" value="INJECTION"></td></tr>
+                            </table>
+                        </fieldset>
+                        <fieldset style="margin-top: 20px;">
+                            <legend>GESTION GARAGES VOIE 1</legend>
+                            <table style="width: 100%; text-align: center;">
+                                <tr><td id="retDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV101">RET DISPONIBLE</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" id="btnRetV101" value="RETRAIT"></td></tr>
+                                <tr><td id="injDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV101">INJ DISPONIBLE</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" id="btnInjV101" value="INJECTION"></td></tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div id="tcoItiPa1">
+                    </div>
+                    <div style="padding: 10px;">
+                        <fieldset>
+                            <legend>Demandes de cycles</legend>
+                            <table style="width: 100%; text-align: center;" id="masterTableCycles1">
+                                
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+                <div id="manualItiBot1" style="display: inline-flex; width: 100%; align-items: center;">
                     
                 </div>
-                <div style="padding: 10px;">
-                    <fieldset>
-                        <legend>Demandes de cycles</legend>
-                        <table style="width: 100%; text-align: center;" id="masterTableCycles2">
-                            
-                        </table>
-                    </fieldset>
-                </div>
             </div>
-            <div id="manualItiBot2" style="display: inline-flex; width: 100%; align-items: center;">
+            <div class="itiFormatAmovible" id="itiFormatAmovible2">
+                <div id="manualItiTop2" style="display: inline-flex; width: 100%; align-items: center;">
                 
+                </div>
+                <div style="display: inline-flex;">
+                    <div style="padding: 10px;">
+                        <fieldset style="margin-top: 20px;">
+                            <legend>GESTION GLARNER</legend>
+                            <table style="width: 100%; text-align: center;">
+                                <tr><td id="sortieDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="sortieDispoGla">SORTIE DISPO</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" id="btnSortieGla" value="SORTIE"></td></tr>
+                                <tr><td id="entreeDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="entreeDispoGla">ENTRÉE DISPO</span></td></tr>
+                                <tr><td><input type="button" class="btnControl" id="btnEntreeGla" value="ENTRÉE"></td></tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div id="tcoItiPa2">
+                        
+                    </div>
+                    <div style="padding: 10px;">
+                        <fieldset>
+                            <legend>Demandes de cycles</legend>
+                            <table style="width: 100%; text-align: center;" id="masterTableCycles2">
+                                
+                            </table>
+                        </fieldset>
+                    </div>
+                </div>
+                <div id="manualItiBot2" style="display: inline-flex; width: 100%; align-items: center;">
+                    
+                </div>
             </div>
         </div>
-    </div>
-    <div class="format">
-        <div style="background-color: #5E5E5E;">
-            <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des PA</span><span><select id="selectMenuPaFormat"></select></span><button id="paFormAcq">ACQUITTER</button><input type="checkbox" id="checkMuteGong"><span style="color: white;">Inhiber avertisseur</span>
-        </div>
-        <div class="paFormatAmovible" id="paFormatAmovible1">
-            
-            <div id="ctnStateTop1" style="display: inline; width: 100%; align-items: center;">
+        <div class="format">
+            <div style="background-color: #5E5E5E;">
+                <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des PA</span><span><select id="selectMenuPaFormat"></select></span><button id="paFormAcq">ACQUITTER</button><input type="checkbox" id="checkMuteGong"><span style="color: white;">Inhiber avertisseur</span>
+            </div>
+            <div class="paFormatAmovible" id="paFormatAmovible1">
                 
-            </div>
-            <div style="display: inline-flex;">
-                <div style="padding: 10px;">
-                    <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
-                        <legend>UCA</legend>
-                        <table style="width: 100%; text-align: center;">
-                            <tr>
-                                <td class="voyPaFormat" id="zoneManoeuvre1"><span class="voyPaFormat" id="zoneManoeuvre1">ZONE MANOEUVRE</span></td>
-                            </tr>
-                            <tr>
-                                <td class="voyPaFormat" id="tnitne1"><span class="voyPaFormat" id="tnitne1">TNI/TNE</span></td>
-                            </tr>
-                            <tr>
-                                <td class="voyPaFormat" id="lstpas1"><span class="voyPaFormat" id="lstpas1">LTPAS</span></td>
-                            </tr>
-                            <tr>
-                                <td class="voyPaFormat" id="discord1"><span class="voyPaFormat" id="discord1">DISCORDANCE</span></td>
-                            </tr>
-                        </table>
-                    </fieldset>
+                <div id="ctnStateTop1" style="display: inline; width: 100%; align-items: center;">
+                    
                 </div>
-                <div id="tcoFormPa1">
-                    <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                <div style="display: inline-flex;">
+                    <div style="padding: 10px;">
+                        <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
+                            <legend>UCA</legend>
+                            <table style="width: 100%; text-align: center;">
+                                <tr>
+                                    <td class="voyPaFormat" id="zoneManoeuvre1"><span class="voyPaFormat" id="zoneManoeuvre1">ZONE MANOEUVRE</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="voyPaFormat" id="tnitne1"><span class="voyPaFormat" id="tnitne1">TNI/TNE</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="voyPaFormat" id="lstpas1"><span class="voyPaFormat" id="lstpas1">LTPAS</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="voyPaFormat" id="discord1"><span class="voyPaFormat" id="discord1">DISCORDANCE</span></td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div id="tcoFormPa1">
+                    </div>
                 </div>
-            </div>
-            <div id="ctnStateBot1" style="display: inline-flex; width: 100%; align-items: center;">
-                
-            </div>
-        </div>
-        <div class="paFormatAmovible" id="paFormatAmovible2">
-            <div id="ctnStateTop2" style="display: inline; width: 100%; align-items: center;">
-                
-            </div>
-            <div style="display: inline-flex;">
-                <div style="padding: 10px;">
-                    <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
-                        <legend>UCA</legend>
-                        <table style="width: 100%; text-align: center;">
-                            <tr>
-                                <td class="voyPaFormat" id="zoneManoeuvre2"><span class="voyPaFormat" id="zoneManoeuvre2">ZONE MANOEUVRE</span></td>
-                            </tr>
-                            <tr>
-                                <td class="voyPaFormat" id="tnitne2"><span class="voyPaFormat" id="tnitne2">TNI/TNE</span></td>
-                            </tr>
-                            <tr>
-                                <td class="voyPaFormat" id="lstpas2"><span class="voyPaFormat" id="lstpas2">LTPAS</span></td>
-                            </tr>
-                            <tr>
-                                <td class="voyPaFormat" id="discord2"><span class="voyPaFormat" id="discord2">DISCORDANCE</span></td>
-                            </tr>
-                        </table>
-                    </fieldset>
-                </div>
-                <div id="tcoFormPa2">
-                    <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                <div id="ctnStateBot1" style="display: inline-flex; width: 100%; align-items: center;">
+                    
                 </div>
             </div>
-            <div id="ctnStateBot2" style="display: inline-flex; width: 100%; align-items: center;">
-                
+            <div class="paFormatAmovible" id="paFormatAmovible2">
+                <div id="ctnStateTop2" style="display: inline; width: 100%; align-items: center;">
+                    
+                </div>
+                <div style="display: inline-flex;">
+                    <div style="padding: 10px;">
+                        <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
+                            <legend>UCA</legend>
+                            <table style="width: 100%; text-align: center;">
+                                <tr>
+                                    <td class="voyPaFormat" id="zoneManoeuvre2"><span class="voyPaFormat" id="zoneManoeuvre2">ZONE MANOEUVRE</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="voyPaFormat" id="tnitne2"><span class="voyPaFormat" id="tnitne2">TNI/TNE</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="voyPaFormat" id="lstpas2"><span class="voyPaFormat" id="lstpas2">LTPAS</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="voyPaFormat" id="discord2"><span class="voyPaFormat" id="discord2">DISCORDANCE</span></td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                    </div>
+                    <div id="tcoFormPa2">
+                    </div>
+                </div>
+                <div id="ctnStateBot2" style="display: inline-flex; width: 100%; align-items: center;">
+                    
+                </div>
             </div>
         </div>
     </div>
@@ -960,8 +1515,6 @@
                         <tr><td colspan="6" id="alimDef" class="voyStationState"><span id="alimDef" class="voyStationState">DÉFAUT ALIMENTATION</span></td></tr>
                         <tr><td colspan="2" width="33%"><input type="text" value="" id="newTime" placeholder="TEMPS D'ARRÊT EN STATION"></td><td colspan="2" width="33%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="2" width="33%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>
                         <tr><td colspan="2" width="33%"><span>Identification train:</span></td><td colspan="2" width="33%"><input type="text" id="trainNumber" disabled></td><td colspan="2" width="33%" id="longTrain" class="voyStationTrain"><span id="longTrain" class="voyStationTrain">TRAIN LONG</span></td></tr>
-
-                        <!--<tr><td colspan="3" width="50%">Temps d’arrêt quai:<span></span></td><td width="%" colspan="1"><input type="text" value="10" id="newTime"></td><td colspan="1" width="18%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="1" width="18%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>-->
                     </tbody>
                 </table>
             </fieldset></span>
@@ -983,29 +1536,29 @@
                         <tr><td><input type="button" class="btnControl" value="ISTA" id="btnISTA"></td><td colspan="2" id="istaActive" class="voyStationState"><span id="istaActive" class="voyStationState">INTER. ARRÊT STATION</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZista"></td><td colspan="2" id="istaBlock" class="voyStationState"><span id="istaBlock" class="voyStationState">BLOCAGE AUTO PAR ALC/UCA</span></td></tr>
                         <tr><td><input type="button" class="btnControl" value="MAPF" id="btnMAPF"></td><td colspan="2" id="mapfActive" class="voyStationState"><span id="mapfActive" class="voyStationState">MAINT. ARRÊT PORTES FERMÉES</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZmapf"></td><td colspan="2" id="mapfImp" class="voyStationState"><span id="mapfImp" class="voyStationState">MAPF IMPOSSIBLE</span></td></tr>
                         <tr><td colspan="6" class="voyStationState" id="defOrderExec"><span class="voyStationState" id="defOrderExec">DÉFAUT EXECUTION ORDRE</span></td></tr>
-
-                        <!--<tr><td colspan="3" width="50%">Temps d’arrêt quai:<span></span></td><td width="%" colspan="1"><input type="text" value="10" id="newTime"></td><td colspan="1" width="18%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="1" width="18%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>-->
                     </tbody>
                 </table>
             </fieldset></span>
         </div>
     </div>
-    <span><fieldset style="width: 20%; display: inline-block;">
-        <legend>Sectionner un train</legend>
-        <select name="trainSelect" id="trainSelect" multiple size="10">
-            <option value="O">CHOISIR TRAIN</option>
-        </select> <br>
-        <input type="button" value="ACQUITTER" id="btnAcquitTrain">
-    </fieldset></span>
-    <span><fieldset style="width: 20%; display: inline-block;">
-        <legend>ACTIONS</legend>
-        <span><input type="button" id="fuCreate" value="Créer FU"></span> <span><input type="button" id="fuReleave" value="Lever FU"></span>
-    </fieldset></span>
-    <div id="train" class="format" style=" align-items: center;">
-        <div id="stationhead" style="width: 100%; background-color: #5E5E5E; color: white;">
+    <div id="ftrain" class="format" style=" align-items: center;">
+        <div id="trainhead" style="width: 100%; background-color: #5E5E5E; color: white;">
+            
             <span><b>Gestion des trains</b></span> <br>
             <span id="trainTitle"></span>
         </div>
+        <span><fieldset style="width: 20%; display: inline-block;">
+            <legend>Sectionner un train</legend>
+            <select name="trainSelect" id="trainSelect" multiple size="10">
+                <option value="O">CHOISIR TRAIN</option>
+            </select> <br>
+            <input type="button" value="ACQUITTER" id="btnAcquitTrain">
+        </fieldset></span>
+        <span><fieldset style="width: 20%; display: inline-block;">
+            <legend>ACTIONS</legend>
+            <span><input type="button" id="fuCreate" value="Créer FU"></span> <span><input type="button" id="fuReleave" value="Lever FU"></span>
+        </fieldset></span>
+        <br>
         <div id="trainHead" style="width: 100%;">
             <table>
                 <tr>
@@ -1210,7 +1763,7 @@
                 </table>
             </fieldset></span>
         </div>
-    </div>
+    </div>-->
 
     <div id="snackbar"></div>
 
