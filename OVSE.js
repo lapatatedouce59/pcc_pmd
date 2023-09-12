@@ -333,6 +333,8 @@ function askForFsCoup(){
 
 function retablissementUCA(){
     if(!(noDef1&&noDef2)) return false;
+    if(!(pccApi.voyUCA===2||pccApi.voyUCA===1)) return false;
+    console.log(('HEINN??'))
     exports.coupFS='RETABLISSEMENT'
     pccApi.voyUCA=true
     noDef1=false

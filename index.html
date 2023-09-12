@@ -29,6 +29,7 @@
         }
         body{
             margin: 0;
+            overflow-x: hidden;
         }
 
         .voy{
@@ -370,19 +371,7 @@
             <object data="src/tco/elec/ELEC.svg" type="image/svg+xml" id="elecSvg"></object>
         </div>
     </div>
-    
-    <div>
-        <button id="downward"><-</button>
-        <button id="forward">-></button>
-    
-        <input type="text" id="trainAffect" placeholder="train">
-        <button id="reload">RELOAD (en cas de non-load)</button>
-        <br>
-        <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
-        <button id="sendCmd">SEND</button>
-    </div>
-    <br>
-    <div class="pltp" style="background-color: #DCDCDC; width: fit-content;">
+    <div class="pltp" style="background-color: #DCDCDC; width: 100%; padding: 20px;">
     <div style="height: fit-content;">
     <div class="pltpContainer" style="background-color: #DCDCDC; display: inline-flex; height: 654px;">
         <fieldset style="text-align: center; width:fit-content; border-radius: 10px; border: black solid 2px;">
@@ -719,6 +708,16 @@
     <span><button id="btnAG2">rétablir</button></span>
     
     <h3 id="attention" class="warn" style="transition: 400ms;">Respecter les feux et les itinéraires!</h3>
+    <div>
+        <button id="downward"><-</button>
+        <button id="forward">-></button>
+    
+        <input type="text" id="trainAffect" placeholder="train">
+        <button id="reload">RELOAD (en cas de non-load)</button>
+        <br>
+        <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
+        <button id="sendCmd">SEND</button>
+    </div>
 
     <div id="menuSelectFormat" style="display: inline-flex;">
         <div>

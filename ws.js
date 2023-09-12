@@ -400,7 +400,9 @@ function HTTrains(type,zone){
 function FSTrains (type,zone){
     ovse.coupFS=false
     function executeDwn(veh){
+        console.log('ETAPE 1 '+veh.tid)
         if(veh.states.awakeMR===true){
+            console.log('ETAPE 2 '+veh.tid)
             veh.states.fsOk=2
             veh.states.fuNoFS=2
             veh.states.cmdFu=2
@@ -412,7 +414,6 @@ function FSTrains (type,zone){
                 if(veh.states.speed===0){
                     clearInterval(checkSpeedInter)
                     veh.states.activeFI=true
-                    apiSave()
                 }
             }
         }
@@ -444,19 +445,16 @@ function FSTrains (type,zone){
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
                     if(!(ss04CLIST.includes(ctn.cid))) continue;
-                    for(let veh of ctn.trains){
-                        if(type === 'down'){
-                            for(let veh of ctn.trains){
-                                executeDwn(veh)
-                            }
-                        }
-                        if(type === 'up'){
-                            for(let veh of ctn.trains){
-                                executeUp(veh)
-                            }
+                    if(type === 'down'){
+                        for(let veh of ctn.trains){
+                            executeDwn(veh)
                         }
                     }
-                    
+                    if(type === 'up'){
+                        for(let veh of ctn.trains){
+                            executeUp(veh)
+                        }
+                    }
                 }
             }
         break;
@@ -882,12 +880,13 @@ wss.on('connection', (ws, req) => {
                                 pccApi.voyFS=true
                                 FSTrains('up','all')
                             }
+                            apiSave()
 
                         } else if(data.state===true){
                             pccApi.comFSLine=true
                             pccApi.voyFS=2
                             FSTrains('down','all')
-                            apiSave();
+                            apiSave()
                         }
                         if((pccApi.comAuth) && !(pccApi.comFSLine)){
                             pccApi.voyABS=true
