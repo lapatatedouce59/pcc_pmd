@@ -3,7 +3,7 @@ let actualRequest=false
 let selectMenuPa = document.getElementById('selectMenuPaFormat')
 let checkMuteGong = document.getElementById('checkMuteGong')
 checkMuteGong.addEventListener('input', ()=>{
-    let pa = PaInfo(selected)
+    let pa = PaInfo(selectMenuPa.value)
     updateFormat(pa)
 })
 let selected = false
@@ -25,10 +25,10 @@ window.WebSocket.addEventListener('message', msg =>{
                 console.log('PA '+sec.id)
                 pa.push({paid: sec.id})
                 let opt = document.createElement('OPTION')
-                opt.innerHTML=sec.id
                 opt.value=sec.id
                 opt.classList='paOpt'
-                opt.setAttribute('name', `paOpt${sec.id}`)
+                opt.innerHTML=`HYYYYY`
+                opt.id=`paOpt${sec.id}`
                 selectMenuPa.appendChild(opt)
             }
 
@@ -58,7 +58,7 @@ let listDef = document.getElementById('listDef')
 function gerardMontreMoiLesDefautsDuPaStp(){
 
     for(let paOpt of document.getElementsByClassName('paOpt')){
-        paOpt.innerText=paOpt.id
+        paOpt.innerText=paOpt.id.replace('paOpt','')
         paOpt.classList.remove('alarm')
     }
     //listDef.innerHTML=''
@@ -92,8 +92,8 @@ function gerardMontreMoiLesDefautsDuPaStp(){
 
     for (let tr of defList2){
         console.log('def '+tr)
-        let elem = document.getElementsByName(`paOpt${tr}`)
-        elem[0].innerText='🟥' +tr
+        let elem = document.getElementById(`paOpt${tr}`)
+        elem.innerText='🟥' +tr
     }
     for (let tr of anoList){
         if(!(tr.def==='ldi'||tr.def==='pzo'||tr.def==='tcs'||tr.def==='pdp'||tr.def==='coupFs'||tr.def==='zoneManoeuvre1'||tr.def==='tnitne1'||tr.def==='lstpas1'||tr.def==='discord1'||tr.def==='zoneManoeuvre2'||tr.def==='tnitne2'||tr.def==='lstpas2'||tr.def==='discord2')) continue;
@@ -109,8 +109,8 @@ function gerardMontreMoiLesDefautsDuPaStp(){
         defDiv.appendChild(cName)
         defDiv.appendChild(defName)
         listDef.appendChild(defDiv)
-        let elem = document.getElementsByName(`paOpt${tr.id}`)
-        elem[0].classList.add('alarm')
+        let elem = document.getElementById(`paOpt${tr.id}`)
+        elem.classList.add('alarm')
     }
 }
 
