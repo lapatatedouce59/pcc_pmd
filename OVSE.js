@@ -265,7 +265,7 @@ function detectAZM(){
                         } else
                         if(sec.id==='2'){
                             sec.states.zoneManoeuvre2=2
-                        }      //TODO FIX CONDITION AZM
+                        }
                         defUCA.push(ctn.cid)
                         exports.f9=false
                         exports.callCounts++
@@ -343,6 +343,7 @@ function retablissementUCA(){
 
 exports.periodicUpdateVoy = async function(){
     exports.f9=true
+    exports.done=false
     detectLDI()
     detectAZM()
     detectTNE()

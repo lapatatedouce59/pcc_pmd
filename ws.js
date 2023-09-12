@@ -400,9 +400,7 @@ function HTTrains(type,zone){
 function FSTrains (type,zone){
     ovse.coupFS=false
     function executeDwn(veh){
-        console.log('ETAPE 1 '+veh.tid)
         if(veh.states.awakeMR===true){
-            console.log('ETAPE 2 '+veh.tid)
             veh.states.fsOk=2
             veh.states.fuNoFS=2
             veh.states.cmdFu=2

@@ -316,9 +316,8 @@
         }
         #formatContainer{
             border: #1C1C1C solid 5px;
-            margin: 10px;
             background-color: #DCDCDC;
-            width: 1320px;
+            width: 1520px;
         }
         #MASTERHEAD{
             background-color: #1C1C1C;
@@ -701,23 +700,13 @@
             <label for="comIDPOTPAS" id="lcomIDPOTPAS" class="comLabel"></label><br>
             <span>IDPO/DSO tout PAS</span>
         </fieldset>
-    </div>
-    </div>
-    <br><span><button id="btnACQU">ACQUITTER</button></span>
-    <br>
-    <span><button id="btnAG2">rétablir</button></span>
-    
-    <h3 id="attention" class="warn" style="transition: 400ms;">Respecter les feux et les itinéraires!</h3>
-    <div>
-        <button id="downward"><-</button>
-        <button id="forward">-></button>
-    
-        <input type="text" id="trainAffect" placeholder="train">
-        <button id="reload">RELOAD (en cas de non-load)</button>
+        <br><span><button id="btnACQU">ACQUITTER</button></span>
         <br>
-        <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
-        <button id="sendCmd">SEND</button>
+    <span><button id="btnAG2">rétablir</button></span>
     </div>
+    </div>
+    
+    <h3 id="attention" class="warn" style="transition: 400ms; display: none;">Respecter les feux et les itinéraires!</h3>
 
     <div id="menuSelectFormat" style="display: inline-flex;">
         <div>
@@ -1253,6 +1242,16 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div>
+        <button id="downward"><-</button>
+        <button id="forward">-></button>
+    
+        <input type="text" id="trainAffect" placeholder="train">
+        <button id="reload">RELOAD (en cas de non-load)</button>
+        <br>
+        <input type="text" id="commandInput" placeholder="commande" value="SET 1201 2201">
+        <button id="sendCmd">SEND</button>
     </div>
 
     <!--<div id="groupFormatPA">
