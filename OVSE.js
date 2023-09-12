@@ -259,13 +259,13 @@ function detectAZM(){
         for(let ctn of sec.cantons){
             if(ctn.cid === 'c1301' || ctn.cid === 'c2301'){
                 if(ctn.trains.length>0){
-                    if(!(isItiActive('1201_1401')&&isItiActive('1401_1201')&&isItiActive('1401_2401')&&isItiActive('2401_1401')&&isItiActive('1201_2201')&&isItiActive('2201_1201'))){
+                    if(!(isItiActive('1201_1401')||isItiActive('1401_1201')||isItiActive('1401_2401')||isItiActive('2401_1401')||isItiActive('1201_2201')||isItiActive('2201_1201')||isItiActive('2201_2401')||isItiActive('2401_2201'))){
                         if(sec.id==='1'){
                             sec.states.zoneManoeuvre1=2
                         } else
                         if(sec.id==='2'){
                             sec.states.zoneManoeuvre2=2
-                        }
+                        }      //TODO FIX CONDITION AZM
                         defUCA.push(ctn.cid)
                         exports.f9=false
                         exports.callCounts++
