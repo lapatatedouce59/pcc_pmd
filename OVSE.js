@@ -9,6 +9,8 @@ exports.f4 = false
 exports.f5 = false
 exports.f6 = false
 exports.f7 = false
+exports.f8 = false
+exports.f9 = true
 
 
 exports.coupFS = false
@@ -48,7 +50,6 @@ function ongoingcycle(){
         } else {
             sec.states.cycleOngoing=false
         }
-        console.log(sec.states.cycleOngoing)
     }
     
     exports.f2=true
@@ -241,7 +242,6 @@ function detectPZO(){
     for(let sec of pccApi.SEC){
         for(let ctn of sec.cantons){
             if(ctn.trains.length>1){
-                pzoList.push(ctn.cid)
                 ctn.states.pzo=2
             }
         }
@@ -249,9 +249,10 @@ function detectPZO(){
     exports.f6=true
 }
 
-exports.done=false
+let noDef1 = false
+let noDef2 = false
 
-let ucaCoupAsk = false
+
 function detectAZM(){
     let defUCA = []
     for(let sec of pccApi.SEC){
@@ -261,42 +262,87 @@ function detectAZM(){
                     if(!(isItiActive('1201_1401')&&isItiActive('1401_1201')&&isItiActive('1401_2401')&&isItiActive('2401_1401')&&isItiActive('1201_2201')&&isItiActive('2201_1201'))){
                         if(sec.id==='1'){
                             sec.states.zoneManoeuvre1=2
-                        }
+                        } else
                         if(sec.id==='2'){
                             sec.states.zoneManoeuvre2=2
                         }
-                        
-                        exports.coupFS=true
-                        
-                        pccApi.voyUCA=2
                         defUCA.push(ctn.cid)
-                        ucaCoupAsk=true
+                        if(exports.f9=true) exports.f9=false
+                        askForFsCoup()
                     }
                 }
             }
         }
     }
     if(defUCA.length===0){
-        ucaCoupAsk=false
-        exports.coupFS=false
-        exports.done=false
-    }
-    
-    console.log('F7')
-    if(!(ucaCoupAsk)){
-        exports.coupFS='RETABLISSEMENT'
-        pccApi.voyUCA=true
+        noDef1=true
     }
     exports.f7=true
 }
 
+function detectTNE(){
+    let defs = []
+    for(let sec of pccApi.SEC){
+        for(let ctn of sec.cantons){
+            if(ctn.cid.startsWith('cG')) continue;
+            if(ctn.trains.length>0){
+                if(ctn.trains[0].states.TMSActive===false){
+                    ctn.trains[0].states.tneHorsZGAT=2
+                    ctn.states.pdp=2
+                    if(sec.id==='1'){
+                        sec.states.tnitne1=2
+                    } else if(sec.id==='2'){
+                        sec.states.tnitne2=2
+                    }
+                    if(exports.f9=true) exports.f9=false
+                    askForFsCoup()
+                    defs.push(ctn.cid)
+                }
+            }
+        }
+    }
+    if(defs.length===0){
+        for(let sec of pccApi.SEC){
+            for(let ctn of sec.cantons){
+                if(!(ctn.trains.length>0)) continue;
+                ctn.trains[0].states.tneHorsZGAT=false
+                if(sec.id==='1'){
+                    sec.states.tnitne1=false
+                } else if(sec.id==='2'){
+                    sec.states.tnitne2=false
+                }
+            }
+        }
+        noDef2=true
+    }
+    exports.f8=true
+}
+
+
+exports.done=false
+function askForFsCoup(){
+    exports.coupFS=true
+    pccApi.voyUCA=2
+    exports.f9=true
+}
+
+function retablissementUCA(){
+    if(!(noDef1&&noDef2)) return false;
+    exports.coupFS='RETABLISSEMENT'
+    pccApi.voyUCA=true
+    noDef1=false
+    noDef2=false
+}
+
 exports.periodicUpdateVoy = async function(){
-    console.log('CALL')
+    exports.f9=true
     detectLDI()
     detectAZM()
+    detectTNE()
     detectPZO()
     ongoingiti()
     checkStationTrainsPresence()
     ongoingcycle()
     updateItiFormVoys()
+    retablissementUCA()
 }

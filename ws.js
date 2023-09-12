@@ -97,7 +97,7 @@ const clients = {}
 function apiSave(){
     ovse.periodicUpdateVoy()
     let fx = setInterval(()=>{
-    if(ovse.f1===true&&ovse.f2===true&&ovse.f3===true&&ovse.f4===true&&ovse.f5===true&&ovse.f6===true&&ovse.f7===true){
+    if(ovse.f1===true&&ovse.f2===true&&ovse.f3===true&&ovse.f4===true&&ovse.f5===true&&ovse.f6===true&&ovse.f7===true&&ovse.f8===true&&ovse.f9===true){
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
         clearInterval(fx)
         ovse.f1=false
@@ -107,6 +107,8 @@ function apiSave(){
         ovse.f5=false
         ovse.f6=false
         ovse.f7=false
+        ovse.f8=false
+        ovse.f9=false
         ovse.work=true
     }
     },10)
