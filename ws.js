@@ -112,9 +112,8 @@ function apiSave(){
         ovse.work=true
     }
     },10)
-    
     let workerInter=setInterval(()=>{
-        //console.log(work)
+        //(work)
         if(ovse.work===false) return;
         clearInterval(workerInter)
 
@@ -356,7 +355,7 @@ function HTTrains(type,zone){
                     }
                 }
             }
-            console.log('ABC')
+            ('ABC')
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
                     if(ss04CLIST.includes(ctn.cid)){
@@ -562,7 +561,7 @@ wss.on('connection', (ws, req) => {
         ovse.work=false
         
         /*worker1.postMessage("MAJ");
-        console.log('sent to worker')
+        ('sent to worker')
         worker1.on('message', ()=>{
             work=true
         })*/
@@ -665,7 +664,6 @@ wss.on('connection', (ws, req) => {
                 switch(data.execute){
                     case 'AG':
                         pccApi.comAG=true
-                        console.log(pccApi.comAG)
                         pccApi.voyGAT=2
                         pccApi.voyABS=2
                         pccApi.voyHT=2
@@ -896,8 +894,6 @@ wss.on('connection', (ws, req) => {
                         if(data.state===false){
                             pccApi.comFSGAT=false
                             if(pccApi.comAG===false){
-                                console.log('OK')
-                                console.log(pccApi.comAG)
                                 pccApi.voyFSGAT=true
                             }
                         } else if(data.state===true){
@@ -1096,8 +1092,6 @@ wss.on('connection', (ws, req) => {
                                 }
                             for (let ss of pccApi.SS){
                                 ss.voyAlim=true
-                                console.log(ss)
-                                console.log(pccApi)
                                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
                                     ss.voyHTAutABS=true
                                 }
@@ -1242,7 +1236,6 @@ wss.on('connection', (ws, req) => {
                     if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
-                    console.log(stationIndex, sectionIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
                     if(!stationObj.states.manualExpKeyEng) return;
                     stationObj.states.manuelPPOpening=false
@@ -1283,7 +1276,6 @@ wss.on('connection', (ws, req) => {
                     stationObj.states.doorsClosedPAS=false
                     stationObj.states.defPartFerPP=false
                     stationObj.states.doorsObstacle=false
-                    console.log(stationObj.trains)
                     if(!(stationObj.trains[0])){
                         stationObj.states.doorsOpenedWithoutTrain=2
                         apiSave()
@@ -1544,7 +1536,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                     const weweOnControleSale = async() => {
                         await setTimeout(5000)
-                        if(stationObj.states.IDPOAlreadyActiveByPLTP===false) {console.log('Ah merde ah c\'est con ça')
+                        if(stationObj.states.IDPOAlreadyActiveByPLTP===false) {
                         return;}
                         stationObj.states.DSO=true
                         apiSave()
@@ -1560,7 +1552,7 @@ wss.on('connection', (ws, req) => {
                     apiSave()
                     const weweOnControleSale = async() => {
                         await setTimeout(5000)
-                        if(stationObj.states.IDPOAlreadyActiveByALC===false) {console.log('Ah merde ah c\'est con ça')
+                        if(stationObj.states.IDPOAlreadyActiveByALC===false) {
                         return;}
                         stationObj.states.DSO=true
                         apiSave()
@@ -2470,9 +2462,7 @@ wss.on('connection', (ws, req) => {
                     
                     let _cantonIndex = parseFloat(train.cantonIndex)   
                     let _trainIndex = parseFloat(train.trainIndex)
-                    let _secIndex = parseFloat(train.secIndex)
-                    console.log(_cantonIndex +' et '+ _trainIndex)                        
-                    console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex])
+                    let _secIndex = parseFloat(train.secIndex)                    
 
                     //?    On va donc regarder la voie active du train -> vérifier la possibilité de mouvement -> vérifier le type -> vérifier la continuité du canton -> créer le mouvement avec les bons indexs        ////////////////////////
 
@@ -2491,7 +2481,6 @@ wss.on('connection', (ws, req) => {
                                 if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
                                     trainCopy.states.inZOPP=false
                                 }
-                                console.log(trainCopy)
 
                                 pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
                                 
@@ -2509,9 +2498,9 @@ wss.on('connection', (ws, req) => {
                                 if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
                                     trainCopy.states.inZOPP=false
                                 }
-                                console.log(trainCopy)
+                                
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
+
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -2569,7 +2558,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2633,7 +2621,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2693,7 +2680,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -2751,7 +2737,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -2808,7 +2793,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -2843,7 +2827,6 @@ wss.on('connection', (ws, req) => {
                     let _cantonIndex = parseFloat(train.cantonIndex)   
                     let _trainIndex = parseFloat(train.trainIndex)
                     let _secIndex = parseFloat(train.secIndex)
-                    console.log(_cantonIndex +' et '+ _trainIndex)
                     console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex])
                     if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==='2501') return;
                     if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==='1101') return;
@@ -2999,7 +2982,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -3060,7 +3042,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -3125,7 +3106,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                                     logger.confirm('Mouvement effectué avec succès')
@@ -3185,7 +3165,6 @@ wss.on('connection', (ws, req) => {
                                     trainCopy.states.inZOPP=false
                                 }
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains[_trainIndex])
                                 pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
 
                                 if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
@@ -3226,7 +3205,6 @@ wss.on('connection', (ws, req) => {
                 let cmdargs = args
                 args.shift()
 
-                console.log(cmdargs)
 
                 let aiguilles = []
 
@@ -3235,7 +3213,6 @@ wss.on('connection', (ws, req) => {
                     console.log('aucun canton renseigné')
                     return;
                 }
-                console.log('commande '+cmd)
                 for (let _SECTION in pccApi.SEC){
                     for (let _CANTON_ of pccApi.SEC[_SECTION].cantons){
                         if(_CANTON_.hasOwnProperty('position')){
@@ -3442,7 +3419,7 @@ function getCantonsInfo(id){
     if (id){
         //console.log(fresponse.trains)
         for(let rame of fresponse.trains){
-            if(rame.trainId == id) return JSON.stringify(rame);
+            if(rame.trainId === id) return JSON.stringify(rame);
         }
         return false;
     } else return JSON.stringify(fresponse)
