@@ -123,6 +123,7 @@ function apiSave(){
             FSTrains('down', 'all')
         }
         if(ovse.coupFS==='RETABLISSEMENT'){
+            console.log('UP')
             ovse.coupFS=false
             FSTrains('up', 'all')
         }
@@ -3419,7 +3420,7 @@ function getCantonsInfo(id){
     if (id){
         //console.log(fresponse.trains)
         for(let rame of fresponse.trains){
-            if(rame.trainId === id) return JSON.stringify(rame);
+            if(rame.trainId == id) return JSON.stringify(rame);
         }
         return false;
     } else return JSON.stringify(fresponse)

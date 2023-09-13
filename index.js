@@ -1715,7 +1715,7 @@ function isDigit(n) {
 }
 
 copyConfig.addEventListener('click', () => {
-    showRequest.innerHTML=window.actualRequest
+    navigator.clipboard.writeText(window.actualRequest)
 })
 
 let btnAdminAccess = document.getElementById('btnAdminAccess')
