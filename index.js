@@ -9,6 +9,8 @@ let dataLoaded = false
 let tco1Loaded = false
 let tco2Loaded = false
 
+let fileIntervals=[]
+
 //? LOAD FORMAT SELECT
 let formatSelect = document.getElementById('formatSelect')
 let groupFormatPA = document.getElementById('groupFormatPA')
@@ -333,6 +335,7 @@ sm.registerSound("join", './src/global/join.mp3');
 sm.registerSound("left", './src/global/leave.mp3');
 sm.registerSound("enter", './src/global/enter.mp3');
 sm.registerSound("wb", './src/global/wb.mp3');
+sm.registerSound("ring", './src/formats/det/ring.mp3');
 
 const blinkIntervalId = new Map()
 
@@ -604,6 +607,7 @@ async function isWsRunning(){
                     //getCantonsInfoS2()
                     loadElectricalInfos()
                     refreshTCO()
+                    refreshComPlat()
                 }
                 
             }
@@ -1574,6 +1578,105 @@ function refreshTCO(){
         }
     }
 }
+let blinkIntervalIdEM = new Map()
+let comSoundInter=0
+function refreshComPlat(){
+    for(let interval of fileIntervals){
+        if(interval===comSoundInter) continue;
+        clearInterval(interval)
+    }
+    let voyDetresseComm = document.getElementById('voyDetresseComm')
+    let voyDetresseFromPilot = document.getElementById('voyDetresseFromPilot')
+    let voyDetresseFromUCA = document.getElementById('voyDetresseFromUCA')
+    let screenTrainID = document.getElementById('screenTrainID')
+    let screenTrainLoc = document.getElementById('screenTrainLoc')
+
+    let defListt = [];
+    let defListtA = [];
+    for(let call of data.emCalls){
+        if(call.active===false) continue;
+        switch(call.active){
+            case true:
+                defListtA.push(call)
+                let blinkIdReturn = blinkIntervalIdEM.get('detresseComVoy')
+                clearInterval(blinkIdReturn)
+                blinkIntervalId.delete('detresseComVoy')
+                if(call.caller==='UCA'){
+                    let blinkInterval = blinkIntervalIdEM.get('detresseComUCA')
+                    clearInterval(blinkInterval)
+                    voyDetresseFromUCA.src='./src/formats/det/voy_on.png'
+                } else {
+                    let blinkInterval = blinkIntervalIdEM.get('detresseComPilot')
+                    clearInterval(blinkInterval)
+                    voyDetresseFromPilot.src='./src/formats/det/voy_on.png'
+                }
+                voyDetresseComm.src='./src/formats/det/voy_on.png'
+                screenTrainID.value=call.trid
+                screenTrainID.classList.add('scrOn')
+                screenTrainID.classList.remove('scrOff')
+                screenTrainLoc.value=call.ctn.replace('c','')
+                screenTrainLoc.classList.add('scrOn')
+                screenTrainLoc.classList.add('scrOff')
+                break;
+            case 2:
+                defListt.push(call)
+                console.log('A L\'AIDE')
+                let blinkId1 = setInterval(async function () {
+                    voyDetresseComm.src='./src/formats/det/voy_on.png'
+                    await sleep(500);
+                    voyDetresseComm.src='./src/formats/det/voy_off.png'
+                }, 1000)
+                if(call.caller==='UCA'){
+                    let blinkId2 = setInterval(async function () {
+                        voyDetresseFromUCA.src='./src/formats/det/voy_on.png'
+                        await sleep(500);
+                        voyDetresseFromUCA.src='./src/formats/det/voy_off.png'
+                    }, 1000)
+                    blinkIntervalIdEM.set('detresseComUCA', blinkId2)
+                    fileIntervals.push(blinkId2)
+                } else if(call.caller==='PILOT'){
+                    let blinkId2 = setInterval(async function () {
+                        voyDetresseFromPilot.src='./src/formats/det/voy_on.png'
+                        await sleep(500);
+                        voyDetresseFromPilot.src='./src/formats/det/voy_off.png'
+                    }, 1000)
+                    blinkIntervalIdEM.set('detresseComPilot', blinkId2)
+                    fileIntervals.push(blinkId2)
+                }
+                blinkIntervalIdEM.set('detresseComVoy', blinkId1)
+                fileIntervals.push(blinkId1)
+                screenTrainID.value=call.trid
+                screenTrainID.classList.add('scrOn')
+                screenTrainID.classList.remove('scrOff')
+                screenTrainLoc.value=call.ctn.replace('c','')
+                screenTrainLoc.classList.add('scrOn')
+                screenTrainLoc.classList.add('scrOff')
+                break;
+        }
+    }
+    if(defListt.length>0){
+        comSoundInter=setInterval( ()=> {
+            sm.playSound('ring')
+        },750)
+    } else if(defListt.length===0){
+        clearInterval(comSoundInter)
+        sm.stopSound('ring')
+        if(defListtA.length===0){
+            voyDetresseFromPilot.src='./src/formats/det/voy_off.png'
+            voyDetresseFromUCA.src='./src/formats/det/voy_off.png'
+            voyDetresseComm.src='./src/formats/det/voy_off.png'
+
+            screenTrainID.src='./src/formats/det/sc_off.png'
+            screenTrainID.classList.remove('scrOn')
+            screenTrainID.classList.add('scrOff')
+            screenTrainLoc.src='./src/formats/det/sc_off.png'
+            screenTrainLoc.classList.remove('scrOn')
+            screenTrainLoc.classList.add('scrOff')
+            screenTrainID.value=''
+            screenTrainLoc.value=''
+        }
+    }
+}
 
 
 
@@ -1745,3 +1848,36 @@ let verifFunc = ()=>{
     }
 }
 let verifLoadInter = setInterval(verifFunc,50)
+
+document.getElementById('createEmCall').addEventListener('click', ()=>{
+    let reqbody = prompt('REQUEST BODY')
+    let parsedBody = JSON.parse(reqbody)
+    actualRequest = JSON.stringify({
+        op: 226,
+        execute: "EMCALL-TEST",
+        reqestBody: parsedBody,
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+document.getElementById('acqAlerteUrgence').addEventListener('click',()=>{
+    actualRequest = JSON.stringify({
+        op: 226,
+        execute: "EMCALL-ACQ",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+document.getElementById('razAlerteUrgence').addEventListener('click',()=>{
+    actualRequest = JSON.stringify({
+        op: 226,
+        execute: "EMCALL-RAZ",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})

@@ -94,7 +94,7 @@ let work = false
 
 const clients = {}
 
-function apiSave(){
+exports.apiSave = function(){
     ovse.periodicUpdateVoy()
     let fx = setInterval(()=>{
     if(ovse.f1===true&&ovse.f2===true&&ovse.f3===true&&ovse.f4===true&&ovse.f5===true&&ovse.f6===true&&ovse.f7===true&&ovse.f8===true&&ovse.f9===true){
@@ -206,25 +206,25 @@ function HTTrains(type,zone){
                 veh.states.abs750=false
                 veh.states.btDelest=false
                 veh.states.trainBattery=false
-                apiSave()
+                exports.apiSave()
                 await setTimeout(3400)
                 veh.states.avarieOnduls=2
                 veh.states.defTech=2
                 veh.states.trainHeating=true
                 veh.states.trainComp=true
-                apiSave()
+                exports.apiSave()
                 await setTimeout(2500)
                 veh.states.defCvs=false
                 veh.states.trainLights=true
-                apiSave()
+                exports.apiSave()
                 await setTimeout(120)
                 veh.states.prodPert=true
-                apiSave()
+                exports.apiSave()
                 await setTimeout(4900)
                 veh.states.avarieOnduls=false
                 veh.states.activeOnduls=true
                 veh.states.defTech=false
-                apiSave()
+                exports.apiSave()
             }
             timeFunc()
         }
@@ -697,7 +697,7 @@ wss.on('connection', (ws, req) => {
                                             if(veh.states.speed===0){
                                                 clearInterval(checkSpeedInter)
                                                 veh.states.activeFI=true
-                                                apiSave()
+                                                exports.apiSave()
                                             }
                                         }
                                         
@@ -705,7 +705,7 @@ wss.on('connection', (ws, req) => {
                                 }
                             }
                         }*/
-                        apiSave();
+                        exports.apiSave();
                         break;
                     case 'AGreset':
                         if(!(pccApi.comAG===true)) break;
@@ -782,7 +782,7 @@ wss.on('connection', (ws, req) => {
                                                 veh.states.fsOk=true
                                                 veh.states.fuNoFS=false
                                             }
-                                            apiSave()
+                                            exports.apiSave()
                                             await setTimeout(600)
                                             if(pccApi.voyFS===true){
                                                 veh.states.activeFI=false
@@ -790,20 +790,20 @@ wss.on('connection', (ws, req) => {
                                                 veh.states.cmdFu=false
                                                 veh.states.fuNoFS=false
                                             }
-                                            apiSave()
+                                            exports.apiSave()
                                             await setTimeout(300)
                                             if(pccApi.voyFS===true){
                                                 veh.states.cmdTraction=true
                                                 veh.states.tractionS1=true
                                             }
-                                            apiSave()
+                                            exports.apiSave()
                                             await setTimeout(5700)
                                             if(pccApi.voyHT===true){
                                                 veh.states.abs750=false
                                                 veh.states.btDelest=false
                                                 veh.states.trainBattery=false
                                             }
-                                            apiSave()
+                                            exports.apiSave()
                                             await setTimeout(3400)
                                             if(pccApi.voyFS===true){
                                                 veh.states.activeFU=true
@@ -818,16 +818,16 @@ wss.on('connection', (ws, req) => {
                                                 veh.states.trainHeating=true
                                                 veh.states.trainComp=true
                                             }
-                                            apiSave()
+                                            exports.apiSave()
                                             await setTimeout(2500)
                                             if(pccApi.voyHT===true){
                                                 veh.states.defCvs=false
                                                 veh.states.trainLights=true
                                             }
-                                            apiSave()
+                                            exports.apiSave()
                                             await setTimeout(120)
                                             veh.states.prodPert=true
-                                            apiSave()
+                                            exports.apiSave()
                                             await setTimeout(4900)
                                             if(pccApi.voyHT===true){
                                                 veh.states.avarieOnduls=false
@@ -840,14 +840,14 @@ wss.on('connection', (ws, req) => {
                                                 veh.states.defTech=false
                                                 veh.states.cmdTraction=true
                                             }
-                                            apiSave()
+                                            exports.apiSave()
                                         }
                                         timeFunc()
                                     }
                                 }
                             }
                         }
-                        apiSave();
+                        exports.apiSave();
                         break;
                     case 'LINE-ACQU':
                         if (pccApi.voyGAT===2) pccApi.voyGAT=1;
@@ -862,7 +862,7 @@ wss.on('connection', (ws, req) => {
                                 if(ss[prop]===2) ss[prop]=1
                             }
                         }
-                        apiSave();
+                        exports.apiSave();
                         break;
                 }
                 break;
@@ -877,13 +877,13 @@ wss.on('connection', (ws, req) => {
                                 pccApi.voyFS=true
                                 FSTrains('up','all')
                             }
-                            apiSave()
+                            exports.apiSave()
 
                         } else if(data.state===true){
                             pccApi.comFSLine=true
                             pccApi.voyFS=2
                             FSTrains('down','all')
-                            apiSave()
+                            exports.apiSave()
                         }
                         if((pccApi.comAuth) && !(pccApi.comFSLine)){
                             pccApi.voyABS=true
@@ -913,7 +913,7 @@ wss.on('connection', (ws, req) => {
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=2
                                 HTTrains('down','all')
-                                apiSave();
+                                exports.apiSave();
                             }
                         } else if(data.state===true){
                             pccApi.comAuth=true
@@ -943,7 +943,7 @@ wss.on('connection', (ws, req) => {
                                     pccApi.PR[0].DJVSS05MSTO=true
                                     pccApi.PR[1].DJVSS05GLANER=true
                                 }
-                                apiSave();
+                                exports.apiSave();
                             }
                         }
                         if((pccApi.comAuth) && !(pccApi.comFSLine)){
@@ -1177,7 +1177,7 @@ wss.on('connection', (ws, req) => {
                         }
                         break;
                 }
-                apiSave()
+                exports.apiSave()
                 break;
             case 204 :
                 if(!isClientExisting(data.uuid)) return;
@@ -1191,7 +1191,7 @@ wss.on('connection', (ws, req) => {
                     trainObj.states.cmdOuvPortesTrain=true
                     if(trainObj.states.inZOPP) {
                         let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
-                        if(typeof stationObj.states === 'undefined') return apiSave();
+                        if(typeof stationObj.states === 'undefined') return exports.apiSave();
                         stationObj.states.engagedPMS=false
                         stationObj.states.doorsOpened=true
                         stationObj.states.doorsClosed=false
@@ -1200,7 +1200,7 @@ wss.on('connection', (ws, req) => {
                         stationObj.states.defPartFerPP=false
                         stationObj.states.doorsObstacle=false
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='CLOSEPV-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
@@ -1212,7 +1212,7 @@ wss.on('connection', (ws, req) => {
                     if(trainObj.states.inZOPP) {
 
                         let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
-                        if(typeof stationObj.states === 'undefined') return apiSave();
+                        if(typeof stationObj.states === 'undefined') return exports.apiSave();
                         stationObj.states.engagedPMS=false
                         stationObj.states.doorsOpened=false
                         stationObj.states.doorsClosedPAS=true
@@ -1231,7 +1231,7 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.doorsClosedPV=true
                         trainObj.states.defCdeFerPV=false
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='CLOSEPP-BTN'){
                     if(!data.target.cIndex) return;
@@ -1260,7 +1260,7 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.doorsClosedPV=true
                         trainObj.states.defCdeFerPV=false
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='OPENPP-BTN'){
                     if(!data.target.cIndex) return;
@@ -1279,15 +1279,15 @@ wss.on('connection', (ws, req) => {
                     stationObj.states.doorsObstacle=false
                     if(!(stationObj.trains[0])){
                         stationObj.states.doorsOpenedWithoutTrain=2
-                        apiSave()
+                        exports.apiSave()
                         return;
                     }
                     if(!stationObj.trains[0].states.inZOPP){
                         stationObj.states.doorsOpenedWithoutTrain=2
-                        apiSave()
+                        exports.apiSave()
                         return;
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='GENRATEINC-PARTIALPPOPEN-BTN'){
                     if(!data.target.cIndex) return;
@@ -1295,7 +1295,7 @@ wss.on('connection', (ws, req) => {
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
                     stationObj.states.defPartOuvPP=2
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='GENRATEINC-PARTIALPPCLOSE-BTN'){
                     if(!data.target.cIndex) return;
@@ -1303,7 +1303,7 @@ wss.on('connection', (ws, req) => {
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
                     stationObj.states.defPartFerPP=2
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='GENRATEINC-TOTALPPOPEN-BTN'){
                     if(!data.target.cIndex) return;
@@ -1311,7 +1311,7 @@ wss.on('connection', (ws, req) => {
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
                     stationObj.states.defTotOuvPP=2
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='GENRATEINC-TOTALPPCLOSE-BTN'){
                     if(!data.target.cIndex) return;
@@ -1319,7 +1319,7 @@ wss.on('connection', (ws, req) => {
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
                     stationObj.states.defTotFerPP=2
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='GENRATEINC-RESET-BTN'){
                     if(!data.target.cIndex) return;
@@ -1330,7 +1330,7 @@ wss.on('connection', (ws, req) => {
                     stationObj.states.defPartFerPP=false
                     stationObj.states.defTotOuvPP=false
                     stationObj.states.defTotFerPP=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='AQC-BTN'){
                     if(!data.target.cIndex) return;
@@ -1348,7 +1348,7 @@ wss.on('connection', (ws, req) => {
                             trainObj.states[alarm]=1
                         }
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='ZOPP-ON-COM'){
                     let response = JSON.parse(getCantonsInfo(data.target))
@@ -1360,7 +1360,7 @@ wss.on('connection', (ws, req) => {
                     }
                     trainObj.states.inZOPP=true
                     trainObj.states.lvsTrain=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='ZOPP-OFF-COM'){
                     let response = JSON.parse(getCantonsInfo(data.target))
@@ -1374,7 +1374,7 @@ wss.on('connection', (ws, req) => {
                     }
                     trainObj.states.inZOPP=false
                     trainObj.states.lvsTrain=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='OBS-ON-COM'){
                     if(!data.target.cIndex) return;
@@ -1383,7 +1383,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.activeObs=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='OBS-OFF-COM'){
                     if(!data.target.cIndex) return;
@@ -1393,7 +1393,7 @@ wss.on('connection', (ws, req) => {
 
                     stationObj.states.activeObs=false
                     stationObj.states.doorsObstacle=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='PMSUNLOCK-ON-COM'){
                     if(!data.target.cIndex) return;
@@ -1402,7 +1402,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.unlockedPMS=2
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='PMSUNLOCK-OFF-COM'){
                     if(!data.target.cIndex) return;
@@ -1411,7 +1411,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.unlockedPMS=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='PMSMANUAL-ON-COM'){
                     if(!data.target.cIndex) return;
@@ -1421,7 +1421,7 @@ wss.on('connection', (ws, req) => {
                     if(!stationObj.states.unlockedPMS) return;
 
                     stationObj.states.manualExpKeyEng=2
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='PMSMANUAL-OFF-COM'){
                     if(!data.target.cIndex) return;
@@ -1433,7 +1433,7 @@ wss.on('connection', (ws, req) => {
                     stationObj.states.engagedPMS=false
                     stationObj.states.manuelPPOpening=false
                     stationObj.states.manuelPPClosing=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='PMSMAINT-ON-COM'){
                     if(!data.target.cIndex) return;
@@ -1443,7 +1443,7 @@ wss.on('connection', (ws, req) => {
                     if(!stationObj.states.unlockedPMS) return;
 
                     stationObj.states.maintKeyEng=2
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='PMSMAINT-OFF-COM'){
                     if(!data.target.cIndex) return;
@@ -1452,7 +1452,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.maintKeyEng=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='SAFE-ON-COM'){
                     let response = JSON.parse(getCantonsInfo(data.target))
@@ -1462,7 +1462,7 @@ wss.on('connection', (ws, req) => {
                     
                     trainObj.states.trainSecurised=true
                     trainObj.states.trainInscrit=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='SAFE-OFF-COM'){
                     let response = JSON.parse(getCantonsInfo(data.target))
@@ -1472,7 +1472,7 @@ wss.on('connection', (ws, req) => {
                     
                     trainObj.states.trainSecurised=false
                     trainObj.states.trainInscrit=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='HLP-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1481,7 +1481,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.HLP=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='HLP-OFF-BTN'){
                     if(!data.target.cIndex) return;
@@ -1490,7 +1490,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.HLP=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='DSO-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1499,7 +1499,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.DSO=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='DSO-OFF-BTN'){
                     if(!data.target.cIndex) return;
@@ -1508,7 +1508,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.DSO=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='SSO-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1517,7 +1517,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.SSO=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='SSO-OFF-BTN'){
                     if(!data.target.cIndex) return;
@@ -1526,7 +1526,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.SSO=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='INHIBPLTPIDPO-BTN'){
                     if(!data.target.cIndex) return;
@@ -1534,13 +1534,13 @@ wss.on('connection', (ws, req) => {
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
                     stationObj.states.DSO=false
-                    apiSave()
+                    exports.apiSave()
                     const weweOnControleSale = async() => {
                         await setTimeout(5000)
                         if(stationObj.states.IDPOAlreadyActiveByPLTP===false) {
                         return;}
                         stationObj.states.DSO=true
-                        apiSave()
+                        exports.apiSave()
                     }
                     weweOnControleSale()
                 } else
@@ -1550,13 +1550,13 @@ wss.on('connection', (ws, req) => {
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
                     stationObj.states.DSO=false
-                    apiSave()
+                    exports.apiSave()
                     const weweOnControleSale = async() => {
                         await setTimeout(5000)
                         if(stationObj.states.IDPOAlreadyActiveByALC===false) {
                         return;}
                         stationObj.states.DSO=true
-                        apiSave()
+                        exports.apiSave()
                     }
                     weweOnControleSale()
                 } else
@@ -1565,14 +1565,14 @@ wss.on('connection', (ws, req) => {
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
                     trainObj.states.obstalceActive=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='OBSVEH-OFF-COM'){
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
                     let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
                     trainObj.states.obstalceActive=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='SETTIME-BTN'){
                     if(!data.target.cIndex) return;
@@ -1582,7 +1582,7 @@ wss.on('connection', (ws, req) => {
                     let newTime = parseInt(data.new)
 
                     stationObj.states.actualTime=newTime
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='EMCALL-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
@@ -1595,7 +1595,7 @@ wss.on('connection', (ws, req) => {
                         stationObj.states.DSO=true
                         stationObj.states.IDPOAlreadyActiveByALC=true
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='ACQEMCALL-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
@@ -1605,7 +1605,7 @@ wss.on('connection', (ws, req) => {
                     trainObj.states.forbiddenStart=false
                     let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
                     stationObj.states.IDPOAlreadyActiveByALC=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='AFD-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1614,7 +1614,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.afdActive=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='AFD-RAZ-BTN'){
                     if(!data.target.cIndex) return;
@@ -1623,7 +1623,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.afdActive=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='VVTS1-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1632,7 +1632,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.VVTS1=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='VVTS1-RAZ-BTN'){
                     if(!data.target.cIndex) return;
@@ -1641,7 +1641,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.VVTS1=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='VVTS2-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1650,7 +1650,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.VVTS2=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='VVTS2-RAZ-BTN'){
                     if(!data.target.cIndex) return;
@@ -1659,7 +1659,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.VVTS2=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='DEPA-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1668,7 +1668,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.depaActive=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='DEPA-RAZ-BTN'){
                     if(!data.target.cIndex) return;
@@ -1677,7 +1677,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.depaActive=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='IDPF-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1686,7 +1686,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.idpfActive=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='IDPF-RAZ-BTN'){
                     if(!data.target.cIndex) return;
@@ -1695,7 +1695,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.idpfActive=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='MAPF-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1704,7 +1704,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.mapfActive=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='MAPF-RAZ-BTN'){
                     if(!data.target.cIndex) return;
@@ -1713,7 +1713,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.mapfActive=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='ISTA-ON-BTN'){
                     if(!data.target.cIndex) return;
@@ -1722,7 +1722,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.istaActive=true
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='ISTA-RAZ-BTN'){
                     if(!data.target.cIndex) return;
@@ -1731,7 +1731,7 @@ wss.on('connection', (ws, req) => {
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
 
                     stationObj.states.istaActive=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='VVTS1-INHIB-BTN'){
                     if(!data.target.cIndex) return;
@@ -1743,10 +1743,10 @@ wss.on('connection', (ws, req) => {
                     const weweOnAttendLaFinDeLhinib = async() => {
                         await setTimeout(4000)
                         stationObj.states.defOrderExec=false
-                        apiSave()
+                        exports.apiSave()
                     }
                     weweOnAttendLaFinDeLhinib()
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if (data.execute==='VVTS2-INHIB-BTN'){
                     if(!data.target.cIndex) return;
@@ -1758,10 +1758,10 @@ wss.on('connection', (ws, req) => {
                     const weweOnAttendLaFinDeLhinib = async() => {
                         await setTimeout(4000)
                         stationObj.states.defOrderExec=false
-                        apiSave()
+                        exports.apiSave()
                     }
                     weweOnAttendLaFinDeLhinib()
-                    apiSave()
+                    exports.apiSave()
                 } else                                       //TRAIN
                 if(data.execute==='AQC-BTN-TRAIN'){
                     if(!data.target.secIndex) return;
@@ -1776,7 +1776,7 @@ wss.on('connection', (ws, req) => {
                         if(alarm==='cptFu') continue;
                         trainObj.states[alarm]=1
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='FU-BTN-ON'){
                     if(!data.target.secIndex) return;
@@ -1795,7 +1795,7 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.v0pas=2
                         trainObj.states.blockedTrain=2
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='FU-BTN-OFF'){
                     if(!data.target.secIndex) return;
@@ -1808,7 +1808,7 @@ wss.on('connection', (ws, req) => {
                     trainObj.states.fuNoFS=false
                     trainObj.states.cmdFu=false
                     trainObj.states.activeFU=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='CPTFU-BTN-ACQ'){
                     if(!data.target.secIndex) return;
@@ -1822,7 +1822,7 @@ wss.on('connection', (ws, req) => {
                     trainObj.states.defTech=false
                     trainObj.states.v0pas=false
                     trainObj.states.blockedTrain=false
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='PREP-BTN'){
                     if(!data.target.secIndex) return;
@@ -1835,7 +1835,7 @@ wss.on('connection', (ws, req) => {
                     const goFaireDuRPInutile = async() => {
                         trainObj.states.TMSActive=true
                         trainObj.states.defLtpa=2
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(2040)
                         trainObj.states.defTech=2
                         trainObj.states.defFN=2
@@ -1844,18 +1844,18 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.activeFU=true
                         trainObj.states.cmdFu=2
                         trainObj.states.cptFu++
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(1510)
                         trainObj.states.trainFrott=2
                         trainObj.states.defCvs=2
                         trainObj.states.trainBattery=2
                         trainObj.states.abs750=2
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(2120)
                         trainObj.states.defDistBt=2
                         trainObj.states.btDelest=2
                         trainObj.states.avarieOnduls=2
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(4015)
                         trainObj.states.awakeMR=true
                         trainObj.states.speed=0
@@ -1864,7 +1864,7 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.trainPilot=true
                         trainObj.states.v0pas=2
                         trainObj.states.trainFrott=true
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(4015)
                         if(pccApi.voyHT===true){
                             trainObj.states.abs750=false
@@ -1875,22 +1875,22 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.activeTests=true
                         trainObj.states.defDistBt=false
                         trainObj.states.defCvs=false
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(1034)
                         trainObj.states.testAuto=2
                         trainObj.states.activeFI=true
                         trainObj.states.forbCommand=2
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(10120)
                         trainObj.states.avarieOnduls=false
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(4030)
                         trainObj.states.validTests=true
                         trainObj.states.activeTests=false
                         if(pccApi.voyHT===true){
                             trainObj.states.defTech=false
                         }
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(4080)
                         if(pccApi.voyHT===true){
                             trainObj.states.trainLights=true
@@ -1903,7 +1903,7 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.blockedTrain=true
                         trainObj.states.vitModifPAS=true
                         trainObj.states.cptFu++
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(10028)
                         trainObj.states.nullSpeed=true
                         trainObj.states.defFN=false
@@ -1911,13 +1911,13 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.waitingMission=true
                         trainObj.states.permBrake=false
                         trainObj.states.cmdTraction=true
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(10021)
                         trainObj.states.pretTrain=true
                         trainObj.states.autoTrain=true
                         trainObj.states.forbCommand=false
                         trainObj.states.vitModifPAS=false
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(400)
                         if(pccApi.voyFS===true){
                             trainObj.states.cmdFu=false
@@ -1927,17 +1927,17 @@ wss.on('connection', (ws, req) => {
                     }
                     const refusPrep = async() => {
                         trainObj.states.echecPrep=2
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(10000)
                         trainObj.states.echecPrep=false
-                        apiSave()
+                        exports.apiSave()
                     }
                     if(trainObj.states.pretTrain){
                         refusPrep()
                     } else {
                         goFaireDuRPInutile()
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else
                 if(data.execute==='DEPREP-BTN'){
                     if(!data.target.secIndex) return;
@@ -1975,43 +1975,43 @@ wss.on('connection', (ws, req) => {
                         trainObj.states.validTests=false
                         trainObj.states.deprepTrain=true
                         trainObj.states.cptFu++
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(2000)
                         trainObj.states.autoTrain=false
                         trainObj.states.trainPilot=false
                         trainObj.states.defFN=2
                         trainObj.states.permBrake=true
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(1500)
                         trainObj.states.trainLights=false
                         trainObj.states.trainHeating=false
                         trainObj.states.trainComp=false
                         trainObj.states.trainFrott=false
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(1000)
                         trainObj.states.abs750=2
                         trainObj.states.activeOnduls=false
                         trainObj.states.avarieOnduls=2
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(1000)
                         trainObj.states.pretTrain=false
                         trainObj.states.activeFI=true
                         trainObj.states.cptFu=0
                         trainObj.states.avarieOnduls=false
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(5000)
                         for(let alarm in trainObj.states){
                             if(alarm==='cptFu') continue;
                             trainObj.states[alarm]=false
                         }
-                        apiSave()
+                        exports.apiSave()
                     }
                     const refusDeprep = async() => {
                         trainObj.states.refusDeprep=2
-                        apiSave()
+                        exports.apiSave()
                         await setTimeout(10000)
                         trainObj.states.refusDeprep=false
-                        apiSave()
+                        exports.apiSave()
                     }
                     if(trainObj.states.pretTrain){
                         goFaireDuRPInutile()
@@ -2038,10 +2038,10 @@ wss.on('connection', (ws, req) => {
                                 if(iti.code===data.target){
                                     const rpdelay = async() => {
                                         iti.mode='SEL'
-                                        apiSave()
+                                        exports.apiSave()
                                         await setTimeout(2000)
                                         iti.active=true
-                                        apiSave()
+                                        exports.apiSave()
                                     }
                                     rpdelay()
                                     return;
@@ -2058,11 +2058,11 @@ wss.on('connection', (ws, req) => {
                                 if(iti.code===data.target){
                                     const rpdelay = async() => {
                                         iti.mode='DES'
-                                        apiSave()
+                                        exports.apiSave()
                                         await setTimeout(2000)
                                         iti.mode=false
                                         iti.active=false
-                                        apiSave()
+                                        exports.apiSave()
                                     }
                                     rpdelay()
                                     return;
@@ -2081,7 +2081,7 @@ wss.on('connection', (ws, req) => {
                                         iti.mode='DU'
                                         iti.mode=false
                                         iti.active=false
-                                        apiSave()
+                                        exports.apiSave()
                                     }
                                     rpdelay()
                                     return;
@@ -2115,9 +2115,9 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','2401_1401')
                             changeItiState('des','1201_2201')
                             changeItiState('des','2401_1401')
-                            apiSave()
+                            exports.apiSave()
                             await setTimeout(2000)
-                            apiSave()
+                            exports.apiSave()
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2126,7 +2126,7 @@ wss.on('connection', (ws, req) => {
                                 pccApi.SEC[0].states.injDispoV201=true
                                 pccApi.SEC[0].states.retDispoV201=false
                                 pccApi.SEC[0].CYCLES[6].active=false
-                                apiSave()
+                                exports.apiSave()
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2146,9 +2146,9 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','2401_2201')
                             changeItiState('des','1201_1401')
                             changeItiState('des','1401_1201')
-                            apiSave()
+                            exports.apiSave()
                             await setTimeout(2000)
-                            apiSave()
+                            exports.apiSave()
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2161,7 +2161,7 @@ wss.on('connection', (ws, req) => {
                                 } else {
                                     pccApi.SEC[0].states.retDispoV101=false
                                 }
-                                apiSave()
+                                exports.apiSave()
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2177,9 +2177,9 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','1202_1501')
                             changeItiState('des','1202_2101')
                             changeItiState('des','2101_1202')
-                            apiSave()
+                            exports.apiSave()
                             await setTimeout(2000)
-                            apiSave()
+                            exports.apiSave()
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2187,7 +2187,7 @@ wss.on('connection', (ws, req) => {
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[1].states.entreeDispoGla=true
                                 pccApi.SEC[1].CYCLES[6].active=false
-                                apiSave()
+                                exports.apiSave()
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2208,9 +2208,9 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','2201_1201')
                             changeItiState('des','1201_2201')
                             changeItiState('des','2401_1401')
-                            apiSave()
+                            exports.apiSave()
                             await setTimeout(2000)
-                            apiSave()
+                            exports.apiSave()
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2219,7 +2219,7 @@ wss.on('connection', (ws, req) => {
                                 pccApi.SEC[0].states.injDispoV201=false
                                 pccApi.SEC[0].states.retDispoV201=true 
                                 pccApi.SEC[0].CYCLES[3].active=false
-                                apiSave()
+                                exports.apiSave()
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2235,9 +2235,9 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','1201_2201')
                             changeItiState('des','2401_1401')
                             changeItiState('des','1401_2401')
-                            apiSave()
+                            exports.apiSave()
                             await setTimeout(2000)
-                            apiSave()
+                            exports.apiSave()
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2253,7 +2253,7 @@ wss.on('connection', (ws, req) => {
                                 if((pccApi.SEC[0].cantons[1].trains.length===0)&&(pccApi.SEC[0].cantons[0].trains.length===0)){
                                     pccApi.SEC[0].states.injDispoV101=false
                                 }
-                                apiSave()
+                                exports.apiSave()
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2270,9 +2270,9 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','1202_1501')
                             changeItiState('des','2301_2101')
                             changeItiState('des','2101_2302')
-                            apiSave()
+                            exports.apiSave()
                             await setTimeout(2000)
-                            apiSave()
+                            exports.apiSave()
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2280,13 +2280,30 @@ wss.on('connection', (ws, req) => {
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[1].CYCLES[7].active=false
                                 pccApi.SEC[1].states.entreeDispoGla=false
-                                apiSave()
+                                exports.apiSave()
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
                     }
                 }
                 break;
+            case 226:
+                /*if(data.execute==='EMCALL-TEST'){
+                    let com = require('./com')
+                    console.log(com.triggerSpecialAction('train','2','emCall',{ caller: data.reqestBody.caller }))
+                }*/
+                if(data.execute==='EMCALL-ACQ'){
+                    if(pccApi.emCalls.length>0){
+                        pccApi.emCalls[0].active=true
+                        exports.apiSave()
+                    }
+                }
+                if(data.execute==='EMCALL-RAZ'){
+                    pccApi.emCalls.shift()
+                    exports.apiSave()
+                }
+                break;
+                
             case 222:
                 if(data.execute==='SEL-BTN-CYCLE'){
                     if(!(data.target)) return;
@@ -2298,7 +2315,7 @@ wss.on('connection', (ws, req) => {
                                 continue;
                             }
                             cycle.sel=true
-                            apiSave()
+                            exports.apiSave()
                             sec.states.cycleOngoing=true
                             if(cycle.code==='c1p1'){
                                 let secureCnt = 0
@@ -2307,13 +2324,13 @@ wss.on('connection', (ws, req) => {
                                     if(secureCnt===5){
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
-                                        apiSave()
+                                        exports.apiSave()
                                         return;
                                     }
                                     if(!(pccApi.SEC[0].cantons[8].trains.length>0)){
                                         clearInterval(checkCycleClearInter)
                                         ogdc.startCycle(cycle.code, wss, true)
-                                        apiSave()
+                                        exports.apiSave()
                                     }
                                 }
                                 let checkCycleClearInter = setInterval(checkCycleClear,2000)
@@ -2325,13 +2342,13 @@ wss.on('connection', (ws, req) => {
                                     if(secureCnt===5){
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
-                                        apiSave()
+                                        exports.apiSave()
                                         return;
                                     }
                                     if(!(pccApi.SEC[0].cantons[1].trains.length>0)){
                                         clearInterval(checkCycleClearInter)
                                         ogdc.startCycle(cycle.code, wss, true)
-                                        apiSave()
+                                        exports.apiSave()
                                     }
                                 }
                                 let checkCycleClearInter = setInterval(checkCycleClear,2000)
@@ -2343,14 +2360,14 @@ wss.on('connection', (ws, req) => {
                                     if(secureCnt===5){
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
-                                        apiSave()
+                                        exports.apiSave()
                                         return;
                                     }
                                     if(pccApi.SEC[0].cantons[5].trains.length===0){
                                         console.log('iti '+cycle.code+' activated')
                                         clearInterval(checkCycleClearInter)
                                         ogdc.startCycle(cycle.code, wss, true)
-                                        apiSave()
+                                        exports.apiSave()
                                     }
                                 }
                                 let checkCycleClearInter = setInterval(checkCycleClear,2000)
@@ -2362,14 +2379,14 @@ wss.on('connection', (ws, req) => {
                                     if(secureCnt===5){
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
-                                        apiSave()
+                                        exports.apiSave()
                                         return;
                                     }
                                     if(pccApi.SEC[0].cantons[5].trains.length===0){
                                         console.log('iti '+cycle.code+' activated')
                                         clearInterval(checkCycleClearInter)
                                         ogdc.startCycle(cycle.code, wss, true)
-                                        apiSave()
+                                        exports.apiSave()
                                     }
                                 }
                                 let checkCycleClearInter = setInterval(checkCycleClear,2000)
@@ -2389,7 +2406,7 @@ wss.on('connection', (ws, req) => {
                         }
                         //sec.states.cycleOngoing=false
                     }
-                    apiSave()
+                    exports.apiSave()
                 } else if(data.execute==='DUG-BTN-ITI'){
                     if(!(data.target)) return;
                     for(let sec of pccApi.SEC){
@@ -2401,12 +2418,12 @@ wss.on('connection', (ws, req) => {
                                     const rpdelay = async() => {
                                         iti.mode='DES'
                                         iti.active=false
-                                        if(iti.code==='1103_1402'||iti.code==='1102_1501') apiSave()
+                                        if(iti.code==='1103_1402'||iti.code==='1102_1501') exports.apiSave()
                                         await setTimeout(1000)
                                         iti.mode=false
                                         
                                         if(iti.code==='1103_1402'||iti.code==='1102_1501') {
-                                            apiSave()
+                                            exports.apiSave()
                                         }
                                     }
                                     rpdelay()
@@ -2437,765 +2454,15 @@ wss.on('connection', (ws, req) => {
                             }
                         }
                     }
-                    apiSave()
+                    exports.apiSave()
                 }
                 break;
             case 400:
                 if(!isClientExisting(data.uuid)) return;
-                class Aiguille {
-                    constructor(cantonPath){
-                        this.cantonPath=cantonPath
-                    }
-                    get dir(){
-                        let aigDir = this.cantonPath.dir
-                        if(aigDir) return aigDir;
-                        return false;
-                    }
-                }
-
-                let a1301 = new Aiguille(pccApi.SEC[0].cantons[2])
-                let a2301 = new Aiguille(pccApi.SEC[0].cantons[7])
 
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
 
-                if(data.sens === 1){
-                    let train = JSON.parse(getCantonsInfo(data.train))
-                    
-                    let _cantonIndex = parseFloat(train.cantonIndex)   
-                    let _trainIndex = parseFloat(train.trainIndex)
-                    let _secIndex = parseFloat(train.secIndex)                    
-
-                    //?    On va donc regarder la voie active du train -> vérifier la possibilité de mouvement -> vérifier le type -> vérifier la continuité du canton -> créer le mouvement avec les bons indexs        ////////////////////////
-
-
-                    if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("c1")){
-                        console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie 1 canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
-                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
-                            console.log("[S1? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
-                            if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
-                                logger.error('Pas de canton +1!')
-                                console.log('[S1? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S1? V1 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
-                                
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S1? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        } else {   //check si y'a un iti               //!                   OCCURENCE       ////////////////////////////
-                            console.log("[S1? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
-                            //? ITIS D'AIGUILLES
-                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 1, wss)) return;
-                            //pas d'iti, on traite l'aiguille comme un canton normal
-                            if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
-                                logger.error('Pas de canton +1!')
-                                console.log('[S1? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
-                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S1? V1 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S1? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        }
-
-
-
-                    } else if (pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("c2")){
-
-
-
-
-                        console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie 2 canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
-                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
-                            console.log("[S1? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
-                            if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
-                                logger.error('Pas de canton -1!')
-                                console.log('[S1? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S1? V2 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S1? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        } else {
-                            console.log("[S1? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
-                            console.warn('pour l\'instant on s\'en fous des iti mais faudra les mettre!')    //?         METTRE LES ITIS
-                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 1, wss)) return;
-
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S1? V2 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
-
-                                //!                   OCCURENCE       ////////////////////////////
-
-                                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
-                                    logger.error('Pas de canton -1!')
-                                    console.log('[S1? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
-    
-                                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
-    
-                                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                    if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                        trainCopy.states.inZOPP=false
-                                    }
-                                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                    
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()
-                                    return;
-                                }
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                            } else {
-                                console.log('[S1? V2 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        }
-                    } else if (pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("cG")) {
-                        logger.info('[WS] Canton évalué hors ligne')
-                        console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie GAT canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
-                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
-                            console.log("[S1? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
-                            if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
-                                logger.error('Pas de canton +1!')
-                                console.log('[S1? VG SIM -> ELSE] Pas de continuité, passage à la section GAT')
-                                logger.error('Abandon iti (pas de section GAT)')
-
-                                /*let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 'GAT')
-
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
-                                    tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                    name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                } )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()*/
-                                return;
-                            }
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S1? VG SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S1? VG SIM -> ELSE] Pas de continuité, passage à la section GAT')
-                                logger.error('Abandon iti (pas de section GAT)')
-
-                                /*let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
-
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
-                                    tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                    name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                } )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()*/
-                                return;
-                            }
-                        } else {
-                            console.log("[S1? VG] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
-                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 'GAT', wss)) return;
-
-                            if((/*pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && */pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S1? VG AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
-
-
-                                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
-                                    logger.error('Pas de canton +1!')
-                                    console.log('[S1? VG SIM -> ELSE] Pas de continuité, passage à la section GAT')
-    
-                                    /*let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
-    
-                                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
-                                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                    } )
-                                    
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()*/
-                                    return;
-                                }
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                            } else {
-                                console.log('[S1? VG AIG -> ELSE] Pas de continuité, passage à la section GAT')
-
-                                /*let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
-
-                                pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
-                                    tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
-                                    name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
-                                } )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()*/
-                                return;
-                            }
-                        }
-                    }
-//! todo crash hors zopp ouverture porte (a fix pour sens 2)
-                    //?         FIN DE MOOVHANDLER V1            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                } else if(data.sens === 2){
-                    let train = JSON.parse(getCantonsInfo(data.train))
-                    
-                    let _cantonIndex = parseFloat(train.cantonIndex)   
-                    let _trainIndex = parseFloat(train.trainIndex)
-                    let _secIndex = parseFloat(train.secIndex)
-                    console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex])
-                    if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==='2501') return;
-                    if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==='1101') return;
-
-                    //?    On va donc regarder la voie active du train -> vérifier la possibilité de mouvement -> vérifier le type -> vérifier la continuité du canton -> créer le mouvement avec les bons indexs        ////////////////////////
-
-
-                    if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("c1")){
-                        console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie 1 canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
-                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
-                            console.log("[S2? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
-                            if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
-                                logger.error('Pas de canton -1!')
-                                console.log('[S2? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S2? V1 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S2? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        } else {   //check si y'a un iti                            //!                   OCCURENCE       ////////////////////////////
-                            console.log("[S2? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
-                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 2, wss)) return;
-                            //pas d'iti, on traite l'aiguille comme un canton normal
-                            if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
-                                logger.error('Pas de canton -1!')
-                                console.log('[S2? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S2? V1 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S2? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        }
-
-
-
-                    } else if (pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("c2")){
-
-
-
-
-                        console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie 2 canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
-                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
-                            console.log("[S2? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
-                            if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
-                                logger.error('Pas de canton +1!')
-                                if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==='c2501') return logger.error('LIMITE DE LIGNE, AUCUNE ACTION!');
-                                console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S2? V2 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        } else {
-                            console.log("[S2? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
-                            console.warn('pour l\'instant on s\'en fous des iti mais faudra les mettre!')
-
-                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 2, wss)) return;
-                            
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S2? V2 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
-                                
-                                //!                   OCCURENCE       ////////////////////////////
-
-                                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
-                                    logger.error('Pas de canton +1!')
-                                    console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
-    
-                                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
-                                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
-                                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                        trainCopy.states.inZOPP=false
-                                    }
-    
-                                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                    
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()
-                                    return;
-                                }
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S2? V2 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        }
-
-
-
-                    }else if (pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("cG")){
-
-
-
-
-                        console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie GAT canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
-                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
-                            console.log("[S2? VG] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
-                            if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
-                                logger.error('Pas de canton -1!')
-                                console.log('[S2? VG SIM -> ELSE] Pas de continuité, passage à la section LIGNE')
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                            if((/*pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) &&*/pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S2? VG SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S2? VG SIM -> ELSE] Pas de continuité, passage à la section LIGNE')
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        } else {
-                            console.log("[S2? VG] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
-
-                            if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 'GAT', wss)) return;
-                            
-                            if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
-                                console.log('[S2? VG AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
-                                
-                                //!                   OCCURENCE       ////////////////////////////
-
-                                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
-                                    logger.error('Pas de canton -1!')
-                                    console.log('[S2? VG SIM -> ELSE] Pas de continuité, passage à la section LIGNE')
-    
-                                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
-                                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-    
-                                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                    
-                                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                        logger.confirm('Mouvement effectué avec succès')
-                                    }
-                                    apiSave()
-                                    return;
-                                }
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            } else {
-                                console.log('[S2? VG AIG -> ELSE] Pas de continuité, passage à la section LIGNE')
-
-                                let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
-
-                                let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
-                                if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
-                                    trainCopy.states.inZOPP=false
-                                }
-                                pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
-                                
-                                pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
-                                if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
-                                    logger.confirm('Mouvement effectué avec succès')
-                                }
-                                apiSave()
-                                return;
-                            }
-                        }
-                    }
-
-                    //?         FIN DE MOOVHANDLER V2            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                }
+                moveHandler(data.train, data.sens)
                 break;
             case 500:
                 if(!isClientExisting(data.uuid)) return;
@@ -3322,7 +2589,7 @@ wss.on('connection', (ws, req) => {
                         pccApi.SEC[1].cantons[aiguilles[5].index].position='r';
                         pccApi.SEC[1].cantons[aiguilles[5].index].dir='r';
                     }
-                    apiSave()
+                    exports.apiSave()
                 }
                 break;
             case 600:
@@ -3339,7 +2606,7 @@ wss.on('connection', (ws, req) => {
                     let currentMonth = currentDate.getUTCMonth()+1
                     let currentYear = currentDate.getFullYear();
                     event.date=event.date+' - '+currentDay+'/'+currentMonth+'/'+currentYear+', '+currentHour+'h'+currentMinute;
-                    apiSave()
+                    exports.apiSave()
                     gsa.cancelIncident(event, wss, event.id)
                 }
                 break;
@@ -3367,7 +2634,7 @@ wss.on('connection', (ws, req) => {
             }
             
             logger.client(false,ws,Object.keys(clients).length);
-            apiSave()
+            exports.apiSave()
         }
     });
 })
@@ -3387,6 +2654,8 @@ wss.on('connection', (ws, req) => {
         idArray.push(JSON.parse(_TID_))
     }
 }*/
+
+//? INTERNALS
 
 function getCantonsInfo(id){
     let fresponse={ trains: [] }
@@ -3482,4 +2751,752 @@ function changeItiState(mode, code){
         }
     }
     return false;
+}
+
+//? SHARED
+
+function moveHandler(tid, sens){
+    if(sens === 1){
+        let train = JSON.parse(getCantonsInfo(tid))
+        
+        let _cantonIndex = parseFloat(train.cantonIndex)   
+        let _trainIndex = parseFloat(train.trainIndex)
+        let _secIndex = parseFloat(train.secIndex)                    
+    
+        //?    On va donc regarder la voie active du train -> vérifier la possibilité de mouvement -> vérifier le type -> vérifier la continuité du canton -> créer le mouvement avec les bons indexs        ////////////////////////
+    
+    
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("c1")){
+            console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie 1 canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
+                console.log("[S1? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
+                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
+                    logger.error('Pas de canton +1!')
+                    console.log('[S1? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+    
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S1? V1 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
+                    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
+    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+    
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S1? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+    
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            } else {   //check si y'a un iti               //!                   OCCURENCE       ////////////////////////////
+                console.log("[S1? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
+                //? ITIS D'AIGUILLES
+                if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 1, wss)) return;
+                //pas d'iti, on traite l'aiguille comme un canton normal
+                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
+                    logger.error('Pas de canton +1!')
+                    console.log('[S1? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
+                    if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+    
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S1? V1 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S1? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 1)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            }
+    
+    
+    
+        } else if (pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("c2")){
+    
+    
+    
+    
+            console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie 2 canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
+                console.log("[S1? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
+                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
+                    logger.error('Pas de canton -1!')
+                    console.log('[S1? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S1? V2 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S1? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            } else {
+                console.log("[S1? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
+                console.warn('pour l\'instant on s\'en fous des iti mais faudra les mettre!')    //?         METTRE LES ITIS
+                if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 1, wss)) return;
+    
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S1? V2 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
+    
+                    //!                   OCCURENCE       ////////////////////////////
+    
+                    if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
+                        logger.error('Pas de canton -1!')
+                        console.log('[S1? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
+    
+                        let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
+    
+                        let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                        if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                            trainCopy.states.inZOPP=false
+                        }
+                        pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                        
+                        pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                            logger.confirm('Mouvement effectué avec succès')
+                        }
+                        exports.apiSave()
+                        return;
+                    }
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+    
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                } else {
+                    console.log('[S1? V2 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            }
+        } else if (pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("cG")) {
+            logger.info('[WS] Canton évalué hors ligne')
+            console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie GAT canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
+                console.log("[S1? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
+                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
+                    logger.error('Pas de canton +1!')
+                    console.log('[S1? VG SIM -> ELSE] Pas de continuité, passage à la section GAT')
+                    logger.error('Abandon iti (pas de section GAT)')
+    
+                    /*let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 'GAT')
+    
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
+                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
+                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
+                    } )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()*/
+                    return;
+                }
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S1? VG SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S1? VG SIM -> ELSE] Pas de continuité, passage à la section GAT')
+                    logger.error('Abandon iti (pas de section GAT)')
+    
+                    /*let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
+    
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
+                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
+                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
+                    } )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()*/
+                    return;
+                }
+            } else {
+                console.log("[S1? VG] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
+                if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 'GAT', wss)) return;
+    
+                if((/*pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && */pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S1? VG AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
+    
+    
+                    if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
+                        logger.error('Pas de canton +1!')
+                        console.log('[S1? VG SIM -> ELSE] Pas de continuité, passage à la section GAT')
+    
+                        /*let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
+    
+                        pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
+                            tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
+                            name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
+                        } )
+                        
+                        pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                            logger.confirm('Mouvement effectué avec succès')
+                        }
+                        exports.apiSave()*/
+                        return;
+                    }
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+    
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                } else {
+                    console.log('[S1? VG AIG -> ELSE] Pas de continuité, passage à la section GAT')
+    
+                    /*let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 1, 2)
+    
+                    pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].trains.push( {
+                        tid: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid,
+                        name: pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].name
+                    } )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()*/
+                    return;
+                }
+            }
+        }
+    //! todo crash hors zopp ouverture porte (a fix pour sens 2)
+        //?         FIN DE MOOVHANDLER V1            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    } else if(sens === 2){
+        let train = JSON.parse(getCantonsInfo(tid))
+        
+        let _cantonIndex = parseFloat(train.cantonIndex)   
+        let _trainIndex = parseFloat(train.trainIndex)
+        let _secIndex = parseFloat(train.secIndex)
+        //console.log(pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex])
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==='c2501') return;
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==='c1101') return;
+    
+        //?    On va donc regarder la voie active du train -> vérifier la possibilité de mouvement -> vérifier le type -> vérifier la continuité du canton -> créer le mouvement avec les bons indexs        ////////////////////////
+    
+    
+        if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("c1")){
+            console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie 1 canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
+                console.log("[S2? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
+                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
+                    logger.error('Pas de canton -1!')
+                    console.log('[S2? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S2? V1 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+    
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S2? V1 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            } else {   //check si y'a un iti                            //!                   OCCURENCE       ////////////////////////////
+                console.log("[S2? V1] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
+                if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 2, wss)) return;
+                //pas d'iti, on traite l'aiguille comme un canton normal
+                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
+                    logger.error('Pas de canton -1!')
+                    console.log('[S2? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+    
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S2? V1 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S2? V1 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 1)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            }
+    
+    
+    
+        } else if (pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("c2")){
+    
+    
+    
+    
+            console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie 2 canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
+                console.log("[S2? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
+                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
+                    logger.error('Pas de canton +1!')
+                    if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid==='c2501') return logger.error('LIMITE DE LIGNE, AUCUNE ACTION!');
+                    console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+    
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S2? V2 SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            } else {
+                console.log("[S2? V2] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
+                console.warn('pour l\'instant on s\'en fous des iti mais faudra les mettre!')
+    
+                if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 2, wss)) return;
+                
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S2? V2 AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid)
+                    
+                    //!                   OCCURENCE       ////////////////////////////
+    
+                    if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex+1])) {
+                        logger.error('Pas de canton +1!')
+                        console.log('[S2? V2 SIM -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
+    
+                        let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
+                        let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                        if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                            trainCopy.states.inZOPP=false
+                        }
+    
+                        pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                        
+                        pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                            logger.confirm('Mouvement effectué avec succès')
+                        }
+                        exports.apiSave()
+                        return;
+                    }
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex+1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex+1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+    
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S2? V2 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex-1].id)
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 2)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            }
+    
+    
+    
+        }else if (pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("cG")){
+    
+    
+    
+    
+            console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie GAT canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)
+            if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].position==='undefined'){
+                console.log("[S2? VG] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' simple')
+                if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
+                    logger.error('Pas de canton -1!')
+                    console.log('[S2? VG SIM -> ELSE] Pas de continuité, passage à la section LIGNE')
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( {...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]} )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+                if((/*pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) &&*/pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S2? VG SIM -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S2? VG SIM -> ELSE] Pas de continuité, passage à la section LIGNE')
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            } else {
+                console.log("[S2? VG] Canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' aiguille')
+    
+                if(ogia.findCompatibleItis(_secIndex, _cantonIndex, _trainIndex, 'GAT', wss)) return;
+                
+                if((pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.endsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(-2)) && pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid.startsWith(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.slice(0,2)))){
+                    console.log('[S2? VG AIG -> CONTINUE] Bon, on va supprimer le train du canton '+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid+' jusque au '+pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid)
+                    
+                    //!                   OCCURENCE       ////////////////////////////
+    
+                    if(!(pccApi.SEC[_secIndex].cantons[_cantonIndex-1])) {
+                        logger.error('Pas de canton -1!')
+                        console.log('[S2? VG SIM -> ELSE] Pas de continuité, passage à la section LIGNE')
+    
+                        let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
+                        let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+    
+                        pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                        
+                        pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                        if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                            logger.confirm('Mouvement effectué avec succès')
+                        }
+                        exports.apiSave()
+                        return;
+                    }
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex-1].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+    
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                } else {
+                    console.log('[S2? VG AIG -> ELSE] Pas de continuité, passage à la section LIGNE')
+    
+                    let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
+    
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
+                        trainCopy.states.inZOPP=false
+                    }
+                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    
+                    pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
+                    if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
+                        logger.confirm('Mouvement effectué avec succès')
+                    }
+                    exports.apiSave()
+                    return;
+                }
+            }
+        }
+    
+        //?         FIN DE MOOVHANDLER V2            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+}
+
+
+exports.MH=function(tid, sens){
+    moveHandler(tid, sens)
 }

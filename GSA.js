@@ -9,6 +9,8 @@ const pccApi=require('./server.json');
 
 const fs = require('fs')
 
+const parent = require('./ws')
+
 const {setTimeout} = require('timers/promises')
 
 /**
@@ -89,11 +91,7 @@ exports.applyIncident = async function(det, cmd, usr, wss){
     function apiSave(){
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
     
-        wss.broadcast(JSON.stringify({
-            op: 300,
-            content: pccApi
-        }))
-        logger.message('broadcast','NEW SERVER DATA => REFRESH')
+        parent.apiSave()
         //ws.send();
     }
     
@@ -267,11 +265,7 @@ exports.cancelIncident=async function(event, wss, evid){
     function apiSave(){
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
     
-        wss.broadcast(JSON.stringify({
-            op: 300,
-            content: pccApi
-        }))
-        logger.message('broadcast','NEW SERVER DATA => REFRESH')
+        parent.apiSave()
         //ws.send();
     }
     

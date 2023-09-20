@@ -37,6 +37,10 @@ if(cookies.discord_token){
                     alert(data.message)
                     document.location.href='https://discord.com/api/oauth2/authorize?client_id=1102519610848313344&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Fverify.html&response_type=token&scope=identify'
                 }
+                if(data.error===10){
+                    alert(data.message)
+                    document.location.href='https://discord.com/api/oauth2/authorize?client_id=1102519610848313344&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Fverify.html&response_type=token&scope=identify'
+                }
             }
         })
     })

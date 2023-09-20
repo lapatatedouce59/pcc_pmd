@@ -9,6 +9,8 @@ const pccApi=require('./server.json');
 
 const fs = require('fs')
 
+const parent = require('./ws')
+
 const {setTimeout} = require('timers/promises')
 
 
@@ -28,11 +30,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
     function apiSave(){
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
 
-        wss.broadcast(JSON.stringify({
-            op: 300,
-            content: pccApi
-        }))
-        logger.message('broadcast','NEW SERVER DATA => REFRESH')
+        parent.apiSave()
         //ws.send();
     }
 

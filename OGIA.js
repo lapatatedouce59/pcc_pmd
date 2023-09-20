@@ -9,6 +9,8 @@ const pccApi=require('./server.json');
 
 const fs = require('fs')
 
+const parent = require('./ws')
+
 /**
 * Véirifie l'existance d'un itinéraire et l'applique si besoins en retourant true. Retourne false dans le cas échéant
 * @param _secIndex Itération d'index de section actif
@@ -27,11 +29,7 @@ exports.findCompatibleItis = function (_secIndex, _cantonIndex, _trainIndex, voi
     function apiSave(){
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
 
-        wss.broadcast(JSON.stringify({
-            op: 300,
-            content: pccApi
-        }))
-        logger.message('broadcast','NEW SERVER DATA => REFRESH')
+        parent.apiSave()
         //ws.send();
     }
 
