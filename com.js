@@ -159,10 +159,9 @@ exports.triggerSpecialAction=(element, id, event, args)=>{
 
 /**
 * @description Déclanche un évenement spécial sur un élement
-* @param element (train ou station) L'élement concerné par le changement
+* @param mode (spawn ou remove) L'opération a effectuer
 * @param id (identifiant d'élement) L'identifiant "littéral" de l'élement (nom de la station, n° du train...)
-* @param event (évennement) L'évenement à déclancher
-* @param args Object contenant les informations relatives à l'évennement à déclancher.
+* @param args Les arguments annexes de la fonction
 * @returns { code: "HTTP Code", verbose: "HTTP Message", message: "Action response", response: array or boolean }
 * @type {object}
 */
@@ -171,7 +170,7 @@ exports.manageTrains=(mode, id, args)=>{
     if(!(mode)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The function mode have'nt been specified. Please refer to the documentation." })
     if(!(typeof args === 'object')) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The args parametter is not an Object. Please refer to the documentation." })
     if(mode==='spawn'){
-        if(!(args.initial)||!(id)||!(args.owner)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the function args is not provided. Please refer to the documentation." })
+        if(!(args.initial)||!(id)||!(args.owner)||!(args.type)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the function args is not provided. Please refer to the documentation." })
         for(let sec of pccApi.SEC){
             for(let ctn of sec.cantons){
                 let availableCtn = ['cGPAG1','c1101','c1201','c1501']
@@ -218,8 +217,9 @@ class Train {
     spawn(){
         if(this.mode==='set'){
             this.ctn.trains.push({
-                "tid": `${this.type} - ${this.id}`,
+                "tid": `${this.id}`,
                 "owner": this.owner,
+                "trainType": this.type,
                 "states": {
                     "doorsOpenedPV": false,
                     "doorsClosedPV": false,
@@ -359,8 +359,9 @@ class Train {
             ws.apiSave()
         } else if (this.mode==='unset'){
             this.ctn.trains.push({
-                "tid": `${this.type} - ${this.id}`,
+                "tid": `${this.id}`,
                 "owner": this.owner,
+                "trainType": this.type,
                 "states": {
                     "doorsOpenedPV": false,
                     "doorsClosedPV": false,
