@@ -92,6 +92,8 @@ let msr = false
 
 let work = false
 
+let com = require('./com')
+
 const clients = {}
 
 exports.apiSave = function(){
@@ -2288,10 +2290,9 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 226:
-                /*if(data.execute==='EMCALL-TEST'){
-                    let com = require('./com')
-                    console.log(com.triggerSpecialAction('train','2','emCall',{ caller: data.reqestBody.caller }))
-                }*/
+                if(data.execute==='EMCALL-TEST'){
+                    console.log(com.manageTrains('remove','29', {initial: 'set', owner: 'Amaury', type: 'P14'}))
+                }
                 if(data.execute==='EMCALL-ACQ'){
                     if(pccApi.emCalls.length>0){
                         pccApi.emCalls[0].active=true

@@ -1851,11 +1851,11 @@ let verifLoadInter = setInterval(verifFunc,50)
 
 document.getElementById('createEmCall').addEventListener('click', ()=>{
     let reqbody = prompt('REQUEST BODY')
-    let parsedBody = JSON.parse(reqbody)
+    //let parsedBody = JSON.parse(reqbody)
     actualRequest = JSON.stringify({
         op: 226,
         execute: "EMCALL-TEST",
-        reqestBody: parsedBody,
+        //reqestBody: parsedBody,
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);

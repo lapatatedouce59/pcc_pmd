@@ -153,6 +153,351 @@ exports.triggerSpecialAction=(element, id, event, args)=>{
         }
         return JSON.stringify({ code: 404, verbose: "Not Found", message: "The train id provided does'nt corresponds to any valid train. Here is a list of valid train identifiers.", reponse: errResponse})
     } else if (element==='station'){
-        return JSON.stringify({ code: 501, verbose: "Not Implemented", message: "The element specified is valid, bug no functions are usable for now. Please refer to the repos's changelog." })
+        return JSON.stringify({ code: 501, verbose: "Not Implemented", message: "The element specified is valid, but no functions are usable for now. Please refer to the repos's changelog." })
     } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The element provided is invalid. Please refer to the documentation." })
+}
+
+/**
+* @description Déclanche un évenement spécial sur un élement
+* @param element (train ou station) L'élement concerné par le changement
+* @param id (identifiant d'élement) L'identifiant "littéral" de l'élement (nom de la station, n° du train...)
+* @param event (évennement) L'évenement à déclancher
+* @param args Object contenant les informations relatives à l'évennement à déclancher.
+* @returns { code: "HTTP Code", verbose: "HTTP Message", message: "Action response", response: array or boolean }
+* @type {object}
+*/
+
+exports.manageTrains=(mode, id, args)=>{
+    if(!(mode)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The function mode have'nt been specified. Please refer to the documentation." })
+    if(!(typeof args === 'object')) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The args parametter is not an Object. Please refer to the documentation." })
+    if(mode==='spawn'){
+        if(!(args.initial)||!(id)||!(args.owner)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the function args is not provided. Please refer to the documentation." })
+        for(let sec of pccApi.SEC){
+            for(let ctn of sec.cantons){
+                let availableCtn = ['cGPAG1','c1101','c1201','c1501']
+                for(let actn of availableCtn){
+                    if(availableCtn.includes(ctn.cid)&&ctn.trains.length===0){
+                        let train = new Train(ctn, args.owner, args.initial, args.type, id)
+                        train.spawn()
+                        return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully on the map.`})
+                    }
+                }
+            }
+        }
+    } else if (mode==='remove'){
+        let errResponse = []
+        for(let sec of pccApi.SEC){
+            for(let ctn of sec.cantons){
+                if(!(ctn.trains.length>0)) continue;
+                for(let train of ctn.trains){
+                    errResponse.push( {id: train.tid, ctn: ctn.cid, sec: sec.id} )
+                    if(!(train.tid===id)) continue;
+                    let availableCtn = ['cGPAG1','c1101','c1201','c1501']
+                    if(availableCtn.includes(ctn.cid)){
+                        ctn.trains.shift()
+                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                        ws.apiSave()
+                        return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully deleted from the map.`})
+                    } else return JSON.stringify({ code: 403, verbose: "Forbidden", message: "You tried to delete a train without it beeing in a garage zone. Here is a list a valid cantons.", reponse: availableCtn})
+                }
+            }
+        }
+        return JSON.stringify({ code: 404, verbose: "Not Found", message: "The train id provided does'nt corresponds to any valid train. Here is a list of valid train identifiers.", reponse: errResponse})
+    } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The function mode provided is invalid. Please refer to the documentation." })
+}
+
+class Train {
+    constructor(ctn, owner, mode, type, id) {
+        this.ctn = ctn
+        this.owner = owner
+        this.mode = mode
+        this.type = type
+        this.id = id
+    }
+
+    spawn(){
+        if(this.mode==='set'){
+            this.ctn.trains.push({
+                "tid": `${this.type} - ${this.id}`,
+                "owner": this.owner,
+                "states": {
+                    "doorsOpenedPV": false,
+                    "doorsClosedPV": false,
+                    "inZOPP": false,
+                    "failedStop": false,
+                    "secureStop": false,
+                    "trainEssai": false,
+                    "trainIOP": false,
+                    "forbiddenStart": false,
+                    "trainEvac": false,
+                    "trainEmCall": false,
+                    "lsvDef": false,
+                    "blockDef": false,
+                    "defCdeOuvPV": false,
+                    "defCdeFerPV": false,
+                    "obstalceActive": false,
+                    "longTrain": false,
+                    "trainSecurised": false,
+                    "TMSActive": true,
+                    "EVACActive": false,
+                    "defTech": false,
+                    "defLtpa": false,
+                    "tneHorsZGAT": false,
+                    "fuKSEPO": false,
+                    "fuSurvitesse": false,
+                    "fuDiscMob": false,
+                    "fuVacma": false,
+                    "fuKPAMN": false,
+                    "fuPil": false,
+                    "fuObsColl": false,
+                    "fuNoFS": false,
+                    "fuRuptAtt": false,
+                    "testAuto": false,
+                    "defCvs": false,
+                    "trainBattery": false,
+                    "btDelest": false,
+                    "defDistBt": false,
+                    "defPart750": false,
+                    "abs750": false,
+                    "trainPAT": false,
+                    "defPartOuvPV": false,
+                    "defTotOuvPV": false,
+                    "trainInscrit": false,
+                    "evacUitp": false,
+                    "IOP": true,
+                    "nullSpeed": true,
+                    "selOuvDroite": false,
+                    "selOuvGauche": false,
+                    "blockedTrain": false,
+                    "defDCA": false,
+                    "cmdOuvPortesTrain": false,
+                    "opl": false,
+                    "lvsTrain": false,
+                    "seqDemTrain": false,
+                    "asmd": false,
+                    "v0pas": false,
+                    "cmdFu": false,
+                    "fsOk": true,
+                    "fuFranch": false,
+                    "inhibedCycleSeq": false,
+                    "autoIti": false,
+                    "defAppSeq": false,
+                    "activeMission": false,
+                    "waitingMission": true,
+                    "defExeMission": false,
+                    "canceledMission": false,
+                    "autorisedTrain": false,
+                    "fsForce": false,
+                    "execAcc": false,
+                    "accosting": false,
+                    "endAcc": false,
+                    "prodPert": false,
+                    "modeDegr": false,
+                    "trainLights": true,
+                    "trainHeating": true,
+                    "trainFans": false,
+                    "trainSmoke": false,
+                    "trainEstinguisher": false,
+                    "trainTempBrakes": false,
+                    "trainComp": true,
+                    "trainSusp": false,
+                    "trainKSA": false,
+                    "trainDefSupportWheels": false,
+                    "trainDefGuideWheels": false,
+                    "trainFrott": true,
+                    "autoTrain": true,
+                    "manuTrain": false,
+                    "doubleTrain": false,
+                    "trainSOS": false,
+                    "trainPilot": true,
+                    "defSynthVoc": false,
+                    "reguTrain": false,
+                    "defLectBal": false,
+                    "defKIBS": false,
+                    "tractionS1": false,
+                    "tractionS2": false,
+                    "cmdTraction": true,
+                    "activeOnduls": true,
+                    "avarieOnduls": false,
+                    "patEnr": false,
+                    "neutralManip": false,
+                    "activeFU": false,
+                    "activeFI": false,
+                    "defFN": false,
+                    "defFU": false,
+                    "permBrake": false,
+                    "activeFMS": false,
+                    "vitModifTrain": false,
+                    "vitModifSta": false,
+                    "vitModifPAS": false,
+                    "cmd08ms": false,
+                    "waitLectBal": false,
+                    "cmd0ms": false,
+                    "cmd5ms": false,
+                    "defTelec": false,
+                    "cmd10ms": false,
+                    "survTelec": false,
+                    "forbCommand": false,
+                    "awakeMR": true,
+                    "pretTrain": true,
+                    "defEveil": false,
+                    "deprepTrain": false,
+                    "defEndorm": false,
+                    "defDeprep": false,
+                    "echecPrep": false,
+                    "refusDeprep": false,
+                    "validTests": true,
+                    "echecTestFU": false,
+                    "activeTests": false,
+                    "unvalidTest": false,
+                    "speed": 0,
+                    "mission": false,
+                    "cptFu": 0
+                }
+            })
+            fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+            ws.apiSave()
+        } else if (this.mode==='unset'){
+            this.ctn.trains.push({
+                "tid": `${this.type} - ${this.id}`,
+                "owner": this.owner,
+                "states": {
+                    "doorsOpenedPV": false,
+                    "doorsClosedPV": false,
+                    "inZOPP": false,
+                    "failedStop": false,
+                    "secureStop": false,
+                    "trainEssai": false,
+                    "trainIOP": false,
+                    "forbiddenStart": false,
+                    "trainEvac": false,
+                    "trainEmCall": false,
+                    "lsvDef": false,
+                    "blockDef": false,
+                    "defCdeOuvPV": false,
+                    "defCdeFerPV": false,
+                    "obstalceActive": false,
+                    "longTrain": false,
+                    "trainSecurised": false,
+                    "TMSActive": true,
+                    "EVACActive": false,
+                    "defTech": false,
+                    "defLtpa": false,
+                    "tneHorsZGAT": false,
+                    "fuKSEPO": false,
+                    "fuSurvitesse": false,
+                    "fuDiscMob": false,
+                    "fuVacma": false,
+                    "fuKPAMN": false,
+                    "fuPil": 1,
+                    "fuObsColl": false,
+                    "fuNoFS": false,
+                    "fuRuptAtt": false,
+                    "testAuto": false,
+                    "defCvs": false,
+                    "trainBattery": 1,
+                    "btDelest": 1,
+                    "defDistBt": false,
+                    "defPart750": false,
+                    "abs750": 1,
+                    "trainPAT": false,
+                    "defPartOuvPV": false,
+                    "defTotOuvPV": false,
+                    "trainInscrit": false,
+                    "evacUitp": false,
+                    "IOP": true,
+                    "nullSpeed": true,
+                    "selOuvDroite": false,
+                    "selOuvGauche": false,
+                    "blockedTrain": false,
+                    "defDCA": false,
+                    "cmdOuvPortesTrain": false,
+                    "opl": false,
+                    "lvsTrain": false,
+                    "seqDemTrain": false,
+                    "asmd": false,
+                    "v0pas": 1,
+                    "cmdFu": false,
+                    "fsOk": 1,
+                    "fuFranch": false,
+                    "inhibedCycleSeq": false,
+                    "autoIti": false,
+                    "defAppSeq": false,
+                    "activeMission": false,
+                    "waitingMission": false,
+                    "defExeMission": false,
+                    "canceledMission": false,
+                    "autorisedTrain": false,
+                    "fsForce": false,
+                    "execAcc": false,
+                    "accosting": false,
+                    "endAcc": false,
+                    "prodPert": false,
+                    "modeDegr": false,
+                    "trainLights": false,
+                    "trainHeating": false,
+                    "trainFans": false,
+                    "trainSmoke": false,
+                    "trainEstinguisher": false,
+                    "trainTempBrakes": false,
+                    "trainComp": false,
+                    "trainSusp": false,
+                    "trainKSA": false,
+                    "trainDefSupportWheels": false,
+                    "trainDefGuideWheels": false,
+                    "trainFrott": false,
+                    "autoTrain": false,
+                    "manuTrain": false,
+                    "doubleTrain": false,
+                    "trainSOS": false,
+                    "trainPilot": false,
+                    "defSynthVoc": false,
+                    "reguTrain": false,
+                    "defLectBal": false,
+                    "defKIBS": false,
+                    "tractionS1": false,
+                    "tractionS2": false,
+                    "cmdTraction": false,
+                    "activeOnduls": false,
+                    "avarieOnduls": false,
+                    "patEnr": false,
+                    "neutralManip": false,
+                    "activeFU": false,
+                    "activeFI": true,
+                    "defFN": false,
+                    "defFU": false,
+                    "permBrake": true,
+                    "activeFMS": false,
+                    "vitModifTrain": false,
+                    "vitModifSta": false,
+                    "vitModifPAS": false,
+                    "cmd08ms": false,
+                    "waitLectBal": false,
+                    "cmd0ms": false,
+                    "cmd5ms": false,
+                    "defTelec": false,
+                    "cmd10ms": false,
+                    "survTelec": false,
+                    "forbCommand": false,
+                    "awakeMR": true,
+                    "pretTrain": false,
+                    "defEveil": false,
+                    "deprepTrain": false,
+                    "defEndorm": false,
+                    "defDeprep": false,
+                    "echecPrep": false,
+                    "refusDeprep": false,
+                    "validTests": false,
+                    "echecTestFU": false,
+                    "activeTests": false,
+                    "unvalidTest": true,
+                    "speed": 0,
+                    "mission": false,
+                    "cptFu": 0
+                }
+            })
+            fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+            ws.apiSave()
+        }
+    }
 }
