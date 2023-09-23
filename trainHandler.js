@@ -1,6 +1,8 @@
 let selectMenuTrain = document.getElementById('trainSelect');
 let selectValueTrain = false
 
+let previousSelected = '2'
+
 //INFOS TRAIN HEAD
 let trainNumberTrain = document.getElementById('trainNumberTrain')
 let trainCanton = document.getElementById('trainCanton')
@@ -106,34 +108,41 @@ function sleep(ms) {
         }*/else if ((data.op===300)||(data.op===2)){
             let op = data.op
             data=data.content
+
             if(op===2){
-                let trains = []
-                let inflationDuPrixDuCarburant = 0
-                for (let sec of data.SEC){
-                    for (let ctns of sec.cantons){
-                        if(!(ctns.trains.length >=1)) continue;
-                        console.log('canton '+ctns.cid)
-                        for (let train of ctns.trains){
-                            console.log(train)
-                            trains.push({tname: train.tid})
-                            let opt = document.createElement('OPTION')
-                            opt.innerHTML=train.tid
-                            opt.value=train.tid
-                            opt.classList='trainOpt'
-                            opt.id=train.tid
-                            selectMenuTrain.appendChild(opt)
-                        }
-                    }
-                    inflationDuPrixDuCarburant++
-                }
-                console.log(trains)
+                refreshTList()
             }
-            let train = getTrainInfo(selectMenuTrain.value)
+            refreshTList()
+            let train = getTrainInfo(selectValueTrain || selectMenuTrain.value)
             console.log(train)
             updateVoy(train)
         }
     })
 //})
+
+function refreshTList(){
+    let trains = []
+    selectMenuTrain.innerText='';
+    let inflationDuPrixDuCarburant = 0
+    for (let sec of data.SEC){
+        for (let ctns of sec.cantons){
+            if(!(ctns.trains.length >=1)) continue;
+            console.log('canton '+ctns.cid)
+            for (let train of ctns.trains){
+                console.log(train)
+                trains.push({tname: train.tid})
+                let opt = document.createElement('OPTION')
+                opt.innerHTML=train.trainType + '-' +train.tid
+                opt.setAttribute('name',train.trainType + '-' +train.tid)
+                opt.value=train.tid
+                opt.classList='trainOpt'
+                opt.id=train.tid
+                selectMenuTrain.appendChild(opt)
+            }
+        }
+        inflationDuPrixDuCarburant++
+    }
+}
 
 function getTrainInfo(id){
     let reponse={id: false, states: false, trains: [], secIndex: false, cIndex: false, tIndex: false}
@@ -180,7 +189,7 @@ let blinkIdReturn = 0
 function josephineChercheLesDefauts(){
 
     for(let tOpt of document.getElementsByClassName('trainOpt')){
-        tOpt.innerText=tOpt.id
+        tOpt.innerText=tOpt.getAttribute("name")
         tOpt.classList.remove('alarm')
     }
     //listDef.innerHTML=''
@@ -195,10 +204,10 @@ function josephineChercheLesDefauts(){
                 for(const property of Object.entries(data.SEC[sec].cantons[ctns].trains[train].states)){
                     if(!(property[1] === 1 || property[1] === 2)) continue;
                     if(property[1]===1){
-                        defList.push(data.SEC[sec].cantons[ctns].trains[train].tid)
+                        defList.push({name: data.SEC[sec].cantons[ctns].trains[train].tid + '-' + data.SEC[sec].cantons[ctns].trains[train].trainType, id: data.SEC[sec].cantons[ctns].trains[train].tid})
                     }
                     if(property[1]===2){
-                        anoList.push({name:data.SEC[sec].cantons[ctns].trains[train].tid,def:property[0],pos:data.SEC[sec].cantons[ctns].cid})
+                        anoList.push({name:data.SEC[sec].cantons[ctns].trains[train].tid + '-' + data.SEC[sec].cantons[ctns].trains[train].trainType,def:property[0],pos:data.SEC[sec].cantons[ctns].cid, id: data.SEC[sec].cantons[ctns].trains[train].tid})
                     }
                 }
             }
@@ -207,12 +216,10 @@ function josephineChercheLesDefauts(){
     console.log(defList)
     for (let tr in defList){
         console.log(defList)
-        let elem = document.getElementById(defList[tr])
-        console.log(elem)
-        elem.innerText='🟥' +defList[tr]
+        let elem = document.getElementById(defList[tr].id)
+        elem.innerText='🟥' +defList[tr].name
     }
     for (let tr in anoList){
-        console.log('PRESET 6666')
         let defDiv = document.createElement('div')
         defDiv.id=anoList[tr].name+'DEF'
         let tName = document.createElement('mark')
@@ -225,7 +232,7 @@ function josephineChercheLesDefauts(){
         defDiv.appendChild(cName)
         defDiv.appendChild(defName)
         listDef.appendChild(defDiv)
-        let elem = document.getElementById(anoList[tr].name)
+        let elem = document.getElementById(anoList[tr].id)
         elem.classList.add('alarm')
     }
     if (anoList.length >= 1){
@@ -311,7 +318,6 @@ function updateVoy(c){
 
         switch(c.trains[0].states[elemid]){
             case false:
-                console.log(elemid+' faux.')
                 voy.classList.remove('ok')
                 voy.classList.remove('alarm')
                 blinkIdReturn = blinkIntervalId.get(elemid)
@@ -320,7 +326,6 @@ function updateVoy(c){
                 blinkIntervalId.delete(elemid)
                 break;
             case true:
-                console.log(elemid+' true.')
                 voy.classList.toggle('ok', true)
                 voy.classList.remove('alarm')
                 blinkIdReturn = blinkIntervalId.get(elemid)
@@ -329,7 +334,6 @@ function updateVoy(c){
                 blinkIntervalId.delete(elemid)
                 break;
             case 1:
-                console.log(elemid+' Alarme')
                 voy.classList.remove('ok')
                 voy.classList.toggle('alarm', true)
                 blinkIdReturn = blinkIntervalId.get(elemid)
@@ -338,7 +342,6 @@ function updateVoy(c){
                 blinkIntervalId.delete(elemid)
                 break;
             case 2:
-                console.log(elemid+' Anomalie')
                 voy.classList.remove('ok')
                 voy.classList.toggle('alarm',true)
                 let blinkId = setInterval(async function() {

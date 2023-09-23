@@ -320,6 +320,7 @@
             {
               "tid": "2",
               "name": "Jean Marc",
+              "trainType": "89",
               "states": {
                 "doorsOpenedPV": false,
                 "doorsClosedPV": false,
@@ -1041,6 +1042,7 @@
             {
               "tid": "3",
               "name": "Léo",
+              "trainType": "14",
               "missions": [
                 {
                   "code": "EXPL MSO-OLY",
