@@ -208,6 +208,16 @@ exports.nextSectionIndex = function (_secIndex, _cantonIndex, sens, voie){
                     logger.info('[OGIA] Aucun index de canton trouvé. Valeur défaut.')
                     _NEXTCINDEX = 0
             }
+        } else if (voie === 'GAT'){
+            switch(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid){
+                case 'cGA2PAG':
+                    logger.info('[OGIA] Un index de canton a été trouvé.')
+                    _NEXTCINDEX = 1
+                    break;
+                default:
+                    logger.info('[OGIA] Aucun index de canton trouvé. Valeur défaut.')
+                    _NEXTCINDEX = 0
+            }
         } else throw new Error ('[OGIA] La voie renseigné ('+voie+') n\'est pas valide.')
 
         return _NEXTCINDEX;

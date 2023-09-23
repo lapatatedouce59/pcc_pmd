@@ -3385,7 +3385,7 @@ function moveHandler(tid, sens){
     
                     let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
     
-                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
                     if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
                         trainCopy.states.inZOPP=false
                     }
@@ -3417,7 +3417,7 @@ function moveHandler(tid, sens){
     
                     let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
     
-                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
                     if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
                         trainCopy.states.inZOPP=false
                     }
@@ -3445,7 +3445,7 @@ function moveHandler(tid, sens){
                         console.log('[S2? VG SIM -> ELSE] Pas de continuité, passage à la section LIGNE')
     
                         let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
-                        let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                        let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
                     if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
                         trainCopy.states.inZOPP=false
                     }
@@ -3460,7 +3460,7 @@ function moveHandler(tid, sens){
                         return;
                     }
     
-                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
                     if(!pccApi.SEC[_secIndex].cantons[_cantonIndex-1].hasOwnProperty('type')){
                         trainCopy.states.inZOPP=false
                     }
@@ -3477,11 +3477,11 @@ function moveHandler(tid, sens){
     
                     let _NEXTCINDEX = ogia.nextSectionIndex(_secIndex, _cantonIndex, 2, 'GAT')
     
-                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains[_trainIndex]}
+                    let trainCopy={...pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]}
                     if(!pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].hasOwnProperty('type')){
                         trainCopy.states.inZOPP=false
                     }
-                    pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].trains.push( trainCopy )
+                    pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].trains.push( trainCopy )
                     
                     pccApi.SEC[_secIndex].cantons[_cantonIndex].trains.pop();
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){

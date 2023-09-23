@@ -258,20 +258,42 @@ let noDef2 = false
 function detectAZM(){
     let defUCA = []
     for(let sec of pccApi.SEC){
-        for(let ctn of sec.cantons){
-            if(ctn.cid === 'c1301' || ctn.cid === 'c2301'){
-                if(ctn.trains.length>0){
-                    if(!(isItiActive('1201_1401')||isItiActive('1401_1201')||isItiActive('1401_2401')||isItiActive('2401_1401')||isItiActive('1201_2201')||isItiActive('2201_1201')||isItiActive('2201_2401')||isItiActive('2401_2201'))){
-                        if(sec.id==='1'){
+        if(sec.id==='1'){
+            for(let ctn of sec.cantons){
+                if(ctn.cid === 'c1301' || ctn.cid === 'c2301'){
+                    if(ctn.trains.length>0){
+                        if(!(isItiActive('1201_1401')||isItiActive('1401_1201')||isItiActive('1401_2401')||isItiActive('2401_1401')||isItiActive('1201_2201')||isItiActive('2201_1201')||isItiActive('2201_2401')||isItiActive('2401_2201'))){
                             sec.states.zoneManoeuvre1=2
-                        } else
-                        if(sec.id==='2'){
-                            sec.states.zoneManoeuvre2=2
+                            defUCA.push(ctn.cid)
+                            exports.f9=false
+                            exports.callCounts++
+                            askForFsCoup()
                         }
-                        defUCA.push(ctn.cid)
-                        exports.f9=false
-                        exports.callCounts++
-                        askForFsCoup()
+                    }
+                }
+            }
+        }
+        if(sec.id==='2'){
+            for(let ctn of sec.cantons){
+                if(ctn.cid === 'c1102' || ctn.cid === 'c2402'){
+                    if(ctn.trains.length>0){
+                        if(!(isItiActive('2501_1202')||isItiActive('1202_2501')||isItiActive('2302_2101')||isItiActive('2101_2302')||isItiActive('1202_2101')||isItiActive('2101_1202'))){
+                            sec.states.zoneManoeuvre2=2
+                            defUCA.push(ctn.cid)
+                            exports.f9=false
+                            exports.callCounts++
+                            askForFsCoup()
+                        }
+                    }
+                } else if(ctn.cid === 'c1202' || ctn.cid === 'cGA2PAG'){
+                    if(ctn.trains.length>0){
+                        if(!(isItiActive('1102_1302')||isItiActive('1302_1102')||isItiActive('PAG1_1102')||isItiActive('1102_PAG1'))){
+                            sec.states.zoneManoeuvre2=2
+                            defUCA.push(ctn.cid)
+                            exports.f9=false
+                            exports.callCounts++
+                            askForFsCoup()
+                        }
                     }
                 }
             }
