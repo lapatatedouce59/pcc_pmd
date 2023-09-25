@@ -1881,3 +1881,9 @@ document.getElementById('razAlerteUrgence').addEventListener('click',()=>{
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
 })
+
+document.getElementById('btnSupervisionPage').addEventListener('click', ()=>{
+    if(window.role==='chef'){
+        document.location.href='supervision.html'
+    }
+})

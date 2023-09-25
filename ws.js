@@ -96,6 +96,8 @@ let com = require('./com')
 
 const clients = {}
 
+pccApi.players=[]
+
 exports.apiSave = function(){
     ovse.periodicUpdateVoy()
     let fx = setInterval(()=>{
@@ -598,13 +600,17 @@ wss.on('connection', (ws, req) => {
                                         } else {
                                             ws.role='operator'
                                         }
+
+                                        ws.send(JSON.stringify({ op: 2, uuid: ws.id, content: pccApi, uname:ws.usr.username, role:ws.role }))
+                                        clients[ws.id]=ws
+                                        let firstUUID = newUUID.slice(0,10)
+                                        pccApi.players.push({ uuid: `${firstUUID}...`, name: usr.username, role: ws.role })
+                                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                         wss.broadcast(JSON.stringify({
                                             op: 10,
                                             joined: { uuid: ws.id, uname: ws.usr.username },
                                             content: pccApi
                                         }))
-                                        ws.send(JSON.stringify({ op: 2, uuid: ws.id, content: pccApi, uname:ws.usr.username, role:ws.role }))
-                                        clients[ws.id]=ws
                                         logger.identify(ws,Object.keys(clients).length)
                                     } else {
                                         logger.error('[DV] '+usr.username+' non whitelisté')
@@ -2291,7 +2297,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 226:
                 if(data.execute==='EMCALL-TEST'){
-                    console.log(com.manageTrains('remove','29', {initial: 'set', owner: 'Amaury', type: 'P14'}))
+                    console.log(com.manageTrains('spawn','21', {initial: 'set', owner: 'Amaury', type: 'P14'}))
                 }
                 if(data.execute==='EMCALL-ACQ'){
                     if(pccApi.emCalls.length>0){
@@ -2619,6 +2625,37 @@ wss.on('connection', (ws, req) => {
                 let user = clients[data.uuid]
                 gsa.applyIncident(prefix,command,user,wss)
                 break;
+            case 900:
+                if(!isClientExisting(data.uuid)) return;
+                if(!ws.role==='chef') return;
+                if(data.command==='stopServer'){
+                    logger.info(`ARRET DU SERVEUR! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
+                    process.exit(0)
+                } else if(data.command==='trainDelete'){
+                    for(let sec of pccApi.SEC){
+                        for(let ctn of sec.cantons){
+                            if(!(ctn.trains.length>0)) continue;
+                            for(let train of ctn.trains){
+                                if(!(train.tid===data.train)) continue;
+                                let availableCtn = ['cGPAG1','c1101','c1201','c1501']
+                                if(availableCtn.includes(ctn.cid)){
+                                    ctn.trains.shift()
+                                    fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                                    exports.apiSave()
+                                    logger.confirm(`Suppression du train ${data.train}! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
+                                } else {
+                                    ctn.trains.shift()
+                                    logger.info('FORCED SUPPRESION')
+                                    fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                                    exports.apiSave()
+                                    logger.confirm(`Suppression du train ${data.train}! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
+                                }
+                            }
+                        }
+                    }
+                }
+
+                break;
         }
     })
     ws.on("close", ()=>{
@@ -2629,6 +2666,11 @@ wss.on('connection', (ws, req) => {
                 name: ws.usr.username,
                 content: pccApi
             }))
+            for(let player in pccApi.players){
+                if((ws.id.slice(0,10)+'...') === pccApi.players[player].uuid){
+                    pccApi.players.splice(player, 1)
+                }
+            }
             delete clients[ws.id];
             if(!ws.loaded){
                 logger.error(ws.usr.username+' leaved without loading!')

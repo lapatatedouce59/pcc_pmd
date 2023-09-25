@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Supervision administrateur</title>
+    <style>
+        body{
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #222222;
+            color: white;
+            font-family: Arial;
+        }
+        #MASTERHEAD{
+            background-color: #1C1C1C;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100%;
+            padding: 20px;
+        }
+        #head1{
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+        }
+        .divPlayers>div{
+            margin-inline: 15px;
+        }
+        .divTrains>div{
+            margin-inline: 15px;
+        }
+        .divPlayers{
+            display: flex;
+        }
+        .divTrains{
+            display: flex;
+        }
+
+    </style>
+</head>
+<body>
+    <script src="connexion.js"></script>
+    <div id="MASTERHEAD">
+        <div id="head1">
+            <img src="./src/global/Paris_transit_icons_-_Métro_14.svg.png" style="height: 50px;"><img src="./src/global/logo new.png" style="height: 50px;"><h1>PCC Multijoueur</h1>
+        </div>
+        <div style="color: #A6A6A6;">
+            <div class="user">
+                Connecté en tant que: <span id="uname">indéfini</span>
+            </div>
+            <div class="user">
+                Votre UUID: <span id="uuidLigne">indéfini</span>
+            </div>
+            <div class="user">
+                Votre rôle: <span id="roleOP">indéfini</span>
+            </div>
+            <div style="display: inline-flex;"><button id="copyConfig" style="height: 20px; font-size: 10px; background: none; color: white;">Copier la requête</button><button id="btnPcc" style="height: 20px; font-size: 10px; background: none; color: white;">Opérateur PCC</button></div>
+        </div>
+    </div>
+    <div style="display: inline-flex">
+        <div>
+            <fieldset style="width: fit-content" id="playerListField">
+                <legend>Joueurs présents</legend>
+                <div id="playerList">
+                </div>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset style="width: fit-content" id="trainListField">
+                <legend>Trains présents</legend>
+                <div id="trainList">
+                </div>
+            </fieldset>
+        </div>
+    </div>
+    <br>
+    <button id="trainDelete">Forcer la suppression d'un train</button>
+    <button id="stopServer" style="color: white; background-color: #EF0000">ARRÊT D'URGENCE</button>
+
+    <script src="supervision.js"></script>
+</body>
+</html>

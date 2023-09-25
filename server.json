@@ -93,6 +93,13 @@
     "402": true,
     "501": true
   },
+  "players": [
+    {
+      "uuid": "a963139f-8...",
+      "name": "patatedouce.dev",
+      "role": "chef"
+    }
+  ],
   "SEC": [
     {
       "id": "1",
@@ -290,6 +297,7 @@
             {
               "tid": "2",
               "name": "Jean Marc",
+              "owner": "Amaury",
               "trainType": "89",
               "states": {
                 "doorsOpenedPV": false,
@@ -460,6 +468,7 @@
             {
               "tid": "3",
               "name": "Léo",
+              "owner": "Amaury",
               "trainType": "14",
               "missions": [
                 {
