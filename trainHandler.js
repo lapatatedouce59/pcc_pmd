@@ -119,18 +119,18 @@ function sleep(ms) {
         }
     })
 //})
-
+let trainsAlreadyCreated = []
 function refreshTList(){
-    let trains = []
-    selectMenuTrain.innerText='';
+
     let inflationDuPrixDuCarburant = 0
     for (let sec of data.SEC){
         for (let ctns of sec.cantons){
             if(!(ctns.trains.length >=1)) continue;
             console.log('canton '+ctns.cid)
             for (let train of ctns.trains){
+                if(trainsAlreadyCreated.includes(train.tid)) continue;
                 console.log(train)
-                trains.push({tname: train.tid})
+                trainsAlreadyCreated.push(train.tid)
                 let opt = document.createElement('OPTION')
                 opt.innerHTML=train.trainType + '-' +train.tid
                 opt.setAttribute('name',train.trainType + '-' +train.tid)
