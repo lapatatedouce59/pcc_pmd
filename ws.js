@@ -2029,6 +2029,8 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 220:
+                if(!isClientExisting(data.uuid)) return;
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if((pccApi.SEC[0].cantons[0].trains.length===0)||(pccApi.SEC[0].cantons[1].trains.length===0)){
                     pccApi.SEC[0].states.retDispoV101=true
                 }
@@ -2100,6 +2102,8 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 221:
+                if(!isClientExisting(data.uuid)) return;
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if((pccApi.SEC[0].cantons[0].trains.length===0)||(pccApi.SEC[0].cantons[1].trains.length===0)){
                     pccApi.SEC[0].states.retDispoV101=true
                 }
@@ -2296,6 +2300,8 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 226:
+                if(!isClientExisting(data.uuid)) return;
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.execute==='EMCALL-TEST'){
                     console.log(com.manageTrains('spawn','21', {initial: 'set', owner: 'Amaury', type: 'P14'}))
                 }
@@ -2312,6 +2318,8 @@ wss.on('connection', (ws, req) => {
                 break;
                 
             case 222:
+                if(!isClientExisting(data.uuid)) return;
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.execute==='SEL-BTN-CYCLE'){
                     if(!(data.target)) return;
                     for(let sec of pccApi.SEC){
@@ -2403,6 +2411,8 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 223:
+                if(!isClientExisting(data.uuid)) return;
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.execute==='CANCELCYCLES-BTN-ITI'){
                     if(!(data.target)) return;
                     for(let sec of pccApi.SEC){
@@ -2442,6 +2452,8 @@ wss.on('connection', (ws, req) => {
                 }
                 break;
             case 224:
+                if(!isClientExisting(data.uuid)) return;
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.execute==='AQC-BTN'){
                     if(!(data.target)) return;
                     for(let sec of pccApi.SEC){
@@ -2628,6 +2640,7 @@ wss.on('connection', (ws, req) => {
             case 900:
                 if(!isClientExisting(data.uuid)) return;
                 if(!ws.role==='chef') return;
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.command==='stopServer'){
                     logger.info(`ARRET DU SERVEUR! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
                     process.exit(0)

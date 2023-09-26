@@ -95,7 +95,12 @@
   },
   "players": [
     {
-      "uuid": "a963139f-8...",
+      "uuid": "e3168b76-4...",
+      "name": "patatedouce.dev",
+      "role": "chef"
+    },
+    {
+      "uuid": "a036e8d6-1...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -399,7 +404,7 @@
                 "activeOnduls": true,
                 "avarieOnduls": false,
                 "patEnr": false,
-                "neutralManip": false,
+                "neutralKDJ": false,
                 "activeFU": false,
                 "activeFI": false,
                 "defFN": false,
@@ -579,7 +584,8 @@
                 "activeOnduls": true,
                 "avarieOnduls": false,
                 "patEnr": false,
-                "neutralManip": false,
+                "neutralKDJ": false,
+                "alaVigil": false,
                 "activeFU": false,
                 "activeFI": false,
                 "defFN": false,
@@ -736,7 +742,7 @@
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
-            "actualTime": 10,
+            "actualTime": 6,
             "afdActive": false,
             "cancelAfd": false,
             "VVTS1": false,

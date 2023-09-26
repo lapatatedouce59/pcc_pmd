@@ -11,7 +11,7 @@ exports.client = function (state, ws, len) {
             return console.log('\x1b[37m[\x1b[32m+\x1b[37m] Client connecté');
         case false:
             return console.log(`\x1b[37m[\x1b[31m-\x1b[37m] ${ws.usr.username} déconnecté. Désormais ${len} utilisateurs.`);
-  };
+    };
 }
 
 exports.message = function (type,data,uname,ip,instance){

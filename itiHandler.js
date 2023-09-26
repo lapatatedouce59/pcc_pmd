@@ -5,7 +5,7 @@ let selected = false
 
 window.WebSocket.addEventListener('message', msg =>{
     data = JSON.parse(msg.data);
-    if ((data.op===300)||(data.op===2)){
+    if ((data.op===300)||(data.op===2)||(data.op===10)){
         let op = data.op
         data=data.content
         if(op===2){

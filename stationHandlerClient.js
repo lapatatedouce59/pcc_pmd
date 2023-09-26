@@ -163,7 +163,7 @@ async function faireBip(){
                 demande: 'TEST-UUID?',
                 uuid: uuid
             }))*/
-        } else if ((data.op===300)||(data.op===2)){
+        } else if ((data.op===300)||(data.op===2)||(data.op===10)){
             
             let op=data.op
             data=data.content

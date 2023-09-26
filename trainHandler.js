@@ -105,7 +105,7 @@ function sleep(ms) {
                 demande: 'TEST-UUID?',
                 uuid: uuid
             }))
-        }*/else if ((data.op===300)||(data.op===2)){
+        }*/else if ((data.op===300)||(data.op===2)||(data.op===10)){
             let op = data.op
             data=data.content
 
@@ -204,10 +204,10 @@ function josephineChercheLesDefauts(){
                 for(const property of Object.entries(data.SEC[sec].cantons[ctns].trains[train].states)){
                     if(!(property[1] === 1 || property[1] === 2)) continue;
                     if(property[1]===1){
-                        defList.push({name: data.SEC[sec].cantons[ctns].trains[train].tid + '-' + data.SEC[sec].cantons[ctns].trains[train].trainType, id: data.SEC[sec].cantons[ctns].trains[train].tid})
+                        defList.push({name: data.SEC[sec].cantons[ctns].trains[train].trainType + '-' + data.SEC[sec].cantons[ctns].trains[train].tid, id: data.SEC[sec].cantons[ctns].trains[train].tid})
                     }
                     if(property[1]===2){
-                        anoList.push({name:data.SEC[sec].cantons[ctns].trains[train].tid + '-' + data.SEC[sec].cantons[ctns].trains[train].trainType,def:property[0],pos:data.SEC[sec].cantons[ctns].cid, id: data.SEC[sec].cantons[ctns].trains[train].tid})
+                        anoList.push({name:data.SEC[sec].cantons[ctns].trains[train].trainType + '-' + data.SEC[sec].cantons[ctns].trains[train].tid,def:property[0],pos:data.SEC[sec].cantons[ctns].cid, id: data.SEC[sec].cantons[ctns].trains[train].tid})
                     }
                 }
             }
