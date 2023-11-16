@@ -95,12 +95,7 @@
   },
   "players": [
     {
-      "uuid": "e3168b76-4...",
-      "name": "patatedouce.dev",
-      "role": "chef"
-    },
-    {
-      "uuid": "4c374c41-a...",
+      "uuid": "7901d6ed-b...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -649,7 +644,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": true,
+            "DSO": false,
             "SSO": false,
             "status": "valid",
             "IDPOAlreadyActiveByPLTP": false,
@@ -736,7 +731,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": true,
+            "DSO": false,
             "SSO": false,
             "status": false,
             "IDPOAlreadyActiveByPLTP": false,
@@ -1045,7 +1040,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": true,
+            "DSO": false,
             "SSO": false,
             "status": false,
             "IDPOAlreadyActiveByPLTP": false,
@@ -1130,7 +1125,7 @@
             "departAuth": false,
             "departForce": false,
             "HLP": false,
-            "DSO": true,
+            "DSO": false,
             "SSO": true,
             "status": false,
             "IDPOAlreadyActiveByPLTP": false,

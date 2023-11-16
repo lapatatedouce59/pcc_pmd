@@ -67,8 +67,8 @@ exports.itiInfos = async(mode, code)=>{
 * @type {object}
 */
 
-exports.changeElementState = (element, id, state, value)=>{
-    if(!(element)||!(id)||!(state)||!(value))  return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the function parametters are missing. Please refer to the documentation." })
+exports.changeElementState = (element, id, state, value, force)=>{
+    if(!(element)||!(id)||!(state))  return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the function parametters are missing. Please refer to the documentation." })
     if(!(value===true||value===false||value===2)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The value of the element state is invalid. Please refer to the documentation." })
     if(element==='station'){
         let errResponse = []
@@ -101,15 +101,16 @@ exports.changeElementState = (element, id, state, value)=>{
                 for(let train of ctn.trains){
                     errResponse.push( {id: train.tid, ctn: ctn.cid, sec: sec.id} )
                     if(!(train.tid===id)) continue;
-                    for(let state of Object.entries(train.states)){
+                    for(let tstate of Object.entries(train.states)){
                         errResponse2.push(state[0])
-                        if(!(state[0]===state)) continue;
-                        if(state[0]==='trainSOS') return JSON.stringify({ code: 423, verbose: "Locked", message: "While the state provided is valid, you don't have the permission to change it directly. Call the function triggerSpecialAction() or refer to the documentation.", reponse: errResponse2})
-                        let formerState = state[1]
-                        train.states[state[0]] = value
+                        //console.log(`${state}=${tstate[0]}?${state===tstate[0]}`)
+                        if(!(tstate[0]===state)) continue;
+                        if(tstate[0]==='trainSOS' && !(force)) return JSON.stringify({ code: 423, verbose: "Locked", message: "While the state provided is valid, you don't have the permission to change it directly. Call the function triggerSpecialAction() or refer to the documentation.", reponse: errResponse2})
+                        let formerState = tstate[1]
+                        train.states[tstate[0]] = value
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         ws.apiSave()
-                        return JSON.stringify({ code: 200, verbose: "OK", message: `The element ${state[0]} have been successfully changed from ${formerState} to ${value}.`})
+                        return JSON.stringify({ code: 200, verbose: "OK", message: `The element ${tstate[0]} have been successfully changed from ${formerState} to ${value}.`})
                     }
                     return JSON.stringify({ code: 404, verbose: "Not Found", message: "The state provided does'nt corresponds to any valid element state. Here is a list of valid states.", reponse: errResponse2})
                 }
@@ -144,6 +145,7 @@ exports.triggerSpecialAction=(element, id, event, args)=>{
                     if(event==='emCall'){
                         if(!(args.caller)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the event args is not provided. Please refer to the documentation." })
                         pccApi.emCalls.push({ caller: args.caller, ctn: ctn.cid, trid: train.tid, active: 2})
+                        console.log(exports.changeElementState('train', train.tid, 'trainSOS', 2, true))
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         ws.apiSave()
                         return JSON.stringify({ code: 200, verbose: "OK", message: `Event ${event} started for ${element} ${id}.`})
@@ -153,8 +155,8 @@ exports.triggerSpecialAction=(element, id, event, args)=>{
         }
         return JSON.stringify({ code: 404, verbose: "Not Found", message: "The train id provided does'nt corresponds to any valid train. Here is a list of valid train identifiers.", reponse: errResponse})
     } else if (element==='station'){
-        return JSON.stringify({ code: 501, verbose: "Not Implemented", message: "The element specified is valid, but no functions are usable for now. Please refer to the repos's changelog." })
-    } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The element provided is invalid. Please refer to the documentation." })
+        return JSON.stringify({ code: 501, verbose: "Not Implemented", message: "While your request is valid, no functions are presents with this element." })
+    }
 }
 
 /**

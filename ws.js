@@ -2303,7 +2303,7 @@ wss.on('connection', (ws, req) => {
                 if(!isClientExisting(data.uuid)) return;
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.execute==='EMCALL-TEST'){
-                    console.log(com.manageTrains('spawn','21', {initial: 'set', owner: 'Amaury', type: 'P14'}))
+                    console.log(com.triggerSpecialAction('train', '2', 'emCall', data.reqestBody))
                 }
                 if(data.execute==='EMCALL-ACQ'){
                     if(pccApi.emCalls.length>0){
@@ -2312,6 +2312,7 @@ wss.on('connection', (ws, req) => {
                     }
                 }
                 if(data.execute==='EMCALL-RAZ'){
+                    console.log(com.changeElementState('train', pccApi.emCalls[0].trid, 'trainSOS', false, true))
                     pccApi.emCalls.shift()
                     exports.apiSave()
                 }
