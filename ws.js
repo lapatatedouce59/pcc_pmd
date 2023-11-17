@@ -2844,7 +2844,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -2863,7 +2863,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -2881,7 +2881,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -2906,7 +2906,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -2922,7 +2922,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -2940,7 +2940,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -2972,7 +2972,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -2988,7 +2988,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -3006,7 +3006,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3036,7 +3036,7 @@ function moveHandler(tid, sens){
                         if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                             logger.confirm('Mouvement effectué avec succès')
                         }
-                        ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
+                        detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid])
                         exports.apiSave()
                         return;
                     }
@@ -3051,7 +3051,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid])
                     exports.apiSave()
                 } else {
                     console.log('[S1? V2 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
@@ -3068,7 +3068,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3109,7 +3109,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -3167,7 +3167,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid])
                     exports.apiSave()
                 } else {
                     console.log('[S1? VG AIG -> ELSE] Pas de continuité, passage à la section GAT')
@@ -3224,7 +3224,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3241,7 +3241,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -3258,7 +3258,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3281,7 +3281,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3297,7 +3297,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -3314,7 +3314,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3347,7 +3347,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3363,7 +3363,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -3381,7 +3381,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3412,7 +3412,7 @@ function moveHandler(tid, sens){
                         if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                             logger.confirm('Mouvement effectué avec succès')
                         }
-                        ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                        detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                         exports.apiSave()
                         return;
                     }
@@ -3427,7 +3427,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -3445,7 +3445,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3477,7 +3477,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3493,7 +3493,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -3511,7 +3511,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3542,7 +3542,7 @@ function moveHandler(tid, sens){
                             logger.confirm('Mouvement effectué avec succès')
                         }
                         exports.apiSave()
-                        ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
+                        detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid])
                         return;
                     }
     
@@ -3556,7 +3556,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid])
                     exports.apiSave()
                     return;
                 } else {
@@ -3574,7 +3574,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
-                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].cid]
+                    detectALDC([pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].cid])
                     exports.apiSave()
                     return;
                 }
@@ -3583,6 +3583,108 @@ function moveHandler(tid, sens){
     
         //?         FIN DE MOOVHANDLER V2            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
+}
+
+//Joue un peu le role de whitelist des iti ALDC et replace des
+//faux itis par des vrais itis à vérifier
+let itiALDCMap = new Map()
+
+itiALDCMap.set('1301_2301',['1201_2201','1401_2401'])
+
+itiALDCMap.set('1201_1301',['1201_2201','1201_1401'])
+itiALDCMap.set('1301_1401',['1201_2201','1201_1401'])
+itiALDCMap.set('1401_1301',['1401_2401','1401_1201'])
+
+itiALDCMap.set('2301_1301',['2201_1201','2401_1401'])
+
+itiALDCMap.set('2201_2301',['2201_1201','2201_2401'])
+itiALDCMap.set('2301_2201',['2401_2201','1201_2201'])
+itiALDCMap.set('2301_2401',['2201_1201','2201_2401'])
+itiALDCMap.set('2401_2301',['2401_2201','2401_1401'])
+
+
+
+itiALDCMap.set('1102_2402',['1202_2101'])
+itiALDCMap.set('2402_2101',['1202_2101'])
+itiALDCMap.set('2402_1102',['2101_1202'])
+
+itiALDCMap.set('1202_1102',['1202_1501'])
+itiALDCMap.set('1102_1501',['1202_1501'])
+itiALDCMap.set('2302_2402',['2302_2101'])
+itiALDCMap.set('2101_2402',['2101_2302','2101_1202'])
+
+itiALDCMap.set('A2PAG_1202',['PAG1_1102'])
+itiALDCMap.set('1202_A2PAG',['1102_PAG1'])
+itiALDCMap.set('A2PAG_PAG1',['1102_PAG1'])
+
+itiALDCMap.set('PAG1_A2PAG',['PAG1_1102'])
+itiALDCMap.set('1102_1202',['1102_PAG1','1102_1302'])
+itiALDCMap.set('1202_1302',['1102_1302'])
+itiALDCMap.set('1302_1202',['1302_1102'])
+
+function isItiActive(code){
+    if(!code) return console.error('[isItiActive] Aucun code d\'iti indiqué!')
+    for(let sec of pccApi.SEC){
+        for(let itil of Object.entries(sec.ITI[0])){
+            for(let iti of itil[1]){
+                if(!(iti.code===code)) continue;
+                return iti.active
+            }
+        }
+    }
+    console.info('[itiInfo] Aucun itinéraire correspondant.')
+    return false;
+}
+function detectALDC(sequence){
+    let ctnToIti1=sequence[0]
+    let ctnToIti2=sequence[1]
+    if(sequence[0].startsWith('cG')){
+        ctnToIti1=sequence[0].replace('cG','')
+    }
+    if(sequence[1].startsWith('cG')){
+        ctnToIti2=sequence[1].replace('cG','')
+    }
+    if(sequence[0].startsWith('c')){
+        ctnToIti1=sequence[0].replace('c','')
+    }
+    if(sequence[1].startsWith('c')){
+        ctnToIti2=sequence[1].replace('c','')
+    }
+    if(isItiActive(`${ctnToIti1}_${ctnToIti2}`)) return;
+    if(typeof itiALDCMap.get(`${ctnToIti1}_${ctnToIti2}`) === 'undefined'){
+        console.log(`${sequence[0]} et ${sequence[1]} en ALDC`)
+        return;
+    } else {
+        for(let newIti of itiALDCMap.get(`${ctnToIti1}_${ctnToIti2}`)){
+            if(ovse.isItiAnAigOne(newIti)){
+                if(isItiActive(newIti)) return;
+            }
+        }
+    }
+    console.log(`${sequence[0]} et ${sequence[1]} en ALDC`)
+
+    /*for(let sec of pccApi.SEC){
+        for(let itil of Object.entries(sec.ITI[0])){
+            for(let iti of itil[1]){
+                let actualCtn = returnCtnIteration(ctn)
+                actualCtn.states.ldi = 2
+
+                let itiParts = iti.code.split('_')
+
+
+                if(itiParts[0]==='cGPAG1')
+
+                if(isItiActive(`${itiParts[1]}_${itiParts[0]}`)&&isItiActive(iti.code)){
+                    if(itiParts[0]==='PAG1') itiParts[0]='cGPAG1'
+                    if(itiParts[1]==='PAG1') itiParts[1]='cGPAG1'
+                    let ctn1 = returnCtnIteration(`c${itiParts[0]}`)
+                    let ctn2 = returnCtnIteration(`c${itiParts[1]}`)
+                    ctn1.states.ldi=2
+                    ctn2.states.ldi=2
+                }
+            }
+        }
+    }*/
 }
 
 

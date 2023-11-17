@@ -95,7 +95,7 @@
   },
   "players": [
     {
-      "uuid": "4e7c6cdb-8...",
+      "uuid": "beccfe67-4...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -171,8 +171,8 @@
             },
             {
               "code": "2501_2401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1401_2401",
@@ -181,8 +181,8 @@
             },
             {
               "code": "2201_1201",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2201_2401",
@@ -279,7 +279,7 @@
         "retDispoV101": true,
         "injDispoV101": true,
         "razSeq": false,
-        "itiOngoing": false,
+        "itiOngoing": true,
         "cycleOngoing": false
       },
       "cantons": [
