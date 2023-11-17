@@ -1,3 +1,8 @@
+/**
+ * Outil de vérification du statut des éléments
+ * @module OVSE
+ */
+
 let pccApi = require('./server.json')
 
 let parent = require('./ws')
@@ -11,13 +16,13 @@ exports.f6 = false
 exports.f7 = false
 exports.f8 = false
 exports.f9 = true
-
+exports.f10 = false
 
 exports.coupFS = false
 
-
-
 exports.work = false;
+
+exports.sequence = Array
 
 function ongoingiti(){
     for(let sec of pccApi.SEC){
@@ -364,6 +369,66 @@ function retablissementUCA(){
     noDef2=false
 }
 
+
+let itiALDCMap = new Map()
+
+itiALDCMap.set('1301_2301',['1201_2201','1401_2401'])
+itiALDCMap.set('2301_1301',['2201_1201','2401_1401'])
+
+itiALDCMap.set('1102_2402',['1202_2101'])
+itiALDCMap.set('2402_1102',['2101_1202'])
+itiALDCMap.set('A2PAG_1202',['PAG1_1102'])
+itiALDCMap.set('1202_A2PAG',['1102_PAG1'])
+
+
+function detectALDC(){
+    let ctnToIti1=exports.sequence[0]
+    let ctnToIti2=exports.sequence[1]
+    if(exports.sequence[0].startsWith('cG')){
+        ctnToIti1=exports.sequence[0].replace('cG','')
+    }
+    if(exports.sequence[1].startsWith('cG')){
+        ctnToIti2=exports.sequence[1].replace('cG','')
+    }
+    if(exports.sequence[0].startsWith('c')){
+        ctnToIti1=exports.sequence[0].replace('c','')
+    }
+    if(exports.sequence[1].startsWith('c')){
+        ctnToIti2=exports.sequence[1].replace('c','')
+    }
+    if(isItiActive(`${ctnToIti1}_${ctnToIti2}`)) return;
+    for(let newIti of itiALDCMap.get(`${ctnToIti1}_${ctnToIti2}`)){
+        if(isItiAnAigOne(newIti)){
+            if(isItiActive(newIti)) return;
+        }
+    }
+    console.log(`${exports.sequence[0]} et ${exports.sequence[1]} en ALDC`)
+
+    /*for(let sec of pccApi.SEC){
+        for(let itil of Object.entries(sec.ITI[0])){
+            for(let iti of itil[1]){
+                let actualCtn = returnCtnIteration(ctn)
+                actualCtn.states.ldi = 2
+
+                let itiParts = iti.code.split('_')
+
+
+                if(itiParts[0]==='cGPAG1')
+
+                if(isItiActive(`${itiParts[1]}_${itiParts[0]}`)&&isItiActive(iti.code)){
+                    if(itiParts[0]==='PAG1') itiParts[0]='cGPAG1'
+                    if(itiParts[1]==='PAG1') itiParts[1]='cGPAG1'
+                    let ctn1 = returnCtnIteration(`c${itiParts[0]}`)
+                    let ctn2 = returnCtnIteration(`c${itiParts[1]}`)
+                    ctn1.states.ldi=2
+                    ctn2.states.ldi=2
+                }
+            }
+        }
+    }*/
+    exports.f10=true
+}
+
 exports.periodicUpdateVoy = async function(){
     exports.f9=true
     exports.done=false
@@ -371,6 +436,7 @@ exports.periodicUpdateVoy = async function(){
     detectAZM()
     detectTNE()
     detectPZO()
+    detectALDC()
     ongoingiti()
     checkStationTrainsPresence()
     ongoingcycle()

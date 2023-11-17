@@ -2844,6 +2844,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -2862,6 +2863,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -2879,6 +2881,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -2903,6 +2906,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -2918,6 +2922,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -2935,6 +2940,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -2966,6 +2972,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -2981,6 +2988,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -2998,6 +3006,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3027,6 +3036,7 @@ function moveHandler(tid, sens){
                         if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                             logger.confirm('Mouvement effectué avec succès')
                         }
+                        ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
                         exports.apiSave()
                         return;
                     }
@@ -3041,6 +3051,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
                     exports.apiSave()
                 } else {
                     console.log('[S1? V2 AIG -> ELSE] Pas de continuité, passage à la section '+pccApi.SEC[_secIndex+1].id)
@@ -3057,6 +3068,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex+1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3097,6 +3109,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -3154,6 +3167,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
                     exports.apiSave()
                 } else {
                     console.log('[S1? VG AIG -> ELSE] Pas de continuité, passage à la section GAT')
@@ -3210,6 +3224,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3226,6 +3241,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -3242,6 +3258,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3264,6 +3281,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3279,6 +3297,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -3295,6 +3314,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3327,6 +3347,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3342,6 +3363,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -3359,6 +3381,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3389,6 +3412,7 @@ function moveHandler(tid, sens){
                         if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                             logger.confirm('Mouvement effectué avec succès')
                         }
+                        ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                         exports.apiSave()
                         return;
                     }
@@ -3403,6 +3427,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex+1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -3420,6 +3445,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3451,6 +3477,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3466,6 +3493,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -3483,6 +3511,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
@@ -3513,6 +3542,7 @@ function moveHandler(tid, sens){
                             logger.confirm('Mouvement effectué avec succès')
                         }
                         exports.apiSave()
+                        ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex-1].cantons[_NEXTCINDEX].cid]
                         return;
                     }
     
@@ -3526,6 +3556,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_cantonIndex-1].cid]
                     exports.apiSave()
                     return;
                 } else {
@@ -3543,6 +3574,7 @@ function moveHandler(tid, sens){
                     if(typeof pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex]==='undefined'){
                         logger.confirm('Mouvement effectué avec succès')
                     }
+                    ovse.sequence=[pccApi.SEC[_secIndex].cantons[_cantonIndex].cid, pccApi.SEC[_secIndex].cantons[_NEXTCINDEX].cid]
                     exports.apiSave()
                     return;
                 }
