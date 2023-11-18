@@ -2,7 +2,7 @@
   "comForceHT": false,
   "voyUCA": true,
   "voyHT": true,
-  "voyALC": true,
+  "voyALC": false,
   "voyFS": true,
   "voyFSGAT": true,
   "voyUCAGAT": true,
@@ -95,7 +95,7 @@
   },
   "players": [
     {
-      "uuid": "beccfe67-4...",
+      "uuid": "ff981182-6...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -248,8 +248,8 @@
             },
             {
               "code": "1401_1501",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1501_1401",
@@ -370,7 +370,7 @@
                 "execAcc": false,
                 "accosting": false,
                 "endAcc": false,
-                "prodPert": false,
+                "prodPert": true,
                 "modeDegr": false,
                 "trainLights": true,
                 "trainHeating": true,

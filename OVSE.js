@@ -201,7 +201,7 @@ itiAigMap.set('C2NorV1',['c1102'])
 itiAigMap.set('C2NorV2',['c2402'])
 itiAigMap.set('C2BNor',['c1202'])
 
-function returnCtnIteration(cid){
+exports.returnCtnIteration=function(cid){
     for(let sec of pccApi.SEC){
         for(let ctn of sec.cantons){
             if(!(ctn.cid===cid)) continue;
@@ -223,7 +223,7 @@ function detectLDI(){
                         for(let ctn of ctnToAlarm){
                             if(itiParts[0]==='PAG1') itiParts[0]='cGPAG1'
                             if(itiParts[1]==='PAG1') itiParts[1]='cGPAG1'
-                            let actualCtn = returnCtnIteration(ctn)
+                            let actualCtn = exports.returnCtnIteration(ctn)
                             actualCtn.states.ldi = 2
                         }
                     }
@@ -232,8 +232,8 @@ function detectLDI(){
                     if(isItiActive(`${itiParts[1]}_${itiParts[0]}`)&&isItiActive(iti.code)){
                         if(itiParts[0]==='PAG1') itiParts[0]='cGPAG1'
                         if(itiParts[1]==='PAG1') itiParts[1]='cGPAG1'
-                        let ctn1 = returnCtnIteration(`c${itiParts[0]}`)
-                        let ctn2 = returnCtnIteration(`c${itiParts[1]}`)
+                        let ctn1 = exports.returnCtnIteration(`c${itiParts[0]}`)
+                        let ctn2 = exports.returnCtnIteration(`c${itiParts[1]}`)
                         ctn1.states.ldi=2
                         ctn2.states.ldi=2
                     }

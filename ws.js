@@ -2471,6 +2471,9 @@ wss.on('connection', (ws, req) => {
                             for(let state of Object.entries(ctn.states)){
                                 if(!((state[0]==='pzo')||(state[0]==='coupFs')||(state[0]==='tcs')||(state[0]==='ldi')||(state[0]==='pdp')||(state[0]==='selAcc'))) continue;
                                 ctn.states[state[0]]=false
+                                if(state[0]==='ldi' && pccApi.voyALC===2){
+                                    pccApi.voyALC=false
+                                }
                             }
                         }
                     }
@@ -3653,6 +3656,13 @@ function detectALDC(sequence){
     if(isItiActive(`${ctnToIti1}_${ctnToIti2}`)) return;
     if(typeof itiALDCMap.get(`${ctnToIti1}_${ctnToIti2}`) === 'undefined'){
         console.log(`${sequence[0]} et ${sequence[1]} en ALDC`)
+        let ctn1=ovse.returnCtnIteration(sequence[0])
+        let ctn2=ovse.returnCtnIteration(sequence[1])
+        ctn1.states.coupFs=2
+        ctn2.states.coupFs=2
+        pccApi.voyALC=2
+        FSTrains('down','all')
+        console.log('done')
         return;
     } else {
         for(let newIti of itiALDCMap.get(`${ctnToIti1}_${ctnToIti2}`)){
@@ -3661,30 +3671,7 @@ function detectALDC(sequence){
             }
         }
     }
-    console.log(`${sequence[0]} et ${sequence[1]} en ALDC`)
 
-    /*for(let sec of pccApi.SEC){
-        for(let itil of Object.entries(sec.ITI[0])){
-            for(let iti of itil[1]){
-                let actualCtn = returnCtnIteration(ctn)
-                actualCtn.states.ldi = 2
-
-                let itiParts = iti.code.split('_')
-
-
-                if(itiParts[0]==='cGPAG1')
-
-                if(isItiActive(`${itiParts[1]}_${itiParts[0]}`)&&isItiActive(iti.code)){
-                    if(itiParts[0]==='PAG1') itiParts[0]='cGPAG1'
-                    if(itiParts[1]==='PAG1') itiParts[1]='cGPAG1'
-                    let ctn1 = returnCtnIteration(`c${itiParts[0]}`)
-                    let ctn2 = returnCtnIteration(`c${itiParts[1]}`)
-                    ctn1.states.ldi=2
-                    ctn2.states.ldi=2
-                }
-            }
-        }
-    }*/
 }
 
 
