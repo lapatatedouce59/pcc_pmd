@@ -42,6 +42,9 @@ logUpdate('├ Loading GSA...')
 const gsa = require('./GSA')
 logUpdate('├ Loading OVSE...')
 const ovse = require('./OVSE')
+logUpdate('├ Loading writter...')
+const writter = require('./writter')
+writter.clean()
 logUpdate('├ Loading server.json...')
 const pccApi=require('./server.json');
 logUpdate('\x1b[42m\x1b[37m├ CHARGÉ\x1b[0m')
@@ -125,11 +128,13 @@ exports.apiSave = function(){
             ovse.coupFS=false
             ovse.done=true
             FSTrains('down', 'all')
+            writter.simple('Défaut signalé OVSE.','UCA', 'FS')
         }
         if(ovse.coupFS==='RETABLISSEMENT'){
             console.log('UP')
             ovse.coupFS=false
             FSTrains('up', 'all')
+            writter.simple('Défaut résolu OVSE.','UCA', 'FS')
         }
 
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
@@ -245,6 +250,7 @@ function HTTrains(type,zone){
                     if(!(ss04CELIST.includes(ectns[0]))) continue;
                     pccApi.ectns[ectns[0]]=false
                 }
+                writter.simple('NON SS04.','LIGNE', 'HT')
                 pccApi.PR[0].DJVSS04MSTO=false
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
@@ -259,6 +265,7 @@ function HTTrains(type,zone){
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
                     ss.voyPA=true
                 }
+                writter.simple('OUI SS04.','LIGNE', 'HT')
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -294,6 +301,7 @@ function HTTrains(type,zone){
                 }
                 pccApi.PR[0].DJVSS05MSTO=false
                 pccApi.PR[1].DJVSS05GLANER=false
+                writter.simple('NON SS05.','LIGNE', 'HT')
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
                     ss.voyHTAutABS=true
@@ -307,6 +315,7 @@ function HTTrains(type,zone){
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
                     ss.voyPA=true
                 }
+                writter.simple('OUI SS05.','LIGNE', 'HT')
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -344,6 +353,7 @@ function HTTrains(type,zone){
                 pccApi.PR[0].DJVSS04MSTO=false
                 pccApi.PR[0].DJVSS05MSTO=false
                 pccApi.PR[1].DJVSS05GLANER=false
+                writter.simple('NON.','LIGNE', 'HT')
             } else if(type==='up') {
                 for(let ss of pccApi.SS){
                     if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
@@ -359,8 +369,8 @@ function HTTrains(type,zone){
                         ss.voyPA=true
                     }
                 }
+                writter.simple('OUI.','LIGNE', 'HT')
             }
-            ('ABC')
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
                     if(ss04CLIST.includes(ctn.cid)){
@@ -436,6 +446,7 @@ function FSTrains (type,zone){
             if(type==='down'){
                 ss.voyFS=2
                 ss.voyPA=2
+                writter.simple('NON SS04.','LIGNE', 'FS')
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
                     ss.voyFS=true
@@ -443,6 +454,7 @@ function FSTrains (type,zone){
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
                     ss.voyPA=true
                 }
+                writter.simple('OUI SS04.','LIGNE', 'FS')
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -465,6 +477,7 @@ function FSTrains (type,zone){
             if(type==='down'){
                 ss.voyFS=2
                 ss.voyPA=2
+                writter.simple('NON SS05.','LIGNE', 'FS')
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
                     ss.voyFS=true
@@ -472,6 +485,7 @@ function FSTrains (type,zone){
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
                     ss.voyPA=true
                 }
+                writter.simple('OUI SS05.','LIGNE', 'FS')
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -495,6 +509,7 @@ function FSTrains (type,zone){
                 ss=pccApi.SS[1]
                 ss.voyFS=2
                 ss.voyPA=2
+                writter.simple('NON.','LIGNE', 'FS')
             } else if(type==='up') {
                 for(let ss of pccApi.SS){
                     if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
@@ -504,6 +519,7 @@ function FSTrains (type,zone){
                         ss.voyPA=true
                     }
                 }
+                writter.simple('OUI.','LIGNE', 'FS')
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -612,6 +628,7 @@ wss.on('connection', (ws, req) => {
                                             content: pccApi
                                         }))
                                         logger.identify(ws,Object.keys(clients).length)
+                                        writter.simple(`+ Utilisateur ${ws.usr.username} (${ws.role})`,'GAME', 'USER')
                                     } else {
                                         logger.error('[DV] '+usr.username+' non whitelisté')
                                         ws.send(JSON.stringify({ op: 999,error: 20, message: 'L\'utilisateur n\'est pas whitelisté.' }))
@@ -713,9 +730,11 @@ wss.on('connection', (ws, req) => {
                                 }
                             }
                         }*/
+                        writter.simple('ACTIF.','PCC', 'CDP')
                         exports.apiSave();
                         break;
                     case 'AGreset':
+                        writter.simple('INACTIF.','PCC', 'CDP')
                         if(!(pccApi.comAG===true)) break;
                         pccApi.comAG=false
                         console.log(pccApi.comAG)
@@ -858,6 +877,7 @@ wss.on('connection', (ws, req) => {
                         exports.apiSave();
                         break;
                     case 'LINE-ACQU':
+                        writter.simple('REÇU.','PCC', 'ACQ')
                         if (pccApi.voyGAT===2) pccApi.voyGAT=1;
                         if (pccApi.voyABS===2) pccApi.voyABS=1;
                         if (pccApi.voyHT===2) pccApi.voyHT=1;
@@ -880,6 +900,7 @@ wss.on('connection', (ws, req) => {
                 switch(data.execute){
                     case 'FS-LINE-COM':
                         if(data.state===false){
+                            writter.simple('OUI.','PCC', 'FS (LIGNE)')
                             pccApi.comFSLine=false
                             if(pccApi.comAG===false){
                                 pccApi.voyFS=true
@@ -891,6 +912,7 @@ wss.on('connection', (ws, req) => {
                             pccApi.comFSLine=true
                             pccApi.voyFS=2
                             FSTrains('down','all')
+                            writter.simple('NON.','PCC', 'FS (LIGNE)')
                             exports.apiSave()
                         }
                         if((pccApi.comAuth) && !(pccApi.comFSLine)){
@@ -901,6 +923,7 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'FS-GAT-COM':
                         if(data.state===false){
+                            writter.simple('OUI.','PCC', 'FS (GAT)')
                             pccApi.comFSGAT=false
                             if(pccApi.comAG===false){
                                 pccApi.voyFSGAT=true
@@ -908,6 +931,7 @@ wss.on('connection', (ws, req) => {
                         } else if(data.state===true){
                             pccApi.comFSGAT=true
                             pccApi.voyFSGAT=2
+                            writter.simple('NON.','PCC', 'FS (GAT)')
                         }
                         if((pccApi.comAuthGAT) && !(pccApi.comFSGAT)){
                             pccApi.voyGAT=true
@@ -917,14 +941,17 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'HTAUT-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'HT (LIGNE)')
                             pccApi.comAuth=false
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=2
                                 HTTrains('down','all')
+
                                 exports.apiSave();
                             }
                         } else if(data.state===true){
                             pccApi.comAuth=true
+                            writter.simple('OUI.','PCC', 'HT (LIGNE)')
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=true
                                 HTTrains('up','all')
@@ -962,11 +989,13 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'HTAUTGAT-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'HT (GAT)')
                             pccApi.comAuthGAT=false
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHTGAT=2
                             }
                         } else if(data.state===true){
+                            writter.simple('OUI.','PCC', 'HT (GAT)')
                             pccApi.comAuthGAT=true
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHTGAT=true
@@ -981,12 +1010,14 @@ wss.on('connection', (ws, req) => {
 
                     case 'FORCEHT-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'FORCAGE HT')
                             pccApi.comForceHT=false
                             if(pccApi.comAG===true){
                                 pccApi.voyHT=2
                                 pccApi.voyHTGAT=2
                             }
                         } else if(data.state===true){
+                            writter.simple('OUI.','PCC', 'FORCAGE HT')
                             pccApi.comForceHT=true
                             if(pccApi.comAG===true){
                                 pccApi.voyHT=true
@@ -1006,34 +1037,43 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'IDPO-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'IDPO')
                             pccApi.comIDPOTPAS=false
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
                                     if(!(ctns.hasOwnProperty('type'))) continue;
                                     ctns.states.DSO=false
                                     ctns.states.IDPOAlreadyActiveByPLTP=false
+                                    writter.simple('NON.','EAS', 'DSO')
+                                    writter.simple('NON.','EAS', 'DSO PAR PLTP')
                                 }
                             }
                         } else if(data.state===true){
+                            writter.simple('OUI.','PCC', 'IDPO')
                             pccApi.comIDPOTPAS=true
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
                                     if(!(ctns.hasOwnProperty('type'))) continue;
                                     ctns.states.DSO=true
                                     ctns.states.IDPOAlreadyActiveByPLTP=true
+                                    writter.simple('OUI.','EAS', 'DSO')
+                                    writter.simple('OUI.','EAS', 'DSO PAR PLTP')
                                 }
                             }
                         }
                         break;
                     case 'UCAINHIB-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'INHIBITION UCA')
                             pccApi.comInhibUCA=false
                         } else if(data.state===true){
+                            writter.simple('OUI.','PCC', 'INHIBITION UCA')
                             pccApi.comInhibUCA=true
                         }
                         break;
                     case 'ARMPR-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'ARMEMENT PR')
                             pccApi.PR[0].DHTMSTO=false
                             pccApi.PR[1].DHTGLARNER=false
                             pccApi.comArmPR=false
@@ -1043,9 +1083,13 @@ wss.on('connection', (ws, req) => {
                                     ctns.states.alimDef=2
                                     ctns.states.IDPOAlreadyActiveByALC=true
                                     ctns.states.DSO=true
+                                    writter.simple('OUI.','EAS', 'DEF ALIM')
+                                    writter.simple('OUI.','EAS', 'DSO')
+                                    writter.simple('OUI.','EAS', 'DSO PAR ALC')
                                     if(ctns.trains[0]){
                                         let trainObj=ctns.trains[0]
                                         trainObj.states.forbiddenStart=2
+                                        writter.simple('OUI.','TRAIN', 'DÉPART INTERDIT')
                                     }
                                     
                                 }
@@ -1062,6 +1106,7 @@ wss.on('connection', (ws, req) => {
                             pccApi.voyCC=2
                             HTTrains('down','all')
                         } else if(data.state===true){
+                            writter.simple('OUI.','PCC', 'ARMEMENT PR')
                             pccApi.comArmPR=true
                             pccApi.PR[0].DHTMSTO=true
                             pccApi.PR[1].DHTGLARNER=true
@@ -1073,7 +1118,10 @@ wss.on('connection', (ws, req) => {
                                     if(ctns.trains[0]){
                                         let trainObj=ctns.trains[0]
                                         trainObj.states.forbiddenStart=false
+                                        writter.simple('NON.','TRAIN', 'DÉPART INTERDIT')
                                     }
+                                    writter.simple('NON.','EAS', 'DEF ALIM')
+                                    writter.simple('NON.','EAS', 'DSO PAR ALC')
                                 }
                             }
                             let ss = pccApi.SS[0]
@@ -1127,6 +1175,7 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'AUTHTSS04-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'AUT HT (SS04)')
                             pccApi.SS[0].comAutHT=false
                             HTTrains('up','SS04')
                             let ss = pccApi.SS[0]
@@ -1141,12 +1190,14 @@ wss.on('connection', (ws, req) => {
                                     pccApi.PR[0].DJVSS04MSTO=true
                                 }
                         } else if(data.state===true){
+                            writter.simple('OUI.','PCC', 'AUT HT (SS04)')
                             pccApi.SS[0].comAutHT=true
                             HTTrains('down','SS04')
                         }
                         break;
                     case 'AUTHTSS05-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'AUT HT (SS05)')
                             pccApi.SS[1].comAutHT=false
                             HTTrains('up','SS05')
                                 let ss = pccApi.SS[1]
@@ -1162,25 +1213,30 @@ wss.on('connection', (ws, req) => {
                                     pccApi.PR[1].DJVSS05GLANER=true
                                 }
                         } else if(data.state===true){
+                            writter.simple('OUI.','PCC', 'AUT HT (SS05)')
                             pccApi.SS[1].comAutHT=true
                             HTTrains('down','SS05')
                         }
                         break;
                     case 'COUPFSSS04-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'FS (SS04)')
                             pccApi.SS[0].comCoupFS=false
                             FSTrains('up','SS04')
                         } else if(data.state===true){
+                            writter.simple('OUI.','PCC', 'FS (SS04)')
                             pccApi.SS[0].comCoupFS=true
                             FSTrains('down','SS04')
                         }
                         break;
                     case 'COUPFSSS05-COM':
                         if(data.state===false){
+                            writter.simple('NON.','PCC', 'FS (SS05)')
                             pccApi.SS[1].comCoupFS=false
                             FSTrains('up','SS05')
                         } else if(data.state===true){
                             pccApi.SS[1].comCoupFS=true
+                            writter.simple('OUI.','PCC', 'FS (SS05)')
                             FSTrains('down','SS05')
                         }
                         break;
@@ -1342,8 +1398,10 @@ wss.on('connection', (ws, req) => {
                 } else
                 if(data.execute==='AQC-BTN'){
                     if(!data.target.cIndex) return;
+
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
+                    writter.simple('COMMANDÉ.','PCC', `ACQUITTEMENT Q${pccApi.SEC[sectionIndex].cantons[stationIndex].name}`)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
                     for(let alarm in stationObj.states){
                         if(!(stationObj.states[alarm]===2)) continue;
@@ -1484,6 +1542,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='HLP-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('OUI.','QUAI', 'HLP')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1493,6 +1552,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='HLP-OFF-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('NON.','QUAI', 'HLP')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1502,6 +1562,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='DSO-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('OUI.','QUAI', 'DSO')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1511,6 +1572,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='DSO-OFF-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('NON.','QUAI', 'DSO')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1520,6 +1582,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='SSO-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('OUI.','QUAI', 'SSO')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1529,6 +1592,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='SSO-OFF-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('NON.','QUAI', 'SSO')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1538,6 +1602,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='INHIBPLTPIDPO-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('COMMANDÉ.','QUAI', 'INHIBITION IDPO PLTP')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1554,6 +1619,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='INHIBALCIDPO-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('COMMANDÉ.','QUAI', 'INHIBITION IDPO ALC')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1584,6 +1650,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='SETTIME-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple(`EDITÉ EN ${data.new}.`,'QUAI', 'HLP')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1617,6 +1684,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='AFD-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('COMMANDÉ.','QUAI', 'AUTORISATION FORCAGE DÉPART')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1626,6 +1694,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='AFD-RAZ-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('RAZ.','QUAI', 'AUTORISATION FORCAGE DÉPART')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1635,6 +1704,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='VVTS1-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('OUI.','QUAI', 'VVT S1')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1643,6 +1713,7 @@ wss.on('connection', (ws, req) => {
                     exports.apiSave()
                 } else
                 if (data.execute==='VVTS1-RAZ-BTN'){
+                    writter.simple('NON.','QUAI', 'VVT S1')
                     if(!data.target.cIndex) return;
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
@@ -1653,6 +1724,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='VVTS2-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('OUI.','QUAI', 'VVT S2')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1662,6 +1734,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='VVTS2-RAZ-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('NON.','QUAI', 'VVT S2')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1671,6 +1744,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='DEPA-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('ACTIONNÉ.','QUAI', 'DÉPART IMMÉDIAT')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1680,6 +1754,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='DEPA-RAZ-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('RAZ.','QUAI', 'DÉPART IMMÉDIAT')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1689,6 +1764,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='IDPF-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('ACTIONNÉ.','QUAI', 'INTERDICTION DÉPART PF')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1698,6 +1774,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='IDPF-RAZ-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('RAZ.','QUAI', 'INTERDICTION DÉPART PF')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1707,6 +1784,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='MAPF-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('ACTIONNÉ.','QUAI', 'MAINTIEN ARRÊT PF')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1716,6 +1794,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='MAPF-RAZ-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('RAZ.','QUAI', 'MAINTIEN ARRÊT PF')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1725,6 +1804,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='ISTA-ON-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('ACTIONNÉ.','QUAI', 'INTERDICTION STATIONNEMENT')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1734,6 +1814,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='ISTA-RAZ-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('RAZ.','QUAI', 'INTERDICTION STATIONNEMENT')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1743,6 +1824,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='VVTS1-INHIB-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('ACTIONNÉ.','QUAI', 'INHIBITION VVT S1')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1758,6 +1840,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='VVTS2-INHIB-BTN'){
                     if(!data.target.cIndex) return;
+                    writter.simple('RAZ.','QUAI', 'INHIBITION VVT S2')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1775,9 +1858,11 @@ wss.on('connection', (ws, req) => {
                     if(!data.target.secIndex) return;
                     if(!data.target.cIndex) return;
                     if(!data.target.tIndex) return;
+
                     let cantonIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let trainIndex = parseInt(data.target.tIndex)
+                    writter.simple('COMMANDÉ.','TRAIN', `ACQUITTEMENT T${pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex].tid}`)
                     let trainObj = pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]
                     for(let alarm in trainObj.states){
                         if(!(trainObj.states[alarm]===2)) continue;
@@ -1822,6 +1907,7 @@ wss.on('connection', (ws, req) => {
                     if(!data.target.secIndex) return;
                     if(!data.target.cIndex) return;
                     if(!data.target.tIndex) return;
+                    writter.simple('COMMANDÉ.','TRAIN', 'ACQUITTEMENT COMPTEUR FU')
                     let cantonIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let trainIndex = parseInt(data.target.tIndex)
@@ -1836,6 +1922,7 @@ wss.on('connection', (ws, req) => {
                     if(!data.target.secIndex) return;
                     if(!data.target.cIndex) return;
                     if(!data.target.tIndex) return;
+                    writter.simple('COMMANDÉE.','TRAIN', 'PRÉPARATION')
                     let cantonIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let trainIndex = parseInt(data.target.tIndex)
@@ -1951,6 +2038,7 @@ wss.on('connection', (ws, req) => {
                     if(!data.target.secIndex) return;
                     if(!data.target.cIndex) return;
                     if(!data.target.tIndex) return;
+                    writter.simple('COMMANDÉE.','TRAIN', 'DÉPRÉPARATION')
                     let cantonIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let trainIndex = parseInt(data.target.tIndex)
@@ -2049,9 +2137,11 @@ wss.on('connection', (ws, req) => {
                                     const rpdelay = async() => {
                                         iti.mode='SEL'
                                         exports.apiSave()
+                                        writter.simple('SÉLECTIONNÉ.','PA', `ITINÉRAIRE ${iti.code}`)
                                         await setTimeout(2000)
                                         iti.active=true
                                         exports.apiSave()
+                                        writter.simple('FORMÉ.','PA', `ITINÉRAIRE ${iti.code}`)
                                     }
                                     rpdelay()
                                     return;
@@ -2069,10 +2159,12 @@ wss.on('connection', (ws, req) => {
                                     const rpdelay = async() => {
                                         iti.mode='DES'
                                         exports.apiSave()
+                                        writter.simple('EN DESTRUCTION.','PA', `ITINÉRAIRE ${iti.code}`)
                                         await setTimeout(2000)
                                         iti.mode=false
                                         iti.active=false
                                         exports.apiSave()
+                                        writter.simple('DÉTRUIT.','PA', `ITINÉRAIRE ${iti.code}`)
                                     }
                                     rpdelay()
                                     return;
@@ -2092,6 +2184,7 @@ wss.on('connection', (ws, req) => {
                                         iti.mode=false
                                         iti.active=false
                                         exports.apiSave()
+                                        writter.simple('DÉTRUIT D\'URGENCE.','PA', `ITINÉRAIRE ${iti.code}`)
                                     }
                                     rpdelay()
                                     return;
@@ -2128,8 +2221,10 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','1201_2201')
                             changeItiState('des','2401_1401')
                             exports.apiSave()
+                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                             await setTimeout(2000)
                             exports.apiSave()
+                            writter.simple('FORMÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2139,6 +2234,7 @@ wss.on('connection', (ws, req) => {
                                 pccApi.SEC[0].states.retDispoV201=false
                                 pccApi.SEC[0].CYCLES[6].active=false
                                 exports.apiSave()
+                                writter.simple('TERMINÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2159,8 +2255,10 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','1201_1401')
                             changeItiState('des','1401_1201')
                             exports.apiSave()
+                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                             await setTimeout(2000)
                             exports.apiSave()
+                            writter.simple('FORMÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2174,6 +2272,7 @@ wss.on('connection', (ws, req) => {
                                     pccApi.SEC[0].states.retDispoV101=false
                                 }
                                 exports.apiSave()
+                                writter.simple('TERMINÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2190,8 +2289,10 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','1202_2101')
                             changeItiState('des','2101_1202')
                             exports.apiSave()
+                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                             await setTimeout(2000)
                             exports.apiSave()
+                            writter.simple('FORMÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2200,6 +2301,7 @@ wss.on('connection', (ws, req) => {
                                 pccApi.SEC[1].states.entreeDispoGla=true
                                 pccApi.SEC[1].CYCLES[6].active=false
                                 exports.apiSave()
+                                writter.simple('TERMINÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2221,8 +2323,10 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','1201_2201')
                             changeItiState('des','2401_1401')
                             exports.apiSave()
+                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE INJECTION ${data.target}`)
                             await setTimeout(2000)
                             exports.apiSave()
+                            writter.simple('FORMÉ.','PA', `CYCLE INJECTION ${data.target}`)
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2232,6 +2336,7 @@ wss.on('connection', (ws, req) => {
                                 pccApi.SEC[0].states.retDispoV201=true 
                                 pccApi.SEC[0].CYCLES[3].active=false
                                 exports.apiSave()
+                                writter.simple('TERMINÉ.','PA', `CYCLE INJECTION ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2248,8 +2353,10 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','2401_1401')
                             changeItiState('des','1401_2401')
                             exports.apiSave()
+                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE INJECTION ${data.target}`)
                             await setTimeout(2000)
                             exports.apiSave()
+                            writter.simple('FORMÉ.','PA', `CYCLE INJECTION ${data.target}`)
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2266,6 +2373,7 @@ wss.on('connection', (ws, req) => {
                                     pccApi.SEC[0].states.injDispoV101=false
                                 }
                                 exports.apiSave()
+                                writter.simple('TERMINÉ.','PA', `CYCLE INJECTION ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2283,8 +2391,10 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','2301_2101')
                             changeItiState('des','2101_2302')
                             exports.apiSave()
+                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE INJECTION ${data.target}`)
                             await setTimeout(2000)
                             exports.apiSave()
+                            writter.simple('FORMÉ.','PA', `CYCLE INJECTION ${data.target}`)
                         }
                         rpdelay()
                         let endCycleIti = ()=>{
@@ -2293,6 +2403,7 @@ wss.on('connection', (ws, req) => {
                                 pccApi.SEC[1].CYCLES[7].active=false
                                 pccApi.SEC[1].states.entreeDispoGla=false
                                 exports.apiSave()
+                                writter.simple('TERMINÉ.','PA', `CYCLE INJECTION ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2309,12 +2420,15 @@ wss.on('connection', (ws, req) => {
                     if(pccApi.emCalls.length>0){
                         pccApi.emCalls[0].active=true
                         exports.apiSave()
+                        writter.simple('ACQUITTÉ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`)
                     }
                 }
                 if(data.execute==='EMCALL-RAZ'){
                     console.log(com.changeElementState('train', pccApi.emCalls[0].trid, 'trainSOS', false, true))
+                    writter.simple('RAZ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`)
                     pccApi.emCalls.shift()
                     exports.apiSave()
+
                 }
                 break;
                 
@@ -2332,6 +2446,7 @@ wss.on('connection', (ws, req) => {
                             }
                             cycle.sel=true
                             exports.apiSave()
+                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE ${cycle.code}`)
                             sec.states.cycleOngoing=true
                             if(cycle.code==='c1p1'){
                                 let secureCnt = 0
@@ -2341,12 +2456,14 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
+                                        writter.simple('ANNULÉ.','PA', `CYCLE ${cycle.code}`)
                                         return;
                                     }
                                     if(!(pccApi.SEC[0].cantons[8].trains.length>0)){
                                         clearInterval(checkCycleClearInter)
                                         ogdc.startCycle(cycle.code, wss, true)
                                         exports.apiSave()
+
                                     }
                                 }
                                 let checkCycleClearInter = setInterval(checkCycleClear,2000)
@@ -2359,6 +2476,7 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
+                                        writter.simple('ANNULÉ.','PA', `CYCLE ${cycle.code}`)
                                         return;
                                     }
                                     if(!(pccApi.SEC[0].cantons[1].trains.length>0)){
@@ -2377,6 +2495,7 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
+                                        writter.simple('ANNULÉ.','PA', `CYCLE ${cycle.code}`)
                                         return;
                                     }
                                     if(pccApi.SEC[0].cantons[5].trains.length===0){
@@ -2396,6 +2515,7 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
+                                        writter.simple('ANNULÉ.','PA', `CYCLE ${cycle.code}`)
                                         return;
                                     }
                                     if(pccApi.SEC[0].cantons[5].trains.length===0){
@@ -2416,6 +2536,7 @@ wss.on('connection', (ws, req) => {
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.execute==='CANCELCYCLES-BTN-ITI'){
                     if(!(data.target)) return;
+                    writter.simple('ANNULÉS.','PA', `CYCLES S${data.target}`)
                     for(let sec of pccApi.SEC){
                         if(!(sec.id===data.target)) continue;
                         for(let cycle of sec.CYCLES){
@@ -2424,9 +2545,11 @@ wss.on('connection', (ws, req) => {
                         }
                         //sec.states.cycleOngoing=false
                     }
+                    writter.simple('ANNULÉS.','PA', `CYCLES S${data.target}`)
                     exports.apiSave()
                 } else if(data.execute==='DUG-BTN-ITI'){
                     if(!(data.target)) return;
+                    writter.simple('COMMANDÉE.','PA', `DUG S${data.target}`)
                     for(let sec of pccApi.SEC){
                         if(!(sec.id===data.target)) continue;
                         for(let itilist of Object.entries(sec.ITI[0])){
@@ -2442,6 +2565,7 @@ wss.on('connection', (ws, req) => {
                                         
                                         if(iti.code==='1103_1402'||iti.code==='1102_1501') {
                                             exports.apiSave()
+                                            writter.simple('DÉTRUITS.','PA', `ITI S${data.target}`)
                                         }
                                     }
                                     rpdelay()
@@ -2457,6 +2581,7 @@ wss.on('connection', (ws, req) => {
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.execute==='AQC-BTN'){
                     if(!(data.target)) return;
+                    writter.simple('COMMANDÉ.','PCC', `ACQUITTEMENT S${data.target}`)
                     for(let sec of pccApi.SEC){
                         if(!(sec.id===data.target)) continue;
                         for(let state of Object.entries(sec.states)){
@@ -2647,6 +2772,7 @@ wss.on('connection', (ws, req) => {
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.command==='stopServer'){
                     logger.info(`ARRET DU SERVEUR! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
+                    writter.simple('COMMANDÉ.','PCC', `ARRÊT DU SERVEUR`)
                     process.exit(0)
                 } else if(data.command==='trainDelete'){
                     for(let sec of pccApi.SEC){
@@ -2660,12 +2786,14 @@ wss.on('connection', (ws, req) => {
                                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                     exports.apiSave()
                                     logger.confirm(`Suppression du train ${data.train}! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
+                                    writter.simple('COMMANDÉE.','PCC', `SUPPRESSION T${data.train}`)
                                 } else {
                                     ctn.trains.shift()
                                     logger.info('FORCED SUPPRESION')
                                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                     exports.apiSave()
                                     logger.confirm(`Suppression du train ${data.train}! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
+                                    writter.simple('COMMANDÉE.','PCC', `SUPPRESSION FORCÉE T${data.train}`)
                                 }
                             }
                         }
@@ -2694,6 +2822,7 @@ wss.on('connection', (ws, req) => {
             }
             
             logger.client(false,ws,Object.keys(clients).length);
+            writter.simple(`- Utilisateur ${ws.usr.username} (${ws.role})`,'GAME', 'USER')
             exports.apiSave()
         }
     });
@@ -3595,6 +3724,7 @@ let itiALDCMap = new Map()
 itiALDCMap.set('1301_2301',['1201_2201','1401_2401'])
 
 itiALDCMap.set('1201_1301',['1201_2201','1201_1401'])
+itiALDCMap.set('1301_1201',['1401_1201','2201_1201'])
 itiALDCMap.set('1301_1401',['1201_2201','1201_1401'])
 itiALDCMap.set('1401_1301',['1401_2401','1401_1201'])
 
@@ -3639,6 +3769,7 @@ function isItiActive(code){
     return false;
 }
 function detectALDC(sequence){
+    writter.simple(`MOUVEMENT ${sequence[0]}${sequence[1]}`,'PA', 'CANTONNEMENT')
     let ctnToIti1=sequence[0]
     let ctnToIti2=sequence[1]
     if(sequence[0].startsWith('cG')){
@@ -3661,8 +3792,10 @@ function detectALDC(sequence){
         ctn1.states.coupFs=2
         ctn2.states.coupFs=2
         pccApi.voyALC=2
+        writter.simple(`OUI.`,'UCA', 'ALDC')
+        writter.simple(`OUI.`,'PA', `${ctn1.cid}`)
+        writter.simple(`OUI.`,'PA', `${ctn2.cid}`)
         FSTrains('down','all')
-        console.log('done')
         return;
     } else {
         for(let newIti of itiALDCMap.get(`${ctnToIti1}_${ctnToIti2}`)){
@@ -3676,5 +3809,6 @@ function detectALDC(sequence){
 
 
 exports.MH=function(tid, sens){
+    writter.simple(`MOUVEMENT TRAIN ${tid} COMMANDÉ SENS ${sens}`,'PA', 'CANTONNEMENT')
     moveHandler(tid, sens)
 }

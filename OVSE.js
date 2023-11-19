@@ -6,6 +6,7 @@
 let pccApi = require('./server.json')
 
 let parent = require('./ws')
+const writter = require("./writter");
 
 exports.f1 = false
 exports.f2 = false
@@ -225,6 +226,7 @@ function detectLDI(){
                             if(itiParts[1]==='PAG1') itiParts[1]='cGPAG1'
                             let actualCtn = exports.returnCtnIteration(ctn)
                             actualCtn.states.ldi = 2
+                            writter.simple(`${actualCtn.cid}.`,'PA','LDI')
                         }
                     }
                 } else {
@@ -236,6 +238,7 @@ function detectLDI(){
                         let ctn2 = exports.returnCtnIteration(`c${itiParts[1]}`)
                         ctn1.states.ldi=2
                         ctn2.states.ldi=2
+                        writter.simple(`${ctn1.cid}-${ctn2.cid}.`,'PA','LDI')
                     }
                 }
             }
@@ -249,6 +252,7 @@ function detectPZO(){
         for(let ctn of sec.cantons){
             if(ctn.trains.length>1){
                 ctn.states.pzo=2
+                writter.simple(`${ctn.cid} (trains ${ctn.trains[0].tid} et ${ctn.trains[1].tid}).`,'PA','PZO')
             }
         }
     }
@@ -268,6 +272,7 @@ function detectAZM(){
                     if(ctn.trains.length>0){
                         if(!(isItiActive('1201_1401')||isItiActive('1401_1201')||isItiActive('1401_2401')||isItiActive('2401_1401')||isItiActive('1201_2201')||isItiActive('2201_1201')||isItiActive('2201_2401')||isItiActive('2401_2201'))){
                             sec.states.zoneManoeuvre1=2
+                            writter.simple(`${sec.id} (${ctn.cid})`,'PA','AZM')
                             defUCA.push(ctn.cid)
                             exports.f9=false
                             exports.callCounts++
@@ -283,6 +288,7 @@ function detectAZM(){
                     if(ctn.trains.length>0){
                         if(!(isItiActive('2501_1202')||isItiActive('1202_2501')||isItiActive('2302_2101')||isItiActive('2101_2302')||isItiActive('1202_2101')||isItiActive('2101_1202'))){
                             sec.states.zoneManoeuvre2=2
+                            writter.simple(`${sec.id} (${ctn.cid})`,'PA','AZM')
                             defUCA.push(ctn.cid)
                             exports.f9=false
                             exports.callCounts++
@@ -293,6 +299,7 @@ function detectAZM(){
                     if(ctn.trains.length>0){
                         if(!(isItiActive('1102_1302')||isItiActive('1302_1102')||isItiActive('PAG1_1102')||isItiActive('1102_PAG1'))){
                             sec.states.zoneManoeuvre2=2
+                            writter.simple(`${sec.id} (${ctn.cid})`,'PA','AZM')
                             defUCA.push(ctn.cid)
                             exports.f9=false
                             exports.callCounts++
@@ -317,6 +324,8 @@ function detectTNE(){
             if(ctn.trains.length>0){
                 if(ctn.trains[0].states.TMSActive===false){
                     ctn.trains[0].states.tneHorsZGAT=2
+                    writter.simple(`${sec.id} (${ctn.trains[0].tid})`,'PA','TNE/TNI')
+                    writter.simple(`${ctn.cid}`,'PA','PDP')
                     ctn.states.pdp=2
                     if(sec.id==='1'){
                         sec.states.tnitne1=2

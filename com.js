@@ -3,6 +3,7 @@ const ws = require('./ws')
 const pccApi = require('./server.json')
 
 const fs = require('fs')
+const writter = require("./writter");
 
 /**
 * @description Déplace un train d'un canton à un autre
@@ -86,6 +87,11 @@ exports.changeElementState = (element, id, state, value, force)=>{
                     ctn.states[state[0]] = value
                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                     ws.apiSave()
+                    let litteralValue = false
+                    if(value===true) litteralValue='OUI'
+                    if(value===false) litteralValue='NON'
+                    if(value===2) litteralValue='OUI'
+                    writter.simple(`${litteralValue}`,'EAS', `${state}`)
                     return JSON.stringify({ code: 200, verbose: "OK", message: `The element ${state[0]} have been successfully changed from ${formerState} to ${value}.`})
                 }
                 return JSON.stringify({ code: 404, verbose: "Not Found", message: "The state provided does'nt corresponds to any valid element state. Here is a list of valid states.", reponse: errResponse2})
@@ -110,6 +116,11 @@ exports.changeElementState = (element, id, state, value, force)=>{
                         train.states[tstate[0]] = value
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         ws.apiSave()
+                        let litteralValue = false
+                        if(value===true) litteralValue='OUI'
+                        if(value===false) litteralValue='NON'
+                        if(value===2) litteralValue='OUI'
+                        writter.simple(`${litteralValue}`,'EAS', `${state}`)
                         return JSON.stringify({ code: 200, verbose: "OK", message: `The element ${tstate[0]} have been successfully changed from ${formerState} to ${value}.`})
                     }
                     return JSON.stringify({ code: 404, verbose: "Not Found", message: "The state provided does'nt corresponds to any valid element state. Here is a list of valid states.", reponse: errResponse2})
@@ -147,6 +158,7 @@ exports.triggerSpecialAction=(element, id, event, args)=>{
                         pccApi.emCalls.push({ caller: args.caller, ctn: ctn.cid, trid: train.tid, active: 2})
                         console.log(exports.changeElementState('train', train.tid, 'trainSOS', 2, true))
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                        writter.simple('DÉCLANCHÉ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`)
                         ws.apiSave()
                         return JSON.stringify({ code: 200, verbose: "OK", message: `Event ${event} started for ${element} ${id}.`})
                     } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The event type provided is invalid. Please refer to the documentation." })
@@ -180,6 +192,7 @@ exports.manageTrains=(mode, id, args)=>{
                     if(availableCtn.includes(ctn.cid)&&ctn.trains.length===0){
                         let train = new Train(ctn, args.owner, args.initial, args.type, id)
                         train.spawn()
+                        writter.simple(`${id}, ${ctn.cid}`,'GAME', `SPAWN`)
                         return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully on the map.`})
                     }
                 }
@@ -198,6 +211,7 @@ exports.manageTrains=(mode, id, args)=>{
                         ctn.trains.shift()
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         ws.apiSave()
+                        writter.simple(`${id}, ${ctn.cid}`,'GAME', `DELETE`)
                         return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully deleted from the map.`})
                     } else return JSON.stringify({ code: 403, verbose: "Forbidden", message: "You tried to delete a train without it beeing in a garage zone. Here is a list a valid cantons.", reponse: availableCtn})
                 }

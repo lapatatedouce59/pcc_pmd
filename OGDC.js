@@ -13,6 +13,8 @@ const parent = require('./ws')
 
 const {setTimeout} = require('timers/promises')
 
+const writter = require("./writter");
+
 
 /**
 * Applique le cycle rensigné
@@ -45,6 +47,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
             if(!(cycle.code===code)) continue;
             if(code==='c1p1'){
                 cycle.active=true
+                writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 const rpdelay = async() => {
                     changeItiState('sel','2201_2401')
     
@@ -54,8 +57,10 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                     changeItiState('des','1201_2201')
                     await setTimeout(100)
                     apiSave()
+                    writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
                     await setTimeout(2000)
                     apiSave()
+                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
                 }
                 rpdelay()
                 let suiteCycle = ()=>{
@@ -75,12 +80,15 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                         changeItiState('des','1201_1401')
                                         changeItiState('des','1401_1201')
                                         await setTimeout(100)
+                                        writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
                                         apiSave()
                                         await setTimeout(2000)
                                         apiSave()
+                                        writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
                                     }
                                     rpdelay2()
                                     if((cycleTrigger) && (cycle.active)){
+                                        writter.simple('EN ATTENTE POUR RESET.','PA', `CYCLE ${cycle.code}`)
                                         let resetCycle = ()=>{
                                             if((pccApi.SEC[0].cantons[3].trains.length>0)){
                                                 clearInterval(resetCycleInter)
@@ -103,6 +111,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
 
             if(code==='c2p1'){
                 cycle.active=true
+                writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 const rpdelay = async() => {
                     changeItiState('sel','1401_1201')
     
@@ -112,9 +121,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                     changeItiState('des','2201_1201')
                     changeItiState('des','1201_2201')
                     await setTimeout(100)
+                    writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
                     apiSave()
                     await setTimeout(2000)
                     apiSave()
+                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
                 }
                 rpdelay()
                 let suiteCycle = ()=>{
@@ -135,11 +146,14 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                         changeItiState('des','1201_1401')
                                         await setTimeout(100)
                                         apiSave()
+                                        writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
                                         await setTimeout(2000)
                                         apiSave()
+                                        writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
                                     }
                                     rpdelay2()
                                     if((cycleTrigger) && (cycle.active)){
+                                        writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
                                         let resetCycle = ()=>{
                                             if((pccApi.SEC[0].cantons[6].trains.length>0)){
                                                 clearInterval(resetCycleInter)
@@ -160,6 +174,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
             }
 
             if(code==='c1p2'){
+                writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 cycle.active=true
                 const rpdelay = async() => {
                     changeItiState('sel','2202_2302')
@@ -173,8 +188,10 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                     changeItiState('des','1202_2101')
                     await setTimeout(100)
                     apiSave()
+                    writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
                     await setTimeout(2000)
                     apiSave()
+                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
                 }
                 rpdelay()
                 let suiteCycle = ()=>{
@@ -199,11 +216,14 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                         changeItiState('des','1501_1202')
                                         await setTimeout(100)
                                         apiSave()
+                                        writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
                                         await setTimeout(2000)
                                         apiSave()
+                                        writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
                                     }
                                     rpdelay2()
                                     if((cycleTrigger) && (cycle.active)){
+                                        writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
                                         let resetCycle = ()=>{
                                             if((pccApi.SEC[1].cantons[2].trains.length>0)){
                                                 clearInterval(resetCycleInter)
@@ -223,6 +243,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                 let suiteCycleInter = setInterval(suiteCycle,2000)
             }
             if(code==='c2p2'){
+                writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 cycle.active=true
                 const rpdelay = async() => {
                     changeItiState('sel','2202_2302')
@@ -236,8 +257,10 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                     changeItiState('des','1202_2101')
                     await setTimeout(100)
                     apiSave()
+                    writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
                     await setTimeout(2000)
                     apiSave()
+                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
                 }
                 rpdelay()
                 let suiteCycle = ()=>{
@@ -262,11 +285,14 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                         changeItiState('des','1501_1202')
                                         await setTimeout(100)
                                         apiSave()
+                                        writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
                                         await setTimeout(2000)
                                         apiSave()
+                                        writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
                                     }
                                     rpdelay2()
                                     if((cycleTrigger) && (cycle.active)){
+                                        writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
                                         let resetCycle = ()=>{
                                             if((pccApi.SEC[1].cantons[9].trains.length>0)){
                                                 clearInterval(resetCycleInter)
