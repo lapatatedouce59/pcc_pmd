@@ -1,87 +1,79 @@
-[Sunday   18h51:40] {GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Sunday   18h51:54] {PA    -> CYCLE RETRAIT V201 ; SÉLECTIONNÉ. 
-[Sunday   18h51:56] {PA    -> CYCLE RETRAIT V201 ; FORMÉ. 
-[Sunday   18h51:57] {PA    -> CANTONNEMENT ; MOUVEMENT c2201c2301 
-[Sunday   18h51:58] {PA    -> CANTONNEMENT ; MOUVEMENT c2301c2401 
-[Sunday   18h52:02] {PA    -> CANTONNEMENT ; MOUVEMENT c2401c2501 
-[Sunday   18h52:02] {PA    -> CYCLE RETRAIT V201 ; TERMINÉ. 
-[Sunday   18h52:09] {PA    -> CYCLE INJECTION V201 ; SÉLECTIONNÉ. 
-[Sunday   18h52:11] {PA    -> CYCLE INJECTION V201 ; FORMÉ. 
-[Sunday   18h52:15] {PA    -> ITINÉRAIRE 1401_1201 ; EN DESTRUCTION. 
-[Sunday   18h52:17] {PA    -> ITINÉRAIRE 1401_1201 ; DÉTRUIT. 
-[Sunday   18h52:17] {PA    -> CANTONNEMENT ; MOUVEMENT c2501c2401 
-[Sunday   18h52:19] {PA    -> CANTONNEMENT ; MOUVEMENT c2401c2301 
-[Sunday   18h52:21] {PA    -> CANTONNEMENT ; MOUVEMENT c1301c1401 
-[Sunday   18h52:21] {PA    -> CYCLE INJECTION V201 ; TERMINÉ. 
-[Sunday   18h52:33] {PA    -> CYCLE c2p1 ; SÉLECTIONNÉ. 
-[Sunday   18h52:35] {PA    -> CYCLE c2p1 ; EN ACTIVITÉ. 
-[Sunday   18h52:35] {PA    -> CYCLE c2p1 ; EN CONSTRUCTION PHASE 1. 
-[Sunday   18h52:37] {PA    -> CYCLE c2p1 ; CONSTRUIT PHASE 1. 
-[Sunday   18h52:41] {PA    -> CANTONNEMENT ; MOUVEMENT c1401c1301 
-[Sunday   18h52:42] {PA    -> CANTONNEMENT ; MOUVEMENT c1301c1201 
-[Sunday   18h52:45] {PA    -> CYCLE c2p1 ; EN ATTENTE DE RESET. 
-[Sunday   18h52:45] {PA    -> CYCLE c2p1 ; EN CONSTRUCTION PHASE 2. 
-[Sunday   18h52:47] {PA    -> CYCLE c2p1 ; CONSTRUIT PHASE 2. 
-[Sunday   18h52:49] {PA    -> CANTONNEMENT ; MOUVEMENT c1201c1301 
-[Sunday   18h52:51] {PA    -> CYCLE c2p1 ; EN ACTIVITÉ. 
-[Sunday   18h52:51] {PA    -> CYCLE c2p1 ; EN CONSTRUCTION PHASE 1. 
-[Sunday   18h52:53] {PA    -> CYCLE c2p1 ; CONSTRUIT PHASE 1. 
-[Sunday   18h52:56] {PA    -> CYCLES S1 ; ANNULÉS. 
-[Sunday   18h52:56] {PA    -> CYCLES S1 ; ANNULÉS. 
-[Sunday   18h53:02] {LIGNE -> HT ; NON. 
-[Sunday   18h53:02] {LIGNE -> FS ; NON. 
-[Sunday   18h53:02] {PCC   -> CDP ; ACTIF. 
-[Sunday   18h53:10] {PCC   -> CDP ; INACTIF. 
-[Sunday   18h53:32] {PCC   -> ARMEMENT PR ; NON. 
-[Sunday   18h53:32] {EAS   -> DSO PAR ALC ; OUI. 
-[Sunday   18h53:32] {EAS   -> DSO ; OUI. 
-[Sunday   18h53:32] {EAS   -> DEF ALIM ; OUI. 
-[Sunday   18h53:32] {EAS   -> DSO PAR ALC ; OUI. 
-[Sunday   18h53:32] {EAS   -> DSO ; OUI. 
-[Sunday   18h53:32] {TRAIN -> DÉPART INTERDIT ; OUI. 
-[Sunday   18h53:32] {EAS   -> DSO ; OUI. 
-[Sunday   18h53:32] {EAS   -> DEF ALIM ; OUI. 
-[Sunday   18h53:32] {EAS   -> DSO PAR ALC ; OUI. 
-[Sunday   18h53:32] {EAS   -> DEF ALIM ; OUI. 
-[Sunday   18h53:32] {EAS   -> DSO ; OUI. 
-[Sunday   18h53:32] {EAS   -> DEF ALIM ; OUI. 
-[Sunday   18h53:32] {EAS   -> DSO PAR ALC ; OUI. 
-[Sunday   18h53:32] {LIGNE -> HT ; NON. 
-[Sunday   18h53:33] {PCC   -> ARMEMENT PR ; OUI. 
-[Sunday   18h53:33] {EAS   -> DEF ALIM ; NON. 
-[Sunday   18h53:33] {EAS   -> DSO PAR ALC ; NON. 
-[Sunday   18h53:33] {TRAIN -> DÉPART INTERDIT ; NON. 
-[Sunday   18h53:33] {EAS   -> DEF ALIM ; NON. 
-[Sunday   18h53:33] {EAS   -> DEF ALIM ; NON. 
-[Sunday   18h53:33] {EAS   -> DSO PAR ALC ; NON. 
-[Sunday   18h53:33] {EAS   -> DSO PAR ALC ; NON. 
-[Sunday   18h53:33] {EAS   -> DEF ALIM ; NON. 
-[Sunday   18h53:33] {LIGNE -> HT ; OUI. 
-[Sunday   18h53:33] {EAS   -> DSO PAR ALC ; NON. 
-[Sunday   18h53:52] {PCC   -> ACQ ; REÇU. 
-[Sunday   18h53:58] {EAS   -> trainSOS ; NON 
-[Sunday   18h53:58] {PCC   -> APPEL DÉTRESSE DE 2 PAR UCA A c1101 ; RAZ. 
-[Sunday   18h54:59] {LIGNE -> FS ; NON. 
-[Sunday   18h54:59] {PCC   -> FS (LIGNE) ; NON. 
-[Sunday   18h55:00] {PCC   -> FS (LIGNE) ; OUI. 
-[Sunday   18h55:00] {LIGNE -> FS ; OUI. 
-[Sunday   18h55:16] {PA    -> CANTONNEMENT ; MOUVEMENT c2201c2301 
-[Sunday   18h55:18] {PA    -> CANTONNEMENT ; MOUVEMENT c2301c2401 
-[Sunday   18h55:21] {PA    -> CANTONNEMENT ; MOUVEMENT c2401c2301 
-[Sunday   18h55:22] {PA    -> CANTONNEMENT ; MOUVEMENT c2301c2201 
-[Sunday   18h55:23] {PA    -> CANTONNEMENT ; MOUVEMENT c2201c2101 
-[Sunday   18h55:23] {LIGNE -> FS ; NON. 
-[Sunday   18h55:23] {UCA   -> ALDC ; OUI. 
-[Sunday   18h55:23] {PA    -> c2101 ; OUI. 
-[Sunday   18h55:23] {PA    -> c2201 ; OUI. 
-[Sunday   18h55:27] {PA    -> CANTONNEMENT ; MOUVEMENT c2101c2201 
-[Sunday   18h55:27] {UCA   -> ALDC ; OUI. 
-[Sunday   18h55:27] {PA    -> c2101 ; OUI. 
-[Sunday   18h55:27] {PA    -> c2201 ; OUI. 
-[Sunday   18h55:27] {LIGNE -> FS ; NON. 
-[Sunday   18h55:31] {PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
-[Sunday   18h55:33] {PCC   -> ACQ ; REÇU. 
-[Sunday   18h55:38] {LIGNE -> FS ; NON. 
-[Sunday   18h55:38] {PCC   -> FS (LIGNE) ; NON. 
-[Sunday   18h55:38] {PCC   -> FS (LIGNE) ; OUI. 
-[Sunday   18h55:38] {LIGNE -> FS ; OUI. 
+[Saturday 14h04:54] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h07:18] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h07:19] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h07:21] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h07:21] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h27:22] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h27:23] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h27:24] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h27:25] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h27:27] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h27:27] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h27:29] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h27:29] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h28:39] PA    -> ITINÉRAIRE 1102_PAG1 ; EN DESTRUCTION. 
+[Saturday 15h28:41] PA    -> ITINÉRAIRE 1102_PAG1 ; DÉTRUIT. 
+[Saturday 15h28:42] PA    -> ITINÉRAIRE 1102_PAG1 ; SÉLECTIONNÉ. 
+[Saturday 15h28:44] PA    -> ITINÉRAIRE 1102_PAG1 ; FORMÉ. 
+[Saturday 15h29:19] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Saturday 15h29:20] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Saturday 15h29:23] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Saturday 15h29:24] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Saturday 15h29:24] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Saturday 15h29:25] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Saturday 15h29:26] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Saturday 15h29:26] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Saturday 15h29:40] EAS   -> trainSOS ; OUI 
+[Saturday 15h29:40] PCC   -> APPEL DÉTRESSE DE 2 PAR UCA A c1101 ; DÉCLANCHÉ. 
+[Saturday 15h29:44] PCC   -> APPEL DÉTRESSE DE 2 PAR UCA A c1101 ; ACQUITTÉ. 
+[Saturday 15h29:54] TRAIN -> ACQUITTEMENT T2 ; COMMANDÉ. 
+[Saturday 15h29:57] EAS   -> trainSOS ; NON 
+[Saturday 15h29:57] PCC   -> APPEL DÉTRESSE DE 2 PAR UCA A c1101 ; RAZ. 
+[Saturday 15h30:08] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h30:08] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h30:30] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h30:31] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h30:48] PCC   -> FS (SS04) ; OUI. 
+[Saturday 15h30:48] LIGNE -> FS ; NON SS04. 
+[Saturday 15h30:53] LIGNE -> FS ; OUI SS04. 
+[Saturday 15h30:53] PCC   -> FS (SS04) ; NON. 
+[Saturday 15h30:56] PCC   -> FS (SS05) ; OUI. 
+[Saturday 15h30:56] LIGNE -> FS ; NON SS05. 
+[Saturday 15h31:00] PCC   -> FS (SS05) ; NON. 
+[Saturday 15h31:00] LIGNE -> FS ; OUI SS05. 
+[Saturday 15h31:03] PCC   -> AUT HT (SS04) ; OUI. 
+[Saturday 15h31:03] LIGNE -> HT ; NON SS04. 
+[Saturday 15h31:06] PCC   -> AUT HT (SS04) ; NON. 
+[Saturday 15h31:06] LIGNE -> HT ; OUI SS04. 
+[Saturday 15h31:32] LIGNE -> FS ; NON. 
+[Saturday 15h31:32] PCC   -> FS (LIGNE) ; NON. 
+[Saturday 15h31:48] PCC   -> FS (LIGNE) ; OUI. 
+[Saturday 15h31:48] LIGNE -> FS ; OUI. 
+[Saturday 15h31:50] PCC   -> FS (GAT) ; NON. 
+[Saturday 15h31:55] PCC   -> FS (GAT) ; OUI. 
+[Saturday 15h31:57] PCC   -> IDPO ; OUI. 
+[Saturday 15h31:57] EAS   -> DSO ; OUI. 
+[Saturday 15h31:57] EAS   -> DSO PAR PLTP ; OUI. 
+[Saturday 15h31:57] EAS   -> DSO ; OUI. 
+[Saturday 15h31:57] EAS   -> DSO PAR PLTP ; OUI. 
+[Saturday 15h31:57] EAS   -> DSO ; OUI. 
+[Saturday 15h31:57] EAS   -> DSO ; OUI. 
+[Saturday 15h31:57] EAS   -> DSO PAR PLTP ; OUI. 
+[Saturday 15h31:57] EAS   -> DSO PAR PLTP ; OUI. 
+[Saturday 15h31:58] PCC   -> IDPO ; NON. 
+[Saturday 15h31:58] EAS   -> DSO PAR PLTP ; NON. 
+[Saturday 15h31:58] EAS   -> DSO ; NON. 
+[Saturday 15h31:58] EAS   -> DSO PAR PLTP ; NON. 
+[Saturday 15h31:58] EAS   -> DSO ; NON. 
+[Saturday 15h31:58] EAS   -> DSO PAR PLTP ; NON. 
+[Saturday 15h31:58] EAS   -> DSO ; NON. 
+[Saturday 15h31:58] EAS   -> DSO ; NON. 
+[Saturday 15h31:58] EAS   -> DSO PAR PLTP ; NON. 
+[Saturday 15h55:42] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h55:43] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h55:56] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h55:57] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h57:22] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h57:23] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday 15h57:25] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday 15h57:25] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 

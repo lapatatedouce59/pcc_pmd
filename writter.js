@@ -12,7 +12,7 @@ exports.simple = (text,elem,organne) => {
     }
     let actualTime = new Date();
 
-    let data = `[${dayOfWeekAsString(actualTime.getDay())}${' '.repeat(9-dayOfWeekAsString(actualTime.getDay()).length)}${('0'+actualTime.getHours()).slice(-2)}h${('0'+actualTime.getMinutes()).slice(-2)}:${('0'+actualTime.getSeconds()).slice(-2)}] {${elem}${' '.repeat(5-elem.length)} -> ${organne} ; ${text} \n`
+    let data = `[${dayOfWeekAsString(actualTime.getDay())}${' '.repeat(9-dayOfWeekAsString(actualTime.getDay()).length)}${('0'+actualTime.getHours()).slice(-2)}h${('0'+actualTime.getMinutes()).slice(-2)}:${('0'+actualTime.getSeconds()).slice(-2)}] ${elem}${' '.repeat(5-elem.length)} -> ${organne} ; ${text} \n`
     fs.writeFile('logs.txt', data, {flag: 'a+'}, (err) => {
         if (err) {
             throw err;

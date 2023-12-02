@@ -138,7 +138,10 @@ async function faireBip(){
     weweOnAttends()*/
 
     window.WebSocket.addEventListener('close', ()=>{
-        alert('Le serveur viens de crash! Merci de signaler l\'erreur à La Patate Douce sur discord.gg/pmd en indiquant les actions effectuées!')
+        window.notyf.open({
+            type: 'error',
+            message: `La connection a été interompue.`
+        })
     })
 
     window.WebSocket.addEventListener('error',()=>{

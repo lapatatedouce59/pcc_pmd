@@ -624,7 +624,7 @@ wss.on('connection', (ws, req) => {
                                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                         wss.broadcast(JSON.stringify({
                                             op: 10,
-                                            joined: { uuid: ws.id, uname: ws.usr.username },
+                                            joined: { role: ws.role, uname: ws.usr.username },
                                             content: pccApi
                                         }))
                                         logger.identify(ws,Object.keys(clients).length)

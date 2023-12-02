@@ -11,6 +11,81 @@ let tco2Loaded = false
 
 let fileIntervals=[]
 
+window.notyf = new Notyf({
+    duration: 1000,
+    position: {
+        x: 'center',
+        y: 'bottom',
+    },
+    types: [
+        {
+            type: 'arrival',
+            background: 'black',
+            icon: {
+                className: 'material-icons',
+                tagName: 'i',
+                text: 'person_add',
+                color: 'white'
+            },
+            duration: 5000,
+            dismissible: true
+        },
+        {
+            type: 'depart',
+            background: 'black',
+            icon: {
+                className: 'material-icons',
+                tagName: 'i',
+                text: 'person_remove',
+                color: 'white'
+            },
+            duration: 5000,
+            dismissible: true
+        },
+        {
+            type: 'success',
+            background: 'green',
+            icon: {
+                className: 'material-icons',
+                tagName: 'i',
+                text: 'check_circle',
+                color: 'white'
+            },
+            duration: 5000,
+            dismissible: true
+        },
+        {
+            type: 'error',
+            background: 'indianred',
+            duration: 10000,
+            dismissible: true,
+            icon: {
+                className: 'material-icons',
+                tagName: 'i',
+                text: 'error',
+                color: 'white'
+            }
+        },
+        {
+            type: 'warn',
+            background: '#a87103',
+            duration: 10000,
+            dismissible: true,
+            icon: {
+                className: 'material-icons',
+                tagName: 'i',
+                text: 'warning',
+                color: 'white'
+            }
+        }
+    ]
+});
+
+window.notyf.open({
+    type: 'warn',
+    message: `Attention: la gestion des mouvements des trains est en bêta. Merci de l'utiliser avec parcimonie.`
+})
+
 //? LOAD FORMAT SELECT
 let formatSelect = document.getElementById('formatSelect')
 let groupFormatPA = document.getElementById('groupFormatPA')
@@ -356,12 +431,18 @@ async function isWsRunning(){
     //getCantonsInfoS2()
     await sleep(500)
     if(!(cantonsS2.aiguilles)){
-        alert('Le cache doit être vidé pour continuer, désolé :(')
+        window.notyf.open({
+            type: 'error',
+            message: `Le cache de la page doit être vidé pour continuer.`
+        })
         return;
     }
     await sleep(1000)
     if(!(data)){
-        alert('Le websocket semble être hors ligne! Merci de signaler à La Patate Douce sur Discord!')
+        window.notyf.open({
+            type: 'error',
+            message: `Serveur hors ligne ou ne réponds pas.`
+        })
         return;
     }
 }
@@ -385,21 +466,19 @@ async function isWsRunning(){
         window.WebSocket.addEventListener('message', msg => {
             data = JSON.parse(msg.data);
             if(data.op===10){
-                let uuid=data.joined.uuid
-                let newUserName=data.joined.uname
+                window.notyf.open({
+                    type: 'arrival',
+                    message: `${data.joined.uname} (${data.joined.role}) a rejoins le PCC !`
+                })
                 data=data.content
-                toast.innerHTML='L\'utilisateur '+newUserName+' a rejoins le PCC avec l\'UUID '+uuid+' !'
-                sm.playSound('enter')
-                toast.className="show";
-                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
             }
 
             if(data.op===11){
-                toast.innerHTML=data.name+' a quitté la page.'
-                toast.className="show";
+                window.notyf.open({
+                    type: 'depart',
+                    message: `${data.joined.uname} a quitté le PCC !`
+                })
                 data=data.content
-                sm.playSound('left')
-                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 5000);
             }
 
             if ((data.op === 300)||(data.op === 2)) {
@@ -1820,6 +1899,10 @@ function isDigit(n) {
 }
 
 copyConfig.addEventListener('click', () => {
+    window.notyf.open({
+        type: 'success',
+        message: `La requête a bien été copiée.`
+    })
     navigator.clipboard.writeText(window.actualRequest)
 })
 
