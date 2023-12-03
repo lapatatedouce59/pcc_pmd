@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau expériences</title>
+    <style>
+        body{
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #222222;
+            color: white;
+            font-family: Arial;
+        }
+        #MASTERHEAD{
+            background-color: #1C1C1C;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            width: 100%;
+            padding: 20px;
+        }
+        #head1{
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+        }
+        .divPlayers>div{
+            margin-inline: 15px;
+        }
+        .divTrains>div{
+            margin-inline: 15px;
+        }
+        .divPlayers{
+            display: flex;
+        }
+        .divTrains{
+            display: flex;
+        }
+
+        .topDiv1{
+            background-color: rgb(255, 225, 0); width: 200px; height: 20px; margin-inline: 5px; text-align: center;
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+</head>
+<body>
+<script src="connexion.js"></script>
+<div id="MASTERHEAD">
+    <div id="head1">
+        <img src="./src/global/Paris_transit_icons_-_Métro_14.svg.png" style="height: 50px;"><img src="./src/global/logo new.png" style="height: 50px;"><h1>PCC Multijoueur</h1>
+    </div>
+    <div style="color: #A6A6A6;">
+        <div class="user">
+            Connecté en tant que: <span id="uname">indéfini</span>
+        </div>
+        <div class="user">
+            Votre UUID: <span id="uuidLigne">indéfini</span>
+        </div>
+        <div class="user">
+            Votre rôle: <span id="roleOP">indéfini</span>
+        </div>
+        <div style="display: inline-flex;"><button id="copyConfig" style="height: 20px; font-size: 10px; background: none; color: white;">Copier la requête</button><button onclick="document.location.href='./index.html'" style="height: 20px; font-size: 10px; background: none; color: white;">Opérateur PCC</button></div>
+    </div>
+</div>
+<div style="display: flex; flex-direction: column; width: 100%; margin: 20px;">
+    <div style="display: flex; flex-direction: row; align-items: center; width: 100%";><span class="material-icons" style="color: white; font-size: 40px; margin-right: 5px">pest_control</span><h1 style="margin: 0">Bienvenue dans les expériences</h1></div>
+    <div><p>
+        Cette page concerne les différentes expérimentations concernant le PCC. Toutes les requêtes doivent être envoyées depuis un compte administrateur (rôle chef) sinon ignorées.
+    </p></div>
+
+    <fieldset style="width: 90%">
+        <legend>Cantonnement balisé</legend>
+        <i style="display: flex; align-items: center;"><span class="material-icons" style="color: white; font-size: 20px;">info</span> Les zones <span style="color: rgb(255, 225, 0); margin-inline: 6px;">jaunes</span> représentent les DP principales des cantons. Les zones <span style="color: red; margin-inline: 6px;">rouges</span> représentent les DP inter-cantons.</i>
+        <i>Sélectionnez le train dont la position doit être changée puis modifiez les capteurs.</i>
+        <i>Si un train existant en jeu n'est plus détectée par aucune des boucles, une alarme PDP sera jetée, engendrant une perte de la FS.</i>
+        <div style="display: flex; flex-direction: column; width: 100%;">
+            <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                <div class="v2top" style="display: flex; flex-direction: row; width: 100%; justify-content: center;">
+                    <div class="topDiv1"><input type="checkbox" id="chk1101" data-type="dp" class="dpChk"></div>
+                    <div class="topDiv1"><input type="checkbox" id="chk1201" data-type="dp" class="dpChk"></div>
+                    <div class="topDiv1"><input type="checkbox" id="chk1301" data-type="dp" class="dpChk"></div>
+                    <div class="topDiv1"><input type="checkbox" id="chk1401" data-type="dp" class="dpChk"></div>
+                    <div class="topDiv1"><input type="checkbox" id="chk1501" data-type="dp" class="dpChk"></div>
+                </div>
+                <div class="v2bottom" style="display: flex; flex-direction: row; width: 58%; justify-content: space-evenly;">
+                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1101_1201" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1201_1301" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1301_1401" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1401_1501" data-type="dp'" class="dp'Chk"></div>
+                </div>
+            </div>
+            <br>
+            <div class="v2bottom" style="display: flex; flex-direction: row; width: 100%; justify-content: center;">
+                <div style="background-color: red; width: 20px; height: 50px; text-align: center; display: flex; align-items: center; justify-content: center;"><input type="checkbox" id="dp'1301_2301" data-type="dp" class="dp'Chk"></div>
+            </div>
+            <br>
+            <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                <div class="v2bottom" style="display: flex; flex-direction: row; width: 58%; justify-content: space-evenly;">
+                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1101_1201" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1201_1301" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1301_1401" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1401_1501" data-type="dp'" class="dp'Chk"></div>
+                </div>
+                <div class="v2top" style="display: flex; flex-direction: row; width: 100%; justify-content: center;">
+                    <div class="topDiv1"><input type="checkbox" id="dp2501" data-type="dp" class="dpChk"></div>
+                    <div class="topDiv1"><input type="checkbox" id="dp2401" data-type="dp" class="dpChk"></div>
+                    <div class="topDiv1"><input type="checkbox" id="dp2301" data-type="dp" class="dpChk"></div>
+                    <div class="topDiv1"><input type="checkbox" id="dp2201" data-type="dp" class="dpChk"></div>
+                    <div class="topDiv1"><input type="checkbox" id="dp2101" data-type="dp" class="dpChk"></div>
+                </div>
+            </div>
+            <div class="v1top"></div>
+            <div class="v1bottom"></div>
+        </div>
+        <label for="inputTrainID">ID du train en modification:  </label><span><input type="radio" name="radioTrains" value="2"> 2</span><span><input type="radio" name="radioTrains" value="3"> 3</span>
+    </fieldset>
+</div>
+
+<script src="experiment.js"></script>
+</body>
+</html>

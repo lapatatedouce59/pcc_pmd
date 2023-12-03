@@ -1914,8 +1914,15 @@ btnAdminAccess.addEventListener('click',()=>{
 let loadCount = 0
 let verifFunc = ()=>{
     loadCount++
-    if(loadCount===30){
-        document.location.reload()
+    if(loadCount===40){
+        if(localStorage.getItem('reloadLoadCnt')){
+            localStorage.setItem('reloadLoadCnt',parseInt(localStorage.getItem('reloadLoadCnt'))+1)
+        } else localStorage.setItem('reloadLoadCnt',1)
+
+        if(parseInt(localStorage.getItem('reloadLoadCnt'))>=5){
+            alert('Chargement en erreur.')
+            localStorage.setItem('reloadLoadCnt',0)
+        } else document.location.reload()
     }
     if(dataLoaded&&electricLoaded&&tco1Loaded&&tco2Loaded){
         console.log('resolved')

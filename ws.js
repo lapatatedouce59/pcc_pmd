@@ -2942,6 +2942,11 @@ function changeItiState(mode, code){
     return false;
 }
 
+
+function cantonManage(dpid, tid, sens){
+
+}
+
 //? SHARED
 
 function moveHandler(tid, sens){
@@ -2953,7 +2958,8 @@ function moveHandler(tid, sens){
         let _secIndex = parseFloat(train.secIndex)                    
     
         //?    On va donc regarder la voie active du train -> vérifier la possibilité de mouvement -> vérifier le type -> vérifier la continuité du canton -> créer le mouvement avec les bons indexs        ////////////////////////
-    
+
+
     
         if(pccApi.SEC[_secIndex].cantons[_cantonIndex].cid.startsWith("c1")){
             console.log("Train "+pccApi.SEC[_secIndex].cantons[_cantonIndex].trains[_trainIndex].tid+" voie 1 canton "+pccApi.SEC[_secIndex].cantons[_cantonIndex].cid)

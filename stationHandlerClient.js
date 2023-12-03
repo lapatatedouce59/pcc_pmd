@@ -145,7 +145,10 @@ async function faireBip(){
     })
 
     window.WebSocket.addEventListener('error',()=>{
-        alert('Le serveur viens de crash! Merci de signaler l\'erreur à La Patate Douce sur discord.gg/pmd en indiquant les actions effectuées!')
+        window.notyf.open({
+            type: 'error',
+            message: `Le serveur est injoignable.`
+        })
     })
 
     window.WebSocket.addEventListener('message', msg =>{
