@@ -58,7 +58,6 @@ function ongoingcycle(){
             sec.states.cycleOngoing=false
         }
     }
-    
     exports.f2=true
 }
 
@@ -70,7 +69,7 @@ function checkStationTrainsPresence(){
                     ctn.states.status='valid'
                 }
                 if(ctn.trains.length>0){
-                    if((ctn.states.status==='valid'||ctn.states.status==='def') && ctn.trains[0].states.trainInscrit){
+                    if((ctn.states.status==='valid'||ctn.states.status==='def') && pccApi.trains[ctn.trains[0]].states.trainInscrit){
                         ctn.states.status='inscrit'
                     }
                 }
@@ -322,9 +321,9 @@ function detectTNE(){
         for(let ctn of sec.cantons){
             if(ctn.cid.startsWith('cG')) continue;
             if(ctn.trains.length>0){
-                if(ctn.trains[0].states.TMSActive===false){
-                    ctn.trains[0].states.tneHorsZGAT=2
-                    writter.simple(`${sec.id} (${ctn.trains[0].tid})`,'PA','TNE/TNI')
+                if(pccApi.trains[ctn.trains[0]].states.TMSActive===false){
+                    pccApi.trains[ctn.trains[0]].states.tneHorsZGAT=2
+                    writter.simple(`${sec.id} (${pccApi.trains[ctn.trains[0]].tid})`,'PA','TNE/TNI')
                     writter.simple(`${ctn.cid}`,'PA','PDP')
                     ctn.states.pdp=2
                     if(sec.id==='1'){
@@ -344,7 +343,7 @@ function detectTNE(){
         for(let sec of pccApi.SEC){
             for(let ctn of sec.cantons){
                 if(!(ctn.trains.length>0)) continue;
-                ctn.trains[0].states.tneHorsZGAT=false
+                pccApi.trains[ctn.trains[0]].states.tneHorsZGAT=false
                 if(sec.id==='1'){
                     sec.states.tnitne1=false
                 } else if(sec.id==='2'){

@@ -29,8 +29,11 @@ window.WebSocket.addEventListener('message', msg => {
         //adminData=data.admin
         reload()
         function reload(){
-
+            constructCtn()
         }
-
     }
 })
+
+function constructCtn(){
+
+}

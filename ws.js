@@ -271,16 +271,13 @@ function HTTrains(type,zone){
                 for(let ctn of sec.cantons){
                     if(!(ss04CLIST.includes(ctn.cid))) continue;
                     for(let veh of ctn.trains){
+                        let train = pccApi.trains[veh]
                         if(type === 'down'){
-                            for(let veh of ctn.trains){
-                                executeDwn(veh)
-                            }
+                            executeDwn(train)
                         }
                         if(type === 'up'){
-                            for(let veh of ctn.trains){
-                                if((pccApi.SS[0].comAutHT===false)&&(pccApi.SS[0].voyHTAut===true)&&(pccApi.SS[0].voyRU===true)&&(pccApi.comAG===false)&&(pccApi.comArmPR===true)&&(pccApi.comAuth===true)){
-                                    executeUp(veh)
-                                }
+                            if((pccApi.SS[0].comAutHT===false)&&(pccApi.SS[0].voyHTAut===true)&&(pccApi.SS[0].voyRU===true)&&(pccApi.comAG===false)&&(pccApi.comArmPR===true)&&(pccApi.comAuth===true)){
+                                executeUp(train)
                             }
                         }
                     }
@@ -321,12 +318,13 @@ function HTTrains(type,zone){
                 for(let ctn of sec.cantons){
                     if(!(ss05CLIST.includes(ctn.cid))) continue;
                     for(let veh of ctn.trains){
+                        let train = pccApi.trains[veh]
                         if(type === 'down'){
-                            executeDwn(veh)
+                            executeDwn(train)
                         }
                         if(type === 'up'){
                             if((pccApi.SS[1].comAutHT===false)&&(pccApi.SS[1].voyHTAut===true)&&(pccApi.SS[1].voyRU===true)&&(pccApi.comAG===false)&&(pccApi.comArmPR===true)&&(pccApi.comAuth===true)){
-                                executeUp(veh)
+                                executeUp(train)
                             }
                         }
                     }
@@ -377,13 +375,15 @@ function HTTrains(type,zone){
                         if(/*(pccApi.SS[0].comAutHT===false)&&(pccApi.SS[0].voyHTAut===true)&&(pccApi.SS[0].voyRU===true)*/true){
                             if(type === 'down'){
                                 for(let veh of ctn.trains){
-                                    executeDwn(veh)
+                                    let train = pccApi.trains[veh]
+                                    executeDwn(train)
                                 }
                             }
                             if(type === 'up'){
                                 if((pccApi.SS[0].comAutHT===false)&&(pccApi.SS[0].voyHTAut===true)&&(pccApi.SS[0].voyRU===true)&&(pccApi.comAG===false)&&(pccApi.comArmPR===true)&&(pccApi.comAuth===true)){
                                     for(let veh of ctn.trains){
-                                        executeUp(veh)
+                                        let train = pccApi.trains[veh]
+                                        executeUp(train)
                                     }
                                 }
                             }
@@ -393,13 +393,15 @@ function HTTrains(type,zone){
                         if(/*(pccApi.SS[1].comAutHT===false)&&(pccApi.SS[1].voyHTAut===true)&&(pccApi.SS[1].voyRU===true)*/true){
                             if(type === 'down'){
                                 for(let veh of ctn.trains){
-                                    executeDwn(veh)
+                                    let train = pccApi.trains[veh]
+                                    executeDwn(train)
                                 }
                             }
                             if(type === 'up'){
                                 if((pccApi.SS[1].comAutHT===false)&&(pccApi.SS[1].voyHTAut===true)&&(pccApi.SS[1].voyRU===true)&&(pccApi.comAG===false)&&(pccApi.comArmPR===true)&&(pccApi.comAuth===true)){
                                     for(let veh of ctn.trains){
-                                        executeUp(veh)
+                                        let train = pccApi.trains[veh]
+                                        executeUp(train)
                                     }
                                 }
                             }
@@ -461,12 +463,14 @@ function FSTrains (type,zone){
                     if(!(ss04CLIST.includes(ctn.cid))) continue;
                     if(type === 'down'){
                         for(let veh of ctn.trains){
-                            executeDwn(veh)
+                            let train = pccApi.trains[veh]
+                            executeDwn(train)
                         }
                     }
                     if(type === 'up'){
                         for(let veh of ctn.trains){
-                            executeUp(veh)
+                            let train = pccApi.trains[veh]
+                            executeUp(train)
                         }
                     }
                 }
@@ -492,10 +496,12 @@ function FSTrains (type,zone){
                     if(!(ss05CLIST.includes(ctn.cid))) continue;
                     for(let veh of ctn.trains){
                         if(type === 'down'){
-                            executeDwn(veh)
+                            let train = pccApi.trains[veh]
+                            executeDwn(train)
                         }
                         if(type === 'up'){
-                            executeUp(veh)
+                            let train = pccApi.trains[veh]
+                            executeUp(train)
                         }
                     }
                 }
@@ -527,12 +533,14 @@ function FSTrains (type,zone){
                         if(/*(pccApi.SS[0].comCoupFS===false)&&(pccApi.SS[0].voyRU===true)*/true){
                             if(type === 'down'){
                                 for(let veh of ctn.trains){
-                                    executeDwn(veh)
+                                    let train = pccApi.trains[veh]
+                                    executeDwn(train)
                                 }
                             }
                             if(type === 'up'){
                                 for(let veh of ctn.trains){
-                                    executeUp(veh)
+                                    let train = pccApi.trains[veh]
+                                    executeUp(train)
                                 }
                             }
                         }
@@ -541,12 +549,14 @@ function FSTrains (type,zone){
                         if(/*(pccApi.SS[1].comCoupFS===false)&&(pccApi.SS[0].voyRU===true)*/true){
                             if(type === 'down'){
                                 for(let veh of ctn.trains){
-                                    executeDwn(veh)
+                                    let train = pccApi.trains[veh]
+                                    executeDwn(train)
                                 }
                             }
                             if(type === 'up'){
                                 for(let veh of ctn.trains){
-                                    executeUp(veh)
+                                    let train = pccApi.trains[veh]
+                                    executeUp(train)
                                 }
                             }
                         }
@@ -802,54 +812,54 @@ wss.on('connection', (ws, req) => {
                         for (let sec of pccApi.SEC){
                             for(let ctn of sec.cantons){
                                 for(let veh of ctn.trains){
-                                    if(veh.states.awakeMR===true){
+                                    if(pccApi.trains[veh].states.awakeMR===true){
                                         let timeFunc = async () => {
                                             await setTimeout(100)
                                             if(pccApi.voyFS===true){
-                                                veh.states.fsOk=true
-                                                veh.states.fuNoFS=false
+                                                pccApi.trains[veh].states.fsOk=true
+                                                pccApi.trains[veh].states.fuNoFS=false
                                             }
                                             exports.apiSave()
                                             await setTimeout(600)
                                             if(pccApi.voyFS===true){
-                                                veh.states.activeFI=false
-                                                veh.states.activeFU=false
-                                                veh.states.cmdFu=false
-                                                veh.states.fuNoFS=false
+                                                pccApi.trains[veh].states.activeFI=false
+                                                pccApi.trains[veh].states.activeFU=false
+                                                pccApi.trains[veh].states.cmdFu=false
+                                                pccApi.trains[veh].states.fuNoFS=false
                                             }
                                             exports.apiSave()
                                             await setTimeout(300)
                                             if(pccApi.voyFS===true){
-                                                veh.states.cmdTraction=true
-                                                veh.states.tractionS1=true
+                                                pccApi.trains[veh].states.cmdTraction=true
+                                                pccApi.trains[veh].states.tractionS1=true
                                             }
                                             exports.apiSave()
                                             await setTimeout(5700)
                                             if(pccApi.voyHT===true){
-                                                veh.states.abs750=false
-                                                veh.states.btDelest=false
-                                                veh.states.trainBattery=false
+                                                pccApi.trains[veh].states.abs750=false
+                                                pccApi.trains[veh].states.btDelest=false
+                                                pccApi.trains[veh].states.trainBattery=false
                                             }
                                             exports.apiSave()
                                             await setTimeout(3400)
                                             if(pccApi.voyFS===true){
-                                                veh.states.activeFU=true
-                                                veh.states.tractionS1=false
-                                                veh.states.cmdTraction=false
-                                                veh.states.cmdFu=2
-                                                veh.states.fuDiscMob=2
+                                                pccApi.trains[veh].states.activeFU=true
+                                                pccApi.trains[veh].states.tractionS1=false
+                                                pccApi.trains[veh].states.cmdTraction=false
+                                                pccApi.trains[veh].states.cmdFu=2
+                                                pccApi.trains[veh].states.fuDiscMob=2
                                             }
                                             if(pccApi.voyHT===true){
-                                                veh.states.avarieOnduls=2
-                                                veh.states.defTech=2
-                                                veh.states.trainHeating=true
-                                                veh.states.trainComp=true
+                                                pccApi.trains[veh].states.avarieOnduls=2
+                                                pccApi.trains[veh].states.defTech=2
+                                                pccApi.trains[veh].states.trainHeating=true
+                                                pccApi.trains[veh].states.trainComp=true
                                             }
                                             exports.apiSave()
                                             await setTimeout(2500)
                                             if(pccApi.voyHT===true){
-                                                veh.states.defCvs=false
-                                                veh.states.trainLights=true
+                                                pccApi.trains[veh].states.defCvs=false
+                                                pccApi.trains[veh].states.trainLights=true
                                             }
                                             exports.apiSave()
                                             await setTimeout(120)
@@ -857,15 +867,15 @@ wss.on('connection', (ws, req) => {
                                             exports.apiSave()
                                             await setTimeout(4900)
                                             if(pccApi.voyHT===true){
-                                                veh.states.avarieOnduls=false
-                                                veh.states.activeOnduls=true
+                                                pccApi.trains[veh].states.avarieOnduls=false
+                                                pccApi.trains[veh].states.activeOnduls=true
                                             }
                                             if(pccApi.voyFS===true){
-                                                veh.states.activeFU=false
-                                                veh.states.cmdFu=false
-                                                veh.states.fuDiscMob=false
-                                                veh.states.defTech=false
-                                                veh.states.cmdTraction=true
+                                                pccApi.trains[veh].states.activeFU=false
+                                                pccApi.trains[veh].states.cmdFu=false
+                                                pccApi.trains[veh].states.fuDiscMob=false
+                                                pccApi.trains[veh].states.defTech=false
+                                                pccApi.trains[veh].states.cmdTraction=true
                                             }
                                             exports.apiSave()
                                         }
@@ -1087,7 +1097,7 @@ wss.on('connection', (ws, req) => {
                                     writter.simple('OUI.','EAS', 'DSO')
                                     writter.simple('OUI.','EAS', 'DSO PAR ALC')
                                     if(ctns.trains[0]){
-                                        let trainObj=ctns.trains[0]
+                                        let trainObj=pccApi.trains[ctns.trains[0]]
                                         trainObj.states.forbiddenStart=2
                                         writter.simple('OUI.','TRAIN', 'DÉPART INTERDIT')
                                     }
@@ -1116,7 +1126,7 @@ wss.on('connection', (ws, req) => {
                                     ctns.states.alimDef=false
                                     ctns.states.IDPOAlreadyActiveByALC=false
                                     if(ctns.trains[0]){
-                                        let trainObj=ctns.trains[0]
+                                        let trainObj=pccApi.trains[ctns.trains[0]]
                                         trainObj.states.forbiddenStart=false
                                         writter.simple('NON.','TRAIN', 'DÉPART INTERDIT')
                                     }
@@ -1407,7 +1417,7 @@ wss.on('connection', (ws, req) => {
                         if(!(stationObj.states[alarm]===2)) continue;
                         stationObj.states[alarm]=1
                     }
-                    let trainObj = stationObj.trains[0]
+                    let trainObj = pccApi.trains[stationObj.trains[0]]
                     if(trainObj){
                         for(let alarm in trainObj.states){
                             if(!(trainObj.states[alarm]===2)) continue;
@@ -1662,7 +1672,7 @@ wss.on('connection', (ws, req) => {
                 if (data.execute==='EMCALL-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
-                    let trainObj=pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]
+                    let trainObj=pccApi.trains[pccApi.SEC[response.secIndex].cantons[response.cantonIndex].trains[parseInt(response.trainIndex)]]
                     trainObj.states.trainEmCall=2
                     trainObj.states.forbiddenStart=2
                     let stationObj = pccApi.SEC[response.secIndex].cantons[response.cantonIndex]
@@ -1871,7 +1881,7 @@ wss.on('connection', (ws, req) => {
                     }
                     exports.apiSave()
                 } else
-                if(data.execute==='FU-BTN-ON'){
+                /*if(data.execute==='FU-BTN-ON'){
                     if(!data.target.secIndex) return;
                     if(!data.target.cIndex) return;
                     if(!data.target.tIndex) return;
@@ -1902,7 +1912,7 @@ wss.on('connection', (ws, req) => {
                     trainObj.states.cmdFu=false
                     trainObj.states.activeFU=false
                     exports.apiSave()
-                } else
+                } else*/
                 if(data.execute==='CPTFU-BTN-ACQ'){
                     if(!data.target.secIndex) return;
                     if(!data.target.cIndex) return;
@@ -1911,13 +1921,13 @@ wss.on('connection', (ws, req) => {
                     let cantonIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let trainIndex = parseInt(data.target.tIndex)
-                    let trainObj = pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]
+                    let trainObj=pccApi.trains[pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]]
                     trainObj.states.cptFu=0
                     trainObj.states.defTech=false
                     trainObj.states.v0pas=false
                     trainObj.states.blockedTrain=false
                     exports.apiSave()
-                } else
+                } /*else
                 if(data.execute==='PREP-BTN'){
                     if(!data.target.secIndex) return;
                     if(!data.target.cIndex) return;
@@ -2114,7 +2124,7 @@ wss.on('connection', (ws, req) => {
                     } else {
                         refusDeprep()
                     }
-                }
+                }*/
                 break;
             case 220:
                 if(!isClientExisting(data.uuid)) return;
@@ -2779,7 +2789,7 @@ wss.on('connection', (ws, req) => {
                         for(let ctn of sec.cantons){
                             if(!(ctn.trains.length>0)) continue;
                             for(let train of ctn.trains){
-                                if(!(train.tid===data.train)) continue;
+                                if(!(pccApi.trains[train].tid===data.train)) continue;
                                 let availableCtn = ['cGPAG1','c1101','c1201','c1501']
                                 if(availableCtn.includes(ctn.cid)){
                                     ctn.trains.shift()
@@ -2944,7 +2954,12 @@ function changeItiState(mode, code){
 
 
 function cantonManage(dpid, tid, sens){
+    // dpid -> soit dp1101 soit dp'1101_1201
+    if(dpid.startsWith(`dp'`)){
 
+    } else if (dpid.startsWith(`dp`)){
+
+    }
 }
 
 //? SHARED
@@ -3722,44 +3737,6 @@ function moveHandler(tid, sens){
         //?         FIN DE MOOVHANDLER V2            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }
-
-//Joue un peu le role de whitelist des iti ALDC et replace des
-//faux itis par des vrais itis à vérifier
-let itiALDCMap = new Map()
-
-itiALDCMap.set('1301_2301',['1201_2201','1401_2401'])
-
-itiALDCMap.set('1201_1301',['1201_2201','1201_1401'])
-itiALDCMap.set('1301_1201',['1401_1201','2201_1201'])
-itiALDCMap.set('1301_1401',['1201_2201','1201_1401'])
-itiALDCMap.set('1401_1301',['1401_2401','1401_1201'])
-
-itiALDCMap.set('2301_1301',['2201_1201','2401_1401'])
-
-itiALDCMap.set('2201_2301',['2201_1201','2201_2401'])
-itiALDCMap.set('2301_2201',['2401_2201','1201_2201'])
-itiALDCMap.set('2301_2401',['2201_1201','2201_2401'])
-itiALDCMap.set('2401_2301',['2401_2201','2401_1401'])
-
-
-
-itiALDCMap.set('1102_2402',['1202_2101'])
-itiALDCMap.set('2402_2101',['1202_2101'])
-itiALDCMap.set('2402_1102',['2101_1202'])
-
-itiALDCMap.set('1202_1102',['1202_1501'])
-itiALDCMap.set('1102_1501',['1202_1501'])
-itiALDCMap.set('2302_2402',['2302_2101'])
-itiALDCMap.set('2101_2402',['2101_2302','2101_1202'])
-
-itiALDCMap.set('A2PAG_1202',['PAG1_1102'])
-itiALDCMap.set('1202_A2PAG',['1102_PAG1'])
-itiALDCMap.set('A2PAG_PAG1',['1102_PAG1'])
-
-itiALDCMap.set('PAG1_A2PAG',['PAG1_1102'])
-itiALDCMap.set('1102_1202',['1102_PAG1','1102_1302'])
-itiALDCMap.set('1202_1302',['1102_1302'])
-itiALDCMap.set('1302_1202',['1302_1102'])
 
 function isItiActive(code){
     if(!code) return console.error('[isItiActive] Aucun code d\'iti indiqué!')

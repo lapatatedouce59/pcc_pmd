@@ -200,14 +200,14 @@ function josephineChercheLesDefauts(){
     for (let sec in data.SEC){
         for (let ctns in data.SEC[sec].cantons){
             for (let train in data.SEC[sec].cantons[ctns].trains){
-                if(!(data.SEC[sec].cantons[ctns].trains[train])) continue;
-                for(const property of Object.entries(data.SEC[sec].cantons[ctns].trains[train].states)){
+                if(!(data.trains[data.SEC[sec].cantons[ctns].trains[train]])) continue;
+                for(const property of Object.entries(data.trains[data.SEC[sec].cantons[ctns].trains[train]].states)){
                     if(!(property[1] === 1 || property[1] === 2)) continue;
                     if(property[1]===1){
-                        defList.push({name: data.SEC[sec].cantons[ctns].trains[train].trainType + '-' + data.SEC[sec].cantons[ctns].trains[train].tid, id: data.SEC[sec].cantons[ctns].trains[train].tid})
+                        defList.push({name: data.trains[data.SEC[sec].cantons[ctns].trains[train]].trainType + '-' + data.trains[data.SEC[sec].cantons[ctns].trains[train]].tid, id: data.trains[data.SEC[sec].cantons[ctns].trains[train]].tid})
                     }
                     if(property[1]===2){
-                        anoList.push({name:data.SEC[sec].cantons[ctns].trains[train].trainType + '-' + data.SEC[sec].cantons[ctns].trains[train].tid,def:property[0],pos:data.SEC[sec].cantons[ctns].cid, id: data.SEC[sec].cantons[ctns].trains[train].tid})
+                        anoList.push({name:data.trains[data.SEC[sec].cantons[ctns].trains[train]].trainType + '-' + data.trains[data.SEC[sec].cantons[ctns].trains[train]].tid,def:property[0],pos:data.SEC[sec].cantons[ctns].cid, id: data.trains[data.SEC[sec].cantons[ctns].trains[train]].tid})
                     }
                 }
             }

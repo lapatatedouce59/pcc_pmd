@@ -69,9 +69,9 @@
         Cette page concerne les différentes expérimentations concernant le PCC. Toutes les requêtes doivent être envoyées depuis un compte administrateur (rôle chef) sinon ignorées.
     </p></div>
 
-    <fieldset style="width: 90%">
+    <!--<fieldset style="width: 90%">
         <legend>Cantonnement balisé</legend>
-        <i style="display: flex; align-items: center;"><span class="material-icons" style="color: white; font-size: 20px;">info</span> Les zones <span style="color: rgb(255, 225, 0); margin-inline: 6px;">jaunes</span> représentent les DP principales des cantons. Les zones <span style="color: red; margin-inline: 6px;">rouges</span> représentent les DP inter-cantons.</i>
+        <i style="display: flex; align-items: center;"><span class="material-icons" style="color: white; font-size: 20px;">info</span> Les zones <span style="color: rgb(255, 225, 0); margin-inline: 6px;">jaunes</span> représentent les DP principales des cantons. Les zones <span style="color: red; margin-inline: 6px;">rouges</span> représentent les DP inter-cantons. Les zones <span style="color: rgb(149, 149, 149); margin-inline: 6px;">grises</span> représentent les DP de manoeuvre (DN).</i>
         <i>Sélectionnez le train dont la position doit être changée puis modifiez les capteurs.</i>
         <i>Si un train existant en jeu n'est plus détectée par aucune des boucles, une alarme PDP sera jetée, engendrant une perte de la FS.</i>
         <div style="display: flex; flex-direction: column; width: 100%;">
@@ -85,21 +85,19 @@
                 </div>
                 <div class="v2bottom" style="display: flex; flex-direction: row; width: 58%; justify-content: space-evenly;">
                     <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1101_1201" data-type="dp'" class="dp'Chk"></div>
-                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1201_1301" data-type="dp'" class="dp'Chk"></div>
-                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1301_1401" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: rgb(149, 149, 149); width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1201_1301" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: rgb(149, 149, 149); width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1301_1401" data-type="dp'" class="dp'Chk"></div>
                     <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1401_1501" data-type="dp'" class="dp'Chk"></div>
                 </div>
             </div>
-            <br>
             <div class="v2bottom" style="display: flex; flex-direction: row; width: 100%; justify-content: center;">
                 <div style="background-color: red; width: 20px; height: 50px; text-align: center; display: flex; align-items: center; justify-content: center;"><input type="checkbox" id="dp'1301_2301" data-type="dp" class="dp'Chk"></div>
             </div>
-            <br>
             <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
                 <div class="v2bottom" style="display: flex; flex-direction: row; width: 58%; justify-content: space-evenly;">
                     <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1101_1201" data-type="dp'" class="dp'Chk"></div>
-                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1201_1301" data-type="dp'" class="dp'Chk"></div>
-                    <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1301_1401" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: rgb(149, 149, 149); width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1201_1301" data-type="dp'" class="dp'Chk"></div>
+                    <div style="background-color: rgb(149, 149, 149); width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1301_1401" data-type="dp'" class="dp'Chk"></div>
                     <div style="background-color: red; width: 50px; height: 20px; text-align: center;"><input type="checkbox" id="dp'1401_1501" data-type="dp'" class="dp'Chk"></div>
                 </div>
                 <div class="v2top" style="display: flex; flex-direction: row; width: 100%; justify-content: center;">
@@ -112,6 +110,14 @@
             </div>
             <div class="v1top"></div>
             <div class="v1bottom"></div>
+        </div>
+        <label for="inputTrainID">ID du train en modification:  </label><span><input type="radio" name="radioTrains" value="2"> 2</span><span><input type="radio" name="radioTrains" value="3"> 3</span>
+    </fieldset>-->
+    <fieldset style="width: 90%">
+        <legend>Cantonnement balisé</legend>
+        <i>Sélectionnez le train dont la position doit être changée puis modifiez les capteurs.</i>
+        <div style="display: flex; flex-direction: column; width: 100%;">
+            
         </div>
         <label for="inputTrainID">ID du train en modification:  </label><span><input type="radio" name="radioTrains" value="2"> 2</span><span><input type="radio" name="radioTrains" value="3"> 3</span>
     </fieldset>

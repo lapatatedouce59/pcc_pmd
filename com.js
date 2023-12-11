@@ -105,15 +105,15 @@ exports.changeElementState = (element, id, state, value, force)=>{
             for(let ctn of sec.cantons){
                 if(!(ctn.trains.length>0)) continue;
                 for(let train of ctn.trains){
-                    errResponse.push( {id: train.tid, ctn: ctn.cid, sec: sec.id} )
-                    if(!(train.tid===id)) continue;
-                    for(let tstate of Object.entries(train.states)){
+                    errResponse.push( {id: pccApi.trains[train].tid, ctn: ctn.cid, sec: sec.id} )
+                    if(!(pccApi.trains[train]===id)) continue;
+                    for(let tstate of Object.entries(pccApi.trains[train].states)){
                         errResponse2.push(state[0])
                         //console.log(`${state}=${tstate[0]}?${state===tstate[0]}`)
                         if(!(tstate[0]===state)) continue;
                         if(tstate[0]==='trainSOS' && !(force)) return JSON.stringify({ code: 423, verbose: "Locked", message: "While the state provided is valid, you don't have the permission to change it directly. Call the function triggerSpecialAction() or refer to the documentation.", reponse: errResponse2})
                         let formerState = tstate[1]
-                        train.states[tstate[0]] = value
+                        pccApi.trains[train].states[tstate[0]] = value
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         ws.apiSave()
                         let litteralValue = false
@@ -151,12 +151,12 @@ exports.triggerSpecialAction=(element, id, event, args)=>{
             for(let ctn of sec.cantons){
                 if(!(ctn.trains.length>0)) continue;
                 for(let train of ctn.trains){
-                    errResponse.push( {id: train.tid, ctn: ctn.cid, sec: sec.id} )
-                    if(!(train.tid===id)) continue;
+                    errResponse.push( {id: pccApi.trains[train].tid, ctn: ctn.cid, sec: sec.id} )
+                    if(!(pccApi.trains[train].tid===id)) continue;
                     if(event==='emCall'){
                         if(!(args.caller)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the event args is not provided. Please refer to the documentation." })
-                        pccApi.emCalls.push({ caller: args.caller, ctn: ctn.cid, trid: train.tid, active: 2})
-                        console.log(exports.changeElementState('train', train.tid, 'trainSOS', 2, true))
+                        pccApi.emCalls.push({ caller: args.caller, ctn: ctn.cid, trid: pccApi.trains[train].tid, active: 2})
+                        console.log(exports.changeElementState('train', pccApi.trains[train].tid, 'trainSOS', 2, true))
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         writter.simple('DÉCLANCHÉ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`)
                         ws.apiSave()
@@ -204,8 +204,8 @@ exports.manageTrains=(mode, id, args)=>{
             for(let ctn of sec.cantons){
                 if(!(ctn.trains.length>0)) continue;
                 for(let train of ctn.trains){
-                    errResponse.push( {id: train.tid, ctn: ctn.cid, sec: sec.id} )
-                    if(!(train.tid===id)) continue;
+                    errResponse.push( {id: pccApi.trains[train].tid, ctn: ctn.cid, sec: sec.id} )
+                    if(!(pccApi.trains[train].tid===id)) continue;
                     let availableCtn = ['cGPAG1','c1101','c1201','c1501']
                     if(availableCtn.includes(ctn.cid)){
                         ctn.trains.shift()
