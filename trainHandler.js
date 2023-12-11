@@ -124,17 +124,19 @@ function refreshTList(){
 
     let inflationDuPrixDuCarburant = 0
     for(let train of Object.entries(data.trains)){
-        if(trainsAlreadyCreated.includes(train[1].tid)) continue;
+        console.log(train)
+        if(trainsAlreadyCreated.includes(train[0])) continue;
         console.log(train[1])
-        trainsAlreadyCreated.push(train[1].tid)
+        
         let opt = document.createElement('OPTION')
         opt.innerHTML=train[1].trainType + '-' +train[1].tid
         opt.setAttribute('name',train[1].trainType + '-' +train[1].tid)
-        opt.value=train[1].tid
+        opt.value=train[0]
         opt.classList='trainOpt'
-        opt.id=train[1].tid
+        opt.id=train[0]
         selectMenuTrain.appendChild(opt)
         inflationDuPrixDuCarburant++
+        trainsAlreadyCreated.push(train[0])
     }
 }
 
@@ -145,7 +147,7 @@ function getTrainInfo(id){
         if(train[0]===id){
             nRes.id=train[0]
             nRes.states=train[1].states
-            pos=findTrainPos(train[0])
+            nRes.pos=findTrainPos(train[0])
             nRes.trainInf=train[1]
         }
     }
@@ -177,14 +179,13 @@ function getTrainInfo(id){
 }
 
 function findTrainPos(id){
-    let res = {}
+    let res = []
     for(let sec of data.SEC){
         for(let ctn of sec.cantons){
             if(ctn.trains.length>0){
                 for(let train of ctn.trains){
-                    if(train.tid===id) {
-                        res.ctn=ctn
-                        res.sec=sec.id
+                    if(train===id) {
+                        res.push({ctn: ctn, sec: sec.id})
                     }
                 }
             }
@@ -237,7 +238,7 @@ function josephineChercheLesDefauts(){
                 defList.push({name: train[1].trainType + '-' + train[0], id: train[0]})
             }
             if(property[1]===2){
-                anoList.push({name:train[1].trainType + '-' + train[0],def:property[0],pos:findTrainPos(train[0]).ctn.cid, id: train[0]})
+                anoList.push({name:train[1].trainType + '-' + train[0],def:property[0],pos:findTrainPos(train[0])[0].ctn.cid, id: train[0]})
             }
         }
     }
@@ -293,11 +294,10 @@ function josephineChercheLesDefauts(){
 }
 
 function updateVoy(tr){
-
     josephineChercheLesDefauts()
 
     trainNumberTrain.value=tr.id
-    trainCanton.value=tr.pos[0].ctn.id.replace('c','')
+    if(tr.pos.length>1) trainCanton.value=tr.pos[0].ctn.cid.replace('c','')+'*'; else trainCanton.value=tr.pos[0].ctn.cid.replace('c','')
 
     if(tr.pos.sec!=='GAT'){
         trainGSec.value='ABS'
@@ -391,8 +391,8 @@ function updateVoy(tr){
                 }, 500)
                 if(blinkId>=10000) alert('blinkId>=10000, relancer la page!')
                 console.log(blinkId)
-                blinkIntervalId.set(elemid, blinkId)
-                console.log(blinkIntervalId)
+                //blinkIntervalId.set(elemid, blinkId)
+                //console.log(blinkIntervalId)
                 fileIntervals.push(blinkId)
                 break;
         }

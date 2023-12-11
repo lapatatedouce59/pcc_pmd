@@ -863,7 +863,7 @@ wss.on('connection', (ws, req) => {
                                             }
                                             exports.apiSave()
                                             await setTimeout(120)
-                                            veh.states.prodPert=true
+                                            pccApi.trains[veh].states.prodPert=true
                                             exports.apiSave()
                                             await setTimeout(4900)
                                             if(pccApi.voyHT===true){

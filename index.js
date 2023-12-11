@@ -1925,12 +1925,12 @@ let verifFunc = ()=>{
         } else document.location.reload()
     }
     if(dataLoaded&&electricLoaded&&tco1Loaded&&tco2Loaded){
-        console.log('resolved')
         clearInterval(verifLoadInter)
         loadElectricalInfos()
         refreshTCO()
         let endLoad = Date.now()
         console.log('Pre-load in '+(endLoad-startLoad)+' ms.')
+        localStorage.setItem('reloadLoadCnt',0)
         actualRequest = JSON.stringify({
             op: 15,
             time: (endLoad-startLoad)
