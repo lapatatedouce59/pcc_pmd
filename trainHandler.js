@@ -123,31 +123,34 @@ let trainsAlreadyCreated = []
 function refreshTList(){
 
     let inflationDuPrixDuCarburant = 0
-    for (let sec of data.SEC){
-        for (let ctns of sec.cantons){
-            if(!(ctns.trains.length >=1)) continue;
-            console.log('canton '+ctns.cid)
-            for (let train of ctns.trains){
-                if(trainsAlreadyCreated.includes(train.tid)) continue;
-                console.log(train)
-                trainsAlreadyCreated.push(train.tid)
-                let opt = document.createElement('OPTION')
-                opt.innerHTML=train.trainType + '-' +train.tid
-                opt.setAttribute('name',train.trainType + '-' +train.tid)
-                opt.value=train.tid
-                opt.classList='trainOpt'
-                opt.id=train.tid
-                selectMenuTrain.appendChild(opt)
-            }
-        }
+    for(let train of Object.entries(data.trains)){
+        if(trainsAlreadyCreated.includes(train[1].tid)) continue;
+        console.log(train[1])
+        trainsAlreadyCreated.push(train[1].tid)
+        let opt = document.createElement('OPTION')
+        opt.innerHTML=train[1].trainType + '-' +train[1].tid
+        opt.setAttribute('name',train[1].trainType + '-' +train[1].tid)
+        opt.value=train[1].tid
+        opt.classList='trainOpt'
+        opt.id=train[1].tid
+        selectMenuTrain.appendChild(opt)
         inflationDuPrixDuCarburant++
     }
 }
 
 function getTrainInfo(id){
     let reponse={id: false, states: false, trains: [], secIndex: false, cIndex: false, tIndex: false}
-    console.log(data.SEC)
-    for (let sec of data.SEC){
+    let nRes = {}
+    for(let train of Object.entries(data.trains)){
+        if(train[0]===id){
+            nRes.id=train[0]
+            nRes.states=train[1].states
+            pos=findTrainPos(train[0])
+            nRes.trainInf=train[1]
+        }
+    }
+    return nRes;
+    /*for (let sec of data.SEC){
         for (let ctns of sec.cantons){
             for (let train of ctns.trains){
                 if(!(train.tid === id)) continue;
@@ -170,7 +173,37 @@ function getTrainInfo(id){
             }
         }
     }
-    return reponse;
+    return reponse;*/
+}
+
+function findTrainPos(id){
+    let res = {}
+    for(let sec of data.SEC){
+        for(let ctn of sec.cantons){
+            if(ctn.trains.length>0){
+                for(let train of ctn.trains){
+                    if(train.tid===id) {
+                        res.ctn=ctn
+                        res.sec=sec.id
+                    }
+                }
+            }
+        }
+    }
+    return res;
+}
+
+function cantonInf(cid){
+    let res = {}
+    for(let sec in data.SEC){
+        for(let ctn of data.SEC[sec].cantons){
+            if(ctn.cid===cid) {
+                res.cIndex=ctn
+                res.secIndex=sec
+                return res;
+            }
+        }
+    }
 }
 
 selectMenuTrain.addEventListener('input', () => {
@@ -197,7 +230,18 @@ function josephineChercheLesDefauts(){
     sm.stopSound('gong')
     let defList=[]
     let anoList=[]
-    for (let sec in data.SEC){
+    for(let train of Object.entries(data.trains)){
+        for(const property of Object.entries(train[1].states)){
+            if(!(property[1] === 1 || property[1] === 2)) continue;
+            if(property[1]===1){
+                defList.push({name: train[1].trainType + '-' + train[0], id: train[0]})
+            }
+            if(property[1]===2){
+                anoList.push({name:train[1].trainType + '-' + train[0],def:property[0],pos:findTrainPos(train[0]).ctn.cid, id: train[0]})
+            }
+        }
+    }
+    /*for (let sec in data.SEC){
         for (let ctns in data.SEC[sec].cantons){
             for (let train in data.SEC[sec].cantons[ctns].trains){
                 if(!(data.trains[data.SEC[sec].cantons[ctns].trains[train]])) continue;
@@ -212,7 +256,7 @@ function josephineChercheLesDefauts(){
                 }
             }
         }
-    }
+    }*/
     console.log(defList)
     for (let tr in defList){
         console.log(defList)
@@ -248,22 +292,20 @@ function josephineChercheLesDefauts(){
 
 }
 
-function updateVoy(c){
+function updateVoy(tr){
 
     josephineChercheLesDefauts()
 
-    console.log(c)
+    trainNumberTrain.value=tr.id
+    trainCanton.value=tr.pos[0].ctn.id.replace('c','')
 
-    trainNumberTrain.value=c.trains[0].tid
-    trainCanton.value=c.id.replace('c','')
-
-    if(data.SEC[c.secIndex].id!=='GAT'){
+    if(tr.pos.sec!=='GAT'){
         trainGSec.value='ABS'
     } else {
         trainGSec.value='GAT'
     }
 
-    let actualTState=c.trains[0].states
+    let actualTState=tr.states
 
     if(actualTState.pretTrain===false){
         trainState.value='TNE/NI'
@@ -299,9 +341,9 @@ function updateVoy(c){
         trainMission.value=actualTState.mission
     }
 
-    if(data.SEC[c.secIndex].cantons[c.cIndex].trains[1]){
+    /*if(data.SEC[c.secIndex].cantons[c.cIndex].trains[1]){
         trainAsso.value=data.SEC[c.secIndex].cantons[c.cIndex].trains[1].tid
-    } else trainAsso.value='NON'
+    } else trainAsso.value='NON'*/
 
     for(let interval of fileIntervals){
         if(interval===beepIntervalId) continue;
@@ -316,7 +358,7 @@ function updateVoy(c){
         let elemid = voy.id
         let elem=document.getElementById(elemid)
 
-        switch(c.trains[0].states[elemid]){
+        switch(tr.states[elemid]){
             case false:
                 voy.classList.remove('ok')
                 voy.classList.remove('alarm')
