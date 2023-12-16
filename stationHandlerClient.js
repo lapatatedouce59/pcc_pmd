@@ -217,8 +217,8 @@ function getStationsInfo(id){
 
             reponse.states=ctns.states
             for (let train of ctns.trains){
-                console.log(train)
-                reponse.trains.push(train)
+                let trainObj=data.trains[train]
+                reponse.trains.push(trainObj)
             }
         }
     }
@@ -331,7 +331,6 @@ function updateVoy(s){
 
         switch(s.states[elemid]){
             case false:
-                console.log(elemid+' faux.')
                 voy.classList.remove('ok')
                 voy.classList.remove('alarm')
                 blinkIdReturn = blinkIntervalId.get(elemid)
@@ -344,7 +343,6 @@ function updateVoy(s){
                 }
                 break;
             case true:
-                console.log(elemid+' true.')
                 voy.classList.toggle('ok', true)
                 voy.classList.remove('alarm')
                 blinkIdReturn = blinkIntervalId.get(elemid)
@@ -360,7 +358,6 @@ function updateVoy(s){
                 }
                 break;
             case 1:
-                console.log(elemid+' Alarme')
                 voy.classList.remove('ok')
                 voy.classList.toggle('alarm', true)
                 blinkIdReturn = blinkIntervalId.get(elemid)
@@ -369,7 +366,6 @@ function updateVoy(s){
                 blinkIntervalId.delete(elemid)
                 break;
             case 2:
-                console.log(elemid+' Anomalie')
                 voy.classList.remove('ok')
                 voy.classList.toggle('alarm',true)
                 let blinkId = setInterval(async function() {

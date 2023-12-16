@@ -350,7 +350,95 @@
             align-items: center;
         }
 
-        
+        #iq{
+    background-color: #0a0a0a;
+    width: 99px;
+    height: 159px;
+    transform: translateY(40%);
+    pointer-events: none;
+    z-index: 9999;
+    transition: .5s cubic-bezier(0, 0, 0.2, 1);
+}
+#iq:hover{
+    opacity: 0.3;
+}
+.iq_field{
+    background-color: #1e0909;
+    color: transparent;
+    position: absolute;
+    padding: 2px;
+}
+.iq_field.on{
+    color: darkorange;
+}
+#iq_dso{
+    position: absolute;
+    right: 0;
+}
+#iq_aa_hs {
+    top: 5px;
+    left: 3px;
+    width: 53px;
+}
+
+#iq_retard {
+    top: 55px;
+    left: 3px;
+    width: 75px;
+    /* text-align: center; */
+}
+
+#iq_psv {
+    top: 80px;
+    left: 33px;
+    width: 32px;
+    text-align: center;
+}
+
+#iq_ss_sso {
+    top: 30px;
+    left: 3px;
+    width: 34px;
+}
+
+#iq_cm {
+    top: 106px;
+    left: 25px;
+    width: 48px;
+    text-align: center;
+}
+
+#iq_rp {
+    top: 131px;
+    left: 28px;
+    text-align: center;
+    width: 45px;
+}
+#iq.iqhidden{
+    transform: translateY(-50%) translateX(100%);
+    opacity: 1;
+}
+
+.dso_circle{
+    color: rgb(54 54 54);
+}
+#iq_dso.on svg circle.dso_circle{
+    animation: blink 1s infinite;
+}
+@keyframes blink {
+    0%{
+        color: #fff;
+    }
+    50%{
+        color: #fff;
+    }
+    70%{
+        color: rgb(54 54 54);
+    }
+    to {
+        color: rgb(54 54 54);
+    }
+}
     </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
@@ -855,29 +943,46 @@
                                 </tbody>
                             </table>
                         </fieldset></span>
-                        <span><fieldset style="width: 77%; text-align: center;">
-                            <legend>Commandes</legend>
-                            <table style= "height: 100%; width: 100%;">
-                                <tbody>
-                                    <tr><th scope="col"></th>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th>
-                                        <th scope="col"></th></tr>
-                                    <tr><td><input type="button" class="btnControl" value="AFD" id="btnAFD"></td><td colspan="2" id="afdActive" class="voyStationState"><span id="afdActive" class="voyStationState">AUTORISATION FORCAGE DÉPART</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZAFD"></td><td colspan="2" id="cancelAfd" class="voyStationState"><span id="cancelAfd" class="voyStationState">ANNULATION OPÉRATION</span></td></tr>
-                                    <tr><td><input type="button" class="btnControl" value="VVT S1" id="btnVVTS1"></td><td colspan="2" id="VVTS1" class="voyStationState"><span id="VVTS1" class="voyStationState">LIM. VIT. VENTS TRAVAUX SENS 1</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZVVTS1"></td><td colspan="1" id="vvtS1AlreadyOn" class="voyStationState"><span id="vvtS1AlreadyOn" class="voyStationState">VITESSE PRÉSENTE PAR PAS</span></td><td><input type="button" class="btnControl" value="INHIB" id="btnInhibVVTS1"></td></tr>
-                                    <tr><td><input type="button" class="btnControl" value="VVT S2" id="btnVVTS2"></td><td colspan="2" id="VVTS2" class="voyStationState"><span id="VVTS2" class="voyStationState">LIM. VIT. VENTS TRAVAUX SENS 2</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZVVTS2"></td><td colspan="1" id="vvtS2AlreadyOn" class="voyStationState"><span id="vvtS2AlreadyOn" class="voyStationState">VITESSE PRÉSENTE PAR PAS</span></td><td><input type="button" class="btnControl" value="INHIB" id="btnInhibVVTS2"></td></tr>
-                                    <tr><td><input type="button" class="btnControl" value="DEPA" id="btnDEPA"></td><td colspan="2" id="depaActive" class="voyStationState"><span id="depaActive" class="voyStationState">DÉPART IMMEDIAT</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZdepa"></td><td colspan="2" id="defDepa" class="voyStationState"><span id="defDepa" class="voyStationState">DÉFAUT DÉPART</span></td></tr>
-                                    <tr><td><input type="button" class="btnControl" value="IDPF" id="btnIDPF"></td><td colspan="2" id="idpfActive" class="voyStationState"><span id="idpfActive" class="voyStationState">INTER. DÉPART PORTES FERMEES</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZidpf"></td><td colspan="2" id="impIdpf" class="voyStationState"><span id="impIdpf" class="voyStationState">IDPF IMPOSSIBLE</span></td></tr>
-                                    <tr><td><input type="button" class="btnControl" value="ISTA" id="btnISTA"></td><td colspan="2" id="istaActive" class="voyStationState"><span id="istaActive" class="voyStationState">INTER. ARRÊT STATION</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZista"></td><td colspan="2" id="istaBlock" class="voyStationState"><span id="istaBlock" class="voyStationState">BLOCAGE AUTO PAR ALC/UCA</span></td></tr>
-                                    <tr><td><input type="button" class="btnControl" value="MAPF" id="btnMAPF"></td><td colspan="2" id="mapfActive" class="voyStationState"><span id="mapfActive" class="voyStationState">MAINT. ARRÊT PORTES FERMÉES</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZmapf"></td><td colspan="2" id="mapfImp" class="voyStationState"><span id="mapfImp" class="voyStationState">MAPF IMPOSSIBLE</span></td></tr>
-                                    <tr><td colspan="6" class="voyStationState" id="defOrderExec"><span class="voyStationState" id="defOrderExec">DÉFAUT EXECUTION ORDRE</span></td></tr>
-            
-                                    <!--<tr><td colspan="3" width="50%">Temps d’arrêt quai:<span></span></td><td width="%" colspan="1"><input type="text" value="10" id="newTime"></td><td colspan="1" width="18%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="1" width="18%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>-->
-                                </tbody>
-                            </table>
-                        </fieldset></span>
+                        <div style="display: flex; flex-direction: row;">
+                            <fieldset style="width: 77%; text-align: center;">
+                                <legend>Commandes</legend>
+                                <table style= "height: 100%; width: 100%;">
+                                    <tbody>
+                                        <tr><th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th></tr>
+                                        <tr><td><input type="button" class="btnControl" value="AFD" id="btnAFD"></td><td colspan="2" id="afdActive" class="voyStationState"><span id="afdActive" class="voyStationState">AUTORISATION FORCAGE DÉPART</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZAFD"></td><td colspan="2" id="cancelAfd" class="voyStationState"><span id="cancelAfd" class="voyStationState">ANNULATION OPÉRATION</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" value="VVT S1" id="btnVVTS1"></td><td colspan="2" id="VVTS1" class="voyStationState"><span id="VVTS1" class="voyStationState">LIM. VIT. VENTS TRAVAUX SENS 1</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZVVTS1"></td><td colspan="1" id="vvtS1AlreadyOn" class="voyStationState"><span id="vvtS1AlreadyOn" class="voyStationState">VITESSE PRÉSENTE PAR PAS</span></td><td><input type="button" class="btnControl" value="INHIB" id="btnInhibVVTS1"></td></tr>
+                                        <tr><td><input type="button" class="btnControl" value="VVT S2" id="btnVVTS2"></td><td colspan="2" id="VVTS2" class="voyStationState"><span id="VVTS2" class="voyStationState">LIM. VIT. VENTS TRAVAUX SENS 2</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZVVTS2"></td><td colspan="1" id="vvtS2AlreadyOn" class="voyStationState"><span id="vvtS2AlreadyOn" class="voyStationState">VITESSE PRÉSENTE PAR PAS</span></td><td><input type="button" class="btnControl" value="INHIB" id="btnInhibVVTS2"></td></tr>
+                                        <tr><td><input type="button" class="btnControl" value="DEPA" id="btnDEPA"></td><td colspan="2" id="depaActive" class="voyStationState"><span id="depaActive" class="voyStationState">DÉPART IMMEDIAT</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZdepa"></td><td colspan="2" id="defDepa" class="voyStationState"><span id="defDepa" class="voyStationState">DÉFAUT DÉPART</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" value="IDPF" id="btnIDPF"></td><td colspan="2" id="idpfActive" class="voyStationState"><span id="idpfActive" class="voyStationState">INTER. DÉPART PORTES FERMEES</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZidpf"></td><td colspan="2" id="impIdpf" class="voyStationState"><span id="impIdpf" class="voyStationState">IDPF IMPOSSIBLE</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" value="ISTA" id="btnISTA"></td><td colspan="2" id="istaActive" class="voyStationState"><span id="istaActive" class="voyStationState">INTER. ARRÊT STATION</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZista"></td><td colspan="2" id="istaBlock" class="voyStationState"><span id="istaBlock" class="voyStationState">BLOCAGE AUTO PAR ALC/UCA</span></td></tr>
+                                        <tr><td><input type="button" class="btnControl" value="MAPF" id="btnMAPF"></td><td colspan="2" id="mapfActive" class="voyStationState"><span id="mapfActive" class="voyStationState">MAINT. ARRÊT PORTES FERMÉES</span></td><td><input type="button" class="btnControl" value="RAZ" id="btnRAZmapf"></td><td colspan="2" id="mapfImp" class="voyStationState"><span id="mapfImp" class="voyStationState">MAPF IMPOSSIBLE</span></td></tr>
+                                        <tr><td colspan="6" class="voyStationState" id="defOrderExec"><span class="voyStationState" id="defOrderExec">DÉFAUT EXECUTION ORDRE</span></td></tr>
+                
+                                        <!--<tr><td colspan="3" width="50%">Temps d’arrêt quai:<span></span></td><td width="%" colspan="1"><input type="text" value="10" id="newTime"></td><td colspan="1" width="18%"><input type="button" class="btnControl" value="SET" id="btnSetTime"></td><td colspan="1" width="18%"><input type="text" id="actualTime" disabled style="width: 90%;"></td></tr>-->
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                            <div id="iq" class="">
+                                <div id="iq_dso" class="on">
+                                    <svg width="55" height="42">
+                                        <circle cx="10" cy="36" r="5" fill="currentColor" class="dso_circle"></circle>
+                                        <circle cx="40" cy="36" r="5" fill="currentColor" class="dso_circle"></circle>
+                                        <circle cx="25" cy="11" r="5" fill="currentColor" class="dso_circle"></circle>
+                                    </svg>
+                                </div>
+                                <span class="iq_field on" id="iq_retard">+01:11</span>
+                                <span class="iq_field" id="iq_aa_hs">AA_HS</span>
+                                <span class="iq_field" id="iq_psv">PSV</span>
+                                <span class="iq_field on" id="iq_ss_sso">SSO</span>
+                                <span class="iq_field on" id="iq_cm">CMCP</span>
+                                <span class="iq_field" id="iq_rp">RP 30</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="ftrain" class="format" style=" align-items: center;">
@@ -1278,6 +1383,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
     </fieldset>

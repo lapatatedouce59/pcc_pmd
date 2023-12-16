@@ -1255,7 +1255,7 @@ wss.on('connection', (ws, req) => {
                 break;
             case 204 :
                 if(!isClientExisting(data.uuid)) return;
-                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
+                logger.message('income',JSON.stringify(data.execute),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if (data.execute==='OPENPV-BTN'){
                     let response = JSON.parse(getCantonsInfo(data.target))
                     if(!response) return;
@@ -1407,7 +1407,7 @@ wss.on('connection', (ws, req) => {
                     exports.apiSave()
                 } else
                 if(data.execute==='AQC-BTN'){
-                    if(!data.target.cIndex) return;
+                    if(!data.target) return;
 
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
@@ -1865,15 +1865,10 @@ wss.on('connection', (ws, req) => {
                     exports.apiSave()
                 } else                                       //TRAIN
                 if(data.execute==='AQC-BTN-TRAIN'){
-                    if(!data.target.secIndex) return;
-                    if(!data.target.cIndex) return;
-                    if(!data.target.tIndex) return;
+                    if(!data.target.id) return;
 
-                    let cantonIndex = parseInt(data.target.cIndex)
-                    let sectionIndex = parseInt(data.target.secIndex)
-                    let trainIndex = parseInt(data.target.tIndex)
-                    writter.simple('COMMANDÉ.','TRAIN', `ACQUITTEMENT T${pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex].tid}`)
-                    let trainObj = pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]
+                    writter.simple('COMMANDÉ.','TRAIN', `ACQUITTEMENT T${data.target.id}`)
+                    let trainObj = pccApi.trains[data.target.id]
                     for(let alarm in trainObj.states){
                         if(!(trainObj.states[alarm]===2)) continue;
                         if(alarm==='cptFu') continue;
@@ -1914,14 +1909,9 @@ wss.on('connection', (ws, req) => {
                     exports.apiSave()
                 } else*/
                 if(data.execute==='CPTFU-BTN-ACQ'){
-                    if(!data.target.secIndex) return;
-                    if(!data.target.cIndex) return;
-                    if(!data.target.tIndex) return;
+                    if(!data.target.id) return;
                     writter.simple('COMMANDÉ.','TRAIN', 'ACQUITTEMENT COMPTEUR FU')
-                    let cantonIndex = parseInt(data.target.cIndex)
-                    let sectionIndex = parseInt(data.target.secIndex)
-                    let trainIndex = parseInt(data.target.tIndex)
-                    let trainObj=pccApi.trains[pccApi.SEC[sectionIndex].cantons[cantonIndex].trains[trainIndex]]
+                    let trainObj=pccApi.trains[data.target.id]
                     trainObj.states.cptFu=0
                     trainObj.states.defTech=false
                     trainObj.states.v0pas=false

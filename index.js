@@ -1040,7 +1040,9 @@ function getCantonsInfo(id) {
             response.sindex=sec
             response.cindex=ctn
             response.states=data.SEC[sec].cantons[ctn].states
-            response.trains=data.SEC[sec].cantons[ctn].trains
+            for(let trainNum of data.SEC[sec].cantons[ctn].trains){
+                response.trains.push(data.trains[trainNum])
+            }
             if(data.SEC[sec].cantons[ctn].type){
                 if(data.SEC[sec].cantons[ctn].type==='quai') response.station=true;
             }
@@ -1344,7 +1346,7 @@ function refreshTCO(){
                 if(ctn.cid==='c1401'){
                     if(ctn.trains.length>0){
                         dictS1.screens['1401'][0].style.fill = '#3C0A0A'
-                        dictS1.screens['1401'][1].textContent=ctn.trains[0].tid
+                        dictS1.screens['1401'][1].textContent=ctninfo.trains[0].tid
                     } else {
                         dictS1.screens['1401'][0].style.fill = '#000'
                         dictS1.screens['1401'][1].textContent=''
@@ -1353,7 +1355,7 @@ function refreshTCO(){
                 if(ctn.cid==='c2201'){
                     if(ctn.trains.length>0){
                         dictS1.screens['2201'][0].style.fill = '#3C0A0A'
-                        dictS1.screens['2201'][1].textContent=ctn.trains[0].tid
+                        dictS1.screens['2201'][1].textContent=ctninfo.trains[0].tid
                     } else {
                         dictS1.screens['2201'][0].style.fill = '#000'
                         dictS1.screens['2201'][1].textContent=''
@@ -1362,7 +1364,7 @@ function refreshTCO(){
                 if(ctn.cid==='cGPAG1'){
                     if(ctn.trains.length>0){
                         dictS2.screens['PAG1'][0].style.fill = '#3C0A0A'
-                        dictS2.screens['PAG1'][1].textContent=ctn.trains[0].tid
+                        dictS2.screens['PAG1'][1].textContent=ctninfo.trains[0].tid
                     } else {
                         dictS2.screens['PAG1'][0].style.fill = '#000'
                         dictS2.screens['PAG1'][1].textContent=''
@@ -1371,7 +1373,7 @@ function refreshTCO(){
                 if(ctn.cid==='c2202'){
                     if(ctn.trains.length>0){
                         dictS2.screens['2202'][0].style.fill = '#3C0A0A'
-                        dictS2.screens['2202'][1].textContent=ctn.trains[0].tid
+                        dictS2.screens['2202'][1].textContent=ctninfo.trains[0].tid
                     } else {
                         dictS2.screens['2202'][0].style.fill = '#000'
                         dictS2.screens['2202'][1].textContent=''
@@ -1380,7 +1382,7 @@ function refreshTCO(){
                 if(ctn.cid==='c1302'){
                     if(ctn.trains.length>0){
                         dictS2.screens['1302'][0].style.fill = '#3C0A0A'
-                        dictS2.screens['1302'][1].textContent=ctn.trains[0].tid
+                        dictS2.screens['1302'][1].textContent=ctninfo.trains[0].tid
                     } else {
                         dictS2.screens['1302'][0].style.fill = '#000'
                         dictS2.screens['1302'][1].textContent=''
@@ -1389,7 +1391,7 @@ function refreshTCO(){
                 if(ctn.cid==='c1101'){
                     if(ctn.trains.length>0){
                         dictS1.screens['1101'][0].style.fill = '#3C0A0A'
-                        dictS1.screens['1101'][1].textContent=ctn.trains[0].tid
+                        dictS1.screens['1101'][1].textContent=ctninfo.trains[0].tid
                     } else {
                         dictS1.screens['1101'][0].style.fill = '#000'
                         dictS1.screens['1101'][1].textContent=''
@@ -1399,7 +1401,7 @@ function refreshTCO(){
                 if(ctn.cid==='c2401'){
                     if(ctn.trains.length>0){
                         dictS1.screens['2401'][0].style.fill = '#3C0A0A'
-                        dictS1.screens['2401'][1].textContent=ctn.trains[0].tid
+                        dictS1.screens['2401'][1].textContent=ctninfo.trains[0].tid
                     } else {
                         dictS1.screens['2401'][0].style.fill = '#000'
                         dictS1.screens['2401'][1].textContent=''
@@ -1408,7 +1410,7 @@ function refreshTCO(){
                 if(ctn.cid==='c2501'){
                     if(ctn.trains.length>0){
                         dictS1.screens['2501'][0].style.fill = '#3C0A0A'
-                        dictS1.screens['2501'][1].textContent=ctn.trains[0].tid
+                        dictS1.screens['2501'][1].textContent=ctninfo.trains[0].tid
                     } else {
                         dictS1.screens['2501'][0].style.fill = '#000'
                         dictS1.screens['2501'][1].textContent=''
@@ -1417,7 +1419,7 @@ function refreshTCO(){
                 if(ctn.cid==='c1201'){
                     if(ctn.trains.length>0){
                         dictS1.screens['1201'][0].style.fill = '#3C0A0A'
-                        dictS1.screens['1201'][1].textContent=ctn.trains[0].tid
+                        dictS1.screens['1201'][1].textContent=ctninfo.trains[0].tid
                     } else {
                         dictS1.screens['1201'][0].style.fill = '#000'
                         dictS1.screens['1201'][1].textContent=''
