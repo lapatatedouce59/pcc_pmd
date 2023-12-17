@@ -1,7 +1,6 @@
-[Saturday 22h42:33] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Saturday 22h42:43] LIGNE -> HT ; NON. 
-[Saturday 22h42:43] LIGNE -> FS ; NON. 
-[Saturday 22h42:43] PCC   -> CDP ; ACTIF. 
-[Saturday 22h42:46] PCC   -> CDP ; INACTIF. 
-[Saturday 22h47:29] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
-[Saturday 22h47:30] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Sunday   13h18:22] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Sunday   13h18:23] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Sunday   13h18:23] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Sunday   13h18:26] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Sunday   13h18:30] PA    -> ITINÉRAIRE 2501_2401 ; SÉLECTIONNÉ. 
+[Sunday   13h18:32] PA    -> ITINÉRAIRE 2501_2401 ; FORMÉ. 

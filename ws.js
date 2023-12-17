@@ -2612,6 +2612,25 @@ wss.on('connection', (ws, req) => {
 
                 moveHandler(data.train, data.sens)
                 break;
+            case 402:
+                if(!isClientExisting(data.uuid)) return;
+                logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
+                console.log(data)
+                for(let sec of pccApi.SEC){
+                    for(let ctn of sec.cantons){
+                        if(ctn.cid===`c${data.ctnId}`){
+                            if(data.value===false){
+                                ctn.trains.splice(ctn.trains.indexOf(data.train),1)
+                                return exports.apiSave();
+                            } else if (data.value===true){
+                                ctn.trains.push(data.train)
+                                return exports.apiSave();
+                            }
+                        }
+                    }
+                    logger.error(`Balise ${data.ctnId} non trouvée.`)
+                }
+                break;
             case 500:
                 if(!isClientExisting(data.uuid)) return;
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)

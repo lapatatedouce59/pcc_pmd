@@ -95,7 +95,12 @@
   },
   "players": [
     {
-      "uuid": "50b25ec2-0...",
+      "uuid": "02fc4e47-c...",
+      "name": "patatedouce.dev",
+      "role": "chef"
+    },
+    {
+      "uuid": "cdc639de-4...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -584,10 +589,10 @@
         "tnitne1": false,
         "lstpas1": true,
         "discord1": false,
-        "retDispoV201": true,
-        "injDispoV201": false,
+        "retDispoV201": false,
+        "injDispoV201": true,
         "retDispoV101": true,
-        "injDispoV101": true,
+        "injDispoV101": false,
         "razSeq": false,
         "itiOngoing": true,
         "cycleOngoing": false
@@ -603,9 +608,7 @@
             "pdp": false,
             "coupFs": false
           },
-          "trains": [
-            "3"
-          ]
+          "trains": []
         },
         {
           "cid": "c1201",
@@ -635,7 +638,9 @@
         },
         {
           "cid": "c1401",
-          "trains": [],
+          "trains": [
+            "3"
+          ],
           "type": "quai",
           "name": "MSTO V1",
           "states": {
@@ -666,7 +671,7 @@
             "HLP": false,
             "DSO": false,
             "SSO": true,
-            "status": false,
+            "status": "valid",
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -722,9 +727,7 @@
         },
         {
           "cid": "c2201",
-          "trains": [
-            "2"
-          ],
+          "trains": [],
           "type": "quai",
           "name": "MSTO V2",
           "states": {
@@ -755,7 +758,7 @@
             "HLP": false,
             "DSO": false,
             "SSO": false,
-            "status": "valid",
+            "status": false,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
@@ -819,7 +822,9 @@
             "pdp": false,
             "coupFs": false
           },
-          "trains": []
+          "trains": [
+            "2"
+          ]
         }
       ]
     },

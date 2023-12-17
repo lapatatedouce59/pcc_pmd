@@ -117,9 +117,23 @@
         <legend>Cantonnement balisé</legend>
         <i>Sélectionnez le train dont la position doit être changée puis modifiez les capteurs.</i>
         <div style="display: flex; flex-direction: column; width: 100%;">
-            
+            <div style="display: flex; flex-direction: row; width: 100%;">
+                <span>2501<input type="checkbox" data-ctn="2501" class="ctnCheckbox"></span>
+                <span>2401<input type="checkbox" data-ctn="2401" class="ctnCheckbox"></span>
+                <span>2301<input type="checkbox" data-ctn="2301" class="ctnCheckbox"></span>
+                <span>2201<input type="checkbox" data-ctn="2201" class="ctnCheckbox"></span>
+                <span>2101<input type="checkbox" data-ctn="2101" class="ctnCheckbox"></span>
+            </div>
+            <div style="display: flex; flex-direction: row; width: 100%;">
+                <span>1101<input type="checkbox" data-ctn="1101" class="ctnCheckbox"></span>
+                <span>1201<input type="checkbox" data-ctn="1201" class="ctnCheckbox"></span>
+                <span>1301<input type="checkbox" data-ctn="1301" class="ctnCheckbox"></span>
+                <span>1401<input type="checkbox" data-ctn="1401" class="ctnCheckbox"></span>
+                <span>1501<input type="checkbox" data-ctn="1501" class="ctnCheckbox"></span>
+            </div>
         </div>
         <label for="inputTrainID">ID du train en modification:  </label><span><input type="radio" name="radioTrains" value="2"> 2</span><span><input type="radio" name="radioTrains" value="3"> 3</span>
+        <button id="reloadBtn">RELOAD</button>
     </fieldset>
 </div>
 

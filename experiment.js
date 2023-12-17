@@ -22,18 +22,49 @@ window.WebSocket.addEventListener('message', msg => {
                 document.getElementById('roleOP').innerHTML = data.role
                 if(!data.role==='chef') alert('Vous n\'avez pas accès à cette page à cause de votre rôle. Les fonctionalités seront bloquées.')
             }
+        addCheckListeners()
         }
         let parsedJson = data.content
         data = parsedJson
         console.log(data)
         //adminData=data.admin
-        reload()
         function reload(){
             constructCtn()
         }
+        reload()
     }
 })
 
-function constructCtn(){
+function getTrainRadioValue(){
+    for(let elem of document.getElementsByName('radioTrains')) if(elem.checked) return elem.value;
+};
 
+function constructCtn(){
+    for(let sec of data.SEC){
+        if(!(sec.id==='1')) continue;
+        for(let ctn of sec.cantons){
+            if(ctn.trains.includes(getTrainRadioValue())) document.getElementById(ctn.cid.replace('c','')).checked=true; else document.getElementById(ctn.cid.replace('c','')).checked=false;
+        }
+    }
 }
+
+function addCheckListeners(){
+    for(let ctnElem of document.getElementsByClassName('ctnCheckbox')){
+        ctnElem.id=ctnElem.getAttribute('data-ctn')
+        ctnElem.addEventListener('input',()=>{
+            actualRequest = JSON.stringify({
+                op: 402,
+                uuid: window.uuid,
+                ctnId: ctnElem.getAttribute('data-ctn'),
+                train: getTrainRadioValue(),
+                value: ctnElem.checked
+            })
+            window.actualRequest = actualRequest
+            window.WebSocket.send(actualRequest)
+        })
+    }
+}
+
+document.getElementById('reloadBtn').addEventListener('click',()=>{
+    constructCtn()
+})
