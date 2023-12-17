@@ -2619,11 +2619,14 @@ wss.on('connection', (ws, req) => {
                 for(let sec of pccApi.SEC){
                     for(let ctn of sec.cantons){
                         if(ctn.cid===`c${data.ctnId}`){
+                            ovse.lastCtn=ctn.cid
                             if(data.value===false){
                                 ctn.trains.splice(ctn.trains.indexOf(data.train),1)
+                                writter.simple(`BOUCLE ${data.ctnId} TRAIN ${data.train} -> INACTIVE`,'PA','DP')
                                 return exports.apiSave();
                             } else if (data.value===true){
                                 ctn.trains.push(data.train)
+                                writter.simple(`BOUCLE ${data.ctnId} TRAIN ${data.train} -> ACTIVE`,'PA','DP')
                                 return exports.apiSave();
                             }
                         }

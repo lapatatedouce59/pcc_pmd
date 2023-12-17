@@ -26,19 +26,19 @@ if(cookies.discord_token){
             token: cookies.discord_token
         }))
         window.WebSocket.addEventListener('message', msg =>{
-            data = JSON.parse(msg.data);
+            if(JSON.parse(msg.data).op===10) return;
     
-            if(data.op===999){
-                if(data.error===20){
-                    alert(data.message)
+            if(JSON.parse(msg.data).op===999){
+                if(JSON.parse(msg.data).error===20){
+                    alert(JSON.parse(msg.data).message)
                     document.location.href='https://discord.com/api/oauth2/authorize?client_id=1102519610848313344&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Fverify.html&response_type=token&scope=identify'
                 }
-                if(data.error===30){
-                    alert(data.message)
+                if(JSON.parse(msg.data).error===30){
+                    alert(JSON.parse(msg.data).message)
                     document.location.href='https://discord.com/api/oauth2/authorize?client_id=1102519610848313344&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Fverify.html&response_type=token&scope=identify'
                 }
-                if(data.error===10){
-                    alert(data.message)
+                if(JSON.parse(msg.data).error===10){
+                    alert(JSON.parse(msg.data).message)
                     document.location.href='https://discord.com/api/oauth2/authorize?client_id=1102519610848313344&redirect_uri=http%3A%2F%2F127.0.0.1%3A5500%2Fverify.html&response_type=token&scope=identify'
                 }
             }

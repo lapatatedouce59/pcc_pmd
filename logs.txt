@@ -1,6 +1,7 @@
-[Sunday   13h18:22] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Sunday   13h18:23] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
-[Sunday   13h18:23] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Sunday   13h18:26] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Sunday   13h18:30] PA    -> ITINÉRAIRE 2501_2401 ; SÉLECTIONNÉ. 
-[Sunday   13h18:32] PA    -> ITINÉRAIRE 2501_2401 ; FORMÉ. 
+[Sunday   14h59:53] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Sunday   14h59:58] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Sunday   14h59:58] PA    -> PDP ; c2201 > 2 
+[Sunday   15h00:01] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Sunday   15h00:04] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Sunday   15h00:04] PA    -> PDP ; c2201 > 2 
+[Sunday   15h01:08] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 

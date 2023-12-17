@@ -20,6 +20,8 @@ exports.f9 = true
 
 exports.coupFS = false
 
+exports.lastCtn = String
+
 exports.work = false;
 
 exports.sequence = Array
@@ -315,7 +317,31 @@ function detectAZM(){
     exports.f7=true
 }
 
-function detectTNE(){
+function detectPDP(){
+    let trainList = []
+    let foundMap = new Map()
+    for(let train of Object.entries(pccApi.trains)){
+        trainList.push(train[0])
+    }
+    for(let sec of pccApi.SEC){
+        for(let ctn of sec.cantons){
+            for(let train of ctn.trains){
+                if(trainList.includes(train)){
+                    foundMap.set(train,true)
+                }
+            }
+        }
+    }
+    for(let trainInd of trainList){
+        if(typeof foundMap.get(trainInd)==='undefined'){
+            console.log(`PDP de train ${trainInd} sur ${exports.lastCtn}`)
+            writter.simple(`${exports.lastCtn} > ${trainInd}`,'PA','PDP')
+        }
+    }
+    exports.f8=true
+}
+
+/*function detectTNE(){
     let defs = []
     for(let sec of pccApi.SEC){
         for(let ctn of sec.cantons){
@@ -324,8 +350,6 @@ function detectTNE(){
                 if(pccApi.trains[ctn.trains[0]].states.TMSActive===false){
                     pccApi.trains[ctn.trains[0]].states.tneHorsZGAT=2
                     writter.simple(`${sec.id} (${pccApi.trains[ctn.trains[0]].tid})`,'PA','TNE/TNI')
-                    writter.simple(`${ctn.cid}`,'PA','PDP')
-                    ctn.states.pdp=2
                     if(sec.id==='1'){
                         sec.states.tnitne1=2
                     } else if(sec.id==='2'){
@@ -354,7 +378,7 @@ function detectTNE(){
         noDef2=true
     }
     exports.f8=true
-}
+}*/
 
 
 exports.done=false
@@ -381,7 +405,8 @@ exports.periodicUpdateVoy = async function(){
     exports.done=false
     detectLDI()
     detectAZM()
-    detectTNE()
+    detectPDP()
+    //detectTNE()
     detectPZO()
     ongoingiti()
     checkStationTrainsPresence()

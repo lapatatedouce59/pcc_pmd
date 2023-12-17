@@ -1,5 +1,7 @@
 window.WebSocket.addEventListener('message', msg => {
+    if(JSON.parse(msg.data).op===10) return;
     data = JSON.parse(msg.data);
+    console.log(data)
 
     if ((data.op === 300)||(data.op === 2)) {
         if(data.op===2){
@@ -27,6 +29,7 @@ window.WebSocket.addEventListener('message', msg => {
         let parsedJson = data.content
         data = parsedJson
         console.log(data)
+        //console.log(data)
         //adminData=data.admin
         function reload(){
             constructCtn()
@@ -66,5 +69,6 @@ function addCheckListeners(){
 }
 
 document.getElementById('reloadBtn').addEventListener('click',()=>{
+    console.log(data)
     constructCtn()
 })
