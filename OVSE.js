@@ -276,8 +276,7 @@ function detectAZM(){
                             writter.simple(`${sec.id} (${ctn.cid})`,'PA','AZM')
                             defUCA.push(ctn.cid)
                             exports.f9=false
-                            exports.callCounts++
-                            askForFsCoup()
+                            UCA.newAlarm('pzo', `${ctn.cid}`, ["fs"])
                         }
                     }
                 }
@@ -292,8 +291,7 @@ function detectAZM(){
                             writter.simple(`${sec.id} (${ctn.cid})`,'PA','AZM')
                             defUCA.push(ctn.cid)
                             exports.f9=false
-                            exports.callCounts++
-                            askForFsCoup()
+                            UCA.newAlarm('pzo', `${ctn.cid}`, ["fs"])
                         }
                     }
                 } else if(ctn.cid === 'c1202' || ctn.cid === 'cGA2PAG'){
@@ -303,8 +301,8 @@ function detectAZM(){
                             writter.simple(`${sec.id} (${ctn.cid})`,'PA','AZM')
                             defUCA.push(ctn.cid)
                             exports.f9=false
-                            exports.callCounts++
-                            askForFsCoup()
+                            UCA.newAlarm('pzo', `${ctn.cid}`, ["fs"])
+                            UCA.alarmInventory.pzo=true
                         }
                     }
                 }
@@ -312,12 +310,13 @@ function detectAZM(){
         }
     }
     if(defUCA.length===0){
-        noDef1=true
+        UCA.alarmInventory.pzo=false
     }
     exports.f7=true
 }
 
 function detectPDP(){
+    let defUCA2=[]
     let trainList = []
     let foundMap = new Map()
     for(let train of Object.entries(pccApi.trains)){
@@ -336,9 +335,15 @@ function detectPDP(){
         if(typeof foundMap.get(trainInd)==='undefined'){
             console.log(`PDP de train ${trainInd} sur ${exports.lastCtn}`)
             writter.simple(`${exports.lastCtn} > ${trainInd}`,'PA','PDP')
+            defUCA2.push(trainInd)
+            UCA.alarmInventory.pdp=true
+            UCA.newAlarm('pdp', `${exports.lastCtn}`, ["fs","ht"])
         }
     }
     exports.f8=true
+    if(defUCA2.length===0){
+        UCA.alarmInventory.pdp=false
+    }
 }
 
 /*function detectTNE(){
@@ -380,25 +385,47 @@ function detectPDP(){
     exports.f8=true
 }*/
 
-
-exports.done=false
-exports.callCounts=0
-exports.actualCount=0
-function askForFsCoup(){
-    exports.actualCount++
-    exports.coupFS=true
-    pccApi.voyUCA=2
-    if(exports.callCounts===exports.actualCount) exports.f9=true
+let UCA = {
+    newAlarm: function (origin, concern, target){
+        for(let alarm of pccApi.UCA){
+            if(alarm.origin===origin && alarm.concern===concern) return;
+        }
+        pccApi.UCA.push({ origin: origin||"uca", concern: concern||"line", impact: target||["fs","ht"], acq: false })
+    },
+    update: ()=>{
+        let alarmsOn=[]
+        for(let alarmType of Object.entries(UCA.alarmInventory)){
+            if(alarmType[1]===true){
+                alarmsOn.push(alarmType)
+            }
+        }
+        if(alarmsOn.length===0) {
+            pccApi.UCA=[]
+            return pccApi.voyUCA=true
+        }
+        for(let alarm of pccApi.UCA){
+            if(alarm.acq===false) return pccApi.voyUCA=2;
+        }
+        for(let alarmType of Object.entries(UCA.alarmInventory)){
+            if(alarmType[1]===true) return pccApi.voyUCA=1;
+        }
+        console.log('clear uca')
+        pccApi.UCA=[]
+        pccApi.voyUCA=true
+        return writter.simple(`EFFACEMENT ALARMES`,'UCA','')
+    },
+    acquitAll: function () {
+        pccApi.UCA.forEach((alarm)=>alarm.acq=true)
+    },
+    alarmInventory:{
+        ldi: false,
+        azm: false,
+        pzo: false,
+        pdp: false
+    }
 }
 
-function retablissementUCA(){
-    if(!(noDef1&&noDef2)) return false;
-    if(!(pccApi.voyUCA===2||pccApi.voyUCA===1)) return false;
-    exports.coupFS='RETABLISSEMENT'
-    pccApi.voyUCA=true
-    noDef1=false
-    noDef2=false
-}
+exports.uca=UCA
 
 exports.periodicUpdateVoy = async function(){
     exports.f9=true
@@ -412,5 +439,4 @@ exports.periodicUpdateVoy = async function(){
     checkStationTrainsPresence()
     ongoingcycle()
     updateItiFormVoys()
-    retablissementUCA()
 }

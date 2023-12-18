@@ -1,7 +1,10 @@
-[Sunday   14h59:53] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Sunday   14h59:58] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
-[Sunday   14h59:58] PA    -> PDP ; c2201 > 2 
-[Sunday   15h00:01] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
-[Sunday   15h00:04] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
-[Sunday   15h00:04] PA    -> PDP ; c2201 > 2 
-[Sunday   15h01:08] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Monday   23h58:52] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Monday   23h58:54] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Monday   23h58:54] PA    -> PDP ; c2201 > 2 
+[Monday   23h58:55] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Monday   23h59:03] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Monday   23h59:03] PA    -> PDP ; c2201 > 2 
+[Monday   23h59:04] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Monday   23h59:26] PA    -> DP ; BOUCLE 1401 TRAIN 3 -> INACTIVE 
+[Monday   23h59:26] PA    -> PDP ; c1401 > 3 
+[Monday   23h59:33] PA    -> DP ; BOUCLE 1401 TRAIN 3 -> ACTIVE 

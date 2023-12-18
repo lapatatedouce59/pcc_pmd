@@ -117,14 +117,16 @@ exports.apiSave = function(){
         ovse.f8=false
         ovse.f9=false
         ovse.work=true
+        ovse.uca.update()
     }
     },10)
+    
     let workerInter=setInterval(()=>{
         //(work)
         if(ovse.work===false) return;
         clearInterval(workerInter)
 
-        if(ovse.coupFS===true && ovse.done===false){
+        /*if(ovse.coupFS===true && ovse.done===false){
             ovse.coupFS=false
             ovse.done=true
             FSTrains('down', 'all')
@@ -135,7 +137,7 @@ exports.apiSave = function(){
             ovse.coupFS=false
             FSTrains('up', 'all')
             writter.simple('Défaut résolu OVSE.','UCA', 'FS')
-        }
+        }*/
 
         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
 

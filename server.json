@@ -17,6 +17,7 @@
     "ss04": true,
     "ss05": true
   },
+  "UCA": [],
   "emCalls": [],
   "SS": [
     {
@@ -95,7 +96,7 @@
   },
   "players": [
     {
-      "uuid": "c30d17a9-4...",
+      "uuid": "ce814e58-1...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
