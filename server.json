@@ -96,27 +96,84 @@
   },
   "players": [
     {
-      "uuid": "ce814e58-1...",
+      "uuid": "57d41e09-8...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
   ],
-  "aigItis": {},
+  "aigItis": {
+    "C1": [
+      "1201_1401",
+      "1401_1201",
+      "1201_2201",
+      "2201_1201",
+      "2201_2401",
+      "2401_2201",
+      "2401_1401",
+      "1401_2401"
+    ],
+    "C2": [
+      "1501_1202",
+      "1202_1501",
+      "2101_2302",
+      "2302_2101",
+      "1202_2101",
+      "2101_1202"
+    ],
+    "C2B": [
+      "1102_PAG1",
+      "PAG1_1102",
+      "1102_1302",
+      "1302_1102"
+    ]
+  },
   "aiguilles": [
     {
       "id": "C1",
       "occupied": false,
-      "actualIti": "1201_1401"
+      "actualIti": [],
+      "exeption": [
+        "1201_1401",
+        "1401_1201",
+        "2201_2401",
+        "2401_2201"
+      ],
+      "aigCtn": [
+        "c1301",
+        "c2301"
+      ]
     },
     {
       "id": "C2",
       "occupied": false,
-      "actualIti": "1501_1202"
+      "actualIti": [
+        "2302_2101",
+        "1501_1202"
+      ],
+      "exeption": [
+        "1501_1202",
+        "1202_1501",
+        "2101_2302",
+        "2302_2101"
+      ],
+      "aigCtn": [
+        "c1102",
+        "c2402"
+      ]
     },
     {
       "id": "C2B",
       "occupied": false,
-      "actualIti": "1102_1302"
+      "actualIti": [
+        "1102_PAG1"
+      ],
+      "exeption": [
+        "1102_1302",
+        "1302_1102"
+      ],
+      "aigCtn": [
+        "c1202"
+      ]
     }
   ],
   "trains": {
@@ -230,7 +287,7 @@
         "defKIBS": false,
         "tractionS1": false,
         "tractionS2": false,
-        "cmdTraction": true,
+        "cmdTraction": false,
         "activeOnduls": true,
         "avarieOnduls": false,
         "patEnr": false,
@@ -371,7 +428,7 @@
         "defKIBS": false,
         "tractionS1": false,
         "tractionS2": false,
-        "cmdTraction": true,
+        "cmdTraction": false,
         "activeOnduls": true,
         "avarieOnduls": false,
         "patEnr": false,
@@ -497,8 +554,8 @@
             },
             {
               "code": "2201_2401",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "2401_2201",
@@ -554,8 +611,8 @@
             },
             {
               "code": "1401_1201",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1401_1501",
@@ -635,7 +692,7 @@
         {
           "cid": "c1401",
           "trains": [
-            "3"
+            "2"
           ],
           "type": "quai",
           "name": "MSTO V1",
@@ -724,7 +781,7 @@
         {
           "cid": "c2201",
           "trains": [
-            "2"
+            "3"
           ],
           "type": "quai",
           "name": "MSTO V2",

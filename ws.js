@@ -2142,6 +2142,14 @@ wss.on('connection', (ws, req) => {
                                         writter.simple('SÉLECTIONNÉ.','PA', `ITINÉRAIRE ${iti.code}`)
                                         await setTimeout(2000)
                                         iti.active=true
+                                        for(let aigIti of Object.entries(pccApi.aigItis)){
+                                            if (aigIti[1].includes(iti.code)) {
+                                                for(let aigGroup of pccApi.aiguilles){
+                                                    if(!(aigGroup.id===aigIti[0])) continue;
+                                                    aigGroup.actualIti.push(iti.code)
+                                                }
+                                            }
+                                        }
                                         exports.apiSave()
                                         writter.simple('FORMÉ.','PA', `ITINÉRAIRE ${iti.code}`)
                                     }
@@ -2165,6 +2173,14 @@ wss.on('connection', (ws, req) => {
                                         await setTimeout(2000)
                                         iti.mode=false
                                         iti.active=false
+                                        for(let aigIti of Object.entries(pccApi.aigItis)){
+                                            if (aigIti[1].includes(iti.code)) {
+                                                for(let aigGroup of pccApi.aiguilles){
+                                                    if(!(aigGroup.id===aigIti[0])) continue;
+                                                    aigGroup.actualIti.splice(aigGroup.actualIti.indexOf(iti.code),1)
+                                                }
+                                            }
+                                        }
                                         exports.apiSave()
                                         writter.simple('DÉTRUIT.','PA', `ITINÉRAIRE ${iti.code}`)
                                     }
@@ -2185,6 +2201,14 @@ wss.on('connection', (ws, req) => {
                                         iti.mode='DU'
                                         iti.mode=false
                                         iti.active=false
+                                        for(let aigIti of Object.entries(pccApi.aigItis)){
+                                            if (aigIti[1].includes(iti.code)) {
+                                                for(let aigGroup of pccApi.aiguilles){
+                                                    if(!(aigGroup.id===aigIti[0])) continue;
+                                                    aigGroup.actualIti.splice(aigGroup.actualIti.indexOf(iti.code),1)
+                                                }
+                                            }
+                                        }
                                         exports.apiSave()
                                         writter.simple('DÉTRUIT D\'URGENCE.','PA', `ITINÉRAIRE ${iti.code}`)
                                     }
@@ -2941,6 +2965,14 @@ function changeItiState(mode, code){
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         await setTimeout(2000)
                         iti.active=true
+                        for(let aigIti of Object.entries(pccApi.aigItis)){
+                            if (aigIti[1].includes(iti.code)) {
+                                for(let aigGroup of pccApi.aiguilles){
+                                    if(!(aigGroup.id===aigIti[0])) continue;
+                                    aigGroup.actualIti.push(iti.code)
+                                }
+                            }
+                        }
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                     }
                     rpdelay()
@@ -2951,6 +2983,18 @@ function changeItiState(mode, code){
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         await setTimeout(2000)
                         iti.mode=false
+                        for(let aigIti of Object.entries(pccApi.aigItis)){
+                            console.log(aigIti[1])
+                            if (aigIti[1].includes(iti.code)) {
+                                console.log('yes 1')
+                                for(let aigGroup of pccApi.aiguilles){
+                                    console.log(aigGroup.id)
+                                    if(!(aigGroup.id===aigIti[0])) continue;
+                                    aigGroup.actualIti.splice(aigGroup.actualIti.indexOf(iti.code),1)
+                                    console.log(aigGroup.actualIti.indexOf(iti.code))
+                                }
+                            }
+                        }
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                     }
                     rpdelay()
@@ -2958,6 +3002,14 @@ function changeItiState(mode, code){
                 } else if(mode==='du'){
                     iti.mode=false
                     iti.active=false
+                    for(let aigIti of Object.entries(pccApi.aigItis)){
+                        if (aigIti[1].includes(iti.code)) {
+                            for(let aigGroup of pccApi.aiguilles){
+                                if(!(aigGroup.id===aigIti[0])) continue;
+                                aigGroup.actualIti.splice(aigGroup.actualIti.indexOf(iti.code),1)
+                            }
+                        }
+                    }
                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                 } else return false;
             }

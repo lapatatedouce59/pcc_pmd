@@ -1,10 +1,27 @@
-[Monday   23h58:52] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Monday   23h58:54] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
-[Monday   23h58:54] PA    -> PDP ; c2201 > 2 
-[Monday   23h58:55] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
-[Monday   23h59:03] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
-[Monday   23h59:03] PA    -> PDP ; c2201 > 2 
-[Monday   23h59:04] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
-[Monday   23h59:26] PA    -> DP ; BOUCLE 1401 TRAIN 3 -> INACTIVE 
-[Monday   23h59:26] PA    -> PDP ; c1401 > 3 
-[Monday   23h59:33] PA    -> DP ; BOUCLE 1401 TRAIN 3 -> ACTIVE 
+[Tuesday  23h38:45] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Tuesday  23h38:47] UCA   -> COUPURE FS ; C1. 
+[Tuesday  23h38:47] PA    -> ABSENCE ITI ; C1. 
+[Tuesday  23h38:47] PA    -> ITINÉRAIRE 1401_1201 ; SÉLECTIONNÉ. 
+[Tuesday  23h38:49] PA    -> ITINÉRAIRE 1401_1201 ; FORMÉ. 
+[Tuesday  23h38:55] PA    -> ITINÉRAIRE 1201_1401 ; SÉLECTIONNÉ. 
+[Tuesday  23h38:57] PA    -> LDI ; C1 (DIV) 
+[Tuesday  23h38:57] PA    -> LDI ; C1 (DIV) 
+[Tuesday  23h38:57] PA    -> ITINÉRAIRE 1201_1401 ; FORMÉ. 
+[Tuesday  23h39:08] PA    -> LDI ; C1 (DIV) 
+[Tuesday  23h39:08] PA    -> LDI ; C1 (DIV) 
+[Tuesday  23h39:08] PA    -> ITINÉRAIRE 1201_1401 ; EN DESTRUCTION. 
+[Tuesday  23h39:10] PA    -> ITINÉRAIRE 1201_1401 ; DÉTRUIT. 
+[Tuesday  23h39:11] PA    -> ITINÉRAIRE 2201_1201 ; SÉLECTIONNÉ. 
+[Tuesday  23h39:13] PA    -> LDI ; C1 (2201_1201) 
+[Tuesday  23h39:13] PA    -> LDI ; C1 (1401_1201) 
+[Tuesday  23h39:13] PA    -> ITINÉRAIRE 2201_1201 ; FORMÉ. 
+[Tuesday  23h39:15] PA    -> LDI ; C1 (2201_1201) 
+[Tuesday  23h39:15] PA    -> LDI ; C1 (1401_1201) 
+[Tuesday  23h39:15] PA    -> ITINÉRAIRE 2201_1201 ; EN DESTRUCTION. 
+[Tuesday  23h39:16] PA    -> LDI ; C1 (2201_1201) 
+[Tuesday  23h39:16] PA    -> LDI ; C1 (1401_1201) 
+[Tuesday  23h39:16] PA    -> ITINÉRAIRE 1401_1201 ; EN DESTRUCTION. 
+[Tuesday  23h39:17] PA    -> ITINÉRAIRE 2201_1201 ; DÉTRUIT. 
+[Tuesday  23h39:18] UCA   -> COUPURE FS ; C1. 
+[Tuesday  23h39:18] PA    -> ABSENCE ITI ; C1. 
+[Tuesday  23h39:18] PA    -> ITINÉRAIRE 1401_1201 ; DÉTRUIT. 

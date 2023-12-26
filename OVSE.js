@@ -143,38 +143,11 @@ function updateItiFormVoys(){
     }
     exports.f4=true
 }
-//? Ajout des cantons de reference pour les alarmes cantons (ldi)
-giveMapIndexForIti = function (code){
-    let itiArrayC1Dev = ['1201_2201','2201_1201','2401_1401','1401_2401']
-    let itiArrayC1NorV1 = ['1401_1201','1201_1401']
-    let itiArrayC1NorV2 = ['2401_2201','2201_2401']
-
-    let itiArrayC2Dev = ['2101_1202','1202_2101']
-    let itiArrayC2BDev = ['1102_PAG1','PAG1_1102']
-    let itiArrayC2NorV1 = ['1501_1202','1202_1501']
-    let itiArrayC2NorV2 = ['2302_2101','2101_2302']
-    let itiArrayC2BNor = ['1102_1302','1302_1102']
-
-
-
-    if(!(code)) return;
-    if(itiArrayC1Dev.includes(code)) return 'C1Dev';
-    if(itiArrayC1NorV1.includes(code)) return 'C1NorV1';
-    if(itiArrayC1NorV2.includes(code)) return 'C1NorV2';
-
-    if(itiArrayC2Dev.includes(code)) return 'C2Dev';
-    if(itiArrayC2BDev.includes(code)) return 'C2BDev';
-    if(itiArrayC2NorV1.includes(code)) return 'C2NorV1';
-    if(itiArrayC2NorV2.includes(code)) return 'C2NorV2';
-    if(itiArrayC2BNor.includes(code)) return 'C2BNor';
-
-    return false;
-}
 exports.isItiAnAigOne=function(code){
     if(!(code)) return;
-    let gmifi = giveMapIndexForIti(code)
-
-    if(!(gmifi===false)) return true;
+    for(let aigIti of Object.entries(pccApi.aigItis)){
+        if (aigIti[1].includes(code)) return aigIti[0];
+    }
     return false;
 }
 function isItiActive(code){
@@ -191,18 +164,6 @@ function isItiActive(code){
     return false;
 }
 
-let itiAigMap = new Map()
-//s1
-itiAigMap.set('C1Dev',['c1301','c2301'])
-itiAigMap.set('C1NorV1',['c1301'])
-itiAigMap.set('C1NorV2',['c2301'])
-//s2
-itiAigMap.set('C2Dev',['c1102','c2402'])
-itiAigMap.set('C2BDev',['c1202'])
-itiAigMap.set('C2NorV1',['c1102'])
-itiAigMap.set('C2NorV2',['c2402'])
-itiAigMap.set('C2BNor',['c1202'])
-
 exports.returnCtnIteration=function(cid){
     for(let sec of pccApi.SEC){
         for(let ctn of sec.cantons){
@@ -213,21 +174,51 @@ exports.returnCtnIteration=function(cid){
     return false;
 }
 
-
 function detectLDI(){
+    for(let itiGroup of pccApi.aiguilles){
+        if (itiGroup.actualIti.length===0){
+            // aucun itinéraire n'est admis pour l'aiguille.
+            //! Coupure de la FS sur le canton
+            writter.simple(`${itiGroup.id}.`,'UCA','COUPURE FS')
+            writter.simple(`${itiGroup.id}.`,'PA','ABSENCE ITI')
+        }
+    }
     for(let sec of pccApi.SEC){
         for(let itil of Object.entries(sec.ITI[0])){
             for(let iti of itil[1]){
                 if(exports.isItiAnAigOne(iti.code)){
-                    let itiParts = iti.code.split('_')
-                    if(isItiActive(`${itiParts[1]}_${itiParts[0]}`)&&isItiActive(iti.code)){
-                        let ctnToAlarm = itiAigMap.get(giveMapIndexForIti(iti.code))
-                        for(let ctn of ctnToAlarm){
-                            if(itiParts[0]==='PAG1') itiParts[0]='cGPAG1'
-                            if(itiParts[1]==='PAG1') itiParts[1]='cGPAG1'
-                            let actualCtn = exports.returnCtnIteration(ctn)
-                            actualCtn.states.ldi = 2
-                            writter.simple(`${actualCtn.cid}.`,'PA','LDI')
+                    if(isItiActive(iti.code)){
+                        for(let itiGroup of pccApi.aiguilles){
+                            if(!(itiGroup.id===exports.isItiAnAigOne(iti.code))) continue;
+                            if(itiGroup.actualIti.includes(iti.code)){
+                                let itiParts = iti.code.split('_')
+                                if(isItiActive(`${itiParts[1]}_${itiParts[0]}`)&&isItiActive(iti.code)){
+                                    for(let trueCtn of itiGroup.aigCtn){
+                                        let actualCtn = exports.returnCtnIteration(trueCtn)
+                                        //actualCtn.states.ldi = 2
+                                    }
+                                    writter.simple(`${itiGroup.id} (DIV)`,'PA','LDI')
+                                    continue;
+                                }
+                                if(itiGroup.actualIti.length>1){
+                                    for(let aigIti of itiGroup.actualIti){
+                                        if(!(itiGroup.exeption.includes(aigIti))&&(isItiActive(aigIti))){
+                                            //Plusieurs itinéraires sont actifs sur l'aiguille mais ils ne concordent pas.
+                                            //! DU, coupure FS et LDI
+
+                                            for(let trueCtn of itiGroup.aigCtn){
+                                                let actualCtn = exports.returnCtnIteration(trueCtn)
+                                                //actualCtn.states.ldi = 2
+                                            }
+                                            writter.simple(`${itiGroup.id} (${iti.code})`,'PA','LDI')
+                                        }
+                                    }
+                                }
+                            } else {
+                                // l'itinéraire est en ligne...mais n'est pas appliqué à l'aiguille.
+                                //! Anomalie
+                                writter.simple(`${itiGroup.id} > ${iti.code}`,'PA','DISCORDANCE')
+                            }
                         }
                     }
                 } else {
@@ -401,6 +392,7 @@ let UCA = {
         }
         if(alarmsOn.length===0) {
             pccApi.UCA=[]
+            //writter.simple(`EFFACEMENT ALARMES`,'UCA','')
             return pccApi.voyUCA=true
         }
         for(let alarm of pccApi.UCA){
@@ -412,7 +404,7 @@ let UCA = {
         console.log('clear uca')
         pccApi.UCA=[]
         pccApi.voyUCA=true
-        return writter.simple(`EFFACEMENT ALARMES`,'UCA','')
+        return; //writter.simple(`EFFACEMENT ALARMES`,'UCA','')
     },
     acquitAll: function () {
         pccApi.UCA.forEach((alarm)=>alarm.acq=true)
