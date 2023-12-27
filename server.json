@@ -96,7 +96,12 @@
   },
   "players": [
     {
-      "uuid": "57d41e09-8...",
+      "uuid": "92343797-f...",
+      "name": "patatedouce.dev",
+      "role": "chef"
+    },
+    {
+      "uuid": "ca125de0-b...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -131,7 +136,9 @@
     {
       "id": "C1",
       "occupied": false,
-      "actualIti": [],
+      "actualIti": [
+        "2201_2401"
+      ],
       "exeption": [
         "1201_1401",
         "1401_1201",
@@ -554,8 +561,8 @@
             },
             {
               "code": "2201_2401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2401_2201",
@@ -641,7 +648,7 @@
         "zoneManoeuvre1": false,
         "tnitne1": false,
         "lstpas1": true,
-        "discord1": false,
+        "discord1": 1,
         "retDispoV201": true,
         "injDispoV201": false,
         "retDispoV101": true,
@@ -692,7 +699,7 @@
         {
           "cid": "c1401",
           "trains": [
-            "2"
+            "3"
           ],
           "type": "quai",
           "name": "MSTO V1",
@@ -781,7 +788,7 @@
         {
           "cid": "c2201",
           "trains": [
-            "3"
+            "2"
           ],
           "type": "quai",
           "name": "MSTO V2",

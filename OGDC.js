@@ -49,13 +49,14 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                 cycle.active=true
                 writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 const rpdelay = async() => {
-                    changeItiState('sel','2201_2401')
-    
                     changeItiState('des','2401_1401')
                     changeItiState('des','1201_1401')
+                    changeItiState('des','1401_1201')
                     changeItiState('des','1401_2401')
                     changeItiState('des','2201_1201')
                     changeItiState('des','1201_2201')
+                    
+                    changeItiState('sel','2201_2401')
                     await setTimeout(100)
                     apiSave()
                     writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
@@ -72,14 +73,14 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                 clearInterval(cycleClearInter)
                                 if(true){
                                     const rpdelay2 = async() => {
-                                        changeItiState('sel','2401_1401')
-                        
                                         changeItiState('des','2201_2401')
                                         changeItiState('des','1401_2401')
                                         changeItiState('des','2201_1201')
                                         changeItiState('des','1201_2201')
                                         changeItiState('des','1201_1401')
                                         changeItiState('des','1401_1201')
+
+                                        changeItiState('sel','2401_1401')
                                         await setTimeout(100)
                                         writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
                                         apiSave()
@@ -114,13 +115,15 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                 cycle.active=true
                 writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 const rpdelay = async() => {
-                    changeItiState('sel','1401_1201')
-    
                     changeItiState('des','1201_1401')
                     changeItiState('des','1401_2401')
+                    changeItiState('des','2201_2401')
+                    changeItiState('des','2401_2201')
                     changeItiState('des','2401_1401')
                     changeItiState('des','2201_1201')
                     changeItiState('des','1201_2201')
+
+                    changeItiState('sel','1401_1201')
                     await setTimeout(100)
                     writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
                     apiSave()
@@ -137,14 +140,14 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                 clearInterval(cycleClearInter)
                                 if(true){
                                     const rpdelay2 = async() => {
-                                        changeItiState('sel','1201_2201')
-                        
                                         changeItiState('des','2201_2401')
                                         changeItiState('des','1401_2401')
                                         changeItiState('des','2201_1201')
                                         changeItiState('des','2401_1401')
                                         changeItiState('des','1401_1201')
                                         changeItiState('des','1201_1401')
+
+                                        changeItiState('sel','1201_2201')
                                         await setTimeout(100)
                                         apiSave()
                                         writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
@@ -178,15 +181,15 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                 writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 cycle.active=true
                 const rpdelay = async() => {
-                    changeItiState('sel','2202_2302')
-                    changeItiState('sel','2302_2101')
-                    changeItiState('sel','2402_2101')
-    
                     changeItiState('des','2302_2202')
                     changeItiState('des','2101_2302')
                     changeItiState('des','2101_2402')
                     changeItiState('des','2101_1202')
                     changeItiState('des','1202_2101')
+
+                    changeItiState('sel','2202_2302')
+                    changeItiState('sel','2302_2101')
+                    changeItiState('sel','2402_2101')
                     await setTimeout(100)
                     apiSave()
                     writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
@@ -203,10 +206,6 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                 clearInterval(cycleClearInter)
                                 if(true){
                                     const rpdelay2 = async() => {
-                                        changeItiState('sel','2101_2402')
-                                        changeItiState('sel','2101_1202')
-                                        changeItiState('sel','1102_1302')
-                        
                                         changeItiState('des','2402_2101')
                                         changeItiState('des','2302_2101')
                                         changeItiState('des','1202_2101')
@@ -215,6 +214,10 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                         changeItiState('des','1102_PAG1')
                                         changeItiState('des','1202_1501')
                                         changeItiState('des','1501_1202')
+
+                                        changeItiState('sel','2101_2402')
+                                        changeItiState('sel','2101_1202')
+                                        changeItiState('sel','1102_1302')
                                         await setTimeout(100)
                                         apiSave()
                                         writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
@@ -247,15 +250,15 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                 writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 cycle.active=true
                 const rpdelay = async() => {
-                    changeItiState('sel','2202_2302')
-                    changeItiState('sel','2302_2101')
-                    changeItiState('sel','2402_2101')
-    
                     changeItiState('des','2302_2202')
                     changeItiState('des','2101_2302')
                     changeItiState('des','2101_2402')
                     changeItiState('des','2101_1202')
                     changeItiState('des','1202_2101')
+
+                    changeItiState('sel','2202_2302')
+                    changeItiState('sel','2302_2101')
+                    changeItiState('sel','2402_2101')
                     await setTimeout(100)
                     apiSave()
                     writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
@@ -272,10 +275,6 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                 clearInterval(cycleClearInter)
                                 if(true){
                                     const rpdelay2 = async() => {
-                                        changeItiState('sel','2101_2402')
-                                        changeItiState('sel','2101_1202')
-                                        changeItiState('sel','1102_PAG1')
-                        
                                         changeItiState('des','2402_2101')
                                         changeItiState('des','2302_2101')
                                         changeItiState('des','1202_2101')
@@ -284,6 +283,10 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                         changeItiState('des','1102_1302')
                                         changeItiState('des','1202_1501')
                                         changeItiState('des','1501_1202')
+
+                                        changeItiState('sel','2101_2402')
+                                        changeItiState('sel','2101_1202')
+                                        changeItiState('sel','1102_PAG1')
                                         await setTimeout(100)
                                         apiSave()
                                         writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)

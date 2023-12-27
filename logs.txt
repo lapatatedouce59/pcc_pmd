@@ -1,27 +1,95 @@
-[Tuesday  23h38:45] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Tuesday  23h38:47] UCA   -> COUPURE FS ; C1. 
-[Tuesday  23h38:47] PA    -> ABSENCE ITI ; C1. 
-[Tuesday  23h38:47] PA    -> ITINÉRAIRE 1401_1201 ; SÉLECTIONNÉ. 
-[Tuesday  23h38:49] PA    -> ITINÉRAIRE 1401_1201 ; FORMÉ. 
-[Tuesday  23h38:55] PA    -> ITINÉRAIRE 1201_1401 ; SÉLECTIONNÉ. 
-[Tuesday  23h38:57] PA    -> LDI ; C1 (DIV) 
-[Tuesday  23h38:57] PA    -> LDI ; C1 (DIV) 
-[Tuesday  23h38:57] PA    -> ITINÉRAIRE 1201_1401 ; FORMÉ. 
-[Tuesday  23h39:08] PA    -> LDI ; C1 (DIV) 
-[Tuesday  23h39:08] PA    -> LDI ; C1 (DIV) 
-[Tuesday  23h39:08] PA    -> ITINÉRAIRE 1201_1401 ; EN DESTRUCTION. 
-[Tuesday  23h39:10] PA    -> ITINÉRAIRE 1201_1401 ; DÉTRUIT. 
-[Tuesday  23h39:11] PA    -> ITINÉRAIRE 2201_1201 ; SÉLECTIONNÉ. 
-[Tuesday  23h39:13] PA    -> LDI ; C1 (2201_1201) 
-[Tuesday  23h39:13] PA    -> LDI ; C1 (1401_1201) 
-[Tuesday  23h39:13] PA    -> ITINÉRAIRE 2201_1201 ; FORMÉ. 
-[Tuesday  23h39:15] PA    -> LDI ; C1 (2201_1201) 
-[Tuesday  23h39:15] PA    -> LDI ; C1 (1401_1201) 
-[Tuesday  23h39:15] PA    -> ITINÉRAIRE 2201_1201 ; EN DESTRUCTION. 
-[Tuesday  23h39:16] PA    -> LDI ; C1 (2201_1201) 
-[Tuesday  23h39:16] PA    -> LDI ; C1 (1401_1201) 
-[Tuesday  23h39:16] PA    -> ITINÉRAIRE 1401_1201 ; EN DESTRUCTION. 
-[Tuesday  23h39:17] PA    -> ITINÉRAIRE 2201_1201 ; DÉTRUIT. 
-[Tuesday  23h39:18] UCA   -> COUPURE FS ; C1. 
-[Tuesday  23h39:18] PA    -> ABSENCE ITI ; C1. 
-[Tuesday  23h39:18] PA    -> ITINÉRAIRE 1401_1201 ; DÉTRUIT. 
+[Wednesday14h43:19] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday14h43:21] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday14h43:21] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday14h43:30] UCA   -> COUPURE FS ; C1. 
+[Wednesday14h43:30] PA    -> ABSENCE ITI ; C1. 
+[Wednesday14h43:30] PA    -> ITINÉRAIRE 2201_2401 ; DÉTRUIT D'URGENCE. 
+[Wednesday14h43:34] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Wednesday14h43:34] UCA   -> COUPURE FS ; C1. 
+[Wednesday14h43:34] PA    -> ABSENCE ITI ; C1. 
+[Wednesday14h43:36] UCA   -> COUPURE FS ; C1. 
+[Wednesday14h43:36] PA    -> ABSENCE ITI ; C1. 
+[Wednesday14h43:36] PA    -> ITINÉRAIRE 1401_1201 ; SÉLECTIONNÉ. 
+[Wednesday14h43:38] PA    -> ITINÉRAIRE 1401_1201 ; FORMÉ. 
+[Wednesday14h43:40] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Wednesday14h43:42] UCA   -> COUPURE FS ; C1. 
+[Wednesday14h43:42] PA    -> ITINÉRAIRE 1401_1201 ; DÉTRUIT D'URGENCE. 
+[Wednesday14h43:42] PA    -> ABSENCE ITI ; C1. 
+[Wednesday14h43:43] UCA   -> COUPURE FS ; C1. 
+[Wednesday14h43:43] PA    -> ABSENCE ITI ; C1. 
+[Wednesday14h43:43] PA    -> ITINÉRAIRE 1401_1201 ; SÉLECTIONNÉ. 
+[Wednesday14h43:46] PA    -> ITINÉRAIRE 1401_1201 ; FORMÉ. 
+[Wednesday14h43:46] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Wednesday14h43:49] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday14h43:54] PA    -> CYCLE c2p1 ; SÉLECTIONNÉ. 
+[Wednesday14h43:56] PA    -> CYCLE c2p1 ; EN ACTIVITÉ. 
+[Wednesday14h43:56] PA    -> CYCLE c2p1 ; EN CONSTRUCTION PHASE 1. 
+[Wednesday14h43:58] PA    -> CYCLE c2p1 ; CONSTRUIT PHASE 1. 
+[Wednesday14h44:00] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> ACTIVE 
+[Wednesday14h44:01] PA    -> DP ; BOUCLE 1501 TRAIN 2 -> INACTIVE 
+[Wednesday14h44:05] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
+[Wednesday14h44:08] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> ACTIVE 
+[Wednesday14h44:08] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> INACTIVE 
+[Wednesday14h44:08] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> ACTIVE 
+[Wednesday14h44:12] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> INACTIVE 
+[Wednesday14h44:14] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
+[Wednesday14h44:16] PA    -> CYCLE c2p1 ; EN ATTENTE DE RESET. 
+[Wednesday14h44:16] PA    -> CYCLE c2p1 ; EN CONSTRUCTION PHASE 2. 
+[Wednesday14h44:18] PA    -> CYCLE c2p1 ; CONSTRUIT PHASE 2. 
+[Wednesday14h44:20] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
+[Wednesday14h44:22] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
+[Wednesday14h44:25] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Wednesday14h44:27] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> INACTIVE 
+[Wednesday14h44:29] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
+[Wednesday14h44:31] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Wednesday14h44:32] PA    -> CYCLE c2p1 ; EN ACTIVITÉ. 
+[Wednesday14h44:32] PA    -> CYCLE c2p1 ; EN CONSTRUCTION PHASE 1. 
+[Wednesday14h44:34] PA    -> CYCLE c2p1 ; CONSTRUIT PHASE 1. 
+[Wednesday14h44:35] PA    -> CYCLES S1 ; ANNULÉS. 
+[Wednesday14h44:35] PA    -> CYCLES S1 ; ANNULÉS. 
+[Wednesday14h44:45] PA    -> CYCLE c1p1 ; SÉLECTIONNÉ. 
+[Wednesday14h44:47] PA    -> CYCLE c1p1 ; EN ACTIVITÉ. 
+[Wednesday14h44:47] PA    -> CYCLE c1p1 ; EN CONSTRUCTION PHASE 1. 
+[Wednesday14h44:49] PA    -> CYCLE c1p1 ; CONSTRUIT PHASE 1. 
+[Wednesday14h44:50] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
+[Wednesday14h44:54] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> ACTIVE 
+[Wednesday14h44:56] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Wednesday14h44:58] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Wednesday14h45:01] PA    -> CYCLE c1p1 ; EN ATTENTE POUR RESET. 
+[Wednesday14h45:01] PA    -> CYCLE c1p1 ; EN CONSTRUCTION PHASE 2. 
+[Wednesday14h45:03] PA    -> CYCLE c1p1 ; CONSTRUIT PHASE 2. 
+[Wednesday14h45:05] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
+[Wednesday14h45:07] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
+[Wednesday14h45:10] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> ACTIVE 
+[Wednesday14h45:12] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> INACTIVE 
+[Wednesday14h45:14] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Wednesday14h45:16] PA    -> DP ; BOUCLE 2201 TRAIN 3 -> ACTIVE 
+[Wednesday14h45:18] PA    -> DP ; BOUCLE 2101 TRAIN 3 -> INACTIVE 
+[Wednesday14h45:20] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
+[Wednesday14h45:21] PA    -> CYCLE c1p1 ; EN ACTIVITÉ. 
+[Wednesday14h45:21] PA    -> CYCLE c1p1 ; EN CONSTRUCTION PHASE 1. 
+[Wednesday14h45:23] PA    -> CYCLE c1p1 ; CONSTRUIT PHASE 1. 
+[Wednesday14h45:26] PA    -> DP ; BOUCLE 2301 TRAIN 3 -> ACTIVE 
+[Wednesday14h45:28] PA    -> DP ; BOUCLE 2401 TRAIN 3 -> ACTIVE 
+[Wednesday14h45:31] PA    -> DP ; BOUCLE 2201 TRAIN 3 -> INACTIVE 
+[Wednesday14h45:33] PA    -> DP ; BOUCLE 2301 TRAIN 3 -> INACTIVE 
+[Wednesday14h45:41] PA    -> DP ; BOUCLE 1501 TRAIN 2 -> ACTIVE 
+[Wednesday14h45:43] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
+[Wednesday14h45:44] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> INACTIVE 
+[Wednesday14h45:45] PA    -> CYCLE c1p1 ; EN ATTENTE POUR RESET. 
+[Wednesday14h45:45] PA    -> CYCLE c1p1 ; EN CONSTRUCTION PHASE 2. 
+[Wednesday14h45:47] PA    -> DP ; BOUCLE 1501 TRAIN 2 -> INACTIVE 
+[Wednesday14h45:47] PA    -> CYCLE c1p1 ; CONSTRUIT PHASE 2. 
+[Wednesday14h45:49] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Wednesday14h45:50] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
+[Wednesday14h45:56] PA    -> DP ; BOUCLE 2301 TRAIN 3 -> ACTIVE 
+[Wednesday14h45:58] PA    -> DP ; BOUCLE 1301 TRAIN 3 -> ACTIVE 
+[Wednesday14h46:00] PA    -> DP ; BOUCLE 1401 TRAIN 3 -> ACTIVE 
+[Wednesday14h46:01] PA    -> DP ; BOUCLE 2401 TRAIN 3 -> INACTIVE 
+[Wednesday14h46:02] PA    -> DP ; BOUCLE 2301 TRAIN 3 -> INACTIVE 
+[Wednesday14h46:03] PA    -> DP ; BOUCLE 1301 TRAIN 3 -> INACTIVE 
+[Wednesday14h46:03] PA    -> CYCLE c1p1 ; EN ACTIVITÉ. 
+[Wednesday14h46:03] PA    -> CYCLE c1p1 ; EN CONSTRUCTION PHASE 1. 
+[Wednesday14h46:05] PA    -> CYCLE c1p1 ; CONSTRUIT PHASE 1. 
+[Wednesday14h46:11] PA    -> CYCLES S1 ; ANNULÉS. 
+[Wednesday14h46:11] PA    -> CYCLES S1 ; ANNULÉS. 

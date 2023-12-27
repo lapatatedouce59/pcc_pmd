@@ -175,12 +175,17 @@ exports.returnCtnIteration=function(cid){
 }
 
 function detectLDI(){
+    let defUca = []
     for(let itiGroup of pccApi.aiguilles){
         if (itiGroup.actualIti.length===0){
             // aucun itinéraire n'est admis pour l'aiguille.
             //! Coupure de la FS sur le canton
             writter.simple(`${itiGroup.id}.`,'UCA','COUPURE FS')
             writter.simple(`${itiGroup.id}.`,'PA','ABSENCE ITI')
+            for(let trueCtn of itiGroup.aigCtn){
+                let actualCtn = exports.returnCtnIteration(trueCtn)
+                actualCtn.states.coupFs = 2
+            }
         }
     }
     for(let sec of pccApi.SEC){
@@ -195,9 +200,12 @@ function detectLDI(){
                                 if(isItiActive(`${itiParts[1]}_${itiParts[0]}`)&&isItiActive(iti.code)){
                                     for(let trueCtn of itiGroup.aigCtn){
                                         let actualCtn = exports.returnCtnIteration(trueCtn)
-                                        //actualCtn.states.ldi = 2
+                                        actualCtn.states.ldi = 2
                                     }
                                     writter.simple(`${itiGroup.id} (DIV)`,'PA','LDI')
+                                    defUca.push(itiGroup.id)
+                                    UCA.newAlarm('ldi', `${itiGroup.id}`, ["fs"])
+                                    UCA.alarmInventory.ldi=true
                                     continue;
                                 }
                                 if(itiGroup.actualIti.length>1){
@@ -208,9 +216,12 @@ function detectLDI(){
 
                                             for(let trueCtn of itiGroup.aigCtn){
                                                 let actualCtn = exports.returnCtnIteration(trueCtn)
-                                                //actualCtn.states.ldi = 2
+                                                actualCtn.states.ldi = 2
                                             }
                                             writter.simple(`${itiGroup.id} (${iti.code})`,'PA','LDI')
+                                            defUca.push(itiGroup.id)
+                                            UCA.newAlarm('ldi', `${itiGroup.id}`, ["fs"])
+                                            UCA.alarmInventory.ldi=true
                                         }
                                     }
                                 }
@@ -218,6 +229,10 @@ function detectLDI(){
                                 // l'itinéraire est en ligne...mais n'est pas appliqué à l'aiguille.
                                 //! Anomalie
                                 writter.simple(`${itiGroup.id} > ${iti.code}`,'PA','DISCORDANCE')
+                                sec.states[`discord${itiGroup.aigCtn[0].slice(-1)}`]=2
+                                defUca.push(itiGroup.id)
+                                UCA.newAlarm('ldi', `${itiGroup.id}`, ["fs"])
+                                UCA.alarmInventory.ldi=true
                             }
                         }
                     }
@@ -231,10 +246,16 @@ function detectLDI(){
                         ctn1.states.ldi=2
                         ctn2.states.ldi=2
                         writter.simple(`${ctn1.cid}-${ctn2.cid}.`,'PA','LDI')
+                        defUca.push(itiGroup.id)
+                        UCA.newAlarm('ldi', `${iti.code}`, ["fs"])
+                        UCA.alarmInventory.ldi=true
                     }
                 }
             }
         }
+    }
+    if(defUca.length===0){
+        UCA.alarmInventory.ldi=false
     }
     exports.f5=true
 }
