@@ -16,11 +16,13 @@ exports.f5 = false
 exports.f6 = false
 exports.f7 = false
 exports.f8 = false
-exports.f9 = true
+exports.f9 = false
 
 exports.coupFS = false
 
 exports.lastCtn = String
+
+exports.lastDPOn = String
 
 exports.work = false;
 
@@ -147,6 +149,13 @@ exports.isItiAnAigOne=function(code){
     if(!(code)) return;
     for(let aigIti of Object.entries(pccApi.aigItis)){
         if (aigIti[1].includes(code)) return aigIti[0];
+    }
+    return false;
+}
+function isItiApartFromAnAigOne(code){
+    if(!(code)) return;
+    for(let itiDesc of Object.entries(pccApi.itiDescription)){
+        if(itiDesc[1].includes(code)) return true;
     }
     return false;
 }
@@ -358,6 +367,48 @@ function detectPDP(){
     }
 }
 
+
+function detectALCD(){
+    let defUCA2=[]
+    for(let trainItiLog of Object.entries(pccApi.trainMouvements)){
+        if(trainItiLog[1].length>1){ //On vérifie si il y a une SÉQUENCE de mouvement.
+            let ctnToIti = []
+            for(let ctn of trainItiLog[1]){
+                if(ctn==='cGPAG1') ctnToIti.push('PAG1')
+                ctnToIti.push(ctn.replace('c',''))
+            }
+            if(isItiApartFromAnAigOne(`${ctnToIti[0]}_${ctnToIti[1]}`)){
+                let itiCompris = []
+                for(let itiComponents of Object.entries(pccApi.itiDescription)){
+                    if(itiComponents[1].includes(`${ctnToIti[0]}_${ctnToIti[1]}`)){
+                        if(isItiActive(`${itiComponents[0]}`)&&exports.isItiAnAigOne(`${itiComponents[0]}`)) itiCompris.push(`${ctnToIti[0]}_${ctnToIti[1]}`)
+                    }
+                }
+                if(itiCompris.length===0){
+                    //console.log(`ALDC train ${trainItiLog[0]} sur MANOEUVRE ${ctnToIti[0]} A ${ctnToIti[1]}`)
+                    writter.simple(`${ctnToIti[0]}-${ctnToIti[1]} > ${trainItiLog[0]}`,'UCA','ALDC')
+                    defUCA2.push(trainItiLog[0])
+                    UCA.alarmInventory.pdp=true
+                    UCA.newAlarm('alc', `${trainItiLog[0]}`, ["fs","ht"])
+                }
+            } else {
+                if(!(isItiActive(`${ctnToIti[0]}_${ctnToIti[1]}`))){  //Si le mouvement ne correspond pas à un iti online.
+                    //console.log(`ALDC train ${trainItiLog[0]} sur ${ctnToIti[0]} et ${ctnToIti[1]}`)
+                    writter.simple(`${ctnToIti[0]}-${ctnToIti[1]} > ${trainItiLog[0]}`,'UCA','ALDC')
+                    defUCA2.push(trainItiLog[0])
+                    UCA.alarmInventory.pdp=true
+                    UCA.newAlarm('alc', `${trainItiLog[0]}`, ["fs","ht"])
+                    continue;
+                }
+            }
+        }
+    }
+    exports.f9=true
+    if(defUCA2.length===0){
+        UCA.alarmInventory.alc=false
+    }
+}
+
 /*function detectTNE(){
     let defs = []
     for(let sec of pccApi.SEC){
@@ -434,14 +485,14 @@ let UCA = {
         ldi: false,
         azm: false,
         pzo: false,
-        pdp: false
+        pdp: false,
+        alc: false
     }
 }
 
 exports.uca=UCA
 
 exports.periodicUpdateVoy = async function(){
-    exports.f9=true
     exports.done=false
     detectLDI()
     detectAZM()
@@ -451,5 +502,6 @@ exports.periodicUpdateVoy = async function(){
     ongoingiti()
     checkStationTrainsPresence()
     ongoingcycle()
+    detectALCD()
     updateItiFormVoys()
 }

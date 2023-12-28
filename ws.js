@@ -2237,15 +2237,15 @@ wss.on('connection', (ws, req) => {
                         if(pccApi.SEC[0].cantons[9].trains.length>0) return;
                         const rpdelay = async() => {
                             pccApi.SEC[0].CYCLES[6].active=true
-                            changeItiState('sel','2201_2401')
-                            changeItiState('sel','2401_2501')
-
                             changeItiState('des','2501_2401')
                             changeItiState('des','2401_2201')
                             changeItiState('des','2201_1201')
                             changeItiState('des','2401_1401')
                             changeItiState('des','1201_2201')
                             changeItiState('des','2401_1401')
+
+                            changeItiState('sel','2201_2401')
+                            changeItiState('sel','2401_2501')
                             exports.apiSave()
                             writter.simple('SÉLECTIONNÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                             await setTimeout(2000)
@@ -2269,9 +2269,6 @@ wss.on('connection', (ws, req) => {
                         if(pccApi.SEC[0].cantons[0].trains.length>0) return;
                         const rpdelay = async() => {
                             pccApi.SEC[0].CYCLES[2].active=true
-                            changeItiState('sel','2201_1201')
-                            changeItiState('sel','1201_1101')
-
                             changeItiState('des','1401_2401')
                             changeItiState('des','2401_1401')
                             changeItiState('des','1201_2201')
@@ -2280,6 +2277,9 @@ wss.on('connection', (ws, req) => {
                             changeItiState('des','2401_2201')
                             changeItiState('des','1201_1401')
                             changeItiState('des','1401_1201')
+
+                            changeItiState('sel','2201_1201')
+                            changeItiState('sel','1201_1101')
                             exports.apiSave()
                             writter.simple('SÉLECTIONNÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                             await setTimeout(2000)
@@ -2307,13 +2307,13 @@ wss.on('connection', (ws, req) => {
                         if(pccApi.SEC[0].cantons[9].trains.length>0) return;
                         const rpdelay = async() => {
                             pccApi.SEC[1].CYCLES[6].active=true
-                            changeItiState('sel','1501_1202')
-                            changeItiState('sel','1102_PAG1')
-
                             changeItiState('des','PAG1_1102')
                             changeItiState('des','1202_1501')
                             changeItiState('des','1202_2101')
                             changeItiState('des','2101_1202')
+
+                            changeItiState('sel','1501_1202')
+                            changeItiState('sel','1102_PAG1')
                             exports.apiSave()
                             writter.simple('SÉLECTIONNÉ.','PA', `CYCLE RETRAIT ${data.target}`)
                             await setTimeout(2000)
@@ -2339,15 +2339,15 @@ wss.on('connection', (ws, req) => {
                         if(pccApi.SEC[0].cantons[3].trains.length>0) return;
                         const rpdelay = async() => {
                             pccApi.SEC[0].CYCLES[3].active=true
-                            changeItiState('sel','2501_2401')
-                            changeItiState('sel','2401_1401')
-
                             changeItiState('des','2401_2501')
                             changeItiState('des','2401_2201')
                             changeItiState('des','2201_2401')
                             changeItiState('des','2201_1201')
                             changeItiState('des','1201_2201')
                             changeItiState('des','2401_1401')
+
+                            changeItiState('sel','2501_2401')
+                            changeItiState('sel','2401_1401')
                             exports.apiSave()
                             writter.simple('SÉLECTIONNÉ.','PA', `CYCLE INJECTION ${data.target}`)
                             await setTimeout(2000)
@@ -2369,15 +2369,15 @@ wss.on('connection', (ws, req) => {
                     } else if(data.target==='V101'){
                         if(pccApi.SEC[0].cantons[3].trains.length>0) return;
                         const rpdelay = async() => {
-                            changeItiState('sel','1101_1201')
-                            changeItiState('sel','1201_1401')
-
                             changeItiState('des','1401_1201')
                             changeItiState('des','1201_1101')
                             changeItiState('des','2201_1201')
                             changeItiState('des','1201_2201')
                             changeItiState('des','2401_1401')
                             changeItiState('des','1401_2401')
+
+                            changeItiState('sel','1101_1201')
+                            changeItiState('sel','1201_1401')
                             exports.apiSave()
                             writter.simple('SÉLECTIONNÉ.','PA', `CYCLE INJECTION ${data.target}`)
                             await setTimeout(2000)
@@ -2407,15 +2407,15 @@ wss.on('connection', (ws, req) => {
                         if(pccApi.SEC[0].cantons[5].trains.length>0) return;
                         const rpdelay = async() => {
                             pccApi.SEC[1].CYCLES[5].active=true
-                            changeItiState('sel','PAG1_1102')
-                            changeItiState('sel','1202_2101')
-
                             changeItiState('des','1102_PAG1')
                             changeItiState('des','2101_1202')
                             changeItiState('des','1501_1202')
                             changeItiState('des','1202_1501')
                             changeItiState('des','2301_2101')
                             changeItiState('des','2101_2302')
+
+                            changeItiState('sel','PAG1_1102')
+                            changeItiState('sel','1202_2101')
                             exports.apiSave()
                             writter.simple('SÉLECTIONNÉ.','PA', `CYCLE INJECTION ${data.target}`)
                             await setTimeout(2000)
@@ -2649,15 +2649,29 @@ wss.on('connection', (ws, req) => {
                             if(data.value===false){
                                 ctn.trains.splice(ctn.trains.indexOf(data.train),1)
                                 writter.simple(`BOUCLE ${data.ctnId} TRAIN ${data.train} -> INACTIVE`,'PA','DP')
+                                if(pccApi.trainMouvements[data.train]){
+                                    pccApi.trainMouvements[data.train].splice(pccApi.trainMouvements[data.train].indexOf(ctn.cid),1)
+                                } else {
+                                    pccApi.trainMouvements[data.train] = []
+                                    logger.error(`Échec pour la bascule de la DP ${data.ctnId}.`)
+                                }
                                 return exports.apiSave();
                             } else if (data.value===true){
+                                ovse.lastDPOn=ctn.cid
                                 ctn.trains.push(data.train)
                                 writter.simple(`BOUCLE ${data.ctnId} TRAIN ${data.train} -> ACTIVE`,'PA','DP')
+                                if(pccApi.trainMouvements[data.train]){
+                                    pccApi.trainMouvements[data.train].push(ctn.cid)
+                                } else {
+                                    pccApi.trainMouvements[data.train] = []
+                                    pccApi.trainMouvements[data.train].push(ctn.cid)
+                                }
                                 return exports.apiSave();
                             }
                         }
                     }
                     logger.error(`Balise ${data.ctnId} non trouvée.`)
+                    writter.simple(`BOUCLE ${data.ctnId} NON IDENTIFIÉE`,'PCC','DÉFAUT')
                 }
                 break;
             case 500:
@@ -2984,14 +2998,10 @@ function changeItiState(mode, code){
                         await setTimeout(2000)
                         iti.mode=false
                         for(let aigIti of Object.entries(pccApi.aigItis)){
-                            console.log(aigIti[1])
                             if (aigIti[1].includes(iti.code)) {
-                                console.log('yes 1')
                                 for(let aigGroup of pccApi.aiguilles){
-                                    console.log(aigGroup.id)
                                     if(!(aigGroup.id===aigIti[0])) continue;
                                     aigGroup.actualIti.splice(aigGroup.actualIti.indexOf(iti.code),1)
-                                    console.log(aigGroup.actualIti.indexOf(iti.code))
                                 }
                             }
                         }
