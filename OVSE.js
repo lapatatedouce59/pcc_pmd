@@ -255,7 +255,7 @@ function detectLDI(){
                         ctn1.states.ldi=2
                         ctn2.states.ldi=2
                         writter.simple(`${ctn1.cid}-${ctn2.cid}.`,'PA','LDI')
-                        defUca.push(itiGroup.id)
+                        defUca.push(iti.code)
                         UCA.newAlarm('ldi', `${iti.code}`, ["fs"])
                         UCA.alarmInventory.ldi=true
                     }
@@ -374,7 +374,7 @@ function detectALCD(){
         if(trainItiLog[1].length>1){ //On vérifie si il y a une SÉQUENCE de mouvement.
             let ctnToIti = []
             for(let ctn of trainItiLog[1]){
-                if(ctn==='cGPAG1') ctnToIti.push('PAG1')
+                if(ctn==='cGPAG1') {ctnToIti.push('PAG1'); continue;}
                 ctnToIti.push(ctn.replace('c',''))
             }
             if(isItiApartFromAnAigOne(`${ctnToIti[0]}_${ctnToIti[1]}`)){

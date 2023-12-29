@@ -43,6 +43,8 @@ const gsa = require('./GSA')
 logUpdate('├ Loading OVSE...')
 const ovse = require('./OVSE')
 logUpdate('├ Loading writter...')
+const itineraire = require('./itineraires')
+logUpdate('├ Loading writter...')
 const writter = require('./writter')
 writter.clean()
 logUpdate('├ Loading server.json...')
@@ -2131,7 +2133,8 @@ wss.on('connection', (ws, req) => {
                 }
                 if(data.execute==='SEL-BTN-ITI'){
                     if(!(data.target)) return;
-                    for(let sec of pccApi.SEC){
+                    itineraire.SEL(data.target)
+                    /*for(let sec of pccApi.SEC){
                         for(let itilist of Object.entries(sec.ITI[0])){
                             for(let iti of itilist[1]){
                                 //console.log(iti.code)
@@ -2158,38 +2161,10 @@ wss.on('connection', (ws, req) => {
                                 } else continue;
                             }
                         }
-                    }
+                    }*/
                 } else if(data.execute==='DES-BTN-ITI'){
                     if(!(data.target)) return;
-                    for(let sec of pccApi.SEC){
-                        for(let itilist of Object.entries(sec.ITI[0])){
-                            for(let iti of itilist[1]){
-                                //console.log(iti.code)
-                                if(iti.code===data.target){
-                                    const rpdelay = async() => {
-                                        iti.mode='DES'
-                                        exports.apiSave()
-                                        writter.simple('EN DESTRUCTION.','PA', `ITINÉRAIRE ${iti.code}`)
-                                        await setTimeout(2000)
-                                        iti.mode=false
-                                        iti.active=false
-                                        for(let aigIti of Object.entries(pccApi.aigItis)){
-                                            if (aigIti[1].includes(iti.code)) {
-                                                for(let aigGroup of pccApi.aiguilles){
-                                                    if(!(aigGroup.id===aigIti[0])) continue;
-                                                    aigGroup.actualIti.splice(aigGroup.actualIti.indexOf(iti.code),1)
-                                                }
-                                            }
-                                        }
-                                        exports.apiSave()
-                                        writter.simple('DÉTRUIT.','PA', `ITINÉRAIRE ${iti.code}`)
-                                    }
-                                    rpdelay()
-                                    return;
-                                } else continue;
-                            }
-                        }
-                    }
+                    itineraire.DES(data.target)
                 } else if(data.execute==='DU-BTN-ITI'){
                     if(!(data.target)) return;
                     for(let sec of pccApi.SEC){
