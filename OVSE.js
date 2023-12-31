@@ -183,18 +183,52 @@ exports.returnCtnIteration=function(cid){
     return false;
 }
 
+function itiInf(code){
+    for(let sec of pccApi.SEC){
+        for(let itilist of Object.entries(sec.ITI[0])){
+            for(let iti of itilist[1]){
+                if(iti.code===code){
+                    return iti
+                } else continue;
+            }
+        }
+    }
+}
+
+function ctnInf(cid){
+    for(let sec of pccApi.SEC){
+        for(let ctn of sec.cantons){
+            if(!(ctn.cid===cid)) continue;
+            return ctn;
+        }
+    }
+}
+
+function secInf(id){
+    for(let sec of pccApi.SEC){
+        if(!(sec.id===id)) continue;
+        return sec;
+    }
+}
+
 function detectLDI(){
     let defUca = []
     for(let itiGroup of pccApi.aiguilles){
         if (itiGroup.actualIti.length===0){
-            // aucun itinéraire n'est admis pour l'aiguille.
-            //! Coupure de la FS sur le canton
-            writter.simple(`${itiGroup.id}.`,'UCA','COUPURE FS')
-            writter.simple(`${itiGroup.id}.`,'PA','ABSENCE ITI')
-            for(let trueCtn of itiGroup.aigCtn){
-                let actualCtn = exports.returnCtnIteration(trueCtn)
-                actualCtn.states.coupFs = 2
+            let selectedIti = []
+            for(let itiListOfAig of pccApi.aigItis[itiGroup.id]){
+                if(itiInf(itiListOfAig).mode==='SEL') selectedIti.push(itiListOfAig)
             }
+            if(selectedIti.length===0){
+                // aucun itinéraire n'est admis pour l'aiguille et aucun itinéraire n'est sélectionné pour remplacer.
+                //! Coupure de la FS sur le canton
+                writter.simple(`${itiGroup.id}.`,'UCA','COUPURE FS')
+                writter.simple(`${itiGroup.id}.`,'PA','ABSENCE ITI')
+                for(let trueCtn of itiGroup.aigCtn){
+                    let actualCtn = exports.returnCtnIteration(trueCtn)
+                    actualCtn.states.coupFs = 2
+                }
+            } //sinon, un itinéraire est sélectionné pour remédier à la destruction du précédent.
         }
     }
     for(let sec of pccApi.SEC){
@@ -285,7 +319,7 @@ let noDef1 = false
 let noDef2 = false
 
 
-function detectAZM(){
+/*function detectAZM(){
     let defUCA = []
     for(let sec of pccApi.SEC){
         if(sec.id==='1'){
@@ -297,7 +331,7 @@ function detectAZM(){
                             writter.simple(`${sec.id} (${ctn.cid})`,'PA','AZM')
                             defUCA.push(ctn.cid)
                             exports.f9=false
-                            UCA.newAlarm('pzo', `${ctn.cid}`, ["fs"])
+                            UCA.newAlarm('azm', `${ctn.cid}`, ["fs"])
                         }
                     }
                 }
@@ -312,7 +346,7 @@ function detectAZM(){
                             writter.simple(`${sec.id} (${ctn.cid})`,'PA','AZM')
                             defUCA.push(ctn.cid)
                             exports.f9=false
-                            UCA.newAlarm('pzo', `${ctn.cid}`, ["fs"])
+                            UCA.newAlarm('azm', `${ctn.cid}`, ["fs"])
                         }
                     }
                 } else if(ctn.cid === 'c1202' || ctn.cid === 'cGA2PAG'){
@@ -322,8 +356,8 @@ function detectAZM(){
                             writter.simple(`${sec.id} (${ctn.cid})`,'PA','AZM')
                             defUCA.push(ctn.cid)
                             exports.f9=false
-                            UCA.newAlarm('pzo', `${ctn.cid}`, ["fs"])
-                            UCA.alarmInventory.pzo=true
+                            UCA.newAlarm('azm', `${ctn.cid}`, ["fs"])
+                            UCA.alarmInventory.azm=true
                         }
                     }
                 }
@@ -332,6 +366,34 @@ function detectAZM(){
     }
     if(defUCA.length===0){
         UCA.alarmInventory.pzo=false
+    }
+    exports.f7=true
+}*/
+
+function detectAZM(){
+    let defUCA = []
+    for(let aigGroup of pccApi.aiguilles){
+        if(aigGroup.actualIti.length===0){
+            let trainsOnAig=[]
+            for(let pctn of aigGroup.aigCtn){
+                if(ctnInf(pctn).trains.length>0){
+                    trainsOnAig.push(pctn)
+                }
+            }
+            if(trainsOnAig.length>0){
+                let secId = ctnInf(aigGroup.aigCtn[0]).cid.slice(-2)
+                let secIdNum = parseInt(secId)
+                let secIt = secInf(JSON.stringify(secIdNum))
+                secIt.states[`zoneManoeuvre${secIt.id}`] = 2
+                defUCA.push(aigGroup.id)
+                UCA.newAlarm('azm', `${aigGroup.id}`, ["fs","ht"])
+                UCA.alarmInventory.azm=true
+                writter.simple(`${secIdNum} (${aigGroup.id})`,'PA','AZM')
+            }
+        }
+    }
+    if(defUCA.length===0){
+        UCA.alarmInventory.azm=false
     }
     exports.f7=true
 }

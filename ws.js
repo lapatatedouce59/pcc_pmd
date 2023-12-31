@@ -2167,7 +2167,8 @@ wss.on('connection', (ws, req) => {
                     itineraire.DES(data.target)
                 } else if(data.execute==='DU-BTN-ITI'){
                     if(!(data.target)) return;
-                    for(let sec of pccApi.SEC){
+                    itineraire.DU(data.target)
+                    /*for(let sec of pccApi.SEC){
                         for(let itilist of Object.entries(sec.ITI[0])){
                             for(let iti of itilist[1]){
                                 //console.log(iti.code)
@@ -2192,7 +2193,7 @@ wss.on('connection', (ws, req) => {
                                 } else continue;
                             }
                         }
-                    }
+                    }*/
                 }
                 break;
             case 221:
@@ -2587,7 +2588,7 @@ wss.on('connection', (ws, req) => {
                         if(!(sec.id===data.target)) continue;
                         for(let state of Object.entries(sec.states)){
                             if(!(state[1]===2)) continue;
-                            if(state[0]==='zoneManoeuvre1'||state[0]==='zoneManoeuvre2'){
+                            if(state[0].startsWith('zoneManoeuvre')||state[0].startsWith('discord')){
                                 sec.states[state[0]]=false
                             } else {
                                 sec.states[state[0]]=1
@@ -2645,9 +2646,9 @@ wss.on('connection', (ws, req) => {
                             }
                         }
                     }
-                    logger.error(`Balise ${data.ctnId} non trouvée.`)
-                    writter.simple(`BOUCLE ${data.ctnId} NON IDENTIFIÉE`,'PCC','DÉFAUT')
                 }
+                logger.error(`Balise ${data.ctnId} non trouvée.`)
+                writter.simple(`BOUCLE ${data.ctnId} NON IDENTIFIÉE`,'PCC','DÉFAUT')
                 break;
             case 500:
                 if(!isClientExisting(data.uuid)) return;

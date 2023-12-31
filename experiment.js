@@ -44,7 +44,6 @@ function getTrainRadioValue(){
 
 function constructCtn(){
     for(let sec of data.SEC){
-        if(!(sec.id==='1')) continue;
         for(let ctn of sec.cantons){
             if(ctn.trains.includes(getTrainRadioValue())) document.getElementById(ctn.cid.replace('c','')).checked=true; else document.getElementById(ctn.cid.replace('c','')).checked=false;
         }

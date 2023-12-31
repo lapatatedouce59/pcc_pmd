@@ -96,22 +96,22 @@
   },
   "players": [
     {
-      "uuid": "fa204cf3-6...",
+      "uuid": "7e6264f8-b...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "77931480-3...",
+      "uuid": "ca29d5bb-c...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
   ],
   "trainMouvements": {
     "2": [
-      "c2201"
+      "c1401"
     ],
     "3": [
-      "c1401"
+      "c1302"
     ]
   },
   "itiDescription": {
@@ -150,6 +150,50 @@
       "2401_2301",
       "2301_1301",
       "1301_1401"
+    ],
+    "2302_2101": [
+      "2302_2402",
+      "2402_2101"
+    ],
+    "2101_2302": [
+      "2101_2402",
+      "2402_2302"
+    ],
+    "1501_1202": [
+      "1501_1102",
+      "1102_1202"
+    ],
+    "1202_1501": [
+      "1202_1102",
+      "1102_1501"
+    ],
+    "2101_1202": [
+      "2101_2402",
+      "2402_1102",
+      "1102_1202"
+    ],
+    "1202_2101": [
+      "1202_1102",
+      "1102_2402",
+      "2402_2101"
+    ],
+    "1102_1302": [
+      "1102_1202",
+      "1202_1302"
+    ],
+    "1302_1102": [
+      "1302_1202",
+      "1202_1102"
+    ],
+    "1102_PAG1": [
+      "1102_1202",
+      "1202_GA2PAG",
+      "GA2PAG_PAG1"
+    ],
+    "PAG1_1102": [
+      "PAG1_GA2PAG",
+      "GA2PAG_1202",
+      "1202_1102"
     ]
   },
   "aigItis": {
@@ -200,7 +244,6 @@
       "id": "C2",
       "occupied": false,
       "actualIti": [
-        "2302_2101",
         "1501_1202"
       ],
       "exeption": [
@@ -218,7 +261,7 @@
       "id": "C2B",
       "occupied": false,
       "actualIti": [
-        "1102_PAG1"
+        "1102_1302"
       ],
       "exeption": [
         "1102_1302",
@@ -639,13 +682,13 @@
           "V2": [
             {
               "code": "1101_1201",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1201_1101",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1201_2201",
@@ -669,18 +712,18 @@
             },
             {
               "code": "1401_1501",
+              "active": false,
+              "mode": false
+            },
+            {
+              "code": "1501_1401",
               "active": true,
               "mode": "SEL"
             },
             {
-              "code": "1501_1401",
-              "active": false,
-              "mode": false
-            },
-            {
               "code": "1501_1102",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1102_1501",
@@ -694,7 +737,7 @@
         "zoneManoeuvre1": false,
         "tnitne1": false,
         "lstpas1": true,
-        "discord1": 1,
+        "discord1": false,
         "retDispoV201": true,
         "injDispoV201": false,
         "retDispoV101": true,
@@ -745,7 +788,7 @@
         {
           "cid": "c1401",
           "trains": [
-            "3"
+            "2"
           ],
           "type": "quai",
           "name": "MSTO V1",
@@ -833,9 +876,7 @@
         },
         {
           "cid": "c2201",
-          "trains": [
-            "2"
-          ],
+          "trains": [],
           "type": "quai",
           "name": "MSTO V2",
           "states": {
@@ -866,7 +907,7 @@
             "HLP": false,
             "DSO": false,
             "SSO": false,
-            "status": "valid",
+            "status": false,
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
@@ -952,8 +993,8 @@
           "V1": [
             {
               "code": "2302_2101",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "2101_2302",
@@ -1009,8 +1050,8 @@
             },
             {
               "code": "1102_1302",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2101_1202",
@@ -1024,8 +1065,8 @@
             },
             {
               "code": "1102_PAG1",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "PAG1_1102",
@@ -1144,7 +1185,9 @@
         },
         {
           "cid": "c1302",
-          "trains": [],
+          "trains": [
+            "3"
+          ],
           "type": "quai",
           "name": "STO V1",
           "states": {
@@ -1175,7 +1218,7 @@
             "HLP": false,
             "DSO": false,
             "SSO": false,
-            "status": false,
+            "status": "valid",
             "IDPOAlreadyActiveByPLTP": false,
             "IDPOAlreadyActiveByALC": false,
             "alimDef": false,
