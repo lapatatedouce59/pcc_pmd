@@ -96,12 +96,12 @@
   },
   "players": [
     {
-      "uuid": "7e6264f8-b...",
+      "uuid": "824256ff-5...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "ca29d5bb-c...",
+      "uuid": "18dfc0d0-8...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -111,7 +111,7 @@
       "c1401"
     ],
     "3": [
-      "c1302"
+      "c2201"
     ]
   },
   "itiDescription": {
@@ -244,6 +244,7 @@
       "id": "C2",
       "occupied": false,
       "actualIti": [
+        "2302_2101",
         "1501_1202"
       ],
       "exeption": [
@@ -819,7 +820,12 @@
             "departForce": false,
             "HLP": false,
             "DSO": false,
-            "SSO": true,
+            "SSO": false,
+            "SS": false,
+            "PSV": false,
+            "RP10": false,
+            "RP30": false,
+            "AAHS": false,
             "status": "valid",
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
@@ -829,10 +835,8 @@
             "actualTime": 23,
             "afdActive": false,
             "cancelAfd": false,
-            "VVTS1": false,
-            "vvtS1AlreadyOn": false,
-            "VVTS2": false,
-            "vvtS2AlreadyOn": false,
+            "CMCC": false,
+            "CMCP": false,
             "depaActive": false,
             "defDepa": false,
             "idpfActive": false,
@@ -847,7 +851,8 @@
             "tcs": false,
             "ldi": false,
             "pdp": false,
-            "coupFs": false
+            "coupFs": false,
+            "late": ""
           }
         },
         {
@@ -876,14 +881,16 @@
         },
         {
           "cid": "c2201",
-          "trains": [],
+          "trains": [
+            "3"
+          ],
           "type": "quai",
           "name": "MSTO V2",
           "states": {
             "doorsOpened": false,
             "doorsClosed": true,
             "doorsOpenedPAS": false,
-            "doorsClosedPAS": true,
+            "doorsClosedPAS": false,
             "defPartOuvPP": false,
             "defPartFerPP": false,
             "defTotOuvPP": false,
@@ -907,17 +914,22 @@
             "HLP": false,
             "DSO": false,
             "SSO": false,
-            "status": false,
+            "SS": false,
+            "PSV": false,
+            "RP10": false,
+            "RP30": false,
+            "AAHS": false,
+            "status": "valid",
             "IDPOAlreadyActiveByPLTP": false,
+            "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
+            "ALCIDPOInhibed": false,
             "alimDef": false,
-            "actualTime": 10,
+            "actualTime": 23,
             "afdActive": false,
             "cancelAfd": false,
-            "VVTS1": false,
-            "vvtS1AlreadyOn": false,
-            "VVTS2": false,
-            "vvtS2AlreadyOn": false,
+            "CMCC": false,
+            "CMCP": false,
             "depaActive": false,
             "defDepa": false,
             "idpfActive": false,
@@ -932,7 +944,8 @@
             "tcs": false,
             "ldi": false,
             "pdp": false,
-            "coupFs": false
+            "coupFs": false,
+            "late": ""
           }
         },
         {
@@ -993,8 +1006,8 @@
           "V1": [
             {
               "code": "2302_2101",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2101_2302",
@@ -1185,15 +1198,13 @@
         },
         {
           "cid": "c1302",
-          "trains": [
-            "3"
-          ],
+          "trains": [],
           "type": "quai",
           "name": "STO V1",
           "states": {
-            "doorsOpened": true,
-            "doorsClosed": false,
-            "doorsOpenedPAS": true,
+            "doorsOpened": false,
+            "doorsClosed": true,
+            "doorsOpenedPAS": false,
             "doorsClosedPAS": false,
             "defPartOuvPP": false,
             "defPartFerPP": false,
@@ -1218,17 +1229,22 @@
             "HLP": false,
             "DSO": false,
             "SSO": false,
-            "status": "valid",
+            "SS": false,
+            "PSV": false,
+            "RP10": false,
+            "RP30": false,
+            "AAHS": false,
+            "status": false,
             "IDPOAlreadyActiveByPLTP": false,
+            "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
+            "ALCIDPOInhibed": false,
             "alimDef": false,
-            "actualTime": 10,
+            "actualTime": 23,
             "afdActive": false,
             "cancelAfd": false,
-            "VVTS1": false,
-            "vvtS1AlreadyOn": false,
-            "VVTS2": false,
-            "vvtS2AlreadyOn": false,
+            "CMCC": false,
+            "CMCP": false,
             "depaActive": false,
             "defDepa": false,
             "idpfActive": false,
@@ -1243,7 +1259,8 @@
             "tcs": false,
             "ldi": false,
             "pdp": false,
-            "coupFs": false
+            "coupFs": false,
+            "late": ""
           }
         },
         {
@@ -1278,7 +1295,7 @@
           "states": {
             "doorsOpened": false,
             "doorsClosed": true,
-            "doorsOpenedPAS": true,
+            "doorsOpenedPAS": false,
             "doorsClosedPAS": false,
             "defPartOuvPP": false,
             "defPartFerPP": false,
@@ -1303,17 +1320,22 @@
             "HLP": false,
             "DSO": false,
             "SSO": false,
+            "SS": false,
+            "PSV": false,
+            "RP10": false,
+            "RP30": false,
+            "AAHS": false,
             "status": false,
             "IDPOAlreadyActiveByPLTP": false,
+            "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
+            "ALCIDPOInhibed": false,
             "alimDef": false,
-            "actualTime": 10,
+            "actualTime": 23,
             "afdActive": false,
             "cancelAfd": false,
-            "VVTS1": false,
-            "vvtS1AlreadyOn": false,
-            "VVTS2": false,
-            "vvtS2AlreadyOn": false,
+            "CMCC": false,
+            "CMCP": false,
             "depaActive": false,
             "defDepa": false,
             "idpfActive": false,
@@ -1328,7 +1350,8 @@
             "tcs": false,
             "ldi": false,
             "pdp": false,
-            "coupFs": false
+            "coupFs": false,
+            "late": ""
           }
         },
         {

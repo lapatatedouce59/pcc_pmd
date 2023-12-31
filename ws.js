@@ -1058,8 +1058,7 @@ wss.on('connection', (ws, req) => {
                                     if(!(ctns.hasOwnProperty('type'))) continue;
                                     ctns.states.DSO=false
                                     ctns.states.IDPOAlreadyActiveByPLTP=false
-                                    writter.simple('NON.','EAS', 'DSO')
-                                    writter.simple('NON.','EAS', 'DSO PAR PLTP')
+                                    writter.simple('DSO NON.','EAS', `${stationObj.name}`)
                                 }
                             }
                         } else if(data.state===true){
@@ -1070,8 +1069,7 @@ wss.on('connection', (ws, req) => {
                                     if(!(ctns.hasOwnProperty('type'))) continue;
                                     ctns.states.DSO=true
                                     ctns.states.IDPOAlreadyActiveByPLTP=true
-                                    writter.simple('OUI.','EAS', 'DSO')
-                                    writter.simple('OUI.','EAS', 'DSO PAR PLTP')
+                                    writter.simple('DSO OUI.','EAS', `${stationObj.name}`)
                                 }
                             }
                         }
@@ -1576,50 +1574,50 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='DSO-ON-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('OUI.','QUAI', 'DSO')
+                    
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
-
+                    writter.simple('DSO OUI.','QUAI', `${stationObj.name}`)
                     stationObj.states.DSO=true
                     exports.apiSave()
                 } else
                 if (data.execute==='DSO-OFF-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('NON.','QUAI', 'DSO')
+                    
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
-
+                    writter.simple('DSO NON.','QUAI', `${stationObj.name}`)
                     stationObj.states.DSO=false
                     exports.apiSave()
                 } else
                 if (data.execute==='SSO-ON-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('OUI.','QUAI', 'SSO')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('SSO OUI.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.SSO=true
                     exports.apiSave()
                 } else
                 if (data.execute==='SSO-OFF-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('NON.','QUAI', 'SSO')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('SSO NON.','QUAI',`${stationObj.name}`)
 
                     stationObj.states.SSO=false
                     exports.apiSave()
                 } else
                 if (data.execute==='INHIBPLTPIDPO-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('COMMANDÉ.','QUAI', 'INHIBITION IDPO PLTP')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('INHIBITION IDPO PLTP COMMANDÉ.','QUAI', `${stationObj.name}`)
                     stationObj.states.DSO=false
                     exports.apiSave()
                     const weweOnControleSale = async() => {
@@ -1664,7 +1662,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='SETTIME-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple(`EDITÉ EN ${data.new}.`,'QUAI', 'HLP')
+                    writter.simple(`TEMPS EDITÉ EN ${data.new}.`,'QUAI', `${stationObj.name}`)
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1698,20 +1696,21 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='AFD-ON-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('COMMANDÉ.','QUAI', 'AUTORISATION FORCAGE DÉPART')
+                    
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('AUTORISATION FORCAGE DÉPART COMMANDÉ.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.afdActive=true
                     exports.apiSave()
                 } else
                 if (data.execute==='AFD-RAZ-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('RAZ.','QUAI', 'AUTORISATION FORCAGE DÉPART')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('AUTORISATION FORCAGE DÉPART RAZ.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.afdActive=false
                     exports.apiSave()
@@ -1758,82 +1757,221 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='DEPA-ON-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('ACTIONNÉ.','QUAI', 'DÉPART IMMÉDIAT')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('DÉPART IMMÉDIAT ACTIONNÉ.','QUAI',`${stationObj.name}`)
 
                     stationObj.states.depaActive=true
                     exports.apiSave()
                 } else
                 if (data.execute==='DEPA-RAZ-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('RAZ.','QUAI', 'DÉPART IMMÉDIAT')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('DÉPART IMMÉDIAT RAZ.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.depaActive=false
                     exports.apiSave()
                 } else
                 if (data.execute==='IDPF-ON-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('ACTIONNÉ.','QUAI', 'INTERDICTION DÉPART PF')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('INTERDICTION DÉPART PF ACTIONNÉ.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.idpfActive=true
                     exports.apiSave()
                 } else
                 if (data.execute==='IDPF-RAZ-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('RAZ.','QUAI', 'INTERDICTION DÉPART PF')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('INTERDICTION DÉPART PF RAZ.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.idpfActive=false
                     exports.apiSave()
                 } else
                 if (data.execute==='MAPF-ON-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('ACTIONNÉ.','QUAI', 'MAINTIEN ARRÊT PF')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('MAINTIEN ARRÊT PF ACTIONNÉ.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.mapfActive=true
                     exports.apiSave()
                 } else
                 if (data.execute==='MAPF-RAZ-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('RAZ.','QUAI', 'MAINTIEN ARRÊT PF')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('MAINTIEN ARRÊT PF RAZ.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.mapfActive=false
                     exports.apiSave()
                 } else
                 if (data.execute==='ISTA-ON-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('ACTIONNÉ.','QUAI', 'INTERDICTION STATIONNEMENT')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('INTERDICTION STATIONNEMENT ACTIONNÉ.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.istaActive=true
                     exports.apiSave()
                 } else
                 if (data.execute==='ISTA-RAZ-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('RAZ.','QUAI', 'INTERDICTION STATIONNEMENT')
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('INTERDICTION STATIONNEMENT RAZ.','QUAI', `${stationObj.name}`)
 
                     stationObj.states.istaActive=false
+                    exports.apiSave()
+                } else
+                if (data.execute==='SSO-ON-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('SERVICE DE SECURITE SUR ORDRE ACTIF.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.SSO=true
+                    stationObj.states.SS=false
+                    exports.apiSave()
+                } else
+                if (data.execute==='SS-ON-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('SERVICE DE SECURITE SIMPLE ACTIF.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.SS=true
+                    stationObj.states.SSO=false
+                    exports.apiSave()
+                } else
+                if (data.execute==='SS-OFF-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('SERVICE DE SECURITE RAZ.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.SSO=false
+                    stationObj.states.SS=false
+                    exports.apiSave()
+                } else
+                if (data.execute==='CMCC-ON-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('CONDUITE MANUELLE A CONTROLE CONTINU ACTIF.','QUAI',`${stationObj.name}`)
+
+                    stationObj.states.CMCC=true
+                    stationObj.states.CMCP=false
+                    exports.apiSave()
+                } else
+                if (data.execute==='CMCP-ON-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('CONDUITE MANUELLE A CONTROLE PONCTUEL ACTIF.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.CMCC=false
+                    stationObj.states.CMCP=true
+                    exports.apiSave()
+                } else
+                if (data.execute==='CMC-OFF-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('CONDUITE MANUELLE RAZ.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.CMCC=false
+                    stationObj.states.CMCP=false
+                    exports.apiSave()
+                } else
+                if (data.execute==='RP10-ON-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('RALENTISSEMENT PROVISOIRE 10KMH ACTIF.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.RP10=true
+                    stationObj.states.RP30=false
+                    exports.apiSave()
+                } else
+                if (data.execute==='RP30-ON-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('RALENTISSEMENT PROVISOIRE 30KMH ACTIF.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.RP10=false
+                    stationObj.states.RP30=true
+                    exports.apiSave()
+                } else
+                if (data.execute==='RP-OFF-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('RALENTISSEMENT PROVISOIRE RAZ.','QUAI',`${stationObj.name}`)
+
+                    stationObj.states.RP10=false
+                    stationObj.states.RP30=false
+                    exports.apiSave()
+                } else
+                if (data.execute==='PSV-ON-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('PERSONNEL SUR VOIES ACTIF.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.PSV=true
+                    exports.apiSave()
+                } else
+                if (data.execute==='PSV-OFF-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('PERSONNEL SUR VOIES RAZ.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.PSV=false
+                    exports.apiSave()
+                } else
+                if (data.execute==='AAHS-ON-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('AVERTISSEUR D\'ALARME HS ACTIF.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.AAHS=true
+                    exports.apiSave()
+                } else
+                if (data.execute==='AAHS-OFF-BTN'){
+                    if(!data.target.cIndex) return;
+                    let stationIndex = parseInt(data.target.cIndex)
+                    let sectionIndex = parseInt(data.target.secIndex)
+                    let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
+                    writter.simple('AVERTISSEUR D\'ALARME HS RAZ.','QUAI', `${stationObj.name}`)
+
+                    stationObj.states.AAHS=false
                     exports.apiSave()
                 } else
                 if (data.execute==='VVTS1-INHIB-BTN'){

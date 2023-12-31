@@ -6,11 +6,9 @@ let quaiTitle = document.getElementById('quaiTitle')
 //voyants
 let trainNumber = document.getElementById('trainNumber')
 
-let btnActiveHLP = document.getElementById('btnActiveHLP')
 let btnActiveDSO = document.getElementById('btnActiveDSO')
 let btnActiveSSO = document.getElementById('btnActiveSSO')
 let btnInactiveSSO = document.getElementById('btnInactiveSSO')
-let btnInactiveHLP = document.getElementById('btnInactiveHLP')
 let btnInactiveDSO = document.getElementById('btnInactiveDSO')
 let btnIhibIDPOPLTP = document.getElementById('btnIhibIDPOPLTP')
 
@@ -21,10 +19,21 @@ let actualTime = document.getElementById('actualTime')
 //commandes
 let btnAFD = document.getElementById('btnAFD')
 let btnRAZAFD = document.getElementById('btnRAZAFD')
-let btnVVTS1 = document.getElementById('btnVVTS1')
-let btnRAZVVTS1 = document.getElementById('btnRAZVVTS1')
-let btnVVTS2 = document.getElementById('btnVVTS2')
-let btnRAZVVTS2 = document.getElementById('btnRAZVVTS2')
+
+let btnCMCC = document.getElementById('btnCMCC')
+let btnCMCP = document.getElementById('btnCMCP')
+let btnRAZCMC = document.getElementById('btnRAZCMC')
+let btnSS = document.getElementById('btnSS')
+let btnSSO = document.getElementById('btnSSO')
+let btnRAZSS = document.getElementById('btnRAZSS')
+let btnRP10 = document.getElementById('btnRP10')
+let btnRP30 = document.getElementById('btnRP30')
+let btnRAZRP = document.getElementById('btnRAZRP')
+let btnPSV = document.getElementById('btnPSV')
+let btnRAZPSV = document.getElementById('btnRAZPSV')
+let btnAAHS = document.getElementById('btnAAHS')
+let btnRAZAAHS = document.getElementById('btnRAZAAHS')
+
 let btnDEPA = document.getElementById('btnDEPA')
 let btnRAZdepa = document.getElementById('btnRAZdepa')
 let btnIDPF = document.getElementById('btnIDPF')
@@ -33,8 +42,6 @@ let btnISTA = document.getElementById('btnISTA')
 let btnRAZista = document.getElementById('btnRAZista')
 let btnMAPF = document.getElementById('btnMAPF')
 let btnRAZmapf = document.getElementById('btnRAZmapf')
-let btnInhibVVTS1 = document.getElementById('btnInhibVVTS1')
-let btnInhibVVTS2 = document.getElementById('btnInhibVVTS2')
 
 //btnAnomalies
 let btnPartialPPOpeningInc = document.getElementById('btnPartialPPOpeningInc')
@@ -313,6 +320,17 @@ let beepIntervalId = false
 
 let blinkIdReturn = 0
 
+let IQ = 
+{
+    "dso":document.getElementById('iq_dso'),
+    "late":document.getElementById('iq_retard'),
+    "aahs":document.getElementById('iq_aa_hs'),
+    "psv":document.getElementById('iq_psv'),
+    "sso":document.getElementById('iq_ss_sso'),
+    "cm":document.getElementById('iq_cm'),
+    "rp":document.getElementById('iq_rp')
+}
+
 function updateVoy(s){
 
     for(let interval of fileIntervals){
@@ -321,8 +339,51 @@ function updateVoy(s){
     }
 
     yaUnDefautQQPart()
-    
+
+    if(s.states.DSO===true){
+        IQ.dso.classList.add('on')
+    } else {
+        IQ.dso.classList.remove('on')
+    }
+    if(s.states.PSV===true){
+        IQ.psv.classList.add('on')
+    } else {
+        IQ.psv.classList.remove('on')
+    }
+    if(s.states.AAHS===true){
+        IQ.aahs.classList.add('on')
+    } else {
+        IQ.aahs.classList.remove('on')
+    }
+    if(s.states.SSO===true){
+        IQ.sso.classList.add('on')
+        IQ.sso.innerText='SSO'
+    } else if(s.states.SS===true){
+        IQ.sso.classList.add('on')
+        IQ.sso.innerText='SS'
+    } else if (s.states.SS===false&&s.states.SSO===false){
+        IQ.sso.classList.remove('on')
+    }
+    if(s.states.CMCC===true){
+        IQ.cm.classList.add('on')
+        IQ.cm.innerText='CMCC'
+    } else if(s.states.CMCP===true){
+        IQ.cm.classList.add('on')
+        IQ.cm.innerText='CMCP'
+    } else if (s.states.CMCC===false&&s.states.CMCP===false){
+        IQ.cm.classList.remove('on')
+    }
+    if(s.states.RP10===true){
+        IQ.rp.classList.add('on')
+        IQ.rp.innerText='RP10'
+    } else if(s.states.RP30===true){
+        IQ.rp.classList.add('on')
+        IQ.rp.innerText='RP30'
+    } else if (s.states.RP10===false&&s.states.RP30===false){
+        IQ.rp.classList.remove('on')
+    }  
     actualTime.value=s.states.actualTime
+    IQ.late.innerText=s.states.late
 
     
     for (let voy of document.getElementsByClassName('voyStationState')){
@@ -717,28 +778,6 @@ ckbMaintenance.addEventListener('input', ()=>{
     }
 })
 
-btnActiveHLP.addEventListener('click', ()=>{
-    actualRequest = JSON.stringify({
-        op: 204,
-        execute: "HLP-ON-BTN",
-        target: getStationsInfo(selectMenu.value),
-        uuid: window.uuid
-    })
-    window.WebSocket.send(actualRequest);
-    window.actualRequest = actualRequest
-})
-
-btnInactiveHLP.addEventListener('click', ()=>{
-    actualRequest = JSON.stringify({
-        op: 204,
-        execute: "HLP-OFF-BTN",
-        target: getStationsInfo(selectMenu.value),
-        uuid: window.uuid
-    })
-    window.WebSocket.send(actualRequest);
-    window.actualRequest = actualRequest
-})
-
 btnActiveDSO.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 204,
@@ -761,7 +800,9 @@ btnInactiveDSO.addEventListener('click', ()=>{
     window.actualRequest = actualRequest
 })
 
-btnActiveSSO.addEventListener('click', ()=>{
+//! CHANGE QUAI
+
+btnSSO.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 204,
         execute: "SSO-ON-BTN",
@@ -772,10 +813,131 @@ btnActiveSSO.addEventListener('click', ()=>{
     window.actualRequest = actualRequest
 })
 
-btnInactiveSSO.addEventListener('click', ()=>{
+btnSS.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 204,
-        execute: "SSO-OFF-BTN",
+        execute: "SS-ON-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnRAZSS.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "SS-OFF-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnRP10.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "RP10-ON-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnRP30.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "RP30-ON-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnRAZRP.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "RP-OFF-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnCMCC.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "CMCC-ON-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnCMCP.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "CMCP-ON-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnRAZCMC.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "CMC-OFF-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnPSV.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "PSV-ON-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnRAZPSV.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "PSV-OFF-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnAAHS.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "AAHS-ON-BTN",
+        target: getStationsInfo(selectMenu.value),
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+
+btnRAZAAHS.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 204,
+        execute: "AAHS-OFF-BTN",
         target: getStationsInfo(selectMenu.value),
         uuid: window.uuid
     })
