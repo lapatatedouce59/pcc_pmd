@@ -2685,7 +2685,7 @@ wss.on('connection', (ws, req) => {
                         }
                         //sec.states.cycleOngoing=false
                     }
-                    writter.simple('ANNULÉS.','PA', `CYCLES S${data.target}`)
+                    ogdc.clearAll()
                     exports.apiSave()
                 } else if(data.execute==='DUG-BTN-ITI'){
                     if(!(data.target)) return;

@@ -36,6 +36,17 @@ exports.SEL=async(code)=>{
                             }
                         }
                     }
+                    if(iti.mode==='DES') {
+                        writter.simple('DES ANNULÉE.','PA', `ITINÉRAIRE ${iti.code}`)
+                        for(let aigIti of Object.entries(pccApi.aigItis)){
+                            if (aigIti[1].includes(iti.code)) {
+                                for(let aigGroup of pccApi.aiguilles){
+                                    if(!(aigGroup.id===aigIti[0])) continue;
+                                    aigGroup.actualIti.splice(aigGroup.actualIti.indexOf(iti.code),1)
+                                }
+                            }
+                        }
+                    }
                     iti.mode='SEL'
                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                     parent.apiSave()
@@ -167,6 +178,7 @@ exports.DES=async(code)=>{
                             }
                         },250)
                         INTERVALS.push(desselInter)
+                        INTERMAP.set(`${code}`,desselInter)
                     } else {
                         let desselInter = setInterval(()=>{
                             if(ctnInf(modifiedCtn[0]).trains.length===0){
@@ -181,6 +193,7 @@ exports.DES=async(code)=>{
                             }
                         },250)
                         INTERVALS.push(desselInter)
+                        INTERMAP.set(`${code}`,desselInter)
                     }
                     return;
                 } else continue;

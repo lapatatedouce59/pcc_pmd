@@ -77,14 +77,26 @@ window.notyf = new Notyf({
                 text: 'warning',
                 color: 'white'
             }
+        },
+        {
+            type: 'info',
+            background: '#33A1FF',
+            duration: 3000,
+            dismissible: true,
+            icon: {
+                className: 'material-icons',
+                tagName: 'i',
+                text: 'info_i',
+                color: 'white'
+            }
         }
     ]
 });
 
-window.notyf.open({
+/*window.notyf.open({
     type: 'warn',
     message: `Attention: la gestion des mouvements des trains est en bêta. Merci de l'utiliser avec parcimonie.`
-})
+})*/
 
 //? LOAD FORMAT SELECT
 let formatSelect = document.getElementById('formatSelect')
@@ -1936,6 +1948,10 @@ let verifFunc = ()=>{
         actualRequest = JSON.stringify({
             op: 15,
             time: (endLoad-startLoad)
+        })
+        window.notyf.open({
+            type: 'info',
+            message: `Chargement réussi.`
         })
         window.actualRequest = actualRequest
         window.WebSocket.send(actualRequest)

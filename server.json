@@ -96,12 +96,12 @@
   },
   "players": [
     {
-      "uuid": "824256ff-5...",
+      "uuid": "113d7784-e...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "18dfc0d0-8...",
+      "uuid": "ea2f6278-4...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -111,7 +111,7 @@
       "c1401"
     ],
     "3": [
-      "c2201"
+      "c1501"
     ]
   },
   "itiDescription": {
@@ -574,56 +574,64 @@
           "imgn": "./src/formats/cycles/pa1/c1.png",
           "imgl": "./src/formats/cycles/pa1/c1lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c2p1",
           "imgn": "./src/formats/cycles/pa1/c2.png",
           "imgl": "./src/formats/cycles/pa1/c2lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c3p1",
           "imgn": "./src/formats/cycles/pa1/c3.png",
           "imgl": "./src/formats/cycles/pa1/c3lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c4p1",
           "imgn": "./src/formats/cycles/pa1/c4.png",
           "imgl": "./src/formats/cycles/pa1/c4lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c5p1",
           "imgn": "./src/formats/cycles/pa1/c5.png",
           "imgl": "./src/formats/cycles/pa1/c5lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c6p1",
           "imgn": "./src/formats/cycles/pa1/c6.png",
           "imgl": "./src/formats/cycles/pa1/c6lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c7p1",
           "imgn": "./src/formats/cycles/pa1/c7.png",
           "imgl": "./src/formats/cycles/pa1/c7lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c8p1",
           "imgn": "./src/formats/cycles/pa1/c8.png",
           "imgl": "./src/formats/cycles/pa1/c8lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         }
       ],
       "ITI": [
@@ -713,13 +721,13 @@
             },
             {
               "code": "1401_1501",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1501_1401",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1501_1102",
@@ -865,7 +873,9 @@
             "pdp": false,
             "coupFs": false
           },
-          "trains": []
+          "trains": [
+            "3"
+          ]
         },
         {
           "cid": "c2101",
@@ -881,9 +891,7 @@
         },
         {
           "cid": "c2201",
-          "trains": [
-            "3"
-          ],
+          "trains": [],
           "type": "quai",
           "name": "MSTO V2",
           "states": {
@@ -919,7 +927,7 @@
             "RP10": false,
             "RP30": false,
             "AAHS": false,
-            "status": "valid",
+            "status": false,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -1115,56 +1123,64 @@
           "imgn": "./src/formats/cycles/pa2/c1.png",
           "imgl": "./src/formats/cycles/pa2/c1lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c2p2",
           "imgn": "./src/formats/cycles/pa2/c2.png",
           "imgl": "./src/formats/cycles/pa2/c2lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c3p2",
           "imgn": "./src/formats/cycles/pa2/c3.png",
           "imgl": "./src/formats/cycles/pa2/c3lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c4p2",
           "imgn": "./src/formats/cycles/pa2/c4.png",
           "imgl": "./src/formats/cycles/pa2/c4lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c5p2",
           "imgn": "./src/formats/cycles/pa2/c5.png",
           "imgl": "./src/formats/cycles/pa2/c5lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c6p2",
           "imgn": "./src/formats/cycles/pa2/c6.png",
           "imgl": "./src/formats/cycles/pa2/c6lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c7p2",
           "imgn": "./src/formats/cycles/pa2/c7.png",
           "imgl": "./src/formats/cycles/pa2/c7lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         },
         {
           "code": "c8p2",
           "imgn": "./src/formats/cycles/pa2/c8.png",
           "imgl": "./src/formats/cycles/pa2/c8lit.png",
           "active": false,
-          "sel": false
+          "sel": false,
+          "phase": 1
         }
       ],
       "cantons": [
