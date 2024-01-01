@@ -261,7 +261,8 @@ function PaInfo(id){
     console.log(reponse)
     return reponse;
 }
-
+let pa1svgDoc = Object
+let pa2svgDoc = Object
 async function initFormat(pa){
     //gerardMontreMoiLesDefautsDuPaStp()
     for(let divs of document.getElementsByClassName('paFormatAmovible')){
@@ -283,7 +284,7 @@ async function initFormat(pa){
         tcoobj.type="image/svg+xml"
         tcoItiPa.appendChild(tcoobj)
         tcoobj.addEventListener('load', () => {
-            let pa1svgDoc = tcoobj.contentDocument;
+            pa1svgDoc = tcoobj.contentDocument;
             pa1dictionnary = {
                 cantons: {
                     'c1101': pa1svgDoc.getElementById('c1101'),
@@ -324,7 +325,7 @@ async function initFormat(pa){
         tcoobj.type="image/svg+xml"
         tcoItiPa.appendChild(tcoobj)
         tcoobj.addEventListener('load', () => {
-            let pa2svgDoc = tcoobj.contentDocument;
+            pa2svgDoc = tcoobj.contentDocument;
             pa2dictionnary = {
                 cantons: {
                     'c1102': pa2svgDoc.getElementById('c1102'),
@@ -369,10 +370,12 @@ function loadItiTco(pa){
         if(pa1dictionnary===false) return;
         for(let ctno of Object.entries(pa1dictionnary.cantons)){
             ctno[1].style.fill = '#CDCDCD';
+            pa1svgDoc.getElementById(`${ctno[0]}tr`).textContent=''
             for(let ctns of pa.ctns){
                 if(!(ctns.cid===ctno[0])) continue;
                 if(ctns.trains.length>0){
                     ctno[1].style.fill = '#D9DD0E';
+                    pa1svgDoc.getElementById(`${ctno[0]}tr`).textContent=`${ctns.trains[0]}`
                 }
                 for(let states of Object.entries(ctns.states)){
                     if(states[1]===2){
@@ -421,10 +424,12 @@ function loadItiTco(pa){
         if(pa2dictionnary===false) return;
         for(let ctn of Object.entries(pa2dictionnary.cantons)){
             ctn[1].style.fill = '#CDCDCD';
+            pa2svgDoc.getElementById(`${ctn[0]}tr`).textContent=``
             for(let ctns of pa.ctns){
                 if(!(ctns.cid===ctn[0])) continue;
                 if(ctns.trains.length>0){
                     ctn[1].style.fill = '#D9DD0E';
+                    pa2svgDoc.getElementById(`${ctn[0]}tr`).textContent=`${ctns.trains[0]}`
                 }
                 for(let states of Object.entries(ctns.states)){
                     if(states[1]===2){

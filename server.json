@@ -96,22 +96,22 @@
   },
   "players": [
     {
-      "uuid": "113d7784-e...",
+      "uuid": "dee1597d-3...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "ea2f6278-4...",
+      "uuid": "19790e89-3...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
   ],
   "trainMouvements": {
     "2": [
-      "c1401"
+      "c1501"
     ],
     "3": [
-      "c1501"
+      "c2101"
     ]
   },
   "itiDescription": {
@@ -384,7 +384,7 @@
         "defKIBS": false,
         "tractionS1": false,
         "tractionS2": false,
-        "cmdTraction": false,
+        "cmdTraction": true,
         "activeOnduls": true,
         "avarieOnduls": false,
         "patEnr": false,
@@ -525,7 +525,7 @@
         "defKIBS": false,
         "tractionS1": false,
         "tractionS2": false,
-        "cmdTraction": false,
+        "cmdTraction": true,
         "activeOnduls": true,
         "avarieOnduls": false,
         "patEnr": false,
@@ -796,9 +796,7 @@
         },
         {
           "cid": "c1401",
-          "trains": [
-            "2"
-          ],
+          "trains": [],
           "type": "quai",
           "name": "MSTO V1",
           "states": {
@@ -834,7 +832,7 @@
             "RP10": false,
             "RP30": false,
             "AAHS": false,
-            "status": "valid",
+            "status": false,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -874,7 +872,7 @@
             "coupFs": false
           },
           "trains": [
-            "3"
+            "2"
           ]
         },
         {
@@ -887,7 +885,9 @@
             "pdp": false,
             "coupFs": false
           },
-          "trains": []
+          "trains": [
+            "3"
+          ]
         },
         {
           "cid": "c2201",
