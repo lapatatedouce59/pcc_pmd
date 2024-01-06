@@ -630,17 +630,14 @@ wss.on('connection', (ws, req) => {
                                         } else {
                                             ws.role='operator'
                                         }
+                                        ws.service=false
 
-                                        ws.send(JSON.stringify({ op: 2, uuid: ws.id, content: pccApi, uname:ws.usr.username, role:ws.role }))
+                                        ws.send(JSON.stringify({ op: 2, uuid: ws.id, content: pccApi, uname:ws.usr.username, role:ws.role, dInf: ws.usr}))
                                         clients[ws.id]=ws
                                         let firstUUID = newUUID.slice(0,10)
                                         pccApi.players.push({ uuid: `${firstUUID}...`, name: usr.username, role: ws.role })
                                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                                        wss.broadcast(JSON.stringify({
-                                            op: 10,
-                                            joined: { role: ws.role, uname: ws.usr.username },
-                                            content: pccApi
-                                        }))
+                                        
                                         logger.identify(ws,Object.keys(clients).length)
                                         writter.simple(`+ Utilisateur ${ws.usr.username} (${ws.role})`,'GAME', 'USER')
                                     } else {
@@ -697,6 +694,30 @@ wss.on('connection', (ws, req) => {
             case 15:
                 ws.loaded=data.time
                 logger.confirm(ws.usr.username + ' loaded.')
+                wss.broadcast(JSON.stringify({
+                    op: 10,
+                    joined: { role: ws.role, uname: ws.usr.username, dInf: ws.usr },
+                    content: pccApi
+                }))
+                break;
+            case 16:
+                if(data.service===true){
+                    ws.service=true
+                    logger.info(ws.usr.username + ' now in service.')
+                    wss.broadcast(JSON.stringify({
+                        op: 17,
+                        player: { uname: ws.usr.username },
+                        content: pccApi
+                    }))
+                } else if(data.service===false){
+                    ws.service=false
+                    logger.info(ws.usr.username + ' left service.')
+                    wss.broadcast(JSON.stringify({
+                        op: 18,
+                        player: { uname: ws.usr.username },
+                        content: pccApi
+                    }))
+                }
                 break;
             case 200 :
                 if(!isClientExisting(data.uuid)) return;

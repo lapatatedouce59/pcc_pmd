@@ -89,6 +89,30 @@ window.notyf = new Notyf({
                 text: 'info_i',
                 color: 'white'
             }
+        },
+        {
+            type: 'serviceOn',
+            background: '#36393E',
+            duration: 3000,
+            dismissible: true,
+            icon: {
+                className: 'material-icons',
+                tagName: 'i',
+                text: 'shield',
+                color: 'white'
+            }
+        },
+        {
+            type: 'serviceOff',
+            background: '#36393E',
+            duration: 3000,
+            dismissible: true,
+            icon: {
+                className: 'material-icons',
+                tagName: 'i',
+                text: 'remove_moderator',
+                color: 'white'
+            }
         }
     ]
 });
@@ -492,6 +516,20 @@ async function isWsRunning(){
                 })
                 data=data.content
             }
+            if(data.op===17){
+                window.notyf.open({
+                    type: 'serviceOn',
+                    message: `${data.player.uname} est en service!`
+                })
+                data=data.content
+            }
+            if(data.op===18){
+                window.notyf.open({
+                    type: 'serviceOff',
+                    message: `${data.player.uname} a quitté le service!`
+                })
+                data=data.content
+            }
 
             if ((data.op === 300)||(data.op === 2)) {
                 console.log('maj recue')
@@ -507,6 +545,9 @@ async function isWsRunning(){
                     if(data.role){
                         window.role=data.role
                         roleOP.innerHTML = data.role
+                    }
+                    if(data.dInf){
+                        window.dUser=data.dInf
                     }
                 }
                 let parsedJson = data.content
@@ -1955,6 +1996,14 @@ let verifFunc = ()=>{
         })
         window.actualRequest = actualRequest
         window.WebSocket.send(actualRequest)
+
+        document.getElementById('loadingTxt').innerText=`Bienvenue ${window.uname}!`
+        const loader = document.querySelector(".loader");
+        loader.classList.add("loader--hidden");
+        loader.addEventListener("transitionend", () => {
+            document.body.removeChild(loader);
+        });
+        document.body.style.overflowY='scroll'
     }
 }
 let verifLoadInter = setInterval(verifFunc,50)
@@ -1996,4 +2045,26 @@ document.getElementById('btnSupervisionPage').addEventListener('click', ()=>{
     if(window.role==='chef'){
         document.location.href='supervision.html'
     }
+})
+
+let onService = false
+document.getElementById('serviceBtn').addEventListener('click', ()=>{
+    if(onService===false) {
+        onService=true
+        document.getElementById('logoModYesNo').innerText='shield';
+        document.getElementById('serviceSpan').innerText='En service';
+        document.getElementById('serviceBtn').style.backgroundColor='#61ff88'
+    } else if (onService===true){
+        onService=false
+        document.getElementById('logoModYesNo').innerText='remove_moderator';
+        document.getElementById('serviceSpan').innerText='Hors service';
+        document.getElementById('serviceBtn').style.backgroundColor='#FF6161'
+    }
+    actualRequest = JSON.stringify({
+        op: 16,
+        service: onService,
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
 })
