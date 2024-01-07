@@ -18,7 +18,7 @@
     <meta name="twitter:title" content="PCC PMD ALPHA">
     <meta name="twitter:description" content="PMD Multijoueur - PCC réaliste [DEV]">
     <meta name="twitter:image" content="https://pmdapp.fr/tools/pccBeta/logo.png">
-    <link rel="icon" href="favicon.png">
+    <link rel="icon" href="./src/icon.png">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,6 +33,7 @@
             overflow-x: hidden;
             background-color: #1C1C1C;
             overflow-y: hidden;
+            scroll-behavior: smooth;
         }
 
         .voy{
@@ -440,6 +441,27 @@
         color: rgb(54 54 54);
     }
 }
+
+
+.alertVoy{
+    animation: blinkAlert 1s infinite;
+}
+@keyframes blinkAlert {
+    0%{
+        background-color: #ff0000;
+    }
+    50%{
+        background-color: #ff0000;
+    }
+    70%{
+        background-color: #8B8B8B;
+    }
+    to {
+        background-color: #8B8B8B;
+    }
+}
+
+
 .loader {
     position: fixed;
     top: 0;
@@ -507,7 +529,7 @@
     margin-left: 20px; 
     width: 1000px; 
     height: 200px; 
-    top: 10px; 
+    top: 90px; 
     right: 10px; 
     position: fixed; 
     color: white; 
@@ -523,6 +545,76 @@
     background-color: #1c1c1c;
     transition: 250ms all;
 }
+
+.chatBoxCont.hidden{
+    opacity: 0;
+    display: none;
+    transition: 250ms all;
+}
+
+header #cont1{
+    display: flex; 
+    flex-direction: row; 
+    justify-content: center;
+    width: 320px; 
+    height: 80px; 
+    top: 0; 
+    right: 0; 
+    position: fixed; 
+    color: white; 
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+    background-color: #0e0e14; 
+}
+header #cont1 div{
+    display: flex; 
+    flex-direction: row; 
+    width: 80px; 
+    height: 80px; 
+    color: white; 
+    background-color: #0e0e14; 
+    transition: 100ms all;
+    text-align: center;
+    align-items: center;
+}
+header #cont1 div:hover{
+    background-color: #2a2a34; 
+    transition: 100ms all;
+}
+
+header #cont1 div.selected{
+    background-color: #2b2b46; 
+    transition: 100ms all;
+}
+
+header #cont1 div span{
+    width: 100%; 
+    font-size: 50px;
+    user-select: none;
+}
+
+#problemSignal{
+    display: flex; 
+    flex-direction: column;
+    margin-left: 20px; 
+    width: 400px; 
+    height: 300px; 
+    top: 90px;
+    right: 10px; 
+    position: fixed; 
+    color: white; 
+    font-family: Verdana, Geneva, Tahoma, sans-serif; 
+    background-color: #323232; 
+    padding: 10px; 
+    transition: 250ms all;
+    border: white solid 5px;
+    border-radius: 10px;
+}
+#problemSignal.hidden{
+    opacity: 0;
+    display: none;
+    transition: 250ms all;
+}
+
     </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
@@ -534,7 +626,28 @@
     <div class="loader">
         <h1 style="font-family: Verdana, Geneva, Tahoma, sans-serif; color: white;" id="loadingTxt">Chargement du PCC...</h1>
     </div>
-    <div class="chatBoxCont">
+    <header>
+        <div id="cont1">
+            <div id="pbCountDiv">
+                <span id="defCount">0</span>
+            </div>
+            <div id="dropdownChat">
+                <span class="material-icons">chat</span>
+            </div>
+            <div id="reportPb">
+                <span class="material-icons">report</span>
+            </div>
+            <div id="scrollUp">
+                <span class="material-icons">arrow_drop_up</span>
+            </div>
+        </div>
+    </header>
+    <div id="problemSignal">
+        <form>
+            <h2>Comming soon...</h2>
+        </form>
+    </div>
+    <div class="chatBoxCont" id="chatBox">
         <div style="width: 100%; display: flex; flex-direction: column;">
             <div>
                 <span style="color: red;">Amaury: </span>
@@ -553,7 +666,6 @@
             <input type="text" style="width: 100%;" placeholder="Écrivez votre message...">
             <i class="material-icons" style="cursor: pointer; color: #44C1DC;">send</i>
         </div>
-        
     </div>
     <div id="MASTERHEAD">
         <div id="head1">
@@ -975,7 +1087,6 @@
                             <fieldset style="width: 20%; display: inline-block;">
                                 <legend>Sectionner une station</legend>
                                 <select name="stationSelect" id="stationSelect" multiple size="10">
-                                    <option value="O">CHOISIR STATION</option>
                                 </select> <br>
                                 <input type="button" value="ACQUITTER" id="btnAcquitStation">
                             </fieldset>
@@ -1119,7 +1230,6 @@
                     <fieldset style="width: 20%; display: inline-block;">
                         <legend>Sectionner un train</legend>
                         <select name="trainSelect" id="trainSelect" multiple size="10">
-                            <option value="O">CHOISIR TRAIN</option>
                         </select> <br>
                         <input type="button" value="ACQUITTER" id="btnAcquitTrain">
                     </fieldset>

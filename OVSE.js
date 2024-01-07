@@ -7,6 +7,7 @@ let pccApi = require('./server.json')
 
 let parent = require('./ws')
 const writter = require("./writter");
+const fs = require('fs')
 
 exports.f1 = false
 exports.f2 = false
@@ -17,6 +18,7 @@ exports.f6 = false
 exports.f7 = false
 exports.f8 = false
 exports.f9 = false
+exports.fUCA = false
 
 exports.coupFS = false
 
@@ -566,4 +568,102 @@ exports.periodicUpdateVoy = async function(){
     ongoingcycle()
     detectALCD()
     updateItiFormVoys()
+    let verFuncAll = setInterval(()=>{
+        if(exports.f1===true&&exports.f2===true&&exports.f3===true&&exports.f4===true&&exports.f5===true&&exports.f6===true&&exports.f7===true&&exports.f8===true&&exports.f9===true){
+            clearInterval(verFuncAll)
+            exports.uca.update()
+            exports.f1=false
+            exports.f2=false
+            exports.f3=false
+            exports.f4=false
+            exports.f5=false
+            exports.f6=false
+            exports.f7=false
+            exports.f8=false
+            exports.f9=false
+
+            let fsInc=[]
+            let htInc=[]
+            let alcInc=[]
+            //let voys = {ALC: pccApi.voyALC, FS: pccApi.voyFS, HT: pccApi.voyHT, SS: pccApi.SS}
+            for(let alert of pccApi.UCA){
+                if(alert.acq===false){
+                    if(alert.impact.includes('fs')) {
+                        pccApi.voyFS=2
+                        fsInc.push(alert)
+                        for(let ss of pccApi.SS){
+                            ss.voyFS=2
+                            ss.voyPA=2
+                        }
+                    }
+                    if(alert.impact.includes('ht')) {
+                        pccApi.voyHT=2
+                        htInc.push(alert)
+                        for(let ss of pccApi.SS){
+                            ss.voyHTAutABS=2
+                            ss.voyHT=2
+                            ss.voyPA=2
+                        }
+                    }
+                    if(alert.origin==='alc'){
+                        pccApi.voyALC=2
+                        alcInc.push(alert)
+                    }
+                } else if (alert.acq===true){
+                    if(alert.impact.includes('fs')) {
+                        if(!(pccApi.voyFS===2)) pccApi.voyFS=1
+                        fsInc.push(alert)
+                        for(let ss of pccApi.SS){
+                            if(!(ss.voyFS===2)) ss.voyFS=1
+                            if(!(ss.voyPA===2)) ss.voyPA=1
+                        }
+                    }
+                    if(alert.impact.includes('ht')) {
+                        if(!(pccApi.voyHT===2)) pccApi.voyHT=1
+                        htInc.push(alert)
+                        for(let ss of pccApi.SS){
+                            if(!(ss.voyHTAutABS===2)) ss.voyHTAutABS=1
+                            if(!(ss.voyHT===2)) ss.voyHT=1
+                            if(!(ss.voyPA===2)) ss.voyPA=1
+                        }
+                    }
+                    if(alert.origin==='alc'){
+                        if(!(pccApi.voyALC===2)) pccApi.voyALC=1
+                        alcInc.push(alert)
+                    }
+                }
+            }
+            if(fsInc.length===0) {
+                if(isSomeComActivated('fs')) pccApi.voyFS=true
+                for(let ss of pccApi.SS){
+                    if(ss.comCoupFS===false && isSomeComActivated('fs')) ss.voyFS=true
+                    if(ss.comAutHT===false && ss.voyAlim===true && ss.voyDHT===true && ss.voyRU===true && ss.comCoupFS===false && ss.voyFS===true) ss.voyPA=true
+                }
+            }
+            if(htInc.length===0) {
+                if(isSomeComActivated('ht')) pccApi.voyHT=true
+                for(let ss of pccApi.SS){
+                    if(isSomeComActivated('ht')) ss.voyHTAutABS=true
+                    if(ss.comAutHT===false && ss.voyAlim===true && ss.voyDHT===true && ss.voyRU===true && isSomeComActivated('ht')) ss.voyHT=true
+                    if(ss.comAutHT===false && ss.voyAlim===true && ss.voyDHT===true && ss.voyRU===true && ss.comCoupFS===false) ss.voyPA=true
+                }
+            }
+            if(alcInc.length===0) {
+                pccApi.voyALC=true
+            }
+            fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+            return exports.fUCA=true
+        }
+    },10)
+}
+
+function isSomeComActivated(target){
+    switch(target){
+        case 'ht':
+            if(pccApi.comAG===false && pccApi.comArmPR===true && pccApi.comAuth===true) return true;
+            return false;
+        case 'fs':
+            if(pccApi.comFSLine===false) return true;
+            return false;
+    }
 }

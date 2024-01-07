@@ -740,6 +740,18 @@ async function isWsRunning(){
                     loadElectricalInfos()
                     refreshTCO()
                     refreshComPlat()
+
+                    let waitABit = async()=>{
+                        await sleep(100)
+                        let defCount = document.getElementById('listDef').childElementCount
+                        document.getElementById('defCount').innerText=defCount
+                        if (defCount===0){
+                            document.getElementById('pbCountDiv').style.backgroundColor='#0e0e14'
+                        } else {
+                            document.getElementById('pbCountDiv').style.backgroundColor='#ff0000'
+                        }
+                    }
+                    waitABit()
                 }
                 
             }
@@ -2067,4 +2079,36 @@ document.getElementById('serviceBtn').addEventListener('click', ()=>{
     })
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
+})
+
+let chatDroppedDown = true
+document.getElementById('dropdownChat').classList.toggle('selected')
+document.getElementById('dropdownChat').addEventListener('click',()=>{
+    if(chatDroppedDown){
+        chatDroppedDown===false
+        document.getElementById('chatBox').classList.toggle('hidden')
+        document.getElementById('dropdownChat').classList.toggle('selected')
+    } else {
+        chatDroppedDown===true
+        document.getElementById('chatBox').classList.toggle('hidden')
+        document.getElementById('dropdownChat').classList.toggle('selected')
+    }
+})
+
+document.getElementById('scrollUp').addEventListener('click',()=>{
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+})
+
+let reportPbDrop=false
+document.getElementById('problemSignal').classList.toggle('hidden')
+document.getElementById('reportPb').addEventListener('click',()=>{
+    if(reportPbDrop){
+        reportPbDrop===false
+        document.getElementById('problemSignal').classList.toggle('hidden')
+        document.getElementById('reportPb').classList.toggle('selected')
+    } else {
+        reportPbDrop===true
+        document.getElementById('problemSignal').classList.toggle('hidden')
+        document.getElementById('reportPb').classList.toggle('selected')
+    }
 })

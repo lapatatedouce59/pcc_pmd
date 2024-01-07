@@ -113,7 +113,7 @@ function sleep(ms) {
                 refreshTList()
             }
             refreshTList()
-            let train = getTrainInfo(selectValueTrain || selectMenuTrain.value)
+            let train = getTrainInfo(selectMenuTrain.value || "4")
             console.log(train)
             updateVoy(train)
         }

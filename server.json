@@ -2,7 +2,7 @@
   "comForceHT": false,
   "voyUCA": true,
   "voyHT": true,
-  "voyALC": false,
+  "voyALC": true,
   "voyFS": true,
   "voyFSGAT": true,
   "voyUCAGAT": true,
@@ -96,7 +96,12 @@
   },
   "players": [
     {
-      "uuid": "c23c2c76-b...",
+      "uuid": "223eee8b-3...",
+      "name": "patatedouce.dev",
+      "role": "chef"
+    },
+    {
+      "uuid": "ea0f1de3-8...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -222,7 +227,8 @@
       "id": "C1",
       "occupied": false,
       "actualIti": [
-        "2201_2401"
+        "2201_2401",
+        "1201_1401"
       ],
       "exeption": [
         "1201_1401",
@@ -268,21 +274,22 @@
       ]
     }
   ],
+  "missions": [
+    {
+      "code": "EXPL MSO-OLY",
+      "t1": "c2201",
+      "t2": "c1110",
+      "t1cycle": "c1p1",
+      "t2cycle": "c1p10"
+    }
+  ],
   "trains": {
     "2": {
       "tid": "2",
       "name": "Léo",
       "owner": "Amaury",
       "trainType": "14",
-      "missions": [
-        {
-          "code": "EXPL MSO-OLY",
-          "t1": "c2201",
-          "t2": "c1110",
-          "t1cycle": "c1p1",
-          "t2cycle": "c1p10"
-        }
-      ],
+      "mission": "EXPL MSO-OLY",
       "states": {
         "doorsOpenedPV": false,
         "doorsClosedPV": false,
@@ -664,8 +671,8 @@
             },
             {
               "code": "2101_2201",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "2201_2101",
@@ -686,13 +693,13 @@
           "V2": [
             {
               "code": "1101_1201",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1201_1101",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1201_2201",
@@ -706,8 +713,8 @@
             },
             {
               "code": "1201_1401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1401_1201",

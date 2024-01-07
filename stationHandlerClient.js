@@ -204,7 +204,7 @@ async function faireBip(){
                 }
                 console.log(sections)
             }
-            let station = getStationsInfo(selectMenu.value)
+            let station = getStationsInfo(selectMenu.value || "MSTO V1")
             updateVoy(station)
         }
     })

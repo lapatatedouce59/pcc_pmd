@@ -202,7 +202,7 @@ exports.DES=async(code)=>{
     }
 }
 
-exports.DU=async(code)=>{ 
+exports.DU=async(code,inhib)=>{ 
     for(let sec of pccApi.SEC){
         for(let itilist of Object.entries(sec.ITI[0])){
             for(let iti of itilist[1]){
@@ -210,8 +210,8 @@ exports.DU=async(code)=>{
                     let itiParts = iti.code.split('_')
                     clearCorrespondingInterval(code)
                     iti.mode='DU'
-                    parent.apiSave()
-                    writter.simple('EN DESTRUCTION D\'URGENCE.','PA', `ITINÉRAIRE ${iti.code}`)
+                    if(inhib===false) parent.apiSave()
+                    if(inhib===false) writter.simple('EN DESTRUCTION D\'URGENCE.','PA', `ITINÉRAIRE ${iti.code}`)
                     await setTimeout(0)
                     let modifiedCtn = []
                     for(let itiPart of itiParts){
@@ -247,7 +247,7 @@ exports.DU=async(code)=>{
                                 }
                             }
                             parent.apiSave()
-                            writter.simple('DÉTRUIT D\'URGENCE.','PA', `ITINÉRAIRE ${iti.code}`)
+                            if(inhib===false) writter.simple('DÉTRUIT D\'URGENCE.','PA', `ITINÉRAIRE ${iti.code}`)
                         } else {
                             writter.simple(`${ovse.isItiAnAigOne(code)} + ${itiParts[0]},${itiParts[1]}.`,'PA','COUPURE SECURITAIRE')
                             writter.simple(`${ovse.isItiAnAigOne(code)} + ${itiParts[0]},${itiParts[1]}.`,'UCA','COUPURE FS')
@@ -284,15 +284,15 @@ exports.DU=async(code)=>{
                             iti.mode=false
                             iti.active=false
                             fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                            parent.apiSave()
-                            writter.simple('DÉTRUIT D\'URGENCE (INSTANTANE).','PA', `ITINÉRAIRE ${iti.code}`)
+                            if(inhib===false) parent.apiSave()
+                            if(inhib===false) writter.simple('DÉTRUIT D\'URGENCE (INSTANTANE).','PA', `ITINÉRAIRE ${iti.code}`)
                         } else {
                             writter.simple(`${ctnInf(modifiedCtn[0]).cid},${ctnInf(modifiedCtn[1]).cid}.`,'UCA','COUPURE FS')
                             writter.simple(`${ctnInf(modifiedCtn[0]).cid},${ctnInf(modifiedCtn[1]).cid}.`,'PA','COUPURE SECURITAIRE')
                             ctnInf(modifiedCtn[0]).states.coupFs = 2
                             ctnInf(modifiedCtn[1]).states.coupFs = 2
-                            fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                            parent.apiSave()
+                            if(inhib===false) fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                            if(inhib===false) parent.apiSave()
                             await setTimeout(10000)
                             if(iti.mode==='DU'){
                                 writter.simple('DÉTRUIT D\'URGENCE (APRES COUP FS).','PA', `ITINÉRAIRE ${iti.code}`)
