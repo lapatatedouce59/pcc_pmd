@@ -96,12 +96,12 @@
   },
   "players": [
     {
-      "uuid": "223eee8b-3...",
+      "uuid": "da884460-7...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "ea0f1de3-8...",
+      "uuid": "2deb05a1-2...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -1008,6 +1008,7 @@
         "cycleOngoing": false,
         "sortieDispoGla": true,
         "entreeDispoGla": false,
+        "spsto": false,
         "razSeq": false,
         "itiOngoing": true
       },

@@ -707,9 +707,9 @@ header #cont1 div span{
         </div>
     </fieldset>
     <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
-    <fieldset>
+    <fieldset style="overflow-x:auto;">
         <legend style="font-family: 'Courier New', Courier, monospace; color: white;">Tableau de Contrôle Optique</legend>
-        <div class="tco" style="height: 100%; width: 100%;">
+        <div class="tco" style="height: 100%; width: 200%; ">
             <div class="ligne" style="height: 500px; position: relative; pointer-events: none;">
                 <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg" class="svgobj"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep" class="svgobj"></object><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg" class="svgobj"></object>
             </div>
@@ -1527,6 +1527,14 @@ header #cont1 div span{
                                             <tr><td><input type="button" class="btnControl" id="btnSortieGla" value="SORTIE"></td></tr>
                                             <tr><td id="entreeDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="entreeDispoGla">ENTRÉE DISPO</span></td></tr>
                                             <tr><td><input type="button" class="btnControl" id="btnEntreeGla" value="ENTRÉE"></td></tr>
+                                        </table>
+                                    </fieldset>
+                                    <fieldset style="margin-top: 20px;">
+                                        <legend>SP STO</legend>
+                                        <table style="width: 100%; text-align: center;">
+                                            <tr><td><input type="button" class="btnControl" id="btnSPSTO" value="SP STO"></td></tr>
+                                            <tr><td id="spsto" class="voyGestionItiState"><span class="voyGestionItiState" id="spsto">SERVICE PARTIEL</span></td></tr>
+                                            <tr><td><input type="button" class="btnControl" id="btnRAZSPSTO" value="RAZ SP"></td></tr>
                                         </table>
                                     </fieldset>
                                 </div>

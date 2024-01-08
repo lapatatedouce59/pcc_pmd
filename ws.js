@@ -2563,6 +2563,39 @@ wss.on('connection', (ws, req) => {
                         let endCycleInter = setInterval(endCycleIti,2000)
                     }
                 }
+                if(data.execute==='SP-ON'){
+                    if(!(data.target)) return;
+                    if(data.target==='STO'){
+                        if(cycleInfo('c1p2').active===true){
+                            pccApi.SEC[1].states.spsto=true
+                            writter.simple('DÉCLARÉ.','PA', `SP STO`)
+                        } else {
+                            const rpdelay = async() => {
+                                writter.simple('EN ATTENTE.','PA', `SP STO`)
+                                pccApi.SEC[1].states.spsto=1
+                                exports.apiSave()
+                                await setTimeout(5000)
+                                if(cycleInfo('c1p2').active===true){
+                                    pccApi.SEC[1].states.spsto=true
+                                    writter.simple('DÉCLARÉ.','PA', `SP STO`)
+                                } else {
+                                    pccApi.SEC[1].states.spsto=false
+                                    writter.simple('A L\'ABANDON.','PA', `SP STO`)
+                                }
+                                exports.apiSave()
+                            }
+                            rpdelay()
+                        }
+                    }
+                }
+                if(data.execute==='SP-RAZ'){
+                    if(!(data.target)) return;
+                    if(data.target==='STO'){
+                        pccApi.SEC[1].states.spsto=false
+                        writter.simple('SUPPRIMÉ.','PA', `SP STO`)
+                    }
+                    this.apiSave()
+                }
                 break;
             case 226:
                 if(!isClientExisting(data.uuid)) return;
@@ -2585,7 +2618,6 @@ wss.on('connection', (ws, req) => {
 
                 }
                 break;
-                
             case 222:
                 if(!isClientExisting(data.uuid)) return;
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
@@ -3144,5 +3176,14 @@ function isItiActive(code){
         }
     }
     console.info('[itiInfo] Aucun itinéraire correspondant.')
+    return false;
+}
+
+function cycleInfo(code){
+    for(let sec of pccApi.SEC){
+        for(let cycle of sec.CYCLES){
+            if(cycle.code===code) return cycle;
+        }
+    }
     return false;
 }

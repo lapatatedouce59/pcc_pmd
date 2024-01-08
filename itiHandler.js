@@ -48,9 +48,12 @@ async function updateFormat(pa){
     }
     for(let elem of document.getElementsByClassName('voyGestionItiState')){
         elem.classList.remove('ok')
+        elem.classList.remove('alarm')
         for(let sec of data.SEC){
-            if(sec.states[elem.id]){
+            if(sec.states[elem.id]===true){
                 elem.classList.add('ok')
+            } else if(sec.states[elem.id]===1){
+                elem.classList.add('alarm')
             }
         }
     }
@@ -768,6 +771,8 @@ let btnRetV101 = document.getElementById('btnRetV101')
 let btnInjV101 = document.getElementById('btnInjV101')
 let btnSortieGla = document.getElementById('btnSortieGla')
 let btnEntreeGla = document.getElementById('btnEntreeGla')
+let btnSPSTO = document.getElementById('btnSPSTO')
+let btnRAZSPSTO = document.getElementById('btnRAZSPSTO')
 
 let btnDesUrgIti = document.getElementById('btnDesUrgIti')
 let btnCancelCycles = document.getElementById('btnCancelCycles')
@@ -827,6 +832,26 @@ btnEntreeGla.addEventListener('click', ()=>{
         op: 221,
         execute: "INJ-BTN-ITI",
         target: "GLA",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnSPSTO.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "SP-ON",
+        target: "STO",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnRAZSPSTO.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "SP-RAZ",
+        target: "STO",
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
