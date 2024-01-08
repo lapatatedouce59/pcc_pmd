@@ -96,12 +96,12 @@
   },
   "players": [
     {
-      "uuid": "5c07bca1-7...",
+      "uuid": "7ade4845-6...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "972e9f21-1...",
+      "uuid": "4170bbef-4...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -227,7 +227,7 @@
       "id": "C1",
       "occupied": false,
       "actualIti": [
-        "2401_1401"
+        "2201_2401"
       ],
       "exeption": [
         "1201_1401",
@@ -659,8 +659,8 @@
             },
             {
               "code": "2201_2401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2401_2201",
@@ -706,8 +706,8 @@
             },
             {
               "code": "2401_1401",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1201_1401",
@@ -1001,7 +1001,7 @@
         "tnitne2": false,
         "lstpas2": true,
         "discord2": false,
-        "cycleOngoing": true,
+        "cycleOngoing": false,
         "sortieDispoGla": true,
         "entreeDispoGla": false,
         "spsto": true,
@@ -1121,8 +1121,8 @@
           "code": "c1p2",
           "imgn": "./src/formats/cycles/pa2/c1.png",
           "imgl": "./src/formats/cycles/pa2/c1lit.png",
-          "active": true,
-          "sel": true,
+          "active": false,
+          "sel": false,
           "phase": 1
         },
         {

@@ -251,7 +251,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
                                     return;
                                 }
-                                if(aig.actualIti.length===1 && aig.actualIti[0]==='2302_2101'){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
+                                if(aig.actualIti.length===1 && aig.actualIti[0]==='2302_2101' && itiInf('2101_2402').active===false && itiInf('2402_2101').active===true){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
                                     clearCorrespondingInterval(code)
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
                                     writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
