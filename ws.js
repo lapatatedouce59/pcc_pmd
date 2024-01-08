@@ -2363,25 +2363,14 @@ wss.on('connection', (ws, req) => {
                     if(!(data.target)) return;
                     if(data.target==='V201'){
                         if(pccApi.SEC[0].cantons[9].trains.length>0) return;
-                        const rpdelay = async() => {
                             pccApi.SEC[0].CYCLES[6].active=true
-                            
-                            changeItiState('des','2501_2401')
-                            changeItiState('des','2401_2201')
-                            changeItiState('des','2201_1201')
-                            changeItiState('des','2401_1401')
-                            changeItiState('des','1201_2201')
-                            changeItiState('des','2401_1401')
-
-                            changeItiState('sel','2201_2401')
-                            changeItiState('sel','2401_2501')
-                            exports.apiSave()
-                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE RETRAIT ${data.target}`)
-                            await setTimeout(2000)
-                            exports.apiSave()
-                            writter.simple('FORMÉ.','PA', `CYCLE RETRAIT ${data.target}`)
-                        }
-                        rpdelay()
+                            for(let itides of ['2501_2401','2401_2201','2201_1201','2401_1401','1201_2201','2401_1401']){
+                                if(itiInf(itides).active===true) itineraire.DES(itides)
+                            }
+                            for(let itisel of ['2201_2401','2401_2501']){
+                                if(itiInf(itisel).active===false) itineraire.SEL(itisel)
+                            }
+                            writter.simple('SÉLECTIONNÉ.','PA', `SEQUENCE RETRAIT ${data.target}`)
                         let endCycleIti = ()=>{
                             if(pccApi.SEC[0].cantons[9].trains.length>0){
                                 clearInterval(endCycleInter)
@@ -2389,33 +2378,21 @@ wss.on('connection', (ws, req) => {
                                 pccApi.SEC[0].states.retDispoV201=false
                                 pccApi.SEC[0].CYCLES[6].active=false
                                 exports.apiSave()
-                                writter.simple('TERMINÉ.','PA', `CYCLE RETRAIT ${data.target}`)
+                                writter.simple('TERMINÉ.','PA', `SEQUENCE RETRAIT ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
                     }
                     if(data.target==='V101'){
                         if(pccApi.SEC[0].cantons[0].trains.length>0) return;
-                        const rpdelay = async() => {
                             pccApi.SEC[0].CYCLES[2].active=true
-                            changeItiState('des','1401_2401')
-                            changeItiState('des','2401_1401')
-                            changeItiState('des','1201_2201')
-                            changeItiState('des','1101_1201')
-                            changeItiState('des','2201_2401')
-                            changeItiState('des','2401_2201')
-                            changeItiState('des','1201_1401')
-                            changeItiState('des','1401_1201')
-
-                            changeItiState('sel','2201_1201')
-                            changeItiState('sel','1201_1101')
-                            exports.apiSave()
-                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE RETRAIT ${data.target}`)
-                            await setTimeout(2000)
-                            exports.apiSave()
-                            writter.simple('FORMÉ.','PA', `CYCLE RETRAIT ${data.target}`)
-                        }
-                        rpdelay()
+                            for(let itides of ['1401_2401','2401_1401','1201_2201','1101_1201','2201_2401','2401_2201','1201_1401','1401_1201']){
+                                if(itiInf(itides).active===true) itineraire.DES(itides)
+                            }
+                            for(let itisel of ['2201_1201','1201_1101']){
+                                if(itiInf(itisel).active===false) itineraire.SEL(itisel)
+                            }
+                            writter.simple('SÉLECTIONNÉ.','PA', `SEQUENCE RETRAIT ${data.target}`)
                         let endCycleIti = ()=>{
                             if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
                                 clearInterval(endCycleInter)
@@ -2427,36 +2404,29 @@ wss.on('connection', (ws, req) => {
                                     pccApi.SEC[0].states.retDispoV101=false
                                 }
                                 exports.apiSave()
-                                writter.simple('TERMINÉ.','PA', `CYCLE RETRAIT ${data.target}`)
+                                writter.simple('TERMINÉ.','PA', `SEQUENCE RETRAIT ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
                     }
                     if(data.target==='GLA'){
                         if(pccApi.SEC[0].cantons[9].trains.length>0) return;
-                        const rpdelay = async() => {
                             pccApi.SEC[1].CYCLES[6].active=true
-                            changeItiState('des','PAG1_1102')
-                            changeItiState('des','1202_1501')
-                            changeItiState('des','1202_2101')
-                            changeItiState('des','2101_1202')
+                            for(let itides of ['PAG1_1102','1202_1501','1202_2101','2101_1202']){
+                                if(itiInf(itides).active===true) itineraire.DES(itides)
+                            }
+                            for(let itisel of ['1501_1202','1102_PAG1']){
+                                if(itiInf(itisel).active===false) itineraire.SEL(itisel)
+                            }
+                            writter.simple('SÉLECTIONNÉ.','PA', `SEQUENCE RETRAIT ${data.target}`)
 
-                            changeItiState('sel','1501_1202')
-                            changeItiState('sel','1102_PAG1')
-                            exports.apiSave()
-                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE RETRAIT ${data.target}`)
-                            await setTimeout(2000)
-                            exports.apiSave()
-                            writter.simple('FORMÉ.','PA', `CYCLE RETRAIT ${data.target}`)
-                        }
-                        rpdelay()
                         let endCycleIti = ()=>{
                             if(pccApi.SEC[1].cantons[9].trains.length>0){
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[1].states.entreeDispoGla=true
                                 pccApi.SEC[1].CYCLES[6].active=false
                                 exports.apiSave()
-                                writter.simple('TERMINÉ.','PA', `CYCLE RETRAIT ${data.target}`)
+                                writter.simple('TERMINÉ.','PA', `SEQUENCE RETRAIT ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -2466,24 +2436,14 @@ wss.on('connection', (ws, req) => {
                     if(!(data.target)) return;
                     if(data.target==='V201'){
                         if(pccApi.SEC[0].cantons[3].trains.length>0) return;
-                        const rpdelay = async() => {
                             pccApi.SEC[0].CYCLES[3].active=true
-                            changeItiState('des','2401_2501')
-                            changeItiState('des','2401_2201')
-                            changeItiState('des','2201_2401')
-                            changeItiState('des','2201_1201')
-                            changeItiState('des','1201_2201')
-                            changeItiState('des','2401_1401')
-
-                            changeItiState('sel','2501_2401')
-                            changeItiState('sel','2401_1401')
-                            exports.apiSave()
-                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE INJECTION ${data.target}`)
-                            await setTimeout(2000)
-                            exports.apiSave()
-                            writter.simple('FORMÉ.','PA', `CYCLE INJECTION ${data.target}`)
-                        }
-                        rpdelay()
+                            for(let itides of ['2401_2501','2401_2201','2201_2401','2201_1201','1201_2201']){
+                                if(itiInf(itides).active===true) itineraire.DES(itides)
+                            }
+                            for(let itisel of ['2501_2401','2401_1401']){
+                                if(itiInf(itisel).active===false) itineraire.SEL(itisel)
+                            }
+                            writter.simple('SÉLECTIONNÉ.','PA', `SEQUENCE INJECTION ${data.target}`)
                         let endCycleIti = ()=>{
                             if(pccApi.SEC[0].cantons[3].trains.length>0){
                                 clearInterval(endCycleInter)
@@ -2491,29 +2451,19 @@ wss.on('connection', (ws, req) => {
                                 pccApi.SEC[0].states.retDispoV201=true 
                                 pccApi.SEC[0].CYCLES[3].active=false
                                 exports.apiSave()
-                                writter.simple('TERMINÉ.','PA', `CYCLE INJECTION ${data.target}`)
+                                writter.simple('TERMINÉ.','PA', `SEQUENCE INJECTION ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
                     } else if(data.target==='V101'){
                         if(pccApi.SEC[0].cantons[3].trains.length>0) return;
-                        const rpdelay = async() => {
-                            changeItiState('des','1401_1201')
-                            changeItiState('des','1201_1101')
-                            changeItiState('des','2201_1201')
-                            changeItiState('des','1201_2201')
-                            changeItiState('des','2401_1401')
-                            changeItiState('des','1401_2401')
-
-                            changeItiState('sel','1101_1201')
-                            changeItiState('sel','1201_1401')
-                            exports.apiSave()
-                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE INJECTION ${data.target}`)
-                            await setTimeout(2000)
-                            exports.apiSave()
-                            writter.simple('FORMÉ.','PA', `CYCLE INJECTION ${data.target}`)
+                        for(let itides of ['1401_1201','1201_1101','2201_1201','1201_2201','2401_1401','1401_2401']){
+                            if(itiInf(itides).active===true) itineraire.DES(itides)
                         }
-                        rpdelay()
+                        for(let itisel of ['1101_1201','1201_1401']){
+                            if(itiInf(itisel).active===false) itineraire.SEL(itisel)
+                        }
+                        writter.simple('SÉLECTIONNÉ.','PA', `SEQUENCE INJECTION ${data.target}`)
                         let endCycleIti = ()=>{
                             if((pccApi.SEC[0].cantons[3].trains.length>0)){
                                 clearInterval(endCycleInter)
@@ -2528,37 +2478,26 @@ wss.on('connection', (ws, req) => {
                                     pccApi.SEC[0].states.injDispoV101=false
                                 }
                                 exports.apiSave()
-                                writter.simple('TERMINÉ.','PA', `CYCLE INJECTION ${data.target}`)
+                                writter.simple('TERMINÉ.','PA', `SEQUENCE INJECTION ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
                     } else if(data.target==='GLA'){
                         if(pccApi.SEC[0].cantons[5].trains.length>0) return;
-                        const rpdelay = async() => {
-                            pccApi.SEC[1].CYCLES[5].active=true
-                            changeItiState('des','1102_PAG1')
-                            changeItiState('des','2101_1202')
-                            changeItiState('des','1501_1202')
-                            changeItiState('des','1202_1501')
-                            changeItiState('des','2301_2101')
-                            changeItiState('des','2101_2302')
-
-                            changeItiState('sel','PAG1_1102')
-                            changeItiState('sel','1202_2101')
-                            exports.apiSave()
-                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE INJECTION ${data.target}`)
-                            await setTimeout(2000)
-                            exports.apiSave()
-                            writter.simple('FORMÉ.','PA', `CYCLE INJECTION ${data.target}`)
+                        for(let itides of ['1102_PAG1','2101_1202','1501_1202','1202_1501','2301_2101','2101_2302']){
+                            if(itiInf(itides).active===true) itineraire.DES(itides)
                         }
-                        rpdelay()
+                        for(let itisel of ['PAG1_1102','1202_2101']){
+                            if(itiInf(itisel).active===false) itineraire.SEL(itisel)
+                        }
+                        writter.simple('SÉLECTIONNÉ.','PA', `SEQUENCE INJECTION ${data.target}`)
                         let endCycleIti = ()=>{
                             if((pccApi.SEC[0].cantons[5].trains.length>0)){
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[1].CYCLES[7].active=false
                                 pccApi.SEC[1].states.entreeDispoGla=false
                                 exports.apiSave()
-                                writter.simple('TERMINÉ.','PA', `CYCLE INJECTION ${data.target}`)
+                                writter.simple('TERMINÉ.','PA', `SEQUENCE INJECTION ${data.target}`)
                             }
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
@@ -3188,4 +3127,16 @@ function cycleInfo(code){
         }
     }
     return false;
+}
+
+function itiInf(code){
+    for(let sec of pccApi.SEC){
+        for(let itilist of Object.entries(sec.ITI[0])){
+            for(let iti of itilist[1]){
+                if(iti.code===code){
+                    return iti
+                } else continue;
+            }
+        }
+    }
 }

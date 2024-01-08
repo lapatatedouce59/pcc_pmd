@@ -96,22 +96,22 @@
   },
   "players": [
     {
-      "uuid": "7ade4845-6...",
+      "uuid": "aa1020b8-e...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "4170bbef-4...",
+      "uuid": "51da9166-5...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
   ],
   "trainMouvements": {
     "2": [
-      "c2201"
+      "c2401"
     ],
     "3": [
-      "c1302"
+      "c2202"
     ]
   },
   "itiDescription": {
@@ -707,7 +707,7 @@
             {
               "code": "2401_1401",
               "active": false,
-              "mode": false
+              "mode": "DES"
             },
             {
               "code": "1201_1401",
@@ -887,9 +887,7 @@
         },
         {
           "cid": "c2201",
-          "trains": [
-            "2"
-          ],
+          "trains": [],
           "type": "quai",
           "name": "MSTO V2",
           "states": {
@@ -925,7 +923,7 @@
             "RP10": false,
             "RP30": false,
             "AAHS": false,
-            "status": "valid",
+            "status": false,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -978,7 +976,9 @@
             "pdp": false,
             "coupFs": false
           },
-          "trains": []
+          "trains": [
+            "2"
+          ]
         },
         {
           "cid": "c2501",
@@ -1213,9 +1213,7 @@
         },
         {
           "cid": "c1302",
-          "trains": [
-            "3"
-          ],
+          "trains": [],
           "type": "quai",
           "name": "STO V1",
           "states": {
@@ -1251,7 +1249,7 @@
             "RP10": false,
             "RP30": false,
             "AAHS": false,
-            "status": "valid",
+            "status": false,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -1306,7 +1304,9 @@
         },
         {
           "cid": "c2202",
-          "trains": [],
+          "trains": [
+            "3"
+          ],
           "type": "quai",
           "name": "STO V2",
           "states": {
@@ -1342,7 +1342,7 @@
             "RP10": false,
             "RP30": false,
             "AAHS": false,
-            "status": false,
+            "status": "valid",
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
