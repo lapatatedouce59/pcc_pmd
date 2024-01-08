@@ -1402,7 +1402,7 @@ function refreshTCO(){
         if(cycleInfo('c7p2')||cycleInfo('c2p2')){
             dictS2.voys['DEP'].setAttribute('href', '../ON.png')
         }
-        if(cycleInfo('c1p2')){
+        if(data.SEC[1].states.spsto===true){
             dictS2.voys['SP'].setAttribute('href', '../ON.png')
         }
         for(let ctn of sec.cantons){

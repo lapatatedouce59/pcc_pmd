@@ -55,6 +55,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                 cycle.active=true
                 writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 let initPhaseInter = setInterval(async ()=>{ //? PREPARATION PHASE 1
+                    if(cycle.active===false) {
+                        clearCorrespondingInterval(code)
+                        INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
+                        return;
+                    }
                     if(ctnInf('c2201').trains.length>0){
                         clearCorrespondingInterval(code)
                         INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
@@ -67,6 +72,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                         let phase1Inter = setInterval(async ()=>{
                             for(let aig of pccApi.aiguilles){
                                 if(!(aig.id==='C1')) continue;
+                                if(cycle.active===false) {
+                                    clearCorrespondingInterval(code)
+                                    INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
+                                    return;
+                                }
                                 if(aig.actualIti.length===1 && aig.actualIti[0]==='2201_2401'){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
                                     clearCorrespondingInterval(code)
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
@@ -77,6 +87,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                     let phase2inter = setInterval(async ()=>{
                                         for(let aig of pccApi.aiguilles){
                                             if(!(aig.id==='C1')) continue;
+                                            if(cycle.active===false) {
+                                                clearCorrespondingInterval(code)
+                                                INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
+                                                return;
+                                            }
                                             if(ctnInf('c2401').trains.length>0 && itiInf('2401_1401').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
                                                 clearCorrespondingInterval(code)
                                                 INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
@@ -88,6 +103,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                                     let recursiveInter = setInterval(async ()=>{
                                                         for(let aig of pccApi.aiguilles){
                                                             if(!(aig.id==='C1')) continue;
+                                                            if(cycle.active===false) {
+                                                                clearCorrespondingInterval(code)
+                                                                INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
+                                                                return;
+                                                            }
                                                             if(ctnInf('c1401').trains.length>0 && itiInf('2401_1401').active===false){//? ATTENTE DESTRUCTION PHASE 2 POUR RECURSIVITÉ
                                                                 clearCorrespondingInterval(code)
                                                                 INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
@@ -122,6 +142,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                 cycle.active=true
                 writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 let initPhaseInter = setInterval(async ()=>{ //? PREPARATION PHASE 1
+                    if(cycle.active===false) {
+                        clearCorrespondingInterval(code)
+                        INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
+                        return;
+                    }
                     if(ctnInf('c1401').trains.length>0){
                         clearCorrespondingInterval(code)
                         INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
@@ -134,6 +159,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                         let phase1Inter = setInterval(async ()=>{
                             for(let aig of pccApi.aiguilles){
                                 if(!(aig.id==='C1')) continue;
+                                if(cycle.active===false) {
+                                    clearCorrespondingInterval(code)
+                                    INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
+                                    return;
+                                }
                                 if(aig.actualIti.length===1 && aig.actualIti[0]==='1401_1201'){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
                                     clearCorrespondingInterval(code)
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
@@ -144,6 +174,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                     let phase2inter = setInterval(async ()=>{
                                         for(let aig of pccApi.aiguilles){
                                             if(!(aig.id==='C1')) continue;
+                                            if(cycle.active===false) {
+                                                clearCorrespondingInterval(code)
+                                                INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
+                                                return;
+                                            }
                                             if(ctnInf('c1201').trains.length>0 && itiInf('1201_2201').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
                                                 clearCorrespondingInterval(code)
                                                 INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
@@ -155,6 +190,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                                     let recursiveInter = setInterval(async ()=>{
                                                         for(let aig of pccApi.aiguilles){
                                                             if(!(aig.id==='C1')) continue;
+                                                            if(cycle.active===false) {
+                                                                clearCorrespondingInterval(code)
+                                                                INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
+                                                                return;
+                                                            }
                                                             if(ctnInf('c2201').trains.length>0 && itiInf('1201_2201').active===false){//? ATTENTE DESTRUCTION PHASE 2 POUR RECURSIVITÉ
                                                                 clearCorrespondingInterval(code)
                                                                 INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
@@ -188,6 +228,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                 cycle.active=true
                 writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 let initPhaseInter = setInterval(async ()=>{ //? PREPARATION PHASE 1
+                    if(cycle.active===false) {
+                        clearCorrespondingInterval(code)
+                        INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
+                        return;
+                    }
                     if(ctnInf('c2302').trains.length>0){
                         clearCorrespondingInterval(code)
                         INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
@@ -201,6 +246,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                         let phase1Inter = setInterval(async ()=>{
                             for(let aig of pccApi.aiguilles){
                                 if(!(aig.id==='C2')) continue;
+                                if(cycle.active===false) {
+                                    clearCorrespondingInterval(code)
+                                    INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
+                                    return;
+                                }
                                 if(aig.actualIti.length===1 && aig.actualIti[0]==='2302_2101'){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
                                     clearCorrespondingInterval(code)
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
@@ -213,6 +263,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                     let phase2inter = setInterval(async ()=>{
                                         for(let aig of pccApi.aiguilles){
                                             if(!(aig.id==='C2')) continue;
+                                            if(cycle.active===false) {
+                                                clearCorrespondingInterval(code)
+                                                INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
+                                                return;
+                                            }
                                             if(ctnInf('c2101').trains.length>0 && itiInf('2101_1202').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
                                                 clearCorrespondingInterval(code)
                                                 INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
@@ -224,6 +279,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                                 if(cycleTrigger===true){
                                                     writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
                                                     let recursiveInter = setInterval(async ()=>{
+                                                        if(cycle.active===false) {
+                                                            clearCorrespondingInterval(code)
+                                                            INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
+                                                            return;
+                                                        }
                                                         for(let aig of pccApi.aiguilles){
                                                             if(!(aig.id==='C2')) continue;
                                                             if(ctnInf('c1202').trains.length>0 && itiInf('2101_1202').active===false){//? ATTENTE DESTRUCTION PHASE 2 POUR RECURSIVITÉ
@@ -293,6 +353,7 @@ exports.clearAll=()=>{
     let len = INTERVALS.length
     for(let interval of INTERVALS){
         clearInterval(INTERMAP.get(interval))
+        clearInterval(interval)
         INTERVALS.splice(INTERVALS.indexOf(interval),1)
         INTERMAP.clear()
     }

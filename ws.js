@@ -2569,6 +2569,7 @@ wss.on('connection', (ws, req) => {
                         if(cycleInfo('c1p2').active===true){
                             pccApi.SEC[1].states.spsto=true
                             writter.simple('DÉCLARÉ.','PA', `SP STO`)
+                            this.apiSave()
                         } else {
                             const rpdelay = async() => {
                                 writter.simple('EN ATTENTE.','PA', `SP STO`)
