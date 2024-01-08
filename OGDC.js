@@ -121,206 +121,138 @@ exports.startCycle = function (code, wss, cycleTrigger) {
             if(code==='c2p1'){
                 cycle.active=true
                 writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
-                const rpdelay = async() => {
-                    changeItiState('des','1201_1401')
-                    changeItiState('des','1401_2401')
-                    changeItiState('des','2201_2401')
-                    changeItiState('des','2401_2201')
-                    changeItiState('des','2401_1401')
-                    changeItiState('des','2201_1201')
-                    changeItiState('des','1201_2201')
-
-                    changeItiState('sel','1401_1201')
-                    await setTimeout(100)
-                    writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
-                    apiSave()
-                    await setTimeout(2000)
-                    apiSave()
-                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
-                }
-                rpdelay()
-                let suiteCycle = ()=>{
-                    if((pccApi.SEC[0].cantons[1].trains.length>0)){
-                        clearInterval(suiteCycleInter)
-                        let cycleClear = ()=>{
-                            if((pccApi.SEC[0].cantons[1].trains.length>0)&&(pccApi.SEC[0].cantons[2].trains.length===0)&&(pccApi.SEC[0].cantons[6].trains.length===0)){
-                                clearInterval(cycleClearInter)
-                                if(true){
-                                    const rpdelay2 = async() => {
-                                        changeItiState('des','2201_2401')
-                                        changeItiState('des','1401_2401')
-                                        changeItiState('des','2201_1201')
-                                        changeItiState('des','2401_1401')
-                                        changeItiState('des','1401_1201')
-                                        changeItiState('des','1201_1401')
-
-                                        changeItiState('sel','1201_2201')
-                                        await setTimeout(100)
-                                        apiSave()
-                                        writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
-                                        await setTimeout(2000)
-                                        apiSave()
-                                        writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
-                                    }
-                                    rpdelay2()
-                                    if((cycleTrigger) && (cycle.active)){
-                                        writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
-                                        let resetCycle = ()=>{
-                                            if((pccApi.SEC[0].cantons[6].trains.length>0)&&(pccApi.SEC[0].cantons[7].trains.length===0)){
-                                                clearInterval(resetCycleInter)
-                                                exports.startCycle(code, wss, true)
+                let initPhaseInter = setInterval(async ()=>{ //? PREPARATION PHASE 1
+                    if(ctnInf('c1401').trains.length>0){
+                        clearCorrespondingInterval(code)
+                        INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
+                        let itiDes1 = ["2401_2201","2201_2401","1201_1401","2401_1401","1401_2401","1201_2201","2201_1201"]
+                        for(let iti1 of itiDes1){
+                            if(itiInf(iti1).active===true&&itiInf(iti1).mode==='SEL') itineraire.DES(iti1)
+                        }
+                        if(itiInf('1401_1201').active===false) itineraire.SEL('1401_1201')
+                        writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                        let phase1Inter = setInterval(async ()=>{
+                            for(let aig of pccApi.aiguilles){
+                                if(!(aig.id==='C1')) continue;
+                                if(aig.actualIti.length===1 && aig.actualIti[0]==='1401_1201'){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
+                                    clearCorrespondingInterval(code)
+                                    INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
+                                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                                    itineraire.DES('1401_1201')
+                                    itineraire.SEL('1201_2201')
+                                    writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                    let phase2inter = setInterval(async ()=>{
+                                        for(let aig of pccApi.aiguilles){
+                                            if(!(aig.id==='C1')) continue;
+                                            if(ctnInf('c1201').trains.length>0 && itiInf('1201_2201').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
+                                                clearCorrespondingInterval(code)
+                                                INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
+                                                writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                                itineraire.SEL('1401_1201')
+                                                itineraire.DES('1201_2201')
+                                                if(cycleTrigger===true){
+                                                    writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
+                                                    let recursiveInter = setInterval(async ()=>{
+                                                        for(let aig of pccApi.aiguilles){
+                                                            if(!(aig.id==='C1')) continue;
+                                                            if(ctnInf('c2201').trains.length>0 && itiInf('1201_2201').active===false){//? ATTENTE DESTRUCTION PHASE 2 POUR RECURSIVITÉ
+                                                                clearCorrespondingInterval(code)
+                                                                INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
+                                                                return exports.startCycle(code, wss, cycleTrigger);
+                                                            } 
+                                                        }
+                                                    },100)
+                                                    INTERVALS.push(recursiveInter)
+                                                    INTERMAP.set(code, recursiveInter)
+                                                } else {
+                                                    cycle.active=false
+                                                    cycle.sel=false
+                                                }
                                             }
                                         }
-                                        let resetCycleInter = setInterval(resetCycle,2000)
-                                        apiSave()
-                                    }
+                                    },100)
+                                    INTERVALS.push(phase2inter)
+                                    INTERMAP.set(code, phase2inter)
                                 }
                             }
-                        }
-                        let cycleClearInter = setInterval(cycleClear,2000)
-                        apiSave()
+                        },100)
+                        INTERVALS.push(phase1Inter)
+                        INTERMAP.set(code, phase1Inter)
                     }
-                }
-                let suiteCycleInter = setInterval(suiteCycle,2000)
+                },100)
+                INTERVALS.push(initPhaseInter)
+                INTERMAP.set(code, initPhaseInter)
             }
 
             if(code==='c1p2'){
-                writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
                 cycle.active=true
-                const rpdelay = async() => {
-                    changeItiState('des','2302_2202')
-                    changeItiState('des','2101_2302')
-                    changeItiState('des','2101_2402')
-                    changeItiState('des','2101_1202')
-                    changeItiState('des','1202_2101')
-
-                    changeItiState('sel','2202_2302')
-                    changeItiState('sel','2302_2101')
-                    changeItiState('sel','2402_2101')
-                    await setTimeout(100)
-                    apiSave()
-                    writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
-                    await setTimeout(2000)
-                    apiSave()
-                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
-                }
-                rpdelay()
-                let suiteCycle = ()=>{
-                    if((pccApi.SEC[0].cantons[5].trains.length>0)&&(pccApi.SEC[1].cantons[7].trains.length===0)){
-                        clearInterval(suiteCycleInter)
-                        let cycleClear = ()=>{
-                            if((pccApi.SEC[0].cantons[5].trains.length>0)&&(pccApi.SEC[1].cantons[2].trains.length===0)){
-                                clearInterval(cycleClearInter)
-                                if(true){
-                                    const rpdelay2 = async() => {
-                                        changeItiState('des','2402_2101')
-                                        changeItiState('des','2302_2101')
-                                        changeItiState('des','1202_2101')
-                                        changeItiState('des','1302_1102')
-                                        changeItiState('des','PAG1_1102')
-                                        changeItiState('des','1102_PAG1')
-                                        changeItiState('des','1202_1501')
-                                        changeItiState('des','1501_1202')
-
-                                        changeItiState('sel','2101_2402')
-                                        changeItiState('sel','2101_1202')
-                                        changeItiState('sel','1102_1302')
-                                        await setTimeout(100)
-                                        apiSave()
-                                        writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
-                                        await setTimeout(2000)
-                                        apiSave()
-                                        writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
-                                    }
-                                    rpdelay2()
-                                    if((cycleTrigger) && (cycle.active)){
-                                        writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
-                                        let resetCycle = ()=>{
-                                            if((pccApi.SEC[1].cantons[2].trains.length>0)&&(pccApi.SEC[1].cantons[1].trains.length===0)){
-                                                clearInterval(resetCycleInter)
-                                                exports.startCycle(code, wss, true)
+                writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
+                let initPhaseInter = setInterval(async ()=>{ //? PREPARATION PHASE 1
+                    if(ctnInf('c2302').trains.length>0){
+                        clearCorrespondingInterval(code)
+                        INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
+                        let itiDes1 = ["2101_2302","2101_2402","2101_1202","1202_2101","1501_1102","1102_1501","1501_1202","1202_1501"]
+                        for(let iti1 of itiDes1){
+                            if(itiInf(iti1).active===true&&itiInf(iti1).mode==='SEL') itineraire.DES(iti1)
+                        }
+                        if(itiInf('2302_2101').active===false) itineraire.SEL('2302_2101')
+                        if(itiInf('2402_2101').active===false) itineraire.SEL('2402_2101')
+                        writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                        let phase1Inter = setInterval(async ()=>{
+                            for(let aig of pccApi.aiguilles){
+                                if(!(aig.id==='C2')) continue;
+                                if(aig.actualIti.length===1 && aig.actualIti[0]==='2302_2101'){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
+                                    clearCorrespondingInterval(code)
+                                    INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
+                                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                                    itineraire.DES('2302_2101')
+                                    itineraire.DES('2402_2101')
+                                    itineraire.SEL('2101_1202')
+                                    itineraire.SEL('2101_2402')
+                                    writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                    let phase2inter = setInterval(async ()=>{
+                                        for(let aig of pccApi.aiguilles){
+                                            if(!(aig.id==='C2')) continue;
+                                            if(ctnInf('c2101').trains.length>0 && itiInf('2101_1202').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
+                                                clearCorrespondingInterval(code)
+                                                INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
+                                                writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                                itineraire.SEL('2302_2101')
+                                                itineraire.SEL('2402_2101')
+                                                itineraire.DES('2101_1202')
+                                                itineraire.DES('2101_2402')
+                                                if(cycleTrigger===true){
+                                                    writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
+                                                    let recursiveInter = setInterval(async ()=>{
+                                                        for(let aig of pccApi.aiguilles){
+                                                            if(!(aig.id==='C2')) continue;
+                                                            if(ctnInf('c1202').trains.length>0 && itiInf('2101_1202').active===false){//? ATTENTE DESTRUCTION PHASE 2 POUR RECURSIVITÉ
+                                                                clearCorrespondingInterval(code)
+                                                                INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
+                                                                return exports.startCycle(code, wss, cycleTrigger);
+                                                            } 
+                                                        }
+                                                    },100)
+                                                    INTERVALS.push(recursiveInter)
+                                                    INTERMAP.set(code, recursiveInter)
+                                                } else {
+                                                    cycle.active=false
+                                                    cycle.sel=false
+                                                }
                                             }
                                         }
-                                        let resetCycleInter = setInterval(resetCycle,2000)
-                                        apiSave()
-                                    }
+                                    },100)
+                                    INTERVALS.push(phase2inter)
+                                    INTERMAP.set(code, phase2inter)
                                 }
                             }
-                        }
-                        let cycleClearInter = setInterval(cycleClear,2000)
-                        apiSave()
+                        },100)
+                        INTERVALS.push(phase1Inter)
+                        INTERMAP.set(code, phase1Inter)
                     }
-                }
-                let suiteCycleInter = setInterval(suiteCycle,2000)
-            }
-            if(code==='c2p2'){
-                writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
-                cycle.active=true
-                const rpdelay = async() => {
-                    changeItiState('des','2302_2202')
-                    changeItiState('des','2101_2302')
-                    changeItiState('des','2101_2402')
-                    changeItiState('des','2101_1202')
-                    changeItiState('des','1202_2101')
-
-                    changeItiState('sel','2202_2302')
-                    changeItiState('sel','2302_2101')
-                    changeItiState('sel','2402_2101')
-                    await setTimeout(100)
-                    apiSave()
-                    writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
-                    await setTimeout(2000)
-                    apiSave()
-                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
-                }
-                rpdelay()
-                let suiteCycle = ()=>{
-                    if((pccApi.SEC[0].cantons[5].trains.length>0)&&(pccApi.SEC[1].cantons[7].trains.length===0)){
-                        clearInterval(suiteCycleInter)
-                        let cycleClear = ()=>{
-                            if((pccApi.SEC[0].cantons[5].trains.length>0)&&(pccApi.SEC[1].cantons[9].trains.length===0)){
-                                clearInterval(cycleClearInter)
-                                if(true){
-                                    const rpdelay2 = async() => {
-                                        changeItiState('des','2402_2101')
-                                        changeItiState('des','2302_2101')
-                                        changeItiState('des','1202_2101')
-                                        changeItiState('des','1302_1102')
-                                        changeItiState('des','PAG1_1102')
-                                        changeItiState('des','1102_1302')
-                                        changeItiState('des','1202_1501')
-                                        changeItiState('des','1501_1202')
-
-                                        changeItiState('sel','2101_2402')
-                                        changeItiState('sel','2101_1202')
-                                        changeItiState('sel','1102_PAG1')
-                                        await setTimeout(100)
-                                        apiSave()
-                                        writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
-                                        await setTimeout(2000)
-                                        apiSave()
-                                        writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
-                                    }
-                                    rpdelay2()
-                                    if((cycleTrigger) && (cycle.active)){
-                                        writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
-                                        let resetCycle = ()=>{
-                                            if((pccApi.SEC[1].cantons[9].trains.length>0)&&(pccApi.SEC[1].cantons[8].trains.length===0)){
-                                                clearInterval(resetCycleInter)
-                                                exports.startCycle(code, wss, true)
-                                            }
-                                        }
-                                        let resetCycleInter = setInterval(resetCycle,2000)
-                                        apiSave()
-                                    }
-                                }
-                            }
-                        }
-                        let cycleClearInter = setInterval(cycleClear,2000)
-                        apiSave()
-                    }
-                }
-                let suiteCycleInter = setInterval(suiteCycle,2000)
+                },100)
+                INTERVALS.push(initPhaseInter)
+                INTERMAP.set(code, initPhaseInter)
             }
         }
     }

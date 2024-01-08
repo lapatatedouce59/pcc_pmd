@@ -8,7 +8,7 @@ const fs = require('fs')
 logUpdate('├ Loading timers/promises...')
 const {setTimeout} = require('timers/promises')
 logUpdate('├ Loading node-fetch...')
-const fetch = require("node-fetch");
+//const fetch = require("node-fetch");
 /*logUpdate('├ Loading cluster...')
 const {Worker} = require('node:cluster');
 logUpdate('├ Loading cluster...')
