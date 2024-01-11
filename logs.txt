@@ -1,175 +1,157 @@
-[Monday    23h41:45] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Monday    23h41:47] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
-[Monday    23h41:47] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Monday    23h41:47] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Monday    23h41:50] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
-[Monday    23h41:50] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Monday    23h42:43] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
-[Monday    23h42:43] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Monday    23h42:51] PA    -> SP STO ; SUPPRIMÉ. 
-[Monday    23h43:05] PA    -> SP STO ; EN ATTENTE. 
-[Monday    23h43:10] PA    -> SP STO ; A L'ABANDON. 
-[Monday    23h43:15] PA    -> CYCLE c1p2 ; SÉLECTIONNÉ. 
-[Monday    23h43:17] PA    -> CYCLE c1p2 ; EN ACTIVITÉ. 
-[Monday    23h43:20] PA    -> SP STO ; DÉCLARÉ. 
-[Monday    23h43:39] PA    -> DP ; BOUCLE 2202 TRAIN 3 -> ACTIVE 
-[Monday    23h43:39] UCA   -> ALDC ; 1302-2202 > 3 
-[Monday    23h43:39] PA    -> DP ; BOUCLE 1302 TRAIN 3 -> INACTIVE 
-[Monday    23h43:55] PA    -> DP ; BOUCLE 2302 TRAIN 3 -> ACTIVE 
-[Monday    23h43:55] PA    -> CYCLE c1p2 ; EN CONSTRUCTION PHASE 1. 
-[Monday    23h43:55] PA    -> CYCLE c1p2 ; CONSTRUIT PHASE 1. 
-[Monday    23h43:55] PA    -> ITINÉRAIRE 2302_2101 ; EN DESTRUCTION. 
-[Monday    23h43:55] PA    -> ITINÉRAIRE 2101_1202 ; SÉLECTIONNÉ. 
-[Monday    23h43:55] PA    -> ITINÉRAIRE 2402_2101 ; EN DESTRUCTION. 
-[Monday    23h43:55] PA    -> ITINÉRAIRE 2101_2402 ; SÉLECTIONNÉ. 
-[Monday    23h43:55] PA    -> CYCLE c1p2 ; EN CONSTRUCTION PHASE 2. 
-[Monday    23h43:55] PA    -> ITINÉRAIRE 2402_2101 ; DÉTRUIT. 
-[Monday    23h43:56] PA    -> ITINÉRAIRE 2101_2402 ; FORMÉ. 
-[Monday    23h43:57] PA    -> DP ; BOUCLE 2202 TRAIN 3 -> INACTIVE 
-[Monday    23h43:58] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> ACTIVE 
-[Monday    23h43:59] PA    -> DP ; BOUCLE 2101 TRAIN 3 -> ACTIVE 
-[Monday    23h44:01] PA    -> DP ; BOUCLE 2302 TRAIN 3 -> INACTIVE 
-[Monday    23h44:02] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> INACTIVE 
-[Monday    23h44:02] PA    -> ITINÉRAIRE 2302_2101 ; DÉTRUIT. 
-[Monday    23h44:03] PA    -> ITINÉRAIRE 2101_1202 ; FORMÉ. 
-[Monday    23h44:03] PA    -> ITINÉRAIRE 2302_2101 ; SÉLECTIONNÉ. 
-[Monday    23h44:03] PA    -> ITINÉRAIRE 2402_2101 ; SÉLECTIONNÉ. 
-[Monday    23h44:03] PA    -> ITINÉRAIRE 2101_1202 ; EN DESTRUCTION. 
-[Monday    23h44:03] PA    -> CYCLE c1p2 ; CONSTRUIT PHASE 2. 
-[Monday    23h44:03] PA    -> CYCLE c1p2 ; EN ATTENTE DE RESET. 
-[Monday    23h44:03] PA    -> ITINÉRAIRE 2101_2402 ; EN DESTRUCTION. 
-[Monday    23h44:05] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> ACTIVE 
-[Monday    23h44:05] PA    -> DP ; BOUCLE 1102 TRAIN 3 -> ACTIVE 
-[Monday    23h44:07] PA    -> DP ; BOUCLE 1202 TRAIN 3 -> ACTIVE 
-[Monday    23h44:08] PA    -> DP ; BOUCLE 1302 TRAIN 3 -> ACTIVE 
-[Monday    23h44:10] PA    -> DP ; BOUCLE 2101 TRAIN 3 -> INACTIVE 
-[Monday    23h44:10] PA    -> ITINÉRAIRE 2101_2402 ; DÉTRUIT. 
-[Monday    23h44:10] PA    -> ITINÉRAIRE 2402_2101 ; FORMÉ. 
-[Monday    23h44:16] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> INACTIVE 
-[Monday    23h44:17] PA    -> DP ; BOUCLE 1102 TRAIN 3 -> INACTIVE 
-[Monday    23h44:17] PA    -> ITINÉRAIRE 2101_1202 ; DÉTRUIT. 
-[Monday    23h44:17] PA    -> CYCLE c1p2 ; EN ACTIVITÉ. 
-[Monday    23h44:17] PA    -> ITINÉRAIRE 2302_2101 ; FORMÉ. 
-[Monday    23h44:18] PA    -> DP ; BOUCLE 1202 TRAIN 3 -> INACTIVE 
-[Monday    23h44:20] PA    -> CYCLES S2 ; ANNULÉS. 
-[Monday    23h44:21] PA    -> DP ; BOUCLE 2202 TRAIN 3 -> ACTIVE 
-[Monday    23h44:21] UCA   -> ALDC ; 1302-2202 > 3 
-[Monday    23h44:22] PA    -> DP ; BOUCLE 1302 TRAIN 3 -> INACTIVE 
-[Monday    23h45:23] QUAI  -> MSTO V1 ; CONDUITE MANUELLE A CONTROLE CONTINU ACTIF. 
-[Monday    23h45:25] QUAI  -> MSTO V1 ; CONDUITE MANUELLE A CONTROLE PONCTUEL ACTIF. 
-[Monday    23h45:26] QUAI  -> MSTO V1 ; CONDUITE MANUELLE A CONTROLE CONTINU ACTIF. 
-[Monday    23h45:30] QUAI  -> MSTO V1 ; CONDUITE MANUELLE A CONTROLE PONCTUEL ACTIF. 
-[Monday    23h45:34] QUAI  -> MSTO V1 ; CONDUITE MANUELLE RAZ. 
-[Monday    23h45:35] QUAI  -> MSTO V1 ; SERVICE DE SECURITE SIMPLE ACTIF. 
-[Monday    23h45:37] QUAI  -> MSTO V1 ; SSO OUI. 
-[Monday    23h45:40] QUAI  -> MSTO V1 ; SERVICE DE SECURITE RAZ. 
-[Monday    23h45:40] QUAI  -> MSTO V1 ; SSO OUI. 
-[Monday    23h45:41] QUAI  -> MSTO V1 ; SERVICE DE SECURITE RAZ. 
-[Monday    23h45:43] QUAI  -> MSTO V1 ; RALENTISSEMENT PROVISOIRE 10KMH ACTIF. 
-[Monday    23h45:44] QUAI  -> MSTO V1 ; RALENTISSEMENT PROVISOIRE 30KMH ACTIF. 
-[Monday    23h45:45] QUAI  -> MSTO V1 ; RALENTISSEMENT PROVISOIRE RAZ. 
-[Monday    23h45:47] QUAI  -> MSTO V1 ; PERSONNEL SUR VOIES ACTIF. 
-[Monday    23h45:48] QUAI  -> MSTO V1 ; PERSONNEL SUR VOIES RAZ. 
-[Monday    23h45:49] QUAI  -> MSTO V1 ; AVERTISSEUR D'ALARME HS ACTIF. 
-[Monday    23h45:50] QUAI  -> MSTO V1 ; AVERTISSEUR D'ALARME HS RAZ. 
-[Monday    23h46:31] PA    -> ITINÉRAIRE 1201_1101 ; SÉLECTIONNÉ. 
-[Monday    23h46:32] PA    -> LDI ; c1101-c1201. 
-[Monday    23h46:32] PA    -> LDI ; c1201-c1101. 
-[Monday    23h46:32] PA    -> ITINÉRAIRE 1201_1101 ; FORMÉ. 
-[Monday    23h46:53] PCC   -> ACQ ; REÇU. 
-[Monday    23h46:53] PA    -> LDI ; c1101-c1201. 
-[Monday    23h46:53] PA    -> LDI ; c1201-c1101. 
-[Monday    23h46:56] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
-[Monday    23h46:56] PA    -> LDI ; c1101-c1201. 
-[Monday    23h46:56] PA    -> LDI ; c1201-c1101. 
-[Monday    23h47:00] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
-[Monday    23h47:00] PA    -> LDI ; c1101-c1201. 
-[Monday    23h47:00] PA    -> LDI ; c1201-c1101. 
-[Monday    23h47:05] PA    -> LDI ; c1101-c1201. 
-[Monday    23h47:05] PA    -> LDI ; c1201-c1101. 
-[Monday    23h47:05] PA    -> ITINÉRAIRE 1201_1101 ; EN DESTRUCTION. 
-[Monday    23h47:05] PA    -> ITINÉRAIRE 1201_1101 ; DÉTRUIT. 
-[Monday    23h47:07] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
-[Monday    23h47:27] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
-[Monday    23h47:27] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h47:52] PCC   -> FS (SS04) ; OUI. 
-[Monday    23h47:52] LIGNE -> FS ; NON SS04. 
-[Monday    23h47:52] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h47:53] PCC   -> FS (SS04) ; NON. 
-[Monday    23h47:53] LIGNE -> FS ; OUI SS04. 
-[Monday    23h47:53] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h47:56] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h47:56] PCC   -> ACQ ; REÇU. 
-[Monday    23h48:09] PCC   -> HT (LIGNE) ; NON. 
-[Monday    23h48:09] LIGNE -> HT ; NON. 
-[Monday    23h48:09] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h48:09] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h48:13] PCC   -> HT (LIGNE) ; OUI. 
-[Monday    23h48:13] LIGNE -> HT ; OUI. 
-[Monday    23h48:13] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h48:13] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h48:16] PCC   -> ACQ ; REÇU. 
-[Monday    23h48:16] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h48:29] TRAIN -> ACQUITTEMENT T3 ; COMMANDÉ. 
-[Monday    23h48:29] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h48:30] TRAIN -> ACQUITTEMENT T2 ; COMMANDÉ. 
-[Monday    23h48:30] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    23h48:36] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
-[Monday    23h48:41] LIGNE -> HT ; NON. 
-[Monday    23h48:41] LIGNE -> FS ; NON. 
-[Monday    23h48:41] PCC   -> CDP ; ACTIF. 
-[Monday    23h48:42] PCC   -> CDP ; INACTIF. 
-[Monday    23h48:48] TRAIN -> ACQUITTEMENT T3 ; COMMANDÉ. 
-[Monday    23h48:49] TRAIN -> ACQUITTEMENT T2 ; COMMANDÉ. 
-[Monday    23h49:01] PCC   -> INHIBITION UCA ; OUI. 
-[Monday    23h49:02] PCC   -> INHIBITION UCA ; NON. 
-[Monday    23h49:26] PA    -> CYCLE c1p1 ; SÉLECTIONNÉ. 
-[Monday    23h49:28] PA    -> CYCLE c1p1 ; EN ACTIVITÉ. 
-[Monday    23h49:28] PA    -> ITINÉRAIRE 1201_1401 ; EN DESTRUCTION. 
-[Monday    23h49:28] PA    -> CYCLE c1p1 ; EN CONSTRUCTION PHASE 1. 
-[Monday    23h49:28] PA    -> ITINÉRAIRE 1201_1401 ; DÉTRUIT. 
-[Monday    23h49:28] PA    -> CYCLE c1p1 ; CONSTRUIT PHASE 1. 
-[Monday    23h49:28] PA    -> ITINÉRAIRE 2201_2401 ; EN DESTRUCTION. 
-[Monday    23h49:28] PA    -> ITINÉRAIRE 2401_1401 ; SÉLECTIONNÉ. 
-[Monday    23h49:28] PA    -> CYCLE c1p1 ; EN CONSTRUCTION PHASE 2. 
-[Monday    23h49:32] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
-[Monday    23h49:34] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> ACTIVE 
-[Monday    23h49:35] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> INACTIVE 
-[Monday    23h49:36] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> ACTIVE 
-[Monday    23h49:37] PA    -> CYCLES S1 ; ANNULÉS. 
-[Monday    23h49:40] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
-[Monday    23h49:54] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
-[Monday    23h49:54] PA    -> ITINÉRAIRE 2201_2401 ; DÉTRUIT. 
-[Monday    23h49:54] PA    -> ITINÉRAIRE 2401_1401 ; FORMÉ. 
-[Monday    23h49:56] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
-[Monday    23h49:56] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
-[Monday    23h49:57] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> ACTIVE 
-[Monday    23h49:58] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> INACTIVE 
-[Monday    23h49:58] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
-[Monday    23h49:59] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
-[Monday    23h50:01] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
-[Monday    23h50:01] UCA   -> ALDC ; 1401-2201 > 2 
-[Monday    23h50:02] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> INACTIVE 
-[Monday    23h50:07] PA    -> CYCLE c1p1 ; SÉLECTIONNÉ. 
-[Monday    23h50:09] PA    -> CYCLE c1p1 ; EN ACTIVITÉ. 
-[Monday    23h50:09] PA    -> ITINÉRAIRE 2401_1401 ; EN DESTRUCTION. 
-[Monday    23h50:09] PA    -> ITINÉRAIRE 2201_2401 ; SÉLECTIONNÉ. 
-[Monday    23h50:09] PA    -> CYCLE c1p1 ; EN CONSTRUCTION PHASE 1. 
-[Monday    23h50:09] PA    -> ITINÉRAIRE 2401_1401 ; DÉTRUIT. 
-[Monday    23h50:10] PA    -> ITINÉRAIRE 2201_2401 ; FORMÉ. 
-[Monday    23h50:10] PA    -> CYCLE c1p1 ; CONSTRUIT PHASE 1. 
-[Monday    23h50:10] PA    -> ITINÉRAIRE 2201_2401 ; EN DESTRUCTION. 
-[Monday    23h50:10] PA    -> CYCLE c1p1 ; EN CONSTRUCTION PHASE 2. 
-[Monday    23h50:10] PA    -> ITINÉRAIRE 2401_1401 ; SÉLECTIONNÉ. 
-[Monday    23h50:12] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
-[Monday    23h50:13] PA    -> CYCLES S1 ; ANNULÉS. 
-[Monday    23h50:14] PA    -> ITINÉRAIRE 2201_2401 ; DES ANNULÉE. 
-[Monday    23h50:14] PA    -> DISCORDANCE ; C1 > 2201_2401 
-[Monday    23h50:14] PA    -> AZM ; 1 (C1) 
-[Monday    23h50:14] PA    -> ITINÉRAIRE 2201_2401 ; SÉLECTIONNÉ. 
-[Monday    23h50:15] PA    -> ITINÉRAIRE 2201_2401 ; FORMÉ. 
-[Monday    23h50:24] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
-[Monday    23h50:29] PA    -> ITINÉRAIRE 2401_1401 ; EN DESTRUCTION. 
-[Monday    23h50:33] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> ACTIVE 
-[Monday    23h50:33] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
-[Monday    23h50:34] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Thursday  23h52:31] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Thursday  23h52:35] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Thursday  23h52:41] PA    -> ITINÉRAIRE 1201_1401 ; SÉLECTIONNÉ. 
+[Thursday  23h52:42] PA    -> ITINÉRAIRE 1201_1401 ; FORMÉ. 
+[Thursday  23h52:45] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> ACTIVE 
+[Thursday  23h52:45] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
+[Thursday  23h52:46] PA    -> DP ; BOUCLE 1101 TRAIN 2 -> INACTIVE 
+[Thursday  23h52:47] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> INACTIVE 
+[Thursday  23h52:48] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> ACTIVE 
+[Thursday  23h52:50] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:01] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:01] UCA   -> ALDC ; 1401-2201 > 2 
+[Thursday  23h53:01] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:03] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:04] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:04] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:05] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:07] PA    -> DP ; BOUCLE 2501 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:09] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:11] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:11] UCA   -> ALDC ; 2501-2201 > 2 
+[Thursday  23h53:12] PA    -> DP ; BOUCLE 2501 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:16] PA    -> ITINÉRAIRE 2201_2401 ; EN DESTRUCTION. 
+[Thursday  23h53:16] PA    -> ITINÉRAIRE 1201_1401 ; EN DESTRUCTION. 
+[Thursday  23h53:16] PA    -> ITINÉRAIRE 1101_1201 ; EN DESTRUCTION. 
+[Thursday  23h53:16] PA    -> ITINÉRAIRE 2201_1201 ; SÉLECTIONNÉ. 
+[Thursday  23h53:16] PA    -> ITINÉRAIRE 1201_1101 ; SÉLECTIONNÉ. 
+[Thursday  23h53:17] PA    -> ITINÉRAIRE 1201_1401 ; DÉTRUIT. 
+[Thursday  23h53:17] PA    -> ITINÉRAIRE 1101_1201 ; DÉTRUIT. 
+[Thursday  23h53:17] PA    -> ITINÉRAIRE 1201_1101 ; FORMÉ. 
+[Thursday  23h53:21] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:21] UCA   -> ALDC ; 2201-2101 > 2 
+[Thursday  23h53:22] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:22] PA    -> ITINÉRAIRE 2201_2401 ; DÉTRUIT. 
+[Thursday  23h53:22] PA    -> ITINÉRAIRE 2201_1201 ; FORMÉ. 
+[Thursday  23h53:23] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:23] UCA   -> ALDC ; 2101-2201 > 2 
+[Thursday  23h53:24] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:26] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:27] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:27] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:27] PA    -> ITINÉRAIRE 2201_1201 ; EN DESTRUCTION. 
+[Thursday  23h53:27] PA    -> ITINÉRAIRE 2201_2401 ; SÉLECTIONNÉ. 
+[Thursday  23h53:28] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:29] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:33] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:33] PA    -> ITINÉRAIRE 2201_1201 ; DÉTRUIT. 
+[Thursday  23h53:34] PA    -> ITINÉRAIRE 2201_2401 ; FORMÉ. 
+[Thursday  23h53:47] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:47] UCA   -> ALDC ; 1201-1401 > 2 
+[Thursday  23h53:47] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:48] PA    -> DP ; BOUCLE 1501 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:48] UCA   -> ALDC ; 1401-1501 > 2 
+[Thursday  23h53:48] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
+[Thursday  23h53:48] UCA   -> ALDC ; 1401-1501 > 2 
+[Thursday  23h53:49] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> INACTIVE 
+[Thursday  23h53:49] UCA   -> ALDC ; 1501-2101 > 2 
+[Thursday  23h53:49] PA    -> DP ; BOUCLE 1501 TRAIN 2 -> INACTIVE 
+[Thursday  23h54:30] PA    -> DP ; BOUCLE 2501 TRAIN 2 -> ACTIVE 
+[Thursday  23h54:30] UCA   -> ALDC ; 2101-2501 > 2 
+[Thursday  23h54:31] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
+[Thursday  23h55:08] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Thursday  23h55:08] UCA   -> ALDC ; 2501-2201 > 2 
+[Thursday  23h55:09] PA    -> DP ; BOUCLE 2501 TRAIN 2 -> INACTIVE 
+[Thursday  23h55:15] PA    -> ITINÉRAIRE 2201_2401 ; EN DESTRUCTION. 
+[Thursday  23h55:15] PA    -> ITINÉRAIRE 2201_1201 ; SÉLECTIONNÉ. 
+[Thursday  23h55:20] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
+[Thursday  23h55:20] UCA   -> ALDC ; 2201-2101 > 2 
+[Thursday  23h55:21] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Thursday  23h55:21] PA    -> ITINÉRAIRE 2201_2401 ; DÉTRUIT. 
+[Thursday  23h55:21] PA    -> ITINÉRAIRE 2201_1201 ; FORMÉ. 
+[Thursday  23h55:22] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Thursday  23h55:22] UCA   -> ALDC ; 2101-2201 > 2 
+[Thursday  23h55:24] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
+[Thursday  23h55:26] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
+[Thursday  23h55:26] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
+[Thursday  23h55:27] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> ACTIVE 
+[Thursday  23h55:27] PA    -> ITINÉRAIRE 2201_1201 ; EN DESTRUCTION. 
+[Thursday  23h55:27] PA    -> ITINÉRAIRE 2201_2401 ; SÉLECTIONNÉ. 
+[Thursday  23h55:29] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Thursday  23h55:29] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Thursday  23h55:31] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
+[Thursday  23h55:31] PA    -> ITINÉRAIRE 2201_1201 ; DÉTRUIT. 
+[Thursday  23h55:31] PA    -> ITINÉRAIRE 2201_2401 ; FORMÉ. 
+[Thursday  23h55:38] PA    -> DP ; BOUCLE 1101 TRAIN 2 -> ACTIVE 
+[Thursday  23h55:38] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> INACTIVE 
+[Thursday  23h55:41] PA    -> ITINÉRAIRE 1101_1201 ; SÉLECTIONNÉ. 
+[Thursday  23h55:41] PA    -> ITINÉRAIRE 1201_1401 ; SÉLECTIONNÉ. 
+[Thursday  23h55:42] PA    -> LDI ; c1101-c1201. 
+[Thursday  23h55:42] PA    -> LDI ; c1201-c1101. 
+[Thursday  23h55:42] PA    -> ITINÉRAIRE 1101_1201 ; FORMÉ. 
+[Thursday  23h55:42] PA    -> LDI ; c1101-c1201. 
+[Thursday  23h55:42] PA    -> LDI ; c1201-c1101. 
+[Thursday  23h55:42] PA    -> ITINÉRAIRE 1201_1401 ; FORMÉ. 
+[Thursday  23h56:12] PA    -> LDI ; c1101-c1201. 
+[Thursday  23h56:12] PA    -> ITINÉRAIRE 1201_1101 ; EN DESTRUCTION. 
+[Thursday  23h56:12] PA    -> LDI ; c1201-c1101. 
+[Thursday  23h56:12] PA    -> ITINÉRAIRE 1201_1101 ; DÉTRUIT. 
+[Thursday  23h56:20] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Thursday  23h56:26] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> ACTIVE 
+[Thursday  23h56:27] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
+[Thursday  23h56:28] PA    -> DP ; BOUCLE 1101 TRAIN 2 -> INACTIVE 
+[Thursday  23h56:28] PA    -> DP ; BOUCLE 1201 TRAIN 2 -> INACTIVE 
+[Thursday  23h56:30] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> ACTIVE 
+[Thursday  23h56:32] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
+[Thursday  23h56:38] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
+[Thursday  23h56:38] UCA   -> ALDC ; 1401-2101 > 2 
+[Thursday  23h56:39] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> INACTIVE 
+[Thursday  23h56:44] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Thursday  23h56:44] UCA   -> ALDC ; 2101-2201 > 2 
+[Thursday  23h56:45] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
+[Thursday  23h56:45] UCA   -> ALDC ; 2101-2201 > 2 
+[Thursday  23h56:46] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> ACTIVE 
+[Thursday  23h56:46] UCA   -> ALDC ; 2101-2201 > 2 
+[Thursday  23h56:47] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
+[Thursday  23h56:47] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Thursday  23h56:48] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Thursday  23h56:48] PA    -> DP ; BOUCLE 2501 TRAIN 2 -> ACTIVE 
+[Thursday  23h56:49] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> INACTIVE 
+[Thursday  23h56:53] PA    -> ITINÉRAIRE 2201_2401 ; EN DESTRUCTION. 
+[Thursday  23h56:53] PA    -> ITINÉRAIRE 1201_1401 ; EN DESTRUCTION. 
+[Thursday  23h56:53] PA    -> ITINÉRAIRE 2401_1401 ; SÉLECTIONNÉ. 
+[Thursday  23h56:53] PA    -> ITINÉRAIRE 2501_2401 ; SÉLECTIONNÉ. 
+[Thursday  23h56:53] PA    -> ITINÉRAIRE 2201_2401 ; DÉTRUIT. 
+[Thursday  23h56:53] PA    -> ITINÉRAIRE 1201_1401 ; DÉTRUIT. 
+[Thursday  23h56:54] PA    -> LDI ; c2401-c2501. 
+[Thursday  23h56:54] PA    -> LDI ; c2501-c2401. 
+[Thursday  23h56:54] PA    -> LDI ; c2401-c2501. 
+[Thursday  23h56:54] PA    -> LDI ; c2501-c2401. 
+[Thursday  23h56:54] PA    -> ITINÉRAIRE 2501_2401 ; FORMÉ. 
+[Thursday  23h56:54] PA    -> ITINÉRAIRE 2401_1401 ; FORMÉ. 
+[Thursday  23h57:17] PA    -> LDI ; c2401-c2501. 
+[Thursday  23h57:17] PA    -> LDI ; c2501-c2401. 
+[Thursday  23h57:17] PA    -> ITINÉRAIRE 2401_2501 ; EN DESTRUCTION. 
+[Thursday  23h57:17] PA    -> ITINÉRAIRE 2401_2501 ; DÉTRUIT. 
+[Thursday  23h57:20] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Thursday  23h57:24] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> ACTIVE 
+[Thursday  23h57:24] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
+[Thursday  23h57:25] PA    -> DP ; BOUCLE 2501 TRAIN 2 -> INACTIVE 
+[Thursday  23h57:25] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> INACTIVE 
+[Thursday  23h57:27] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
+[Thursday  23h57:28] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> ACTIVE 
+[Thursday  23h57:28] PA    -> ITINÉRAIRE 2401_1401 ; EN DESTRUCTION. 
+[Thursday  23h57:28] PA    -> ITINÉRAIRE 2201_2401 ; SÉLECTIONNÉ. 
+[Thursday  23h57:28] PA    -> ITINÉRAIRE 2401_2501 ; SÉLECTIONNÉ. 
+[Thursday  23h57:29] PA    -> LDI ; c2401-c2501. 
+[Thursday  23h57:29] PA    -> LDI ; c2501-c2401. 
+[Thursday  23h57:29] PA    -> ITINÉRAIRE 2401_2501 ; FORMÉ. 
+[Thursday  23h57:40] PA    -> LDI ; c2401-c2501. 
+[Thursday  23h57:40] PA    -> LDI ; c2501-c2401. 
+[Thursday  23h57:40] PA    -> ITINÉRAIRE 2401_2501 ; EN DESTRUCTION. 
+[Thursday  23h57:40] PA    -> ITINÉRAIRE 2401_2501 ; DÉTRUIT. 
+[Thursday  23h57:44] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Thursday  23h57:46] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Thursday  23h57:47] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
+[Thursday  23h57:47] PA    -> ITINÉRAIRE 2401_1401 ; DÉTRUIT. 
+[Thursday  23h57:47] PA    -> ITINÉRAIRE 2201_2401 ; FORMÉ. 

@@ -96,19 +96,19 @@
   },
   "players": [
     {
-      "uuid": "aa1020b8-e...",
+      "uuid": "6226c495-a...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "51da9166-5...",
+      "uuid": "e13f52e9-b...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
   ],
   "trainMouvements": {
     "2": [
-      "c2401"
+      "c1401"
     ],
     "3": [
       "c2202"
@@ -281,6 +281,217 @@
       "t2cycle": "c1p10"
     }
   ],
+  "sequences": {
+    "RETV201": {
+      "phases": [
+        {
+          "DES": [
+            "2401_2201",
+            "2201_1201",
+            "1201_2201",
+            "1401_2401",
+            "2401_1401"
+          ],
+          "SEL": [
+            "2201_2401",
+            "2401_2501"
+          ],
+          "end": "c2501"
+        }
+      ],
+      "BASE": {
+        "DES": [
+          "2401_2201",
+          "2201_1201",
+          "1201_2201",
+          "1401_2401",
+          "2401_1401"
+        ],
+        "SEL": [
+          "2201_2401",
+          "2401_2501"
+        ]
+      }
+    },
+    "RETV101": {
+      "phases": [
+        {
+          "DES": [
+            "2401_2201",
+            "2201_2401",
+            "1201_1401",
+            "1401_1201",
+            "2401_1401",
+            "1401_2401",
+            "1201_2201",
+            "1101_1201"
+          ],
+          "SEL": [
+            "2201_1201",
+            "1201_1101"
+          ],
+          "end": "c1201"
+        }
+      ],
+      "BASE": {
+        "DES": [
+          "2401_2201",
+          "2201_1201",
+          "1201_2201",
+          "1401_2401",
+          "2401_1401"
+        ],
+        "SEL": [
+          "2201_2401",
+          "2401_2501"
+        ]
+      }
+    },
+    "INJV201": {
+      "phases": [
+        {
+          "DES": [
+            "2401_2201",
+            "2201_2401",
+            "1201_1401",
+            "1401_1201",
+            "2201_1201",
+            "1401_2401",
+            "1201_2201"
+          ],
+          "SEL": [
+            "2501_2401",
+            "2401_1401"
+          ],
+          "end": "c1401"
+        }
+      ],
+      "BASE": {
+        "DES": [
+          "2401_2201",
+          "2201_1201",
+          "1201_2201",
+          "1401_2401",
+          "2401_1401"
+        ],
+        "SEL": [
+          "2201_2401",
+          "2401_2501"
+        ]
+      }
+    },
+    "INJV101": {
+      "phases": [
+        {
+          "DES": [
+            "1401_1201",
+            "2201_1201",
+            "1401_2401",
+            "1201_2201",
+            "2401_1401"
+          ],
+          "SEL": [
+            "1101_1201",
+            "1201_1401"
+          ],
+          "end": "c1401"
+        }
+      ],
+      "BASE": {
+        "DES": [
+          "2401_2201",
+          "2201_1201",
+          "1201_2201",
+          "1401_2401",
+          "2401_1401"
+        ],
+        "SEL": [
+          "2201_2401",
+          "2401_2501"
+        ]
+      }
+    },
+    "RETGLA": {
+      "phases": [
+        {
+          "DES": [
+            "1102_1501",
+            "1202_1501",
+            "1202_2101",
+            "2101_1202",
+            "1102_1302",
+            "1302_1102",
+            "PAG1_1102"
+          ],
+          "SEL": [
+            "1501_1102",
+            "1102_PAG1"
+          ],
+          "end": "cGPAG1"
+        }
+      ],
+      "BASE": {
+        "DES": [
+          "1202_1501",
+          "1102_1501",
+          "1202_2101",
+          "2101_1202",
+          "PAG1_1102",
+          "1102_PAG1"
+        ],
+        "SEL": [
+          "1501_1102",
+          "1501_1202",
+          "1102_1302",
+          "1501_1202"
+        ]
+      }
+    },
+    "INJGLA": {
+      "phases": [
+        {
+          "DES": [
+            "1501_1102",
+            "1501_1202",
+            "1102_1501",
+            "1202_1501",
+            "1102_1302",
+            "1302_1102",
+            "2302_2101",
+            "2101_2402",
+            "2101_2302",
+            "1102_PAG1"
+          ],
+          "SEL": [
+            "PAG1_1102",
+            "1202_1501",
+            "2402_1501"
+          ],
+          "end": "c1501"
+        }
+      ],
+      "BASE": {
+        "DES": [
+          "1202_1501",
+          "1102_1501",
+          "1202_2101",
+          "2101_1202",
+          "PAG1_1102",
+          "1102_PAG1",
+          "2101_2402",
+          "2101_2302"
+        ],
+        "SEL": [
+          "1501_1102",
+          "1501_1202",
+          "1102_1302",
+          "1501_1202",
+          "2302_2101",
+          "2402_2101"
+        ]
+      }
+    }
+  },
   "trains": {
     "2": {
       "tid": "2",
@@ -584,54 +795,6 @@
           "active": false,
           "sel": false,
           "phase": 1
-        },
-        {
-          "code": "c3p1",
-          "imgn": "./src/formats/cycles/pa1/c3.png",
-          "imgl": "./src/formats/cycles/pa1/c3lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c4p1",
-          "imgn": "./src/formats/cycles/pa1/c4.png",
-          "imgl": "./src/formats/cycles/pa1/c4lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c5p1",
-          "imgn": "./src/formats/cycles/pa1/c5.png",
-          "imgl": "./src/formats/cycles/pa1/c5lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c6p1",
-          "imgn": "./src/formats/cycles/pa1/c6.png",
-          "imgl": "./src/formats/cycles/pa1/c6lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c7p1",
-          "imgn": "./src/formats/cycles/pa1/c7.png",
-          "imgl": "./src/formats/cycles/pa1/c7lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c8p1",
-          "imgn": "./src/formats/cycles/pa1/c8.png",
-          "imgl": "./src/formats/cycles/pa1/c8lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
         }
       ],
       "ITI": [
@@ -639,13 +802,13 @@
           "V1": [
             {
               "code": "2401_2501",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "2501_2401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1401_2401",
@@ -707,7 +870,7 @@
             {
               "code": "2401_1401",
               "active": false,
-              "mode": "DES"
+              "mode": false
             },
             {
               "code": "1201_1401",
@@ -751,7 +914,8 @@
         "injDispoV201": false,
         "retDispoV101": true,
         "injDispoV101": false,
-        "razSeq": false,
+        "ongoingseq": false,
+        "echecSeq": false,
         "itiOngoing": true,
         "cycleOngoing": false
       },
@@ -796,7 +960,9 @@
         },
         {
           "cid": "c1401",
-          "trains": [],
+          "trains": [
+            "2"
+          ],
           "type": "quai",
           "name": "MSTO V1",
           "states": {
@@ -832,7 +998,7 @@
             "RP10": false,
             "RP30": false,
             "AAHS": false,
-            "status": false,
+            "status": "valid",
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -976,9 +1142,7 @@
             "pdp": false,
             "coupFs": false
           },
-          "trains": [
-            "2"
-          ]
+          "trains": []
         },
         {
           "cid": "c2501",
@@ -1005,7 +1169,8 @@
         "sortieDispoGla": true,
         "entreeDispoGla": false,
         "spsto": true,
-        "razSeq": false,
+        "ongoingseq": false,
+        "echecSeq": false,
         "itiOngoing": true
       },
       "ITI": [
@@ -1121,62 +1286,6 @@
           "code": "c1p2",
           "imgn": "./src/formats/cycles/pa2/c1.png",
           "imgl": "./src/formats/cycles/pa2/c1lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c2p2",
-          "imgn": "./src/formats/cycles/pa2/c2.png",
-          "imgl": "./src/formats/cycles/pa2/c2lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c3p2",
-          "imgn": "./src/formats/cycles/pa2/c3.png",
-          "imgl": "./src/formats/cycles/pa2/c3lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c4p2",
-          "imgn": "./src/formats/cycles/pa2/c4.png",
-          "imgl": "./src/formats/cycles/pa2/c4lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c5p2",
-          "imgn": "./src/formats/cycles/pa2/c5.png",
-          "imgl": "./src/formats/cycles/pa2/c5lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c6p2",
-          "imgn": "./src/formats/cycles/pa2/c6.png",
-          "imgl": "./src/formats/cycles/pa2/c6lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c7p2",
-          "imgn": "./src/formats/cycles/pa2/c7.png",
-          "imgl": "./src/formats/cycles/pa2/c7lit.png",
-          "active": false,
-          "sel": false,
-          "phase": 1
-        },
-        {
-          "code": "c8p2",
-          "imgn": "./src/formats/cycles/pa2/c8.png",
-          "imgl": "./src/formats/cycles/pa2/c8lit.png",
           "active": false,
           "sel": false,
           "phase": 1

@@ -44,6 +44,8 @@ logUpdate('├ Loading OVSE...')
 const ovse = require('./OVSE')
 logUpdate('├ Loading itineraires...')
 const itineraire = require('./itineraires')
+logUpdate('├ Loading seq...')
+const seq = require('./seq')
 logUpdate('├ Loading writter...')
 const writter = require('./writter')
 writter.clean()
@@ -2359,11 +2361,11 @@ wss.on('connection', (ws, req) => {
                 } else {
                     pccApi.SEC[0].states.injDispoV101=false
                 }
-                if(data.execute==='RET-BTN-ITI'){
+                if(data.execute==="SEQUENCE") seq.appseq(data.target)
+                /*if(data.execute==='RET-BTN-ITI'){
                     if(!(data.target)) return;
                     if(data.target==='V201'){
                         if(pccApi.SEC[0].cantons[9].trains.length>0) return;
-                            pccApi.SEC[0].CYCLES[6].active=true
                             for(let itides of ['2501_2401','2401_2201','2201_1201','2401_1401','1201_2201','2401_1401']){
                                 if(itiInf(itides).active===true) itineraire.DES(itides)
                             }
@@ -2376,7 +2378,6 @@ wss.on('connection', (ws, req) => {
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[0].states.injDispoV201=true
                                 pccApi.SEC[0].states.retDispoV201=false
-                                pccApi.SEC[0].CYCLES[6].active=false
                                 exports.apiSave()
                                 writter.simple('TERMINÉ.','PA', `SEQUENCE RETRAIT ${data.target}`)
                             }
@@ -2385,7 +2386,6 @@ wss.on('connection', (ws, req) => {
                     }
                     if(data.target==='V101'){
                         if(pccApi.SEC[0].cantons[0].trains.length>0) return;
-                            pccApi.SEC[0].CYCLES[2].active=true
                             for(let itides of ['1401_2401','2401_1401','1201_2201','1101_1201','2201_2401','2401_2201','1201_1401','1401_1201']){
                                 if(itiInf(itides).active===true) itineraire.DES(itides)
                             }
@@ -2397,7 +2397,6 @@ wss.on('connection', (ws, req) => {
                             if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[0].states.injDispoV101=true
-                                pccApi.SEC[0].CYCLES[2].active=false
                                 if((pccApi.SEC[0].cantons[0].trains.length>0)||(pccApi.SEC[0].cantons[1].trains.length>0)){
                                     pccApi.SEC[0].states.retDispoV101=true
                                 } else {
@@ -2411,7 +2410,6 @@ wss.on('connection', (ws, req) => {
                     }
                     if(data.target==='GLA'){
                         if(pccApi.SEC[0].cantons[9].trains.length>0) return;
-                            pccApi.SEC[1].CYCLES[6].active=true
                             for(let itides of ['PAG1_1102','1202_1501','1202_2101','2101_1202']){
                                 if(itiInf(itides).active===true) itineraire.DES(itides)
                             }
@@ -2424,7 +2422,6 @@ wss.on('connection', (ws, req) => {
                             if(pccApi.SEC[1].cantons[9].trains.length>0){
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[1].states.entreeDispoGla=true
-                                pccApi.SEC[1].CYCLES[6].active=false
                                 exports.apiSave()
                                 writter.simple('TERMINÉ.','PA', `SEQUENCE RETRAIT ${data.target}`)
                             }
@@ -2436,7 +2433,6 @@ wss.on('connection', (ws, req) => {
                     if(!(data.target)) return;
                     if(data.target==='V201'){
                         if(pccApi.SEC[0].cantons[3].trains.length>0) return;
-                            pccApi.SEC[0].CYCLES[3].active=true
                             for(let itides of ['2401_2501','2401_2201','2201_2401','2201_1201','1201_2201']){
                                 if(itiInf(itides).active===true) itineraire.DES(itides)
                             }
@@ -2449,7 +2445,6 @@ wss.on('connection', (ws, req) => {
                                 clearInterval(endCycleInter)
                                 pccApi.SEC[0].states.injDispoV201=false
                                 pccApi.SEC[0].states.retDispoV201=true 
-                                pccApi.SEC[0].CYCLES[3].active=false
                                 exports.apiSave()
                                 writter.simple('TERMINÉ.','PA', `SEQUENCE INJECTION ${data.target}`)
                             }
@@ -2494,7 +2489,6 @@ wss.on('connection', (ws, req) => {
                         let endCycleIti = ()=>{
                             if((pccApi.SEC[0].cantons[5].trains.length>0)){
                                 clearInterval(endCycleInter)
-                                pccApi.SEC[1].CYCLES[7].active=false
                                 pccApi.SEC[1].states.entreeDispoGla=false
                                 exports.apiSave()
                                 writter.simple('TERMINÉ.','PA', `SEQUENCE INJECTION ${data.target}`)
@@ -2502,7 +2496,7 @@ wss.on('connection', (ws, req) => {
                         }
                         let endCycleInter = setInterval(endCycleIti,2000)
                     }
-                }
+                }*/
                 if(data.execute==='SP-ON'){
                     if(!(data.target)) return;
                     if(data.target==='STO'){

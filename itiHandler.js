@@ -152,8 +152,13 @@ async function updateFormat(pa){
             let stateElem = sec.states[voyHeader.id]
             if(stateElem===true){
                 voyHeader.classList.add('ok')
-            } else {
+                voyHeader.classList.remove('alarm')
+            } else if(stateElem===false){
                 voyHeader.classList.remove('ok')
+                voyHeader.classList.remove('alarm')
+            } else if(stateElem===1){
+                voyHeader.classList.remove('ok')
+                voyHeader.classList.add('alarm')
             }
         }
     }
@@ -780,8 +785,8 @@ let btnCancelCycles = document.getElementById('btnCancelCycles')
 btnRetV201.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 221,
-        execute: "RET-BTN-ITI",
-        target: "V201",
+        execute: "SEQUENCE",
+        target: "RETV201",
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
@@ -790,8 +795,8 @@ btnRetV201.addEventListener('click', ()=>{
 btnInjV201.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 221,
-        execute: "INJ-BTN-ITI",
-        target: "V201",
+        execute: "SEQUENCE",
+        target: "INJV201",
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
@@ -800,8 +805,8 @@ btnInjV201.addEventListener('click', ()=>{
 btnRetV101.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 221,
-        execute: "RET-BTN-ITI",
-        target: "V101",
+        execute: "SEQUENCE",
+        target: "RETV101",
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
@@ -810,8 +815,8 @@ btnRetV101.addEventListener('click', ()=>{
 btnInjV101.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 221,
-        execute: "INJ-BTN-ITI",
-        target: "V101",
+        execute: "SEQUENCE",
+        target: "INJV101",
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
@@ -820,8 +825,8 @@ btnInjV101.addEventListener('click', ()=>{
 btnSortieGla.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 221,
-        execute: "RET-BTN-ITI",
-        target: "GLA",
+        execute: "SEQUENCE",
+        target: "RETGLA",
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
@@ -830,8 +835,8 @@ btnSortieGla.addEventListener('click', ()=>{
 btnEntreeGla.addEventListener('click', ()=>{
     actualRequest = JSON.stringify({
         op: 221,
-        execute: "INJ-BTN-ITI",
-        target: "GLA",
+        execute: "SEQUENCE",
+        target: "INJGLA",
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
