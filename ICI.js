@@ -53,30 +53,9 @@ exports.SEL=async(code)=>{
                     writter.simple(`ITINÉRAIRE ${iti.code} SÉLECTIONNÉ.`,'PA', `ICI`)
                     await setTimeout(1000)
                     if(ovse.isItiAnAigOne(iti.code)){
-                        let incompatibleIti = []
-                        let onDesIti = []
-                        for(let itiListOfAig of pccApi.aigItis[ovse.isItiAnAigOne(iti.code)]){
-                            if(itiInf(itiListOfAig).mode==='DES'||itiInf(itiListOfAig).mode==='DU') onDesIti.push(itiListOfAig)
-                            if(itiInf(itiListOfAig).mode==='SEL'&&itiInf(itiListOfAig).active===true) incompatibleIti.push(itiListOfAig)
-                        }
-                        if(incompatibleIti.length>0){
-                            writter.simple(`INCOMPATIBILITÉ ${iti.code}.`,'PA', `ICI`)
-                            let incompatibleInter = setInterval(()=>{
-                                for(let itiListOfAig of pccApi.aigItis[ovse.isItiAnAigOne(iti.code)]){
-                                    if(itiInf(itiListOfAig).mode==='DES'||itiInf(itiListOfAig).mode==='DU') onDesIti.push(itiListOfAig)
-                                    if(itiInf(itiListOfAig).mode==='SEL'&&itiInf(itiListOfAig).active===true) incompatibleIti.push(itiListOfAig)
-                                }
-                                if(onDesIti.length>0) {
-                                    clearInterval(incompatibleInter)
-                                    INTERVALS.splice(INTERVALS.indexOf(desselInter),1)
-                                    writter.simple(`COMPATIBILITÉ ${iti.code} SUR DESTRUCTION PROGRAMMÉE ${onDesIti[0]}.`,'PA', `ICI`)
-                                    return this.suiteOnDesCond()
-                                }
-                            },250)
-                            INTERVALS.push(incompatibleInter)
-                            INTERMAP.set(`${code}`,incompatibleInter)
-                        }
-                        this.suiteOnDesCond = async function (){
+
+                        //! INIT FUNC, NOT RUNING FIRST!
+                        let suiteOnDesCond = async function (){
                             if(onDesIti.length>0){
                                 let desselInter = setInterval(()=>{
                                     if(itiInf(onDesIti[0]).active===false&&itiInf(onDesIti[0]).mode===false){
@@ -114,7 +93,54 @@ exports.SEL=async(code)=>{
                                 writter.simple(`ITINÉRAIRE ${iti.code} FORMÉ.`,'PA', `ICI`)
                             }
                         }
-                        this.suiteOnDesCond()
+
+
+                        let incompatibleIti = []
+                        let onDesIti = []
+                        for(let itiListOfAig of pccApi.aigItis[ovse.isItiAnAigOne(iti.code)]){
+                            let tempItiParts = itiListOfAig.split('_')
+                            if(itiInf(itiListOfAig).mode==='DES'||itiInf(itiListOfAig).mode==='DU'&&onDesIti.includes(itiListOfAig)===false) onDesIti.push(itiListOfAig)
+                            if(itiInf(itiListOfAig).mode==='SEL'&&itiInf(itiListOfAig).active===true){ //un itinéraire de l'aiguille est actif
+                                if(itiListOfAig===iti.code) continue; //si l'itinéraire s'est autodétecté ça dégage
+                                if(aigInf(ovse.isItiAnAigOne(iti.code)).exeption.includes(itiListOfAig)&&!(aigInf(ovse.isItiAnAigOne(iti.code)).exeption.includes(iti.code))){ //si l'itinéraire n'est pas paralèle à celui en question
+                                    incompatibleIti.push(itiListOfAig)
+                                }
+                                if(aigInf(ovse.isItiAnAigOne(iti.code)).exeption.includes(iti.code)&&!(aigInf(ovse.isItiAnAigOne(iti.code)).exeption.includes(itiListOfAig))){ //si l'itinéraire n'est pas paralèle à celui en question
+                                    incompatibleIti.push(itiListOfAig)
+                                }
+                            }
+                        }
+                        if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===true) incompatibleIti.push(iti.code)
+                        if(incompatibleIti.length>0){
+                            writter.simple(`INCOMPATIBILITÉ ${iti.code}.`,'PA', `ICI`)
+                            let incompatibleInter = setInterval(()=>{
+                                onDesIti = []
+                                incompatibleIti = []
+                                for(let itiListOfAig of pccApi.aigItis[ovse.isItiAnAigOne(iti.code)]){
+                                    let tempItiParts = itiListOfAig.split('_')
+                                    if(itiInf(itiListOfAig).mode==='DES'||itiInf(itiListOfAig).mode==='DU'&&onDesIti.includes(itiListOfAig)===false) onDesIti.push(itiListOfAig)
+                                    if(itiInf(itiListOfAig).mode==='SEL'&&itiInf(itiListOfAig).active===true){ //un itinéraire de l'aiguille est actif
+                                        if(itiListOfAig===iti.code) continue; //si l'itinéraire s'est autodétecté ça dégage
+                                        if(aigInf(ovse.isItiAnAigOne(iti.code)).exeption.includes(itiListOfAig)&&!(aigInf(ovse.isItiAnAigOne(iti.code)).exeption.includes(iti.code))){ //si l'itinéraire n'est pas paralèle à celui en question
+                                            incompatibleIti.push(itiListOfAig)
+                                        }
+                                        if(aigInf(ovse.isItiAnAigOne(iti.code)).exeption.includes(iti.code)&&!(aigInf(ovse.isItiAnAigOne(iti.code)).exeption.includes(itiListOfAig))){ //si l'itinéraire n'est pas paralèle à celui en question
+                                            incompatibleIti.push(itiListOfAig)
+                                        }
+                                    }
+                                }
+                                if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===true) incompatibleIti.push(iti.code)
+                                console.log(incompatibleIti)
+                                if(onDesIti.length>0) {
+                                    clearInterval(incompatibleInter)
+                                    INTERVALS.splice(INTERVALS.indexOf(incompatibleInter),1)
+                                    writter.simple(`COMPATIBILITÉ ${iti.code} SUR DESTRUCTION PROGRAMMÉE ${onDesIti[0]}.`,'PA', `ICI`)
+                                    return suiteOnDesCond()
+                                }
+                            },250)
+                            INTERVALS.push(incompatibleInter)
+                            INTERMAP.set(`${code}`,incompatibleInter)
+                        } else suiteOnDesCond();
                     } else {
                         if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===true&&itiInf(`${itiParts[1]}_${itiParts[0]}`).mode==='SEL') {
                             writter.simple(`INCOMPATIBILITÉ ${iti.code}.`,'PA', `ICI`)
@@ -372,4 +398,10 @@ function clearCorrespondingInterval(code){
         return true;
     }
     return false;
+}
+
+function aigInf(code){
+    for(let aig of pccApi.aiguilles){
+        if(aig.id===code) return aig;
+    }
 }

@@ -15,7 +15,7 @@ const {setTimeout} = require('timers/promises')
 
 const writter = require("./writter");
 
-const itineraire = require('./itineraires');
+const itineraire = require('./ICI');
 const ovse = require('./OVSE');
 
 let INTERVALS = []

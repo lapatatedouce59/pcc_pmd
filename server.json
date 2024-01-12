@@ -96,12 +96,7 @@
   },
   "players": [
     {
-      "uuid": "6226c495-a...",
-      "name": "patatedouce.dev",
-      "role": "chef"
-    },
-    {
-      "uuid": "e13f52e9-b...",
+      "uuid": "35f494e7-5...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -227,7 +222,8 @@
       "id": "C1",
       "occupied": false,
       "actualIti": [
-        "2201_2401"
+        "2201_2401",
+        "1201_1401"
       ],
       "exeption": [
         "1201_1401",
@@ -833,8 +829,8 @@
             },
             {
               "code": "2101_2201",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2201_2101",
@@ -875,8 +871,8 @@
             },
             {
               "code": "1201_1401",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1401_1201",
