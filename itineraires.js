@@ -1,6 +1,6 @@
 /**
- * Module de gestion des itinéraires
- * @module itineraires
+ * Informatique de controle des itinéraires
+ * @module IGI
  */
 
 let pccApi = require('./server.json')
@@ -26,7 +26,7 @@ exports.SEL=async(code)=>{
                     let itiParts = iti.code.split('_')
                     clearCorrespondingInterval(code)
                     if(iti.mode==='DU') {
-                        writter.simple('DU ANNULÉE.','PA', `ITINÉRAIRE ${iti.code}`)
+                        writter.simple(`ITINÉRAIRE ${iti.code} : DU ANNULÉE.`,'PA', `ICI`)
                         for(let aigIti of Object.entries(pccApi.aigItis)){
                             if (aigIti[1].includes(iti.code)) {
                                 for(let aigGroup of pccApi.aiguilles){
@@ -37,7 +37,7 @@ exports.SEL=async(code)=>{
                         }
                     }
                     if(iti.mode==='DES') {
-                        writter.simple('DES ANNULÉE.','PA', `ITINÉRAIRE ${iti.code}`)
+                        writter.simple(`ITINÉRAIRE ${iti.code} : DES ANNULÉE.`,'PA', `ICI`)
                         for(let aigIti of Object.entries(pccApi.aigItis)){
                             if (aigIti[1].includes(iti.code)) {
                                 for(let aigGroup of pccApi.aiguilles){
@@ -50,60 +50,83 @@ exports.SEL=async(code)=>{
                     iti.mode='SEL'
                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                     parent.apiSave()
-                    writter.simple('SÉLECTIONNÉ.','PA', `ITINÉRAIRE ${iti.code}`)
+                    writter.simple(`ITINÉRAIRE ${iti.code} SÉLECTIONNÉ.`,'PA', `ICI`)
                     await setTimeout(1000)
                     if(ovse.isItiAnAigOne(iti.code)){
+                        let incompatibleIti = []
                         let onDesIti = []
                         for(let itiListOfAig of pccApi.aigItis[ovse.isItiAnAigOne(iti.code)]){
                             if(itiInf(itiListOfAig).mode==='DES'||itiInf(itiListOfAig).mode==='DU') onDesIti.push(itiListOfAig)
+                            if(itiInf(itiListOfAig).mode==='SEL'&&itiInf(itiListOfAig).active===true) incompatibleIti.push(itiListOfAig)
                         }
-                        if(onDesIti.length>0){
-                            let desselInter = setInterval(()=>{
-                                if(itiInf(onDesIti[0]).active===false&&itiInf(onDesIti[0]).mode===false){
-                                    clearInterval(desselInter)
+                        if(incompatibleIti.length>0){
+                            writter.simple(`INCOMPATIBILITÉ ${iti.code}.`,'PA', `ICI`)
+                            let incompatibleInter = setInterval(()=>{
+                                for(let itiListOfAig of pccApi.aigItis[ovse.isItiAnAigOne(iti.code)]){
+                                    if(itiInf(itiListOfAig).mode==='DES'||itiInf(itiListOfAig).mode==='DU') onDesIti.push(itiListOfAig)
+                                    if(itiInf(itiListOfAig).mode==='SEL'&&itiInf(itiListOfAig).active===true) incompatibleIti.push(itiListOfAig)
+                                }
+                                if(onDesIti.length>0) {
+                                    clearInterval(incompatibleInter)
                                     INTERVALS.splice(INTERVALS.indexOf(desselInter),1)
-                                    clearCorrespondingInterval(code)
-                                    iti.active=true
-                                    for(let aigIti of Object.entries(pccApi.aigItis)){
-                                        if (aigIti[1].includes(iti.code)) {
-                                            for(let aigGroup of pccApi.aiguilles){
-                                                if(!(aigGroup.id===aigIti[0])) continue;
-                                                aigGroup.actualIti.push(iti.code)
+                                    writter.simple(`COMPATIBILITÉ ${iti.code} SUR DESTRUCTION PROGRAMMÉE ${onDesIti[0]}.`,'PA', `ICI`)
+                                    return this.suiteOnDesCond()
+                                }
+                            },250)
+                            INTERVALS.push(incompatibleInter)
+                            INTERMAP.set(`${code}`,incompatibleInter)
+                        }
+                        this.suiteOnDesCond = async function (){
+                            if(onDesIti.length>0){
+                                let desselInter = setInterval(()=>{
+                                    if(itiInf(onDesIti[0]).active===false&&itiInf(onDesIti[0]).mode===false){
+                                        clearInterval(desselInter)
+                                        INTERVALS.splice(INTERVALS.indexOf(desselInter),1)
+                                        clearCorrespondingInterval(code)
+                                        iti.active=true
+                                        for(let aigIti of Object.entries(pccApi.aigItis)){
+                                            if (aigIti[1].includes(iti.code)) {
+                                                for(let aigGroup of pccApi.aiguilles){
+                                                    if(!(aigGroup.id===aigIti[0])) continue;
+                                                    aigGroup.actualIti.push(iti.code)
+                                                }
                                             }
                                         }
+                                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                                        parent.apiSave()
+                                        writter.simple(`ITINÉRAIRE ${iti.code} FORMÉ.`,'PA', `ICI`)
                                     }
-                                    fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                                    parent.apiSave()
-                                    writter.simple('FORMÉ.','PA', `ITINÉRAIRE ${iti.code}`)
-                                }
-                            },250)
-                            INTERVALS.push(desselInter)
-                            INTERMAP.set(`${code}`,desselInter)
-                        } else {
-                            iti.active=true
-                            for(let aigIti of Object.entries(pccApi.aigItis)){
-                                if (aigIti[1].includes(iti.code)) {
-                                    for(let aigGroup of pccApi.aiguilles){
-                                        if(!(aigGroup.id===aigIti[0])) continue;
-                                        aigGroup.actualIti.push(iti.code)
+                                },250)
+                                INTERVALS.push(desselInter)
+                                INTERMAP.set(`${code}`,desselInter)
+                            } else {
+                                iti.active=true
+                                for(let aigIti of Object.entries(pccApi.aigItis)){
+                                    if (aigIti[1].includes(iti.code)) {
+                                        for(let aigGroup of pccApi.aiguilles){
+                                            if(!(aigGroup.id===aigIti[0])) continue;
+                                            aigGroup.actualIti.push(iti.code)
+                                        }
                                     }
                                 }
+                                fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                                parent.apiSave()
+                                writter.simple(`ITINÉRAIRE ${iti.code} FORMÉ.`,'PA', `ICI`)
                             }
-                            fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                            parent.apiSave()
-                            writter.simple('FORMÉ.','PA', `ITINÉRAIRE ${iti.code}`)
                         }
+                        this.suiteOnDesCond()
                     } else {
-                        if(itiInf(`${itiParts[1]}_${itiParts[0]}`).mode==='DES') {
+                        if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===true&&itiInf(`${itiParts[1]}_${itiParts[0]}`).mode==='SEL') {
+                            writter.simple(`INCOMPATIBILITÉ ${iti.code}.`,'PA', `ICI`)
                             let desselInter = setInterval(()=>{
-                                if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===false&&itiInf(`${itiParts[1]}_${itiParts[0]}`).mode===false){
+                                if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===false){
                                     clearInterval(desselInter)
                                     INTERVALS.splice(INTERVALS.indexOf(desselInter),1)
                                     clearCorrespondingInterval(code)
                                     iti.active=true
                                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                     parent.apiSave()
-                                    writter.simple('FORMÉ.','PA', `ITINÉRAIRE ${iti.code}`)
+                                    writter.simple(`ITINÉRAIRE ${iti.code} FORMÉ.`,'PA', `ICI`)
                                 }
                             },250)
                             INTERVALS.push(desselInter)
@@ -112,7 +135,7 @@ exports.SEL=async(code)=>{
                             iti.active=true
                             fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                             parent.apiSave()
-                            writter.simple('FORMÉ.','PA', `ITINÉRAIRE ${iti.code}`)
+                            writter.simple(`ITINÉRAIRE ${iti.code} FORMÉ.`,'PA', `ICI`)
                         }
                     }
                     return;
@@ -132,8 +155,14 @@ exports.DES=async(code)=>{
                     iti.mode='DES'
                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                     parent.apiSave()
-                    writter.simple('EN DESTRUCTION.','PA', `ITINÉRAIRE ${iti.code}`)
+                    writter.simple(`ITINÉRAIRE ${iti.code} EN DESTRUCTION.`,'PA', `ICI`)
                     await setTimeout(0)
+                    if(iti.active===false){
+                        iti.mode=false
+                        writter.simple(`ITINÉRAIRE ${iti.code} DÉTRUIT.`,'PA', `ICI`)
+                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                        return parent.apiSave();
+                    }
                     let modifiedCtn = []
                     for(let itiPart of itiParts){
                         if(itiPart==='PAG1'){modifiedCtn.push(`cGPAG1`); continue;}
@@ -174,7 +203,7 @@ exports.DES=async(code)=>{
                                 }
                                 fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                 parent.apiSave()
-                                writter.simple('DÉTRUIT.','PA', `ITINÉRAIRE ${iti.code}`)
+                                writter.simple(`ITINÉRAIRE ${iti.code} DÉTRUIT.`,'PA', `ICI`)
                             }
                         },250)
                         INTERVALS.push(desselInter)
@@ -189,7 +218,7 @@ exports.DES=async(code)=>{
                                 iti.active=false
                                 fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                 parent.apiSave()
-                                writter.simple('DÉTRUIT.','PA', `ITINÉRAIRE ${iti.code}`)
+                                writter.simple(`ITINÉRAIRE ${iti.code} DÉTRUIT.`,'PA', `ICI`)
                             }
                         },250)
                         INTERVALS.push(desselInter)
@@ -211,7 +240,7 @@ exports.DU=async(code,inhib)=>{
                     clearCorrespondingInterval(code)
                     iti.mode='DU'
                     if(inhib===false) parent.apiSave()
-                    if(inhib===false) writter.simple('EN DESTRUCTION D\'URGENCE.','PA', `ITINÉRAIRE ${iti.code}`)
+                    if(inhib===false) writter.simple(`ITINÉRAIRE ${iti.code} EN DESTRUCTION D'URGENCE.`,'PA', `ICI`)
                     await setTimeout(0)
                     let modifiedCtn = []
                     for(let itiPart of itiParts){
@@ -247,10 +276,10 @@ exports.DU=async(code,inhib)=>{
                                 }
                             }
                             parent.apiSave()
-                            if(inhib===false) writter.simple('DÉTRUIT D\'URGENCE.','PA', `ITINÉRAIRE ${iti.code}`)
+                            if(inhib===false) writter.simple(`ITINÉRAIRE ${iti.code} EN DESTRUCTION D'URGENCE.`,'PA', `ICI`)
                         } else {
-                            writter.simple(`${ovse.isItiAnAigOne(code)} + ${itiParts[0]},${itiParts[1]}.`,'PA','COUPURE SECURITAIRE')
-                            writter.simple(`${ovse.isItiAnAigOne(code)} + ${itiParts[0]},${itiParts[1]}.`,'UCA','COUPURE FS')
+                            writter.simple(`COUPURE SECURITAIRE ${ovse.isItiAnAigOne(code)} + ${itiParts[0]},${itiParts[1]}.`,'PA','ICI')
+                            writter.simple(`OUI ${ovse.isItiAnAigOne(code)} + ${itiParts[0]},${itiParts[1]}.`,'UCA','COUPURE FS')
                             for(let trueCtn of ctnList){
                                 let actualCtn = ovse.returnCtnIteration(trueCtn)
                                 actualCtn.states.coupFs = 2
@@ -259,7 +288,7 @@ exports.DU=async(code,inhib)=>{
                             parent.apiSave()
                             await setTimeout(10000)
                             if(iti.mode==='DU'){
-                                writter.simple('DÉTRUIT D\'URGENCE (APRES COUP FS).','PA', `ITINÉRAIRE ${iti.code}`)
+                                writter.simple(`ITINÉRAIRE ${iti.code} DÉTRUIT D'URGENCE (APRES COUP FS).`,'PA', `ICI`)
                                 for(let trueCtn of ctnList){
                                     let actualCtn = ovse.returnCtnIteration(trueCtn)
                                     actualCtn.states.coupFs = false
@@ -272,7 +301,7 @@ exports.DU=async(code,inhib)=>{
                                         }
                                     }
                                 }
-                                writter.simple(`${ovse.isItiAnAigOne(code)} + ${itiParts[0]},${itiParts[1]}.`,'UCA','REPRISE FS')
+                                writter.simple(`NON ${ovse.isItiAnAigOne(code)} + ${itiParts[0]},${itiParts[1]}.`,'UCA','COUPURE FS')
                                 iti.mode=false
                                 iti.active=false
                                 fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
@@ -285,22 +314,23 @@ exports.DU=async(code,inhib)=>{
                             iti.active=false
                             fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                             if(inhib===false) parent.apiSave()
-                            if(inhib===false) writter.simple('DÉTRUIT D\'URGENCE (INSTANTANE).','PA', `ITINÉRAIRE ${iti.code}`)
+                            
+                            if(inhib===false) writter.simple(`ITINÉRAIRE ${iti.code} DÉTRUIT D'URGENCE (INSTANTANE).`,'PA', `ICI`)
                         } else {
-                            writter.simple(`${ctnInf(modifiedCtn[0]).cid},${ctnInf(modifiedCtn[1]).cid}.`,'UCA','COUPURE FS')
-                            writter.simple(`${ctnInf(modifiedCtn[0]).cid},${ctnInf(modifiedCtn[1]).cid}.`,'PA','COUPURE SECURITAIRE')
+                            writter.simple(`OUI ${ctnInf(modifiedCtn[0]).cid},${ctnInf(modifiedCtn[1]).cid}.`,'UCA','COUPURE FS')
+                            writter.simple(`COUPURE SECURITAIRE ${ctnInf(modifiedCtn[0]).cid},${ctnInf(modifiedCtn[1]).cid}.`,'PA','ICI')
                             ctnInf(modifiedCtn[0]).states.coupFs = 2
                             ctnInf(modifiedCtn[1]).states.coupFs = 2
                             if(inhib===false) fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                             if(inhib===false) parent.apiSave()
                             await setTimeout(10000)
                             if(iti.mode==='DU'){
-                                writter.simple('DÉTRUIT D\'URGENCE (APRES COUP FS).','PA', `ITINÉRAIRE ${iti.code}`)
+                                writter.simple(`ITINÉRAIRE ${iti.code} DÉTRUIT D\'URGENCE (APRES COUP FS).`,'PA', `ICI`)
                                 iti.mode=false
                                 iti.active=false
                                 ctnInf(modifiedCtn[0]).states.coupFs = false
                                 ctnInf(modifiedCtn[1]).states.coupFs = false
-                                writter.simple(`${ctnInf(modifiedCtn[0]).cid},${ctnInf(modifiedCtn[1]).cid}.`,'UCA','REPRISE FS')
+                                writter.simple(`NON ${ctnInf(modifiedCtn[0]).cid},${ctnInf(modifiedCtn[1]).cid}.`,'UCA','COUPURE FS')
                                 fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                 parent.apiSave()
                             }
