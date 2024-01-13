@@ -53,7 +53,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
             if(!(cycle.code===code)) continue;
             if(code==='c1p1'){
                 cycle.active=true
-                writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
+                writter.simple(`CYCLE ${cycle.code} EN ACTIVITÉ.`,'PA', `IGC`)
                 let initPhaseInter = setInterval(async ()=>{ //? PREPARATION PHASE 1
                     if(cycle.active===false) {
                         clearCorrespondingInterval(code)
@@ -68,7 +68,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                             if(itiInf(iti1).active===true&&itiInf(iti1).mode==='SEL') itineraire.DES(iti1)
                         }
                         if(itiInf('2201_2401').active===false) itineraire.SEL('2201_2401')
-                        writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                        writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 1.`,'PA', `IGC`)
                         let phase1Inter = setInterval(async ()=>{
                             for(let aig of pccApi.aiguilles){
                                 if(!(aig.id==='C1')) continue;
@@ -80,10 +80,10 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                 if(aig.actualIti.length===1 && aig.actualIti[0]==='2201_2401'){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
                                     clearCorrespondingInterval(code)
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
-                                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                                    writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 1.`,'PA', `IGC`)
                                     itineraire.DES('2201_2401')
                                     itineraire.SEL('2401_1401')
-                                    writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                    writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 2.`,'PA', `IGC`)
                                     let phase2inter = setInterval(async ()=>{
                                         for(let aig of pccApi.aiguilles){
                                             if(!(aig.id==='C1')) continue;
@@ -95,11 +95,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                             if(ctnInf('c2401').trains.length>0 && itiInf('2401_1401').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
                                                 clearCorrespondingInterval(code)
                                                 INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
-                                                writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                                writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 2.`,'PA', `IGC`)
                                                 itineraire.SEL('2201_2401')
                                                 itineraire.DES('2401_1401')
                                                 if(cycleTrigger===true){
-                                                    writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
+                                                    writter.simple(`CYCLE ${cycle.code} EN ATTENTE DE RESET.`,'PA', `IGC`)
                                                     let recursiveInter = setInterval(async ()=>{
                                                         for(let aig of pccApi.aiguilles){
                                                             if(!(aig.id==='C1')) continue;
@@ -155,7 +155,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                             if(itiInf(iti1).active===true&&itiInf(iti1).mode==='SEL') itineraire.DES(iti1)
                         }
                         if(itiInf('1401_1201').active===false) itineraire.SEL('1401_1201')
-                        writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                        writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 1.`,'PA', `IGC`)
                         let phase1Inter = setInterval(async ()=>{
                             for(let aig of pccApi.aiguilles){
                                 if(!(aig.id==='C1')) continue;
@@ -167,10 +167,10 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                 if(aig.actualIti.length===1 && aig.actualIti[0]==='1401_1201'){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
                                     clearCorrespondingInterval(code)
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
-                                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                                    writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 1.`,'PA', `IGC`)
                                     itineraire.DES('1401_1201')
                                     itineraire.SEL('1201_2201')
-                                    writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                    writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 2.`,'PA', `IGC`)
                                     let phase2inter = setInterval(async ()=>{
                                         for(let aig of pccApi.aiguilles){
                                             if(!(aig.id==='C1')) continue;
@@ -182,11 +182,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                             if(ctnInf('c1201').trains.length>0 && itiInf('1201_2201').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
                                                 clearCorrespondingInterval(code)
                                                 INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
-                                                writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                                writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 2.`,'PA', `IGC`)
                                                 itineraire.SEL('1401_1201')
                                                 itineraire.DES('1201_2201')
                                                 if(cycleTrigger===true){
-                                                    writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
+                                                    writter.simple(`CYCLE ${cycle.code} EN ATTENTE DE RESET.`,'PA', `IGC`)
                                                     let recursiveInter = setInterval(async ()=>{
                                                         for(let aig of pccApi.aiguilles){
                                                             if(!(aig.id==='C1')) continue;
@@ -226,7 +226,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
 
             if(code==='c1p2'){
                 cycle.active=true
-                writter.simple('EN ACTIVITÉ.','PA', `CYCLE ${cycle.code}`)
+                writter.simple(`CYCLE ${cycle.code} EN ACTIVITÉ.`,'PA', `IGC`)
                 let initPhaseInter = setInterval(async ()=>{ //? PREPARATION PHASE 1
                     if(cycle.active===false) {
                         clearCorrespondingInterval(code)
@@ -236,13 +236,12 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                     if(ctnInf('c2302').trains.length>0){
                         clearCorrespondingInterval(code)
                         INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
-                        let itiDes1 = ["2101_2302","2101_2402","2101_1202","1202_2101","1501_1102","1102_1501","1501_1202","1202_1501"]
+                        let itiDes1 = ["2101_2302","2101_1202","1202_2101","1501_1102","1501_1202","1202_1501"]
                         for(let iti1 of itiDes1){
                             if(itiInf(iti1).active===true&&itiInf(iti1).mode==='SEL') itineraire.DES(iti1)
                         }
                         if(itiInf('2302_2101').active===false) itineraire.SEL('2302_2101')
-                        if(itiInf('2402_2101').active===false) itineraire.SEL('2402_2101')
-                        writter.simple('EN CONSTRUCTION PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                        writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 1.`,'PA', `IGC`)
                         let phase1Inter = setInterval(async ()=>{
                             for(let aig of pccApi.aiguilles){
                                 if(!(aig.id==='C2')) continue;
@@ -251,15 +250,13 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
                                     return;
                                 }
-                                if(aig.actualIti.length===1 && aig.actualIti[0]==='2302_2101' && itiInf('2101_2402').active===false && itiInf('2402_2101').active===true){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
+                                if(aig.actualIti.length===1 && aig.actualIti[0]==='2302_2101' && itiInf('2101_2402').active===false){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
                                     clearCorrespondingInterval(code)
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
-                                    writter.simple('CONSTRUIT PHASE 1.','PA', `CYCLE ${cycle.code}`)
+                                    writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 1.`,'PA', `IGC`)
                                     itineraire.DES('2302_2101')
-                                    itineraire.DES('2402_2101')
                                     itineraire.SEL('2101_1202')
-                                    itineraire.SEL('2101_2402')
-                                    writter.simple('EN CONSTRUCTION PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                    writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 2.`,'PA', `IGC`)
                                     let phase2inter = setInterval(async ()=>{
                                         for(let aig of pccApi.aiguilles){
                                             if(!(aig.id==='C2')) continue;
@@ -271,13 +268,11 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                             if(ctnInf('c2101').trains.length>0 && itiInf('2101_1202').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
                                                 clearCorrespondingInterval(code)
                                                 INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
-                                                writter.simple('CONSTRUIT PHASE 2.','PA', `CYCLE ${cycle.code}`)
+                                                writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 2.`,'PA', `IGC`)
                                                 itineraire.SEL('2302_2101')
-                                                itineraire.SEL('2402_2101')
                                                 itineraire.DES('2101_1202')
-                                                itineraire.DES('2101_2402')
                                                 if(cycleTrigger===true){
-                                                    writter.simple('EN ATTENTE DE RESET.','PA', `CYCLE ${cycle.code}`)
+                                                    writter.simple(`CYCLE ${cycle.code} EN ATTENTE DE RESET.`,'PA', `IGC`)
                                                     let recursiveInter = setInterval(async ()=>{
                                                         if(cycle.active===false) {
                                                             clearCorrespondingInterval(code)

@@ -1,6 +1,6 @@
 /**
- * Outil de gestion des séquences 
- * @module seq
+ * Informatique de Gestion des Séquences 
+ * @module IGS
  */
 
 const logger = require('./logger')
@@ -32,6 +32,7 @@ SECMAP.set('INJGLA','2')
 
 exports.appseq = async function( target ){
     if(!(pccApi.sequences[target])) return console.log(target);
+    writter.simple(`SEQUENCE ${target} COMMANDÉE.`,'PA', `IGS`)
     let phase = 0
     let seq = pccApi.sequences[target]
     this.phase = async function (){
@@ -40,6 +41,7 @@ exports.appseq = async function( target ){
             for(let sec of pccApi.SEC){
                 if(!(sec.id===SECMAP.get(target))) continue;
                 sec.states.echecSeq=1
+                writter.simple(`SEQUENCE ${target} NON APPLICABLE.`,'PA', `IGS`)
                 parent.apiSave()
                 await setTimeout(3000)
                 sec.states.echecSeq=false
@@ -71,9 +73,11 @@ exports.appseq = async function( target ){
                 if(seq[phase+1]){
                     //? Etape finale: passage à la prochaine phase
                     phase++
+                    writter.simple(`SEQUENCE ${target} PHASE ${phase+1}.`,'PA', `IGS`)
                     return this.phase();
                 } else {
                     //? Etape finale: reset des itinéraires selon la base de la séquence
+                    writter.simple(`SEQUENCE ${target} TERMINÉE.`,'PA', `IGS`)
                     for(let itiDes of seq.BASE.DES){
                         if(itiInf(itiDes).active===true&&itiInf(itiDes).mode==='SEL') itineraire.DES(itiDes)
                     }

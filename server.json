@@ -96,19 +96,19 @@
   },
   "players": [
     {
-      "uuid": "8fb80372-c...",
+      "uuid": "2f9a59be-2...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "7f52eda0-6...",
+      "uuid": "43955831-8...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
   ],
   "trainMouvements": {
     "2": [
-      "cGPAG1"
+      "c2201"
     ],
     "3": [
       "c2202"
@@ -417,7 +417,6 @@
       "phases": [
         {
           "DES": [
-            "1102_1501",
             "1202_1501",
             "1202_2101",
             "2101_1202",
@@ -426,7 +425,6 @@
             "PAG1_1102"
           ],
           "SEL": [
-            "1501_1102",
             "1102_PAG1",
             "1501_1202"
           ],
@@ -436,14 +434,12 @@
       "BASE": {
         "DES": [
           "1202_1501",
-          "1102_1501",
           "1202_2101",
           "2101_1202",
           "PAG1_1102",
           "1102_PAG1"
         ],
         "SEL": [
-          "1501_1102",
           "1501_1202",
           "1102_1302",
           "1501_1202"
@@ -454,21 +450,17 @@
       "phases": [
         {
           "DES": [
-            "1501_1102",
             "1501_1202",
-            "1102_1501",
             "1202_1501",
             "1102_1302",
             "1302_1102",
             "2302_2101",
-            "2101_2402",
             "2101_2302",
             "1102_PAG1"
           ],
           "SEL": [
             "PAG1_1102",
-            "1202_2101",
-            "2402_2101"
+            "1202_2101"
           ],
           "end": "c2101"
         }
@@ -476,21 +468,17 @@
       "BASE": {
         "DES": [
           "1202_1501",
-          "1102_1501",
           "1202_2101",
           "2101_1202",
           "PAG1_1102",
           "1102_PAG1",
-          "2101_2402",
           "2101_2302"
         ],
         "SEL": [
-          "1501_1102",
           "1501_1202",
           "1102_1302",
           "1501_1202",
-          "2302_2101",
-          "2402_2101"
+          "2302_2101"
         ]
       }
     }
@@ -835,21 +823,11 @@
             },
             {
               "code": "2101_2201",
-              "active": true,
-              "mode": "SEL"
-            },
-            {
-              "code": "2201_2101",
               "active": false,
               "mode": false
             },
             {
-              "code": "2402_2101",
-              "active": true,
-              "mode": "SEL"
-            },
-            {
-              "code": "2101_2402",
+              "code": "2201_2101",
               "active": false,
               "mode": false
             }
@@ -857,8 +835,8 @@
           "V2": [
             {
               "code": "1101_1201",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1201_1101",
@@ -892,16 +870,6 @@
             },
             {
               "code": "1501_1401",
-              "active": false,
-              "mode": false
-            },
-            {
-              "code": "1501_1102",
-              "active": true,
-              "mode": "SEL"
-            },
-            {
-              "code": "1102_1501",
               "active": false,
               "mode": false
             }
@@ -1054,7 +1022,9 @@
         },
         {
           "cid": "c2201",
-          "trains": [],
+          "trains": [
+            "2"
+          ],
           "type": "quai",
           "name": "MSTO V2",
           "states": {
@@ -1090,7 +1060,7 @@
             "RP10": false,
             "RP30": false,
             "AAHS": false,
-            "status": false,
+            "status": "valid",
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -1167,8 +1137,8 @@
         "lstpas2": true,
         "discord2": false,
         "cycleOngoing": false,
-        "sortieDispoGla": false,
-        "entreeDispoGla": true,
+        "sortieDispoGla": true,
+        "entreeDispoGla": false,
         "spsto": true,
         "ongoingseq": false,
         "echecSeq": false,
@@ -1523,9 +1493,7 @@
         },
         {
           "cid": "cGPAG1",
-          "trains": [
-            "2"
-          ],
+          "trains": [],
           "states": {
             "selAcc": false,
             "pzo": false,

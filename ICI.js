@@ -95,6 +95,7 @@ exports.SEL=async(code)=>{
                         }
 
 
+                        //! FUNC STARTS RUNNING HERE
                         let incompatibleIti = []
                         let onDesIti = []
                         for(let itiListOfAig of pccApi.aigItis[ovse.isItiAnAigOne(iti.code)]){
@@ -111,11 +112,24 @@ exports.SEL=async(code)=>{
                             }
                         }
                         if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===true) incompatibleIti.push(iti.code)
+                        for(let itiL of itiList()){
+                            if(!(itiL.active)) continue;
+                            if(itiL.code===iti.code) continue;
+                            let allitiparts = itiL.code.split('_')
+                            if(itiParts[1]===allitiparts[1]){
+                                incompatibleIti.push(itiL)
+                                //console.log(`BASE ${iti.code} et TROUVE ${itiL.code} INCOMPATIBLES`)
+                                writter.simple(`INCOMPATIBILITÉ NAN ${iti.code}.`,'PA', `ICI`)
+                            }
+                        }
                         if(incompatibleIti.length>0){
-                            writter.simple(`INCOMPATIBILITÉ ${iti.code}.`,'PA', `ICI`)
+                            writter.simple(`${incompatibleIti.length} INCOMPATIBILITÉ(S) POUR ${iti.code}.`,'PA', `ICI`)
                             let incompatibleInter = setInterval(()=>{
                                 onDesIti = []
                                 incompatibleIti = []
+
+                                //?    Détection d'itinéraires incompatibles sur aiguille
+
                                 for(let itiListOfAig of pccApi.aigItis[ovse.isItiAnAigOne(iti.code)]){
                                     let tempItiParts = itiListOfAig.split('_')
                                     if(itiInf(itiListOfAig).mode==='DES'||itiInf(itiListOfAig).mode==='DU'&&onDesIti.includes(itiListOfAig)===false) onDesIti.push(itiListOfAig)
@@ -129,9 +143,22 @@ exports.SEL=async(code)=>{
                                         }
                                     }
                                 }
+
+                                //?    Détection d'itinéraire contraire
+
                                 if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===true) incompatibleIti.push(iti.code)
-                                console.log(incompatibleIti)
-                                if(onDesIti.length>0) {
+
+                                //?    Détection d'itinéraires nez-à-nez
+
+                                for(let itiL of itiList()){
+                                    if(!(itiL.active)) continue;
+                                    if(itiL.code===iti.code) continue;
+                                    let allitiparts = itiL.code.split('_')
+                                    if(itiParts[1]===allitiparts[1]){
+                                        incompatibleIti.push(itiL)
+                                    }
+                                }
+                                if(onDesIti.length>0 && incompatibleIti.length===0) {
                                     clearInterval(incompatibleInter)
                                     INTERVALS.splice(INTERVALS.indexOf(incompatibleInter),1)
                                     writter.simple(`COMPATIBILITÉ ${iti.code} SUR DESTRUCTION PROGRAMMÉE ${onDesIti[0]}.`,'PA', `ICI`)
@@ -142,26 +169,62 @@ exports.SEL=async(code)=>{
                             INTERMAP.set(`${code}`,incompatibleInter)
                         } else suiteOnDesCond();
                     } else {
-                        if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===true&&itiInf(`${itiParts[1]}_${itiParts[0]}`).mode==='SEL') {
-                            writter.simple(`INCOMPATIBILITÉ ${iti.code}.`,'PA', `ICI`)
-                            let desselInter = setInterval(()=>{
-                                if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===false){
-                                    clearInterval(desselInter)
-                                    INTERVALS.splice(INTERVALS.indexOf(desselInter),1)
-                                    clearCorrespondingInterval(code)
-                                    iti.active=true
-                                    fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                                    parent.apiSave()
-                                    writter.simple(`ITINÉRAIRE ${iti.code} FORMÉ.`,'PA', `ICI`)
+                        let incItiSimple = []
+                        for(let itiL of itiList()){
+                            if(!(itiL.active)) continue;
+                            if(itiL.code===iti.code) continue;
+                            let allitiparts = itiL.code.split('_')
+                            if(itiParts[1]===allitiparts[1]){
+                                incItiSimple.push(itiL)
+                                writter.simple(`INCOMPATIBILITÉ NAN ${iti.code}.`,'PA', `ICI`)
+                            }
+                        }
+
+                        let suiteFuncForDesWait = async function(){
+                            if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===true&&itiInf(`${itiParts[1]}_${itiParts[0]}`).mode==='SEL') {
+                                writter.simple(`INCOMPATIBILITÉ ${iti.code}.`,'PA', `ICI`)
+                                let desselInter = setInterval(()=>{
+                                    if(itiInf(`${itiParts[1]}_${itiParts[0]}`).active===false){
+                                        clearInterval(desselInter)
+                                        INTERVALS.splice(INTERVALS.indexOf(desselInter),1)
+                                        clearCorrespondingInterval(code)
+                                        iti.active=true
+                                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                                        parent.apiSave()
+                                        writter.simple(`ITINÉRAIRE ${iti.code} FORMÉ.`,'PA', `ICI`)
+                                    }
+                                },250)
+                                INTERVALS.push(desselInter)
+                                INTERMAP.set(`${code}`,desselInter)
+                            } else {
+                                iti.active=true
+                                fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                                parent.apiSave()
+                                writter.simple(`ITINÉRAIRE ${iti.code} FORMÉ.`,'PA', `ICI`)
+                            }
+                        }
+
+                        if(incItiSimple.length===0){
+                            suiteFuncForDesWait()
+                        } else {
+                            let incompInter = setInterval(async ()=>{
+                                incItiSimple = []
+                                for(let itiL of itiList()){
+                                    if(!(itiL.active)) continue;
+                                    if(itiL.code===iti.code) continue;
+                                    let allitiparts = itiL.code.split('_')
+                                    if(itiParts[1]===allitiparts[1]){
+                                        incItiSimple.push(itiL)
+                                    }
+                                }
+                                if(incItiSimple.length===0){
+                                    clearInterval(incompInter)
+                                    INTERVALS.splice(INTERVALS.indexOf(incompInter),1)
+                                    return suiteFuncForDesWait();
                                 }
                             },250)
-                            INTERVALS.push(desselInter)
-                            INTERMAP.set(`${code}`,desselInter)
-                        } else {
-                            iti.active=true
-                            fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                            parent.apiSave()
-                            writter.simple(`ITINÉRAIRE ${iti.code} FORMÉ.`,'PA', `ICI`)
+                            INTERVALS.push(incompInter)
+                            INTERMAP.set(`${code}`,incompInter)
                         }
                     }
                     return;
@@ -404,4 +467,14 @@ function aigInf(code){
     for(let aig of pccApi.aiguilles){
         if(aig.id===code) return aig;
     }
+}
+
+function itiList(){
+    let itis = []
+    for(let sec of pccApi.SEC){
+        for(let itilist of Object.entries(sec.ITI[0])){
+            for(let iti of itilist[1]) itis.push(iti)
+        }
+    }
+    return itis;
 }

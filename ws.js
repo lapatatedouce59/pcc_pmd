@@ -37,7 +37,7 @@ const logger = require('./logger')
 logUpdate('├ Loading OGIA...')
 const ogia = require('./OGIA')
 logUpdate('├ Loading OGDC...')
-const ogdc = require('./OGDC')
+const ogdc = require('./IGC')
 logUpdate('├ Loading GSA...')
 const gsa = require('./GSA')
 logUpdate('├ Loading OVSE...')
@@ -45,7 +45,7 @@ const ovse = require('./OVSE')
 logUpdate('├ Loading itineraires...')
 const itineraire = require('./ICI')
 logUpdate('├ Loading seq...')
-const seq = require('./seq')
+const seq = require('./IGS')
 logUpdate('├ Loading writter...')
 const writter = require('./writter')
 writter.clean()
@@ -2567,7 +2567,7 @@ wss.on('connection', (ws, req) => {
                             }
                             cycle.sel=true
                             exports.apiSave()
-                            writter.simple('SÉLECTIONNÉ.','PA', `CYCLE ${cycle.code}`)
+                            writter.simple(`CYCLE ${cycle.code} SÉLECTIONNÉ.`,'PA', `IGC`)
                             sec.states.cycleOngoing=true
                             if(cycle.code==='c1p1'){
                                 let secureCnt = 0
@@ -2577,7 +2577,7 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
-                                        writter.simple('ANNULÉ.','PA', `CYCLE ${cycle.code}`)
+                                        writter.simple(`CYCLE ${cycle.code} ANNULÉ.`,'PA', `IGC`)
                                         return;
                                     }
                                     if(!(pccApi.SEC[0].cantons[8].trains.length>0)){
@@ -2597,7 +2597,7 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
-                                        writter.simple('ANNULÉ.','PA', `CYCLE ${cycle.code}`)
+                                        writter.simple(`CYCLE ${cycle.code} ANNULÉ.`,'PA', `IGC`)
                                         return;
                                     }
                                     if(!(pccApi.SEC[0].cantons[1].trains.length>0)){
@@ -2616,27 +2616,7 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
-                                        writter.simple('ANNULÉ.','PA', `CYCLE ${cycle.code}`)
-                                        return;
-                                    }
-                                    if(pccApi.SEC[0].cantons[5].trains.length===0){
-                                        console.log('iti '+cycle.code+' activated')
-                                        clearInterval(checkCycleClearInter)
-                                        ogdc.startCycle(cycle.code, wss, true)
-                                        exports.apiSave()
-                                    }
-                                }
-                                let checkCycleClearInter = setInterval(checkCycleClear,2000)
-                            }
-                            if(cycle.code==='c2p2'){
-                                let secureCnt = 0
-                                let checkCycleClear = ()=>{
-                                    secureCnt++
-                                    if(secureCnt===5){
-                                        clearInterval(checkCycleClearInter)
-                                        cycle.sel=false
-                                        exports.apiSave()
-                                        writter.simple('ANNULÉ.','PA', `CYCLE ${cycle.code}`)
+                                        writter.simple(`CYCLE ${cycle.code} ANNULÉ.`,'PA', `IGC`)
                                         return;
                                     }
                                     if(pccApi.SEC[0].cantons[5].trains.length===0){
@@ -2657,7 +2637,7 @@ wss.on('connection', (ws, req) => {
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.execute==='CANCELCYCLES-BTN-ITI'){
                     if(!(data.target)) return;
-                    writter.simple('ANNULÉS.','PA', `CYCLES S${data.target}`)
+                    writter.simple(`CYCLES S${data.target} ANNULÉS.`,'PA', `IGC`)
                     for(let sec of pccApi.SEC){
                         if(!(sec.id===data.target)) continue;
                         for(let cycle of sec.CYCLES){
@@ -2670,7 +2650,7 @@ wss.on('connection', (ws, req) => {
                     exports.apiSave()
                 } else if(data.execute==='DUG-BTN-ITI'){
                     if(!(data.target)) return;
-                    writter.simple('COMMANDÉE.','PA', `DUG S${data.target}`)
+                    writter.simple(`DUG S${data.target} COMMANDÉE.`,'PA', `ICI`)
                     for(let sec of pccApi.SEC){
                         if(!(sec.id===data.target)) continue;
                         for(let itilist of Object.entries(sec.ITI[0])){

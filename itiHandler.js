@@ -244,8 +244,8 @@ async function initFormat(pa){
                     '2401_2201':pa1svgDoc.getElementById('2401_2201'),
                     '2101_2201':pa1svgDoc.getElementById('2101_2201'),
                     '2201_2101':pa1svgDoc.getElementById('2201_2101'),
-                    '2402_2101':pa1svgDoc.getElementById('2402_2101'),
-                    '2101_2402':pa1svgDoc.getElementById('2101_2402'),
+                    '2302_2101':pa1svgDoc.getElementById('2402_2101'),
+                    '2101_2302':pa1svgDoc.getElementById('2101_2402'),
 
                     '1101_1201':pa1svgDoc.getElementById('1101_1201'),
                     '1201_1101':pa1svgDoc.getElementById('1201_1101'),
@@ -255,8 +255,8 @@ async function initFormat(pa){
                     '1401_1201':pa1svgDoc.getElementById('1401_1201'),
                     '1401_1501':pa1svgDoc.getElementById('1401_1501'),
                     '1501_1401':pa1svgDoc.getElementById('1501_1401'),
-                    '1501_1102':pa1svgDoc.getElementById('1501_1102'),
-                    '1102_1501':pa1svgDoc.getElementById('1102_1501')
+                    '1501_1202':pa1svgDoc.getElementById('1501_1102'),
+                    '1202_1501':pa1svgDoc.getElementById('1102_1501')
                 }
             }
             console.log('MAJ 2')
@@ -671,6 +671,11 @@ function loadItiTco(pa){
         }
         for(let arrows of Object.entries(pa1dictionnary.arrows)){
             arrows[1].style.fill = '#9F9F9F'
+            if(["1501_1202","1202_1501","2302_2101","2101_2302"].includes(arrows[0])){
+                if(itiInf(arrows[0]).active===true){
+                    arrows[1].style.fill = '#00FF19';
+                } else arrows[1].style.fill = '#9F9F9F';
+            }
             for(let itil of Object.entries(pa.itis[0])){
                 for(let iti of Object.entries(itil[1])){
                     if(!(iti[1].code===arrows[0])) continue;
@@ -765,6 +770,19 @@ function itiInfo(id){
     return false;
 }
 
+function itiInf(code){
+    console.log(code)
+    for(let sec of data.SEC){
+        for(let itilist of Object.entries(sec.ITI[0])){
+            for(let iti of itilist[1]){
+                if(iti.code===code){
+                    console.log(iti)
+                    return iti
+                } else continue;
+            }
+        }
+    }
+}
 
 
 
