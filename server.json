@@ -96,12 +96,12 @@
   },
   "players": [
     {
-      "uuid": "2f9a59be-2...",
+      "uuid": "1b1466d5-4...",
       "name": "patatedouce.dev",
       "role": "chef"
     },
     {
-      "uuid": "43955831-8...",
+      "uuid": "a7fe8273-1...",
       "name": "patatedouce.dev",
       "role": "chef"
     }
@@ -111,7 +111,7 @@
       "c2201"
     ],
     "3": [
-      "c2202"
+      "c1302"
     ]
   },
   "itiDescription": {
@@ -227,7 +227,7 @@
       "id": "C1",
       "occupied": false,
       "actualIti": [
-        "2201_2401"
+        "2201_1201"
       ],
       "exeption": [
         "1201_1401",
@@ -244,7 +244,6 @@
       "id": "C2",
       "occupied": false,
       "actualIti": [
-        "1501_1202",
         "2302_2101"
       ],
       "exeption": [
@@ -312,7 +311,8 @@
           "2201_2401",
           "2401_2501"
         ]
-      }
+      },
+      "active": false
     },
     "RETV101": {
       "phases": [
@@ -346,7 +346,8 @@
           "2201_2401",
           "2401_2501"
         ]
-      }
+      },
+      "active": false
     },
     "INJV201": {
       "phases": [
@@ -380,7 +381,8 @@
           "2201_2401",
           "2401_2501"
         ]
-      }
+      },
+      "active": false
     },
     "INJV101": {
       "phases": [
@@ -411,7 +413,8 @@
           "2201_2401",
           "2401_2501"
         ]
-      }
+      },
+      "active": false
     },
     "RETGLA": {
       "phases": [
@@ -444,7 +447,8 @@
           "1102_1302",
           "1501_1202"
         ]
-      }
+      },
+      "active": false
     },
     "INJGLA": {
       "phases": [
@@ -480,7 +484,8 @@
           "1501_1202",
           "2302_2101"
         ]
-      }
+      },
+      "active": false
     }
   },
   "trains": {
@@ -793,8 +798,8 @@
           "V1": [
             {
               "code": "2401_2501",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2501_2401",
@@ -808,13 +813,13 @@
             },
             {
               "code": "2201_1201",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2201_2401",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "2401_2201",
@@ -823,8 +828,8 @@
             },
             {
               "code": "2101_2201",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "2201_2101",
@@ -840,8 +845,8 @@
             },
             {
               "code": "1201_1101",
-              "active": false,
-              "mode": false
+              "active": true,
+              "mode": "SEL"
             },
             {
               "code": "1201_2201",
@@ -1136,7 +1141,7 @@
         "tnitne2": false,
         "lstpas2": true,
         "discord2": false,
-        "cycleOngoing": false,
+        "cycleOngoing": true,
         "sortieDispoGla": true,
         "entreeDispoGla": false,
         "spsto": true,
@@ -1196,8 +1201,8 @@
           "V2": [
             {
               "code": "1501_1202",
-              "active": true,
-              "mode": "SEL"
+              "active": false,
+              "mode": false
             },
             {
               "code": "1202_1501",
@@ -1257,8 +1262,8 @@
           "code": "c1p2",
           "imgn": "./src/formats/cycles/pa2/c1.png",
           "imgl": "./src/formats/cycles/pa2/c1lit.png",
-          "active": false,
-          "sel": false,
+          "active": true,
+          "sel": true,
           "phase": 1
         }
       ],
@@ -1293,7 +1298,9 @@
         },
         {
           "cid": "c1302",
-          "trains": [],
+          "trains": [
+            "3"
+          ],
           "type": "quai",
           "name": "STO V1",
           "states": {
@@ -1329,7 +1336,7 @@
             "RP10": false,
             "RP30": false,
             "AAHS": false,
-            "status": false,
+            "status": "valid",
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,
@@ -1384,9 +1391,7 @@
         },
         {
           "cid": "c2202",
-          "trains": [
-            "3"
-          ],
+          "trains": [],
           "type": "quai",
           "name": "STO V2",
           "states": {
@@ -1422,7 +1427,7 @@
             "RP10": false,
             "RP30": false,
             "AAHS": false,
-            "status": "valid",
+            "status": false,
             "IDPOAlreadyActiveByPLTP": false,
             "PLTPIDPOInhibed": false,
             "IDPOAlreadyActiveByALC": false,

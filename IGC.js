@@ -236,7 +236,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                     if(ctnInf('c2302').trains.length>0){
                         clearCorrespondingInterval(code)
                         INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
-                        let itiDes1 = ["2101_2302","2101_1202","1202_2101","1501_1102","1501_1202","1202_1501"]
+                        let itiDes1 = ["2101_2302","2101_1202","1202_2101","1501_1202","1202_1501"]
                         for(let iti1 of itiDes1){
                             if(itiInf(iti1).active===true&&itiInf(iti1).mode==='SEL') itineraire.DES(iti1)
                         }
@@ -250,7 +250,7 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
                                     return;
                                 }
-                                if(aig.actualIti.length===1 && aig.actualIti[0]==='2302_2101' && itiInf('2101_2402').active===false){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
+                                if(aig.actualIti.length===1 && aig.actualIti[0]==='2302_2101'){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
                                     clearCorrespondingInterval(code)
                                     INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
                                     writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 1.`,'PA', `IGC`)

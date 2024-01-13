@@ -1381,30 +1381,45 @@ function refreshTCO(){
         }
 
         //? Gestion voyants
-        if((itiInfo('2201_2401'))){
+
+        if(itiInfo('2201_2401')||itiInfo('1201_1401')){
             dictS1.voys['NOR'].setAttribute('href', '../ON.png')
         }
-        if(itiInfo('1201_1401')){
-            dictS1.voys['INSR'].setAttribute('href', '../ON.png')
+        if(itiInfo('2401_1401')||itiInfo('1401_2401')){
+            dictS1.voys['A1Dev'].setAttribute('href', '../ON.png')
         }
-        if(itiInfo('2201_1201')){
+        if(itiInfo('2201_1201')||itiInfo('1201_2201')){
+            dictS1.voys['A2Dev'].setAttribute('href', '../ON.png')
+        }
+        if(seqInfo('RETV201').active===true||seqInfo('RETV101').active===true){
             dictS1.voys['GAR'].setAttribute('href', '../ON.png')
         }
-        if(itiInfo('2302_2101')&&itiInfo('1501_1202')){
+        if(seqInfo('INJV201').active===true||seqInfo('INJV101').active===true){
+            dictS1.voys['INSR'].setAttribute('href', '../ON.png')
+        }
+
+        if(itiInfo('1501_1202')||itiInfo('2302_2101')){
             dictS2.voys['NORA1'].setAttribute('href', '../ON.png')
         }
         if(itiInfo('1102_1302')){
             dictS2.voys['NORA2'].setAttribute('href', '../ON.png')
         }
-        if(cycleInfo('c6p2')){
-            dictS2.voys['ENT'].setAttribute('href', '../ON.png')
+        if(itiInfo('1202_2101')||itiInfo('2101_1202')){
+            dictS2.voys['A1Dev'].setAttribute('href', '../ON.png')
         }
-        if(cycleInfo('c7p2')||cycleInfo('c2p2')){
+        if(itiInfo('1102_PAG1')||itiInfo('PAG1_1102')){
+            dictS2.voys['A2Dev'].setAttribute('href', '../ON.png')
+        }
+        if(seqInfo('RETGLA').active===true){
             dictS2.voys['DEP'].setAttribute('href', '../ON.png')
+        }
+        if(seqInfo('INJGLA').active===true){
+            dictS2.voys['ENT'].setAttribute('href', '../ON.png')
         }
         if(data.SEC[1].states.spsto===true){
             dictS2.voys['SP'].setAttribute('href', '../ON.png')
         }
+
         for(let ctn of sec.cantons){
             let ctninfo = getCantonsInfo(ctn.cid)
             if((ctninfo.cid==='c1401')||(ctninfo.cid==='c2201')||(ctninfo.cid==='cGPAG1')||(ctninfo.cid==='c2202')||(ctninfo.cid==='c1302')||(ctninfo.cid==='c1101')||(ctninfo.cid==='c1201')||(ctninfo.cid==='c2401')||(ctninfo.cid==='c2501')){
@@ -1938,11 +1953,18 @@ function cycleInfo(id){
     for(let sec of data.SEC){
         for(let cycle of sec.CYCLES){
             if(!(cycle.code===id)) continue;
-            if(!(cycle.active)) continue;
-            return true;
+            return cycle;
         }
     }
     //console.info('[cycleInfo] Aucun cycle correspondant.')
+    return false;
+}
+
+function seqInfo(id){
+    if(!id) return console.error('[seqInfo] Aucun ID de cycle indiqué!')
+    for(let seq of Object.entries(data.sequences)){
+        if(seq[0]===id) return seq[1];
+    }
     return false;
 }
 

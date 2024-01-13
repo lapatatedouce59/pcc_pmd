@@ -1,92 +1,139 @@
-[Saturday  21h29:07] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Saturday  21h29:10] PA    -> IGC ; CYCLE c1p1 SÉLECTIONNÉ. 
-[Saturday  21h29:12] PA    -> IGC ; CYCLE c1p1 EN ACTIVITÉ. 
-[Saturday  21h29:12] PA    -> IGC ; CYCLE c1p1 EN CONSTRUCTION PHASE 1. 
-[Saturday  21h29:12] PA    -> IGC ; CYCLE c1p1 CONSTRUIT PHASE 1. 
-[Saturday  21h29:12] PA    -> ICI ; ITINÉRAIRE 2201_2401 EN DESTRUCTION. 
-[Saturday  21h29:12] PA    -> ICI ; ITINÉRAIRE 2401_1401 SÉLECTIONNÉ. 
-[Saturday  21h29:12] PA    -> IGC ; CYCLE c1p1 EN CONSTRUCTION PHASE 2. 
-[Saturday  21h29:18] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Saturday  21h29:20] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
-[Saturday  21h29:21] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> ACTIVE 
-[Saturday  21h29:22] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
-[Saturday  21h29:23] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
-[Saturday  21h29:23] PA    -> ICI ; ITINÉRAIRE 2201_2401 DÉTRUIT. 
-[Saturday  21h29:23] PA    -> ICI ; ITINÉRAIRE 2401_1401 FORMÉ. 
-[Saturday  21h29:23] PA    -> IGC ; CYCLE c1p1 CONSTRUIT PHASE 2. 
-[Saturday  21h29:23] PA    -> ICI ; ITINÉRAIRE 2201_2401 SÉLECTIONNÉ. 
-[Saturday  21h29:23] PA    -> IGC ; CYCLE c1p1 EN ATTENTE DE RESET. 
-[Saturday  21h29:23] PA    -> ICI ; ITINÉRAIRE 2401_1401 EN DESTRUCTION. 
-[Saturday  21h29:24] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
-[Saturday  21h29:26] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> ACTIVE 
-[Saturday  21h29:26] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> ACTIVE 
-[Saturday  21h29:27] PA    -> DP ; BOUCLE 2401 TRAIN 2 -> INACTIVE 
-[Saturday  21h29:29] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
-[Saturday  21h29:30] PA    -> DP ; BOUCLE 1301 TRAIN 2 -> INACTIVE 
-[Saturday  21h29:30] PA    -> ICI ; ITINÉRAIRE 2401_1401 DÉTRUIT. 
-[Saturday  21h29:30] PA    -> IGC ; CYCLE c1p1 EN ACTIVITÉ. 
-[Saturday  21h29:30] PA    -> ICI ; ITINÉRAIRE 2201_2401 FORMÉ. 
-[Saturday  21h29:31] PA    -> IGC ; CYCLES S1 ANNULÉS. 
-[Saturday  21h29:45] PA    -> ICI ; ITINÉRAIRE 1401_1501 SÉLECTIONNÉ. 
-[Saturday  21h29:46] PA    -> ICI ; ITINÉRAIRE 1401_1501 FORMÉ. 
-[Saturday  21h29:51] PA    -> IGS ; SEQUENCE RETGLA COMMANDÉE. 
-[Saturday  21h29:51] PA    -> ICI ; ITINÉRAIRE 1102_1302 EN DESTRUCTION. 
-[Saturday  21h29:51] PA    -> ICI ; ITINÉRAIRE 1102_PAG1 SÉLECTIONNÉ. 
-[Saturday  21h29:52] PA    -> ICI ; ITINÉRAIRE 1102_1302 DÉTRUIT. 
-[Saturday  21h29:52] PA    -> ICI ; ITINÉRAIRE 1102_PAG1 FORMÉ. 
-[Saturday  21h29:55] PA    -> DP ; BOUCLE 1501 TRAIN 2 -> ACTIVE 
-[Saturday  21h29:56] PA    -> DP ; BOUCLE 1102 TRAIN 2 -> ACTIVE 
-[Saturday  21h29:58] PA    -> DP ; BOUCLE 1401 TRAIN 2 -> INACTIVE 
-[Saturday  21h30:00] PA    -> DP ; BOUCLE 1202 TRAIN 2 -> ACTIVE 
-[Saturday  21h30:00] PA    -> DP ; BOUCLE 1501 TRAIN 2 -> INACTIVE 
-[Saturday  21h30:01] PA    -> DP ; BOUCLE GA2PAG TRAIN 2 -> ACTIVE 
-[Saturday  21h30:02] PA    -> DP ; BOUCLE 1102 TRAIN 2 -> INACTIVE 
-[Saturday  21h30:03] PA    -> DP ; BOUCLE GPAG1 TRAIN 2 -> ACTIVE 
-[Saturday  21h30:03] PA    -> IGS ; SEQUENCE RETGLA TERMINÉE. 
-[Saturday  21h30:03] PA    -> ICI ; ITINÉRAIRE 1102_PAG1 EN DESTRUCTION. 
-[Saturday  21h30:03] PA    -> ICI ; ITINÉRAIRE 1102_1302 SÉLECTIONNÉ. 
-[Saturday  21h30:03] PA    -> DP ; BOUCLE 1202 TRAIN 2 -> INACTIVE 
-[Saturday  21h30:04] PA    -> DP ; BOUCLE GA2PAG TRAIN 2 -> INACTIVE 
-[Saturday  21h30:04] PA    -> ICI ; ITINÉRAIRE 1102_PAG1 DÉTRUIT. 
-[Saturday  21h30:05] PA    -> ICI ; ITINÉRAIRE 1102_1302 FORMÉ. 
-[Saturday  21h30:09] PA    -> IGS ; SEQUENCE INJGLA COMMANDÉE. 
-[Saturday  21h30:09] PA    -> ICI ; ITINÉRAIRE 1501_1202 EN DESTRUCTION. 
-[Saturday  21h30:09] PA    -> ICI ; ITINÉRAIRE 1102_1302 EN DESTRUCTION. 
-[Saturday  21h30:09] PA    -> ICI ; ITINÉRAIRE 2302_2101 EN DESTRUCTION. 
-[Saturday  21h30:09] PA    -> ICI ; ITINÉRAIRE PAG1_1102 SÉLECTIONNÉ. 
-[Saturday  21h30:09] PA    -> ICI ; ITINÉRAIRE 1202_2101 SÉLECTIONNÉ. 
-[Saturday  21h30:09] PA    -> ICI ; ITINÉRAIRE 1501_1202 DÉTRUIT. 
-[Saturday  21h30:09] PA    -> ICI ; ITINÉRAIRE 1102_1302 DÉTRUIT. 
-[Saturday  21h30:10] PA    -> ICI ; ITINÉRAIRE 2302_2101 DÉTRUIT. 
-[Saturday  21h30:10] PA    -> ICI ; ITINÉRAIRE PAG1_1102 FORMÉ. 
-[Saturday  21h30:10] PA    -> ICI ; ITINÉRAIRE 1202_2101 FORMÉ. 
-[Saturday  21h30:24] PA    -> DP ; BOUCLE GA2PAG TRAIN 2 -> ACTIVE 
-[Saturday  21h30:25] PA    -> DP ; BOUCLE 1202 TRAIN 2 -> ACTIVE 
-[Saturday  21h30:26] PA    -> DP ; BOUCLE GPAG1 TRAIN 2 -> INACTIVE 
-[Saturday  21h30:27] PA    -> DP ; BOUCLE 1102 TRAIN 2 -> ACTIVE 
-[Saturday  21h30:27] PA    -> DP ; BOUCLE 2402 TRAIN 2 -> ACTIVE 
-[Saturday  21h30:28] PA    -> DP ; BOUCLE GA2PAG TRAIN 2 -> INACTIVE 
-[Saturday  21h30:29] PA    -> DP ; BOUCLE 1202 TRAIN 2 -> INACTIVE 
-[Saturday  21h30:30] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
-[Saturday  21h30:30] PA    -> IGS ; SEQUENCE INJGLA TERMINÉE. 
-[Saturday  21h30:30] PA    -> ICI ; ITINÉRAIRE 1202_2101 EN DESTRUCTION. 
-[Saturday  21h30:30] PA    -> ICI ; ITINÉRAIRE PAG1_1102 EN DESTRUCTION. 
-[Saturday  21h30:30] PA    -> ICI ; ITINÉRAIRE 1501_1202 SÉLECTIONNÉ. 
-[Saturday  21h30:30] PA    -> ICI ; ITINÉRAIRE 1102_1302 SÉLECTIONNÉ. 
-[Saturday  21h30:30] PA    -> ICI ; ITINÉRAIRE 2302_2101 SÉLECTIONNÉ. 
-[Saturday  21h30:31] PA    -> ICI ; ITINÉRAIRE PAG1_1102 DÉTRUIT. 
-[Saturday  21h30:31] PA    -> ICI ; ITINÉRAIRE 1102_1302 FORMÉ. 
-[Saturday  21h30:31] PA    -> ICI ; INCOMPATIBILITÉ NAN 2302_2101. 
-[Saturday  21h30:31] PA    -> ICI ; 1 INCOMPATIBILITÉ(S) POUR 2302_2101. 
-[Saturday  21h30:32] PA    -> ICI ; INCOMPATIBILITÉ NAN 2302_2101. 
-[Saturday  21h30:34] PA    -> DP ; BOUCLE 1102 TRAIN 2 -> INACTIVE 
-[Saturday  21h30:35] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
-[Saturday  21h30:39] PA    -> DP ; BOUCLE 2402 TRAIN 2 -> INACTIVE 
-[Saturday  21h30:39] UCA   -> ALDC ; 2101-2201 > 2 
-[Saturday  21h30:39] UCA   -> ALDC ; 2101-2201 > 2 
-[Saturday  21h30:39] PA    -> ICI ; ITINÉRAIRE 1202_2101 DÉTRUIT. 
-[Saturday  21h30:39] UCA   -> ALDC ; 2101-2201 > 2 
-[Saturday  21h30:39] PA    -> ICI ; ITINÉRAIRE 1501_1202 FORMÉ. 
-[Saturday  21h30:40] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
-[Saturday  21h30:48] PA    -> ICI ; ITINÉRAIRE 2302_2101 SÉLECTIONNÉ. 
-[Saturday  21h30:49] PA    -> ICI ; ITINÉRAIRE 2302_2101 FORMÉ. 
+[Saturday  23h26:33] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday  23h26:35] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Saturday  23h26:36] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday  23h26:37] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Saturday  23h26:45] PA    -> IGC ; CYCLES S2 ANNULÉS. 
+[Saturday  23h26:48] PA    -> IGC ; CYCLE c1p2 SÉLECTIONNÉ. 
+[Saturday  23h26:50] PA    -> IGC ; CYCLE c1p2 EN ACTIVITÉ. 
+[Saturday  23h26:54] PA    -> DP ; BOUCLE 2302 TRAIN 3 -> ACTIVE 
+[Saturday  23h26:54] PA    -> ICI ; ITINÉRAIRE 1501_1202 EN DESTRUCTION. 
+[Saturday  23h26:54] PA    -> ICI ; ITINÉRAIRE 2302_2101 SÉLECTIONNÉ. 
+[Saturday  23h26:54] PA    -> IGC ; CYCLE c1p2 EN CONSTRUCTION PHASE 1. 
+[Saturday  23h26:54] PA    -> ICI ; ITINÉRAIRE 1501_1202 DÉTRUIT. 
+[Saturday  23h26:55] PA    -> ICI ; INCOMPATIBILITÉ NAN 2302_2101. 
+[Saturday  23h26:55] PA    -> ICI ; 1 INCOMPATIBILITÉ(S) POUR 2302_2101. 
+[Saturday  23h27:14] PA    -> ICI ; ITINÉRAIRE 2101_2201 SÉLECTIONNÉ. 
+[Saturday  23h27:14] PA    -> ICI ; ITINÉRAIRE 2201_2101 EN DESTRUCTION. 
+[Saturday  23h27:15] PA    -> LDI ; c2101-c2201. 
+[Saturday  23h27:15] PA    -> LDI ; c2201-c2101. 
+[Saturday  23h27:15] PA    -> ICI ; ITINÉRAIRE 2101_2201 FORMÉ. 
+[Saturday  23h27:37] PA    -> LDI ; c2101-c2201. 
+[Saturday  23h27:37] PA    -> LDI ; c2201-c2101. 
+[Saturday  23h27:37] PA    -> ICI ; ITINÉRAIRE 2101_2201 EN DESTRUCTION. 
+[Saturday  23h27:37] PA    -> ICI ; ITINÉRAIRE 2101_2201 DÉTRUIT. 
+[Saturday  23h27:40] PA    -> ICI ; ITINÉRAIRE 2201_2101 EN DESTRUCTION. 
+[Saturday  23h27:41] PA    -> ICI ; ITINÉRAIRE 2101_2201 SÉLECTIONNÉ. 
+[Saturday  23h27:42] PA    -> LDI ; c2101-c2201. 
+[Saturday  23h27:42] PA    -> LDI ; c2201-c2101. 
+[Saturday  23h27:42] PA    -> ICI ; ITINÉRAIRE 2101_2201 FORMÉ. 
+[Saturday  23h27:43] PA    -> DP ; BOUCLE 2302 TRAIN 3 -> INACTIVE 
+[Saturday  23h27:43] PA    -> LDI ; c2101-c2201. 
+[Saturday  23h27:43] PA    -> LDI ; c2201-c2101. 
+[Saturday  23h27:45] PA    -> LDI ; c2101-c2201. 
+[Saturday  23h27:45] PA    -> LDI ; c2201-c2101. 
+[Saturday  23h27:45] PA    -> ICI ; ITINÉRAIRE 2201_2101 EN DESTRUCTION. 
+[Saturday  23h27:47] PA    -> LDI ; c2101-c2201. 
+[Saturday  23h27:47] PA    -> LDI ; c2201-c2101. 
+[Saturday  23h27:47] PA    -> ICI ; ITINÉRAIRE 2101_2201 SÉLECTIONNÉ. 
+[Saturday  23h27:48] PA    -> LDI ; c2101-c2201. 
+[Saturday  23h27:48] PA    -> LDI ; c2201-c2101. 
+[Saturday  23h27:48] PA    -> ICI ; ITINÉRAIRE 2101_2201 FORMÉ. 
+[Saturday  23h27:48] PA    -> LDI ; c2101-c2201. 
+[Saturday  23h27:48] PA    -> LDI ; c2201-c2101. 
+[Saturday  23h27:48] PA    -> ICI ; ITINÉRAIRE 2101_2201 EN DESTRUCTION. 
+[Saturday  23h27:49] PA    -> ICI ; ITINÉRAIRE 2101_2201 DÉTRUIT. 
+[Saturday  23h27:49] PA    -> ICI ; ITINÉRAIRE 2201_2101 EN DESTRUCTION. 
+[Saturday  23h27:51] PA    -> ICI ; ITINÉRAIRE 2201_2101 : DES ANNULÉE. 
+[Saturday  23h27:51] PA    -> ICI ; ITINÉRAIRE 2201_2101 SÉLECTIONNÉ. 
+[Saturday  23h27:52] PA    -> ICI ; ITINÉRAIRE 2201_2101 FORMÉ. 
+[Saturday  23h27:52] PA    -> ICI ; ITINÉRAIRE 2201_2101 EN DESTRUCTION. 
+[Saturday  23h27:56] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Saturday  23h27:58] PA    -> ICI ; ITINÉRAIRE 2201_2101 EN DESTRUCTION. 
+[Saturday  23h28:10] PA    -> ICI ; ITINÉRAIRE 2201_2101 : DES ANNULÉE. 
+[Saturday  23h28:10] PA    -> ICI ; ITINÉRAIRE 2201_2101 SÉLECTIONNÉ. 
+[Saturday  23h28:11] PA    -> ICI ; ITINÉRAIRE 2201_2101 FORMÉ. 
+[Saturday  23h28:12] PA    -> ICI ; ITINÉRAIRE 2101_2201 SÉLECTIONNÉ. 
+[Saturday  23h28:13] PA    -> ICI ; INCOMPATIBILITÉ 2101_2201. 
+[Saturday  23h28:14] PA    -> ICI ; ITINÉRAIRE 2201_2101 EN DESTRUCTION. 
+[Saturday  23h28:22] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> ACTIVE 
+[Saturday  23h28:23] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Saturday  23h28:23] PA    -> ICI ; ITINÉRAIRE 2201_2101 DÉTRUIT. 
+[Saturday  23h28:24] PA    -> ICI ; ITINÉRAIRE 2101_2201 FORMÉ. 
+[Saturday  23h28:24] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Saturday  23h28:24] UCA   -> ALDC ; 2301-2201 > 2 
+[Saturday  23h28:26] PA    -> DP ; BOUCLE 2301 TRAIN 2 -> INACTIVE 
+[Saturday  23h28:36] PA    -> ICI ; ITINÉRAIRE 2302_2101 SÉLECTIONNÉ. 
+[Saturday  23h28:37] PA    -> ICI ; ITINÉRAIRE 2302_2101 FORMÉ. 
+[Saturday  23h28:37] PA    -> IGC ; CYCLE c1p2 CONSTRUIT PHASE 1. 
+[Saturday  23h28:37] PA    -> ICI ; ITINÉRAIRE 2302_2101 EN DESTRUCTION. 
+[Saturday  23h28:37] PA    -> ICI ; ITINÉRAIRE 2101_1202 SÉLECTIONNÉ. 
+[Saturday  23h28:37] PA    -> IGC ; CYCLE c1p2 EN CONSTRUCTION PHASE 2. 
+[Saturday  23h28:37] PA    -> ICI ; ITINÉRAIRE 2302_2101 DÉTRUIT. 
+[Saturday  23h28:38] PA    -> ICI ; ITINÉRAIRE 2101_1202 FORMÉ. 
+[Saturday  23h28:41] PA    -> IGC ; CYCLES S2 ANNULÉS. 
+[Saturday  23h28:44] PA    -> IGC ; CYCLE c1p2 SÉLECTIONNÉ. 
+[Saturday  23h28:46] PA    -> IGC ; CYCLE c1p2 EN ACTIVITÉ. 
+[Saturday  23h28:47] PA    -> SP STO ; DÉCLARÉ. 
+[Saturday  23h28:53] PA    -> DP ; BOUCLE 2302 TRAIN 3 -> ACTIVE 
+[Saturday  23h28:53] PA    -> ICI ; ITINÉRAIRE 2101_1202 EN DESTRUCTION. 
+[Saturday  23h28:53] PA    -> ICI ; ITINÉRAIRE 2302_2101 SÉLECTIONNÉ. 
+[Saturday  23h28:53] PA    -> IGC ; CYCLE c1p2 EN CONSTRUCTION PHASE 1. 
+[Saturday  23h28:53] PA    -> ICI ; ITINÉRAIRE 2101_1202 DÉTRUIT. 
+[Saturday  23h28:54] PA    -> ICI ; ITINÉRAIRE 2302_2101 FORMÉ. 
+[Saturday  23h28:54] PA    -> IGC ; CYCLE c1p2 CONSTRUIT PHASE 1. 
+[Saturday  23h28:54] PA    -> ICI ; ITINÉRAIRE 2302_2101 EN DESTRUCTION. 
+[Saturday  23h28:54] PA    -> ICI ; ITINÉRAIRE 2101_1202 SÉLECTIONNÉ. 
+[Saturday  23h28:54] PA    -> IGC ; CYCLE c1p2 EN CONSTRUCTION PHASE 2. 
+[Saturday  23h28:57] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> ACTIVE 
+[Saturday  23h28:58] PA    -> DP ; BOUCLE 2202 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:01] PA    -> DP ; BOUCLE 2101 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:02] PA    -> DP ; BOUCLE 2302 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:04] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:04] PA    -> ICI ; ITINÉRAIRE 2302_2101 DÉTRUIT. 
+[Saturday  23h29:04] PA    -> ICI ; ITINÉRAIRE 2101_1202 FORMÉ. 
+[Saturday  23h29:04] PA    -> IGC ; CYCLE c1p2 CONSTRUIT PHASE 2. 
+[Saturday  23h29:04] PA    -> ICI ; ITINÉRAIRE 2302_2101 SÉLECTIONNÉ. 
+[Saturday  23h29:04] PA    -> ICI ; ITINÉRAIRE 2101_1202 EN DESTRUCTION. 
+[Saturday  23h29:04] PA    -> IGC ; CYCLE c1p2 EN ATTENTE DE RESET. 
+[Saturday  23h29:08] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:09] PA    -> DP ; BOUCLE 1102 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:11] PA    -> DP ; BOUCLE 2101 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:14] PA    -> DP ; BOUCLE 1202 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:17] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:20] PA    -> DP ; BOUCLE 1102 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:20] PA    -> ICI ; ITINÉRAIRE 2101_1202 DÉTRUIT. 
+[Saturday  23h29:20] PA    -> IGC ; CYCLE c1p2 EN ACTIVITÉ. 
+[Saturday  23h29:20] PA    -> ICI ; ITINÉRAIRE 2302_2101 FORMÉ. 
+[Saturday  23h29:23] PA    -> DP ; BOUCLE 1302 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:25] PA    -> DP ; BOUCLE 1202 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:27] PA    -> DP ; BOUCLE 2202 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:27] UCA   -> ALDC ; 1302-2202 > 3 
+[Saturday  23h29:28] PA    -> DP ; BOUCLE 1302 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:35] PA    -> DP ; BOUCLE 2302 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:35] PA    -> IGC ; CYCLE c1p2 EN CONSTRUCTION PHASE 1. 
+[Saturday  23h29:35] PA    -> IGC ; CYCLE c1p2 CONSTRUIT PHASE 1. 
+[Saturday  23h29:35] PA    -> ICI ; ITINÉRAIRE 2302_2101 EN DESTRUCTION. 
+[Saturday  23h29:35] PA    -> ICI ; ITINÉRAIRE 2101_1202 SÉLECTIONNÉ. 
+[Saturday  23h29:35] PA    -> IGC ; CYCLE c1p2 EN CONSTRUCTION PHASE 2. 
+[Saturday  23h29:39] PA    -> DP ; BOUCLE 2202 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:41] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:43] PA    -> DP ; BOUCLE 2302 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:45] PA    -> DP ; BOUCLE 2101 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:47] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:47] PA    -> ICI ; ITINÉRAIRE 2302_2101 DÉTRUIT. 
+[Saturday  23h29:47] PA    -> ICI ; ITINÉRAIRE 2101_1202 FORMÉ. 
+[Saturday  23h29:47] PA    -> IGC ; CYCLE c1p2 CONSTRUIT PHASE 2. 
+[Saturday  23h29:47] PA    -> ICI ; ITINÉRAIRE 2302_2101 SÉLECTIONNÉ. 
+[Saturday  23h29:47] PA    -> ICI ; ITINÉRAIRE 2101_1202 EN DESTRUCTION. 
+[Saturday  23h29:47] PA    -> IGC ; CYCLE c1p2 EN ATTENTE DE RESET. 
+[Saturday  23h29:51] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:52] PA    -> DP ; BOUCLE 1102 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:53] PA    -> DP ; BOUCLE 2101 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:54] PA    -> DP ; BOUCLE 1202 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:54] PA    -> DP ; BOUCLE 1302 TRAIN 3 -> ACTIVE 
+[Saturday  23h29:55] PA    -> DP ; BOUCLE 2402 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:56] PA    -> DP ; BOUCLE 1102 TRAIN 3 -> INACTIVE 
+[Saturday  23h29:56] PA    -> ICI ; ITINÉRAIRE 2101_1202 DÉTRUIT. 
+[Saturday  23h29:56] PA    -> IGC ; CYCLE c1p2 EN ACTIVITÉ. 
+[Saturday  23h29:56] PA    -> ICI ; ITINÉRAIRE 2302_2101 FORMÉ. 
+[Saturday  23h29:58] PA    -> DP ; BOUCLE 1202 TRAIN 3 -> INACTIVE 

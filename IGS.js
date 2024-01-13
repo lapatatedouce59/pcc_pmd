@@ -51,6 +51,7 @@ exports.appseq = async function( target ){
         for(let sec of pccApi.SEC){
             if(!(sec.id===SECMAP.get(target))) continue;
             sec.states.ongoingseq=true
+            seq.active=true
             fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
             parent.apiSave()
         }
@@ -87,6 +88,7 @@ exports.appseq = async function( target ){
                     for(let sec of pccApi.SEC){
                         if(!(sec.id===SECMAP.get(target))) continue;
                         sec.states.ongoingseq=false
+                        seq.active=false
                     }
                     return parent.apiSave();
                 }
