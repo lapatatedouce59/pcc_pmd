@@ -2703,38 +2703,7 @@ wss.on('connection', (ws, req) => {
             case 402:
                 if(!isClientExisting(data.uuid)) return;
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
-                console.log(data)
-                for(let sec of pccApi.SEC){
-                    for(let ctn of sec.cantons){
-                        if(ctn.cid===`c${data.ctnId}`){
-                            ovse.lastCtn=ctn.cid
-                            if(data.value===false){
-                                ctn.trains.splice(ctn.trains.indexOf(data.train),1)
-                                writter.simple(`BOUCLE ${data.ctnId} TRAIN ${data.train} -> INACTIVE`,'PA','DP')
-                                if(pccApi.trainMouvements[data.train]){
-                                    pccApi.trainMouvements[data.train].splice(pccApi.trainMouvements[data.train].indexOf(ctn.cid),1)
-                                } else {
-                                    pccApi.trainMouvements[data.train] = []
-                                    logger.error(`Échec pour la bascule de la DP ${data.ctnId}.`)
-                                }
-                                return exports.apiSave();
-                            } else if (data.value===true){
-                                ovse.lastDPOn=ctn.cid
-                                ctn.trains.push(data.train)
-                                writter.simple(`BOUCLE ${data.ctnId} TRAIN ${data.train} -> ACTIVE`,'PA','DP')
-                                if(pccApi.trainMouvements[data.train]){
-                                    pccApi.trainMouvements[data.train].push(ctn.cid)
-                                } else {
-                                    pccApi.trainMouvements[data.train] = []
-                                    pccApi.trainMouvements[data.train].push(ctn.cid)
-                                }
-                                return exports.apiSave();
-                            }
-                        }
-                    }
-                }
-                logger.error(`Balise ${data.ctnId} non trouvée.`)
-                writter.simple(`BOUCLE ${data.ctnId} NON IDENTIFIÉE`,'PCC','DÉFAUT',3)
+                exports.dpManage(data.train,data.ctnId,data.value)
                 break;
             case 500:
                 if(!isClientExisting(data.uuid)) return;
@@ -3114,4 +3083,42 @@ function itiInf(code){
             }
         }
     }
+}
+
+
+exports.dpManage = (tid,dp,value)=>{
+    for(let sec of pccApi.SEC){
+        for(let ctn of sec.cantons){
+            if(ctn.cid===`c${dp}`){
+                ovse.lastCtn=ctn.cid
+                if(value===false){
+                    ctn.trains.splice(ctn.trains.indexOf(tid),1)
+                    writter.simple(`BOUCLE ${dp} TRAIN ${tid} -> INACTIVE`,'PA','DP')
+                    if(pccApi.trainMouvements[tid]){
+                        pccApi.trainMouvements[tid].splice(pccApi.trainMouvements[tid].indexOf(ctn.cid),1)
+                    } else {
+                        pccApi.trainMouvements[tid] = []
+                        logger.error(`Échec pour la bascule de la DP ${dp}.`)
+                    }
+                    exports.apiSave();
+                    return true;
+                } else if (value===true){
+                    ovse.lastDPOn=ctn.cid
+                    ctn.trains.push(tid)
+                    writter.simple(`BOUCLE ${dp} TRAIN ${tid} -> ACTIVE`,'PA','DP')
+                    if(pccApi.trainMouvements[tid]){
+                        pccApi.trainMouvements[tid].push(ctn.cid)
+                    } else {
+                        pccApi.trainMouvements[tid] = []
+                        pccApi.trainMouvements[tid].push(ctn.cid)
+                    }
+                    exports.apiSave();
+                    return true;
+                }
+            }
+        }
+    }
+    logger.error(`Balise ${tid} non trouvée.`)
+    writter.simple(`BOUCLE ${tid} NON IDENTIFIÉE`,'PCC','DÉFAUT',3)
+    return false;
 }

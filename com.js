@@ -6,56 +6,63 @@ const fs = require('fs')
 const writter = require("./writter");
 
 /**
-* @description Déplace un train d'un canton à un autre
+* @description Permet de gérer les détections positives
 * @param tid (train id) ID du train qui doit être déplacé
-* @param sens (sens de marche) Sens de circulation du train (1 ou 2)
+* @param dp (détecteur positif) Nom de la boucle de détection positive (cid)
+* @param value valeur du détecteur positif (bool)
 * @returns { code: "HTTP Code", verbose: "HTTP Message", message: "Action response" }
 * @type {object}
 */
 
-exports.moveTrain = async(tid, sens)=>{
-    if(!(tid)||!(sens)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The train ID or direction of the specified train have'nt been sent to the function. Please refer to the documentation." })
-    if(typeof sens !== "number") return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The train direction is'nt a valid number (parsed int)." })
+let DPtoggle = async(tid, dp, value)=>{
+    if(!(tid)||!(dp)||!(value)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The train ID or detection loop or value have'nt been sent to the function. Please refer to the documentation." })
     try{
-        ws.MH(tid, sens)
-        return JSON.stringify({ code: 202, verbose: "Accepted", message: "Train movement have been sucessfully initialised." })
+        let res = ws.dpManage(tid,dp,value)
+        if(res===true) return JSON.stringify({ code: 202, verbose: "Accepted", message: "Train movement have been sucessfully initialised." })
+        if(res===false) return JSON.stringify({ code: 500, verbose: "Internal Server Error", message: `Some error occured, maybe loop you specified don't exist.` })
     } catch (error){
         return JSON.stringify({ code: 500, verbose: "Internal Server Error", message: `The following error occured: ${error}` })
     }
 }
 
 /**
-* @description Gère les itinéraires (get)
-* @param mode (mode d'appel) Si le mode est "list", la fonction retournera la liste des itinéraires de la ligne. Si le mode est sur "online", la fonction retournera true si l'itinéraire spécifié est actif.
+* @description Permet de récupérer l'object d'itinéraire
 * @param code (code d'itinéraire) Si le mode est "online", spécifier le code de l'itinéraire à vérifier.
 * @returns { code: "HTTP Code", verbose: "HTTP Message", message: "Action response", response: array or boolean }
 * @type {object}
 */
 
-exports.itiInfos = async(mode, code)=>{
-    if(!(mode)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The function mode have'nt been specified. Please refer to the documentation." })
-    if(mode==='list'){
-        let response = []
-        for(let sec of pccApi.SEC){
-            for(let itil of Object.entries(sec.ITI[0])){
-                for(let iti of itil[1]){
-                    response.push({ code: iti.code, active: iti.active, section: sec.id })
-                }
+let itiInf = (code)=>{
+    if(!(code)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The path code is'nt specified. Please refer to the documentation." })
+    for(let sec of pccApi.SEC){
+        for(let itilist of Object.entries(sec.ITI[0])){
+            for(let iti of itilist[1]){
+                if(iti.code===code){
+                    return JSON.stringify({ code: 200, verbose: "OK", message: "Path object you asked for.", response:iti })
+                } else continue;
             }
         }
-        return JSON.stringify({ code: 200, verbose: "OK", message: "There is the array of the line.", response: response})
-    } else if (mode==='online'){
-        if(!(code)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The function mode is set to 'online' but no code have been provided. Please refer to the documentation." })
-        for(let sec of pccApi.SEC){
-            for(let itil of Object.entries(sec.ITI[0])){
-                for(let iti of itil[1]){
-                    if(!(iti.code===code)) continue;
-                    return JSON.stringify({ code: 200, verbose: "OK", message: "There is the provided itinerary status.", response: iti.active})
-                }
-            }
+    }
+    return JSON.stringify({ code: 404, verbose: "Not Found", message: "The path code provided does'nt corresponds to any valid path. Please look at server's saves to view valid path codes."})
+}
+
+
+/**
+* @description Permet de récupérer l'object de cantons
+* @param code (code d'itinéraire) Si le mode est "online", spécifier le code de l'itinéraire à vérifier.
+* @returns { code: "HTTP Code", verbose: "HTTP Message", message: "Action response", response: array or boolean }
+* @type {object}
+*/
+
+let ctnInf = (cid)=>{
+    if(!(cid)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The block code is'nt specified. Please refer to the documentation." })
+    for(let sec of pccApi.SEC){
+        for(let ctn of sec.cantons){
+            if(!(ctn.cid===cid)) continue;
+            return JSON.stringify({ code: 200, verbose: "OK", message: "Block object you asked for.", response:ctn });
         }
-        return JSON.stringify({ code: 404, verbose: "Not Found", message: "The itinerary code provided does'nt corresponds to any valid itinerary. Please use the list mode to see a list of valid itinerary codes."})
-    } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The mode provided is invalid. Please refer to the documentation." })
+    }
+    return JSON.stringify({ code: 404, verbose: "Not Found", message: "The block code provided does'nt corresponds to any valid block. Please look at server's saves to view valid block codes."})
 }
 
 /**
@@ -68,7 +75,7 @@ exports.itiInfos = async(mode, code)=>{
 * @type {object}
 */
 
-exports.changeElementState = (element, id, state, value, force)=>{
+let changeElementState = (element, id, state, value, force)=>{
     if(!(element)||!(id)||!(state))  return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the function parametters are missing. Please refer to the documentation." })
     if(!(value===true||value===false||value===2)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The value of the element state is invalid. Please refer to the documentation." })
     if(element==='station'){
@@ -111,41 +118,36 @@ exports.changeElementState = (element, id, state, value, force)=>{
     } else if (element==='train'){
         let errResponse = []
         let errResponse2= []
-        for(let sec of pccApi.SEC){
-            for(let ctn of sec.cantons){
-                if(!(ctn.trains.length>0)) continue;
-                for(let train of ctn.trains){
-                    errResponse.push( {id: pccApi.trains[train].tid, ctn: ctn.cid, sec: sec.id} )
-                    if(!(pccApi.trains[train]===id)) continue;
-                    for(let tstate of Object.entries(pccApi.trains[train].states)){
-                        errResponse2.push(state[0])
-                        //console.log(`${state}=${tstate[0]}?${state===tstate[0]}`)
-                        if(!(tstate[0]===state)) continue;
-                        if(tstate[0]==='trainSOS' && !(force)) return JSON.stringify({ code: 423, verbose: "Locked", message: "While the state provided is valid, you don't have the permission to change it directly. Call the function triggerSpecialAction() or refer to the documentation.", reponse: errResponse2})
-                        let formerState = tstate[1]
-                        pccApi.trains[train].states[tstate[0]] = value
-                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                        ws.apiSave()
-                        let litteralValue = false
-                        let prio = false
-                        if(value===true) {
-                            litteralValue='OUI'
-                            prio = 1
-                        }
-                        if(value===false) {
-                            litteralValue='NON'
-                            prio = 1
-                        }
-                        if(value===2) {
-                            litteralValue='OUI'
-                            prio = 3
-                        }
-                        writter.simple(`${litteralValue}`,'TRAIN', `${state}`,prio)
-                        return JSON.stringify({ code: 200, verbose: "OK", message: `The element ${tstate[0]} have been successfully changed from ${formerState} to ${value}.`})
-                    }
-                    return JSON.stringify({ code: 404, verbose: "Not Found", message: "The state provided does'nt corresponds to any valid element state. Here is a list of valid states.", reponse: errResponse2})
+        for(let train of Object.entries(pccApi.trains)){
+            errResponse.push( {id: train[0]} )
+            if(!(train[0]===id)) continue;
+            for(let tstate of Object.entries(train[1].states)){
+                errResponse2.push(state[0])
+                //console.log(`${state}=${tstate[0]}?${state===tstate[0]}`)
+                if(!(tstate[0]===state)) continue;
+                if(tstate[0]==='trainSOS' && !(force)) return JSON.stringify({ code: 423, verbose: "Locked", message: "While the state provided is valid, you don't have the permission to change it directly. Call the function triggerSpecialAction() or refer to the documentation.", reponse: errResponse2})
+                let formerState = tstate[1]
+                pccApi.trains[train[0]].states[tstate[0]] = value
+                fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                ws.apiSave()
+                let litteralValue = false
+                let prio = false
+                if(value===true) {
+                    litteralValue='OUI'
+                    prio = 1
                 }
+                if(value===false) {
+                    litteralValue='NON'
+                    prio = 1
+                }
+                if(value===2) {
+                    litteralValue='OUI'
+                    prio = 3
+                }
+                writter.simple(`${litteralValue} (${train[0]})`,'TRAIN', `${state}`,prio)
+                return JSON.stringify({ code: 200, verbose: "OK", message: `The element ${tstate[0]} have been successfully changed from ${formerState} to ${value}.`})
             }
+            return JSON.stringify({ code: 404, verbose: "Not Found", message: "The state provided does'nt corresponds to any valid element state. Here is a list of valid states.", reponse: errResponse2})
         }
         return JSON.stringify({ code: 404, verbose: "Not Found", message: "The train id provided does'nt corresponds to any valid train. Here is a list of valid train identifiers.", reponse: errResponse})
     } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The element provided is invalid. Please refer to the documentation." })
@@ -162,33 +164,40 @@ exports.changeElementState = (element, id, state, value, force)=>{
 * @type {object}
 */
 
-exports.triggerSpecialAction=(element, id, event, args)=>{
+let triggerSpecialAction=(element, id, event, args)=>{
     if(!(element)||!(id)||!(event)||!(args))  return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the function parametters are missing. Please refer to the documentation." })
     if(!(typeof args === 'object')) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The args parametter is not an Object. Please refer to the documentation." })
     if(element==='train'){
         let errResponse = []
-        for(let sec of pccApi.SEC){
-            for(let ctn of sec.cantons){
-                if(!(ctn.trains.length>0)) continue;
-                for(let train of ctn.trains){
-                    errResponse.push( {id: pccApi.trains[train].tid, ctn: ctn.cid, sec: sec.id} )
-                    if(!(pccApi.trains[train].tid===id)) continue;
-                    if(event==='emCall'){
-                        if(!(args.caller)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the event args is not provided. Please refer to the documentation." })
-                        pccApi.emCalls.push({ caller: args.caller, ctn: ctn.cid, trid: pccApi.trains[train].tid, active: 2})
-                        console.log(exports.changeElementState('train', pccApi.trains[train].tid, 'trainSOS', 2, true))
-                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                        writter.simple('DÉCLANCHÉ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`,3)
-                        ws.apiSave()
-                        return JSON.stringify({ code: 200, verbose: "OK", message: `Event ${event} started for ${element} ${id}.`})
-                    } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The event type provided is invalid. Please refer to the documentation." })
-                }
-            }
+        for(let train of Object.entries(pccApi.trains)){
+            errResponse.push( {id: train[0]} )
+            if(!(train[0]===id)) continue;
+            if(event==='emCall'){
+                if(!(args.caller)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the event args is not provided. Please refer to the documentation." })
+                let trainPos = whereIsTrain(train[0])[0]
+                pccApi.emCalls.push({ caller: args.caller, ctn: trainPos, trid: train[0], active: 2})
+                console.log(exports.changeElementState('train', train[0], 'trainSOS', 2, true))
+                fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                writter.simple('DÉCLANCHÉ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`,3)
+                ws.apiSave()
+                return JSON.stringify({ code: 200, verbose: "OK", message: `Event ${event} started for ${element} ${id}.`})
+            } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The event type provided is invalid. Please refer to the documentation." })
         }
         return JSON.stringify({ code: 404, verbose: "Not Found", message: "The train id provided does'nt corresponds to any valid train. Here is a list of valid train identifiers.", reponse: errResponse})
     } else if (element==='station'){
         return JSON.stringify({ code: 501, verbose: "Not Implemented", message: "While your request is valid, no functions are presents with this element." })
     }
+}
+let whereIsTrain = (tid)=>{
+    let resp = []
+    for(let sec of pccApi.SEC){
+        for(let ctn of sec.cantons){
+            for(let tids of ctn.trains){
+                if(tids.includes(tid)) resp.push(ctn.cid)
+            }
+        }
+    }
+    return resp;
 }
 
 /**
@@ -200,42 +209,46 @@ exports.triggerSpecialAction=(element, id, event, args)=>{
 * @type {object}
 */
 
-exports.manageTrains=(mode, id, args)=>{
+let manageTrains=(mode, id, args)=>{
     if(!(mode)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The function mode have'nt been specified. Please refer to the documentation." })
     if(!(typeof args === 'object')) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The args parametter is not an Object. Please refer to the documentation." })
     if(mode==='spawn'){
         if(!(args.initial)||!(id)||!(args.owner)||!(args.type)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the function args is not provided. Please refer to the documentation." })
+        if(pccApi.trains[id]) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The train you are trying to spawn already exist on the map. Did you mean to remove it instead?" })
         for(let sec of pccApi.SEC){
             for(let ctn of sec.cantons){
-                let availableCtn = ['cGPAG1','c1101','c1201','c1501']
-                for(let actn of availableCtn){
-                    if(availableCtn.includes(ctn.cid)&&ctn.trains.length===0){
-                        let train = new Train(ctn, args.owner, args.initial, args.type, id)
-                        train.spawn()
-                        writter.simple(`${id}, ${ctn.cid}`,'GAME', `SPAWN`,2)
-                        return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully on the map.`})
-                    }
+                let availableCtn = ['cGPAG1','c1101','c1201','c2501']
+                if(availableCtn.includes(ctn.cid)&&ctn.trains.length===0){
+                    let train = new Train(ctn, args.owner, args.initial, args.type, id)
+                    train.spawn()
+                    writter.simple(`${id}, ${ctn.cid}`,'GAME', `SPAWN`,2)
+                    return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully on the map.`})
                 }
             }
         }
+        return JSON.stringify({ code: 500, verbose: "Internal Server Error", message: `Something went wrong. It is maybe because all of the available spawn blocks are occupied. Please retry later.`})
     } else if (mode==='remove'){
         let errResponse = []
-        for(let sec of pccApi.SEC){
-            for(let ctn of sec.cantons){
-                if(!(ctn.trains.length>0)) continue;
-                for(let train of ctn.trains){
-                    errResponse.push( {id: pccApi.trains[train].tid, ctn: ctn.cid, sec: sec.id} )
-                    if(!(pccApi.trains[train].tid===id)) continue;
-                    let availableCtn = ['cGPAG1','c1101','c1201','c1501']
-                    if(availableCtn.includes(ctn.cid)){
-                        ctn.trains.shift()
-                        fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                        ws.apiSave()
-                        writter.simple(`${id}, ${ctn.cid}`,'GAME', `DELETE`,2)
-                        return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully deleted from the map.`})
-                    } else return JSON.stringify({ code: 403, verbose: "Forbidden", message: "You tried to delete a train without it beeing in a garage zone. Here is a list a valid cantons.", reponse: availableCtn})
-                }
+        for(let train of Object.entries(pccApi.trains)){
+            errResponse.push( {id: train[0]} )
+            if(!(train[0]===id)) continue;
+            let availableCtn = ['cGPAG1','c1101','c1201','c2501']
+            let trainPos = whereIsTrain(train[0])
+            let ctnInvalid = []
+            for(let ctnPos of trainPos){
+                if(availableCtn.includes(ctnPos)) continue;
+                ctnInvalid.push(ctnPos)
             }
+            if(ctnInvalid.length===0){
+                for(let ctnPos of trainPos){
+                    ctnInfo(ctnPos).trains.splice(ctnInfo(ctnPos).trains.indexOf(train[0]))
+                }
+                delete pccApi.trains[train[0]]
+                fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
+                ws.apiSave()
+                writter.simple(`${id}, ${trainPos[0]}`,'GAME', `DELETE`,2)
+                return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully deleted from the map.`})
+            } else return JSON.stringify({ code: 403, verbose: "Forbidden", message: `You tried to delete a train without it beeing in a garage zone (${ctnInvalid.length} block(s) are invalid(s)). Here is a list a valid cantons.`, reponse: availableCtn})
         }
         return JSON.stringify({ code: 404, verbose: "Not Found", message: "The train id provided does'nt corresponds to any valid train. Here is a list of valid train identifiers.", reponse: errResponse})
     } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The function mode provided is invalid. Please refer to the documentation." })
@@ -252,7 +265,8 @@ class Train {
 
     spawn(){
         if(this.mode==='set'){
-            this.ctn.trains.push({
+            this.ctn.trains.push(this.id)
+            pccApi.trains[this.id] = {
                 "tid": `${this.id}`,
                 "owner": this.owner,
                 "trainType": this.type,
@@ -391,11 +405,12 @@ class Train {
                     "mission": false,
                     "cptFu": 0
                 }
-            })
+            }
             fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
             ws.apiSave()
         } else if (this.mode==='unset'){
-            this.ctn.trains.push({
+            this.ctn.trains.push(this.id)
+            pccApi.trains[this.id] = {
                 "tid": `${this.id}`,
                 "owner": this.owner,
                 "trainType": this.type,
@@ -534,9 +549,20 @@ class Train {
                     "mission": false,
                     "cptFu": 0
                 }
-            })
+            }
             fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
             ws.apiSave()
+        }
+    }
+}
+
+module.exports = { ctnInf, manageTrains, DPtoggle, itiInf, changeElementState, triggerSpecialAction,  }
+
+let ctnInfo = (cid)=>{
+    for(let sec of pccApi.SEC){
+        for(let ctn of sec.cantons){
+            if(!(ctn.cid===cid)) continue;
+            return ctn;
         }
     }
 }
