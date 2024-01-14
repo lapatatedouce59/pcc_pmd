@@ -247,7 +247,7 @@ function HTTrains(type,zone){
                     if(!(ss04CELIST.includes(ectns[0]))) continue;
                     pccApi.ectns[ectns[0]]=false
                 }
-                writter.simple('NON SS04.','LIGNE', 'HT')
+                writter.simple('NON SS04.','LIGNE', 'HT',3)
                 pccApi.PR[0].DJVSS04MSTO=false
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
@@ -262,7 +262,7 @@ function HTTrains(type,zone){
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
                     ss.voyPA=true
                 }
-                writter.simple('OUI SS04.','LIGNE', 'HT')
+                writter.simple('OUI SS04.','LIGNE', 'HT',2)
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -295,7 +295,7 @@ function HTTrains(type,zone){
                 }
                 pccApi.PR[0].DJVSS05MSTO=false
                 pccApi.PR[1].DJVSS05GLANER=false
-                writter.simple('NON SS05.','LIGNE', 'HT')
+                writter.simple('NON SS05.','LIGNE', 'HT',3)
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
                     ss.voyHTAutABS=true
@@ -309,7 +309,7 @@ function HTTrains(type,zone){
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
                     ss.voyPA=true
                 }
-                writter.simple('OUI SS05.','LIGNE', 'HT')
+                writter.simple('OUI SS05.','LIGNE', 'HT',2)
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -348,7 +348,7 @@ function HTTrains(type,zone){
                 pccApi.PR[0].DJVSS04MSTO=false
                 pccApi.PR[0].DJVSS05MSTO=false
                 pccApi.PR[1].DJVSS05GLANER=false
-                writter.simple('NON.','LIGNE', 'HT')
+                writter.simple('NON.','LIGNE', 'HT',3)
             } else if(type==='up') {
                 for(let ss of pccApi.SS){
                     if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.voyDHT===true)&&(ss.voyDI===false)){
@@ -364,7 +364,7 @@ function HTTrains(type,zone){
                         ss.voyPA=true
                     }
                 }
-                writter.simple('OUI.','LIGNE', 'HT')
+                writter.simple('OUI.','LIGNE', 'HT',2)
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -445,7 +445,7 @@ function FSTrains (type,zone){
             if(type==='down'){
                 ss.voyFS=2
                 ss.voyPA=2
-                writter.simple('NON SS04.','LIGNE', 'FS')
+                writter.simple('NON SS04.','LIGNE', 'FS',3)
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
                     ss.voyFS=true
@@ -453,7 +453,7 @@ function FSTrains (type,zone){
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
                     ss.voyPA=true
                 }
-                writter.simple('OUI SS04.','LIGNE', 'FS')
+                writter.simple('OUI SS04.','LIGNE', 'FS',2)
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -478,7 +478,7 @@ function FSTrains (type,zone){
             if(type==='down'){
                 ss.voyFS=2
                 ss.voyPA=2
-                writter.simple('NON SS05.','LIGNE', 'FS')
+                writter.simple('NON SS05.','LIGNE', 'FS',3)
             } else if(type==='up') {
                 if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
                     ss.voyFS=true
@@ -486,7 +486,7 @@ function FSTrains (type,zone){
                 if((pccApi.comAG===false)&&(pccApi.comAuth===true)&&(pccApi.voyUCA===true)&&(ss.comAutHT===false)&&(ss.comCoupFS===false)&&(ss.voyDHT===true)&&(ss.voyDI===false)&&(ss.voyHT===true)&&(ss.voyFS===true)&&(ss.voyRU===true)&&(ss.voyAlim===true)){
                     ss.voyPA=true
                 }
-                writter.simple('OUI SS05.','LIGNE', 'FS')
+                writter.simple('OUI SS05.','LIGNE', 'FS',2)
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -512,7 +512,7 @@ function FSTrains (type,zone){
                 ss=pccApi.SS[1]
                 ss.voyFS=2
                 ss.voyPA=2
-                writter.simple('NON.','LIGNE', 'FS')
+                writter.simple('NON.','LIGNE', 'FS',3)
             } else if(type==='up') {
                 for(let ss of pccApi.SS){
                     if((pccApi.comAG===false)&&(pccApi.comFSLine===false)&&(pccApi.voyUCA===true)&&(ss.voyRU===true)&&(ss.comCoupFS===false)){
@@ -522,7 +522,7 @@ function FSTrains (type,zone){
                         ss.voyPA=true
                     }
                 }
-                writter.simple('OUI.','LIGNE', 'FS')
+                writter.simple('OUI.','LIGNE', 'FS',2)
             }
             for(let sec of pccApi.SEC){
                 for(let ctn of sec.cantons){
@@ -758,11 +758,11 @@ wss.on('connection', (ws, req) => {
                                 }
                             }
                         }*/
-                        writter.simple('ACTIF.','PCC', 'CDP')
+                        writter.simple('ACTIF.','PCC', 'CDP',3)
                         exports.apiSave();
                         break;
                     case 'AGreset':
-                        writter.simple('INACTIF.','PCC', 'CDP')
+                        writter.simple('INACTIF.','PCC', 'CDP',1)
                         if(!(pccApi.comAG===true)) break;
                         pccApi.comAG=false
                         console.log(pccApi.comAG)
@@ -942,7 +942,7 @@ wss.on('connection', (ws, req) => {
                             pccApi.comFSLine=true
                             pccApi.voyFS=2
                             FSTrains('down','all')
-                            writter.simple('NON.','PCC', 'FS (LIGNE)')
+                            writter.simple('NON.','PCC', 'FS (LIGNE)',3)
                             exports.apiSave()
                         }
                         if((pccApi.comAuth) && !(pccApi.comFSLine)){
@@ -961,7 +961,7 @@ wss.on('connection', (ws, req) => {
                         } else if(data.state===true){
                             pccApi.comFSGAT=true
                             pccApi.voyFSGAT=2
-                            writter.simple('NON.','PCC', 'FS (GAT)')
+                            writter.simple('NON.','PCC', 'FS (GAT)',3)
                         }
                         if((pccApi.comAuthGAT) && !(pccApi.comFSGAT)){
                             pccApi.voyGAT=true
@@ -971,7 +971,7 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'HTAUT-COM':
                         if(data.state===false){
-                            writter.simple('NON.','PCC', 'HT (LIGNE)')
+                            writter.simple('NON.','PCC', 'HT (LIGNE)',3)
                             pccApi.comAuth=false
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHT=2
@@ -1019,7 +1019,7 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'HTAUTGAT-COM':
                         if(data.state===false){
-                            writter.simple('NON.','PCC', 'HT (GAT)')
+                            writter.simple('NON.','PCC', 'HT (GAT)',3)
                             pccApi.comAuthGAT=false
                             if(pccApi.comAG===false || pccApi.comForceHT===true){
                                 pccApi.voyHTGAT=2
@@ -1047,7 +1047,7 @@ wss.on('connection', (ws, req) => {
                                 pccApi.voyHTGAT=2
                             }
                         } else if(data.state===true){
-                            writter.simple('OUI.','PCC', 'FORCAGE HT')
+                            writter.simple('OUI.','PCC', 'FORCAGE HT',2)
                             pccApi.comForceHT=true
                             if(pccApi.comAG===true){
                                 pccApi.voyHT=true
@@ -1067,7 +1067,7 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'IDPO-COM':
                         if(data.state===false){
-                            writter.simple('NON.','PCC', 'IDPO')
+                            writter.simple('NON.','PCC', 'IDPO',2)
                             pccApi.comIDPOTPAS=false
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
@@ -1078,7 +1078,7 @@ wss.on('connection', (ws, req) => {
                                 }
                             }
                         } else if(data.state===true){
-                            writter.simple('OUI.','PCC', 'IDPO')
+                            writter.simple('OUI.','PCC', 'IDPO',2)
                             pccApi.comIDPOTPAS=true
                             for (let sec of pccApi.SEC){
                                 for (let ctns of sec.cantons){
@@ -1092,16 +1092,16 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'UCAINHIB-COM':
                         if(data.state===false){
-                            writter.simple('NON.','PCC', 'INHIBITION UCA')
+                            writter.simple('NON.','PCC', 'INHIBITION UCA',2)
                             pccApi.comInhibUCA=false
                         } else if(data.state===true){
-                            writter.simple('OUI.','PCC', 'INHIBITION UCA')
+                            writter.simple('OUI.','PCC', 'INHIBITION UCA',3)
                             pccApi.comInhibUCA=true
                         }
                         break;
                     case 'ARMPR-COM':
                         if(data.state===false){
-                            writter.simple('NON.','PCC', 'ARMEMENT PR')
+                            writter.simple('NON.','PCC', 'ARMEMENT PR',3)
                             pccApi.PR[0].DHTMSTO=false
                             pccApi.PR[1].DHTGLARNER=false
                             pccApi.comArmPR=false
@@ -1111,13 +1111,13 @@ wss.on('connection', (ws, req) => {
                                     ctns.states.alimDef=2
                                     ctns.states.IDPOAlreadyActiveByALC=true
                                     ctns.states.DSO=true
-                                    writter.simple('OUI.','EAS', 'DEF ALIM')
+                                    writter.simple('OUI.','EAS', 'DEF ALIM',3)
                                     writter.simple('OUI.','EAS', 'DSO')
                                     writter.simple('OUI.','EAS', 'DSO PAR ALC')
                                     if(ctns.trains[0]){
                                         let trainObj=pccApi.trains[ctns.trains[0]]
                                         trainObj.states.forbiddenStart=2
-                                        writter.simple('OUI.','TRAIN', 'DÉPART INTERDIT')
+                                        writter.simple('OUI.','TRAIN', 'DÉPART INTERDIT',3)
                                     }
                                     
                                 }
@@ -1134,7 +1134,7 @@ wss.on('connection', (ws, req) => {
                             pccApi.voyCC=2
                             HTTrains('down','all')
                         } else if(data.state===true){
-                            writter.simple('OUI.','PCC', 'ARMEMENT PR')
+                            writter.simple('OUI.','PCC', 'ARMEMENT PR',2)
                             pccApi.comArmPR=true
                             pccApi.PR[0].DHTMSTO=true
                             pccApi.PR[1].DHTGLARNER=true
@@ -1203,7 +1203,7 @@ wss.on('connection', (ws, req) => {
                         break;
                     case 'AUTHTSS04-COM':
                         if(data.state===false){
-                            writter.simple('NON.','PCC', 'AUT HT (SS04)')
+                            writter.simple('NON.','PCC', 'AUT HT (SS04)',3)
                             pccApi.SS[0].comAutHT=false
                             HTTrains('up','SS04')
                             let ss = pccApi.SS[0]
@@ -1218,14 +1218,14 @@ wss.on('connection', (ws, req) => {
                                     pccApi.PR[0].DJVSS04MSTO=true
                                 }
                         } else if(data.state===true){
-                            writter.simple('OUI.','PCC', 'AUT HT (SS04)')
+                            writter.simple('OUI.','PCC', 'AUT HT (SS04)',2)
                             pccApi.SS[0].comAutHT=true
                             HTTrains('down','SS04')
                         }
                         break;
                     case 'AUTHTSS05-COM':
                         if(data.state===false){
-                            writter.simple('NON.','PCC', 'AUT HT (SS05)')
+                            writter.simple('NON.','PCC', 'AUT HT (SS05)',3)
                             pccApi.SS[1].comAutHT=false
                             HTTrains('up','SS05')
                                 let ss = pccApi.SS[1]
@@ -1241,7 +1241,7 @@ wss.on('connection', (ws, req) => {
                                     pccApi.PR[1].DJVSS05GLANER=true
                                 }
                         } else if(data.state===true){
-                            writter.simple('OUI.','PCC', 'AUT HT (SS05)')
+                            writter.simple('OUI.','PCC', 'AUT HT (SS05)',2)
                             pccApi.SS[1].comAutHT=true
                             HTTrains('down','SS05')
                         }
@@ -1252,7 +1252,7 @@ wss.on('connection', (ws, req) => {
                             pccApi.SS[0].comCoupFS=false
                             FSTrains('up','SS04')
                         } else if(data.state===true){
-                            writter.simple('OUI.','PCC', 'FS (SS04)')
+                            writter.simple('OUI.','PCC', 'FS (SS04)',3)
                             pccApi.SS[0].comCoupFS=true
                             FSTrains('down','SS04')
                         }
@@ -1264,7 +1264,7 @@ wss.on('connection', (ws, req) => {
                             FSTrains('up','SS05')
                         } else if(data.state===true){
                             pccApi.SS[1].comCoupFS=true
-                            writter.simple('OUI.','PCC', 'FS (SS05)')
+                            writter.simple('OUI.','PCC', 'FS (SS05)',3)
                             FSTrains('down','SS05')
                         }
                         break;
@@ -1633,7 +1633,7 @@ wss.on('connection', (ws, req) => {
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
-                    writter.simple('INHIBITION IDPO PLTP COMMANDÉ.','QUAI', `${stationObj.name}`)
+                    writter.simple('INHIBITION IDPO PLTP COMMANDÉ.','QUAI', `${stationObj.name}`,2)
                     stationObj.states.DSO=false
                     exports.apiSave()
                     const weweOnControleSale = async() => {
@@ -1647,7 +1647,7 @@ wss.on('connection', (ws, req) => {
                 } else
                 if (data.execute==='INHIBALCIDPO-BTN'){
                     if(!data.target.cIndex) return;
-                    writter.simple('COMMANDÉ.','QUAI', 'INHIBITION IDPO ALC')
+                    writter.simple('COMMANDÉ.','QUAI', 'INHIBITION IDPO ALC',2)
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
@@ -1716,7 +1716,7 @@ wss.on('connection', (ws, req) => {
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
-                    writter.simple('AUTORISATION FORCAGE DÉPART COMMANDÉ.','QUAI', `${stationObj.name}`)
+                    writter.simple('AUTORISATION FORCAGE DÉPART COMMANDÉ.','QUAI', `${stationObj.name}`,2)
 
                     stationObj.states.afdActive=true
                     exports.apiSave()
@@ -1726,7 +1726,7 @@ wss.on('connection', (ws, req) => {
                     let stationIndex = parseInt(data.target.cIndex)
                     let sectionIndex = parseInt(data.target.secIndex)
                     let stationObj = pccApi.SEC[sectionIndex].cantons[stationIndex]
-                    writter.simple('AUTORISATION FORCAGE DÉPART RAZ.','QUAI', `${stationObj.name}`)
+                    writter.simple('AUTORISATION FORCAGE DÉPART RAZ.','QUAI', `${stationObj.name}`,2)
 
                     stationObj.states.afdActive=false
                     exports.apiSave()
@@ -2068,7 +2068,7 @@ wss.on('connection', (ws, req) => {
                 } else*/
                 if(data.execute==='CPTFU-BTN-ACQ'){
                     if(!data.target.id) return;
-                    writter.simple('COMMANDÉ.','TRAIN', 'ACQUITTEMENT COMPTEUR FU')
+                    writter.simple('COMMANDÉ.','TRAIN', 'ACQUITTEMENT COMPTEUR FU',2)
                     let trainObj=pccApi.trains[data.target.id]
                     trainObj.states.cptFu=0
                     trainObj.states.defTech=false
@@ -2502,17 +2502,17 @@ wss.on('connection', (ws, req) => {
                     if(data.target==='STO'){
                         if(cycleInfo('c1p2').active===true){
                             pccApi.SEC[1].states.spsto=true
-                            writter.simple('DÉCLARÉ.','PA', `SP STO`)
+                            writter.simple('DÉCLARÉ.','PA', `SP STO`,2)
                             this.apiSave()
                         } else {
                             const rpdelay = async() => {
-                                writter.simple('EN ATTENTE.','PA', `SP STO`)
+                                writter.simple('EN ATTENTE.','PA', `SP STO`,2)
                                 pccApi.SEC[1].states.spsto=1
                                 exports.apiSave()
                                 await setTimeout(5000)
                                 if(cycleInfo('c1p2').active===true){
                                     pccApi.SEC[1].states.spsto=true
-                                    writter.simple('DÉCLARÉ.','PA', `SP STO`)
+                                    writter.simple('DÉCLARÉ.','PA', `SP STO`,2)
                                 } else {
                                     pccApi.SEC[1].states.spsto=false
                                     writter.simple('A L\'ABANDON.','PA', `SP STO`)
@@ -2542,12 +2542,12 @@ wss.on('connection', (ws, req) => {
                     if(pccApi.emCalls.length>0){
                         pccApi.emCalls[0].active=true
                         exports.apiSave()
-                        writter.simple('ACQUITTÉ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`)
+                        writter.simple('ACQUITTÉ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`,2)
                     }
                 }
                 if(data.execute==='EMCALL-RAZ'){
                     console.log(com.changeElementState('train', pccApi.emCalls[0].trid, 'trainSOS', false, true))
-                    writter.simple('RAZ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`)
+                    writter.simple('RAZ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`,2)
                     pccApi.emCalls.shift()
                     exports.apiSave()
 
@@ -2577,7 +2577,7 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
-                                        writter.simple(`CYCLE ${cycle.code} ANNULÉ.`,'PA', `IGC`)
+                                        writter.simple(`CYCLE ${cycle.code} ANNULÉ.`,'PA', `IGC`,2)
                                         return;
                                     }
                                     if(!(pccApi.SEC[0].cantons[8].trains.length>0)){
@@ -2597,7 +2597,7 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
-                                        writter.simple(`CYCLE ${cycle.code} ANNULÉ.`,'PA', `IGC`)
+                                        writter.simple(`CYCLE ${cycle.code} ANNULÉ.`,'PA', `IGC`,2)
                                         return;
                                     }
                                     if(!(pccApi.SEC[0].cantons[1].trains.length>0)){
@@ -2616,7 +2616,7 @@ wss.on('connection', (ws, req) => {
                                         clearInterval(checkCycleClearInter)
                                         cycle.sel=false
                                         exports.apiSave()
-                                        writter.simple(`CYCLE ${cycle.code} ANNULÉ.`,'PA', `IGC`)
+                                        writter.simple(`CYCLE ${cycle.code} ANNULÉ.`,'PA', `IGC`,2)
                                         return;
                                     }
                                     if(pccApi.SEC[0].cantons[5].trains.length===0){
@@ -2637,7 +2637,7 @@ wss.on('connection', (ws, req) => {
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.execute==='CANCELCYCLES-BTN-ITI'){
                     if(!(data.target)) return;
-                    writter.simple(`CYCLES S${data.target} ANNULÉS.`,'PA', `IGC`)
+                    writter.simple(`CYCLES S${data.target} ANNULÉS.`,'PA', `IGC`,2)
                     for(let sec of pccApi.SEC){
                         if(!(sec.id===data.target)) continue;
                         for(let cycle of sec.CYCLES){
@@ -2650,7 +2650,7 @@ wss.on('connection', (ws, req) => {
                     exports.apiSave()
                 } else if(data.execute==='DUG-BTN-ITI'){
                     if(!(data.target)) return;
-                    writter.simple(`DUG S${data.target} COMMANDÉE.`,'PA', `ICI`)
+                    writter.simple(`DUG S${data.target} COMMANDÉE.`,'PA', `ICI`,2)
                     for(let sec of pccApi.SEC){
                         if(!(sec.id===data.target)) continue;
                         for(let itilist of Object.entries(sec.ITI[0])){
@@ -2734,7 +2734,7 @@ wss.on('connection', (ws, req) => {
                     }
                 }
                 logger.error(`Balise ${data.ctnId} non trouvée.`)
-                writter.simple(`BOUCLE ${data.ctnId} NON IDENTIFIÉE`,'PCC','DÉFAUT')
+                writter.simple(`BOUCLE ${data.ctnId} NON IDENTIFIÉE`,'PCC','DÉFAUT',3)
                 break;
             case 500:
                 if(!isClientExisting(data.uuid)) return;
@@ -2896,7 +2896,8 @@ wss.on('connection', (ws, req) => {
                 logger.message('income',JSON.stringify(data),clients[data.uuid].usr.username,clients[data.uuid].ip,clients[data.uuid].instance)
                 if(data.command==='stopServer'){
                     logger.info(`ARRET DU SERVEUR! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
-                    writter.simple('COMMANDÉ.','PCC', `ARRÊT DU SERVEUR`)
+                    writter.simple('COMMANDÉ.','PCC', `ARRÊT DU SERVEUR`,3)
+                    exports.apiSave()
                     process.exit(0)
                 } else if(data.command==='trainDelete'){
                     for(let sec of pccApi.SEC){
@@ -2910,14 +2911,14 @@ wss.on('connection', (ws, req) => {
                                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                     exports.apiSave()
                                     logger.confirm(`Suppression du train ${data.train}! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
-                                    writter.simple('COMMANDÉE.','PCC', `SUPPRESSION T${data.train}`)
+                                    writter.simple('COMMANDÉE.','PCC', `SUPPRESSION T${data.train}`,2)
                                 } else {
                                     ctn.trains.shift()
                                     logger.info('FORCED SUPPRESION')
                                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                                     exports.apiSave()
                                     logger.confirm(`Suppression du train ${data.train}! Opérateur: ${ws.usr.username}, depuis ${ws.ip}`)
-                                    writter.simple('COMMANDÉE.','PCC', `SUPPRESSION FORCÉE T${data.train}`)
+                                    writter.simple('COMMANDÉE.','PCC', `SUPPRESSION FORCÉE T${data.train}`,3)
                                 }
                             }
                         }

@@ -41,7 +41,7 @@ exports.appseq = async function( target ){
             for(let sec of pccApi.SEC){
                 if(!(sec.id===SECMAP.get(target))) continue;
                 sec.states.echecSeq=1
-                writter.simple(`SEQUENCE ${target} NON APPLICABLE.`,'PA', `IGS`)
+                writter.simple(`SEQUENCE ${target} NON APPLICABLE.`,'PA', `IGS`,3)
                 parent.apiSave()
                 await setTimeout(3000)
                 sec.states.echecSeq=false

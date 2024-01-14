@@ -88,10 +88,20 @@ exports.changeElementState = (element, id, state, value, force)=>{
                     fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                     ws.apiSave()
                     let litteralValue = false
-                    if(value===true) litteralValue='OUI'
-                    if(value===false) litteralValue='NON'
-                    if(value===2) litteralValue='OUI'
-                    writter.simple(`${litteralValue}`,'EAS', `${state}`)
+                    let prio = false
+                    if(value===true) {
+                        litteralValue='OUI'
+                        prio = 1
+                    }
+                    if(value===false) {
+                        litteralValue='NON'
+                        prio = 1
+                    }
+                    if(value===2) {
+                        litteralValue='OUI'
+                        prio = 3
+                    }
+                    writter.simple(`${litteralValue}`,'EAS', `${state}`,prio)
                     return JSON.stringify({ code: 200, verbose: "OK", message: `The element ${state[0]} have been successfully changed from ${formerState} to ${value}.`})
                 }
                 return JSON.stringify({ code: 404, verbose: "Not Found", message: "The state provided does'nt corresponds to any valid element state. Here is a list of valid states.", reponse: errResponse2})
@@ -117,10 +127,20 @@ exports.changeElementState = (element, id, state, value, force)=>{
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         ws.apiSave()
                         let litteralValue = false
-                        if(value===true) litteralValue='OUI'
-                        if(value===false) litteralValue='NON'
-                        if(value===2) litteralValue='OUI'
-                        writter.simple(`${litteralValue}`,'EAS', `${state}`)
+                        let prio = false
+                        if(value===true) {
+                            litteralValue='OUI'
+                            prio = 1
+                        }
+                        if(value===false) {
+                            litteralValue='NON'
+                            prio = 1
+                        }
+                        if(value===2) {
+                            litteralValue='OUI'
+                            prio = 3
+                        }
+                        writter.simple(`${litteralValue}`,'TRAIN', `${state}`,prio)
                         return JSON.stringify({ code: 200, verbose: "OK", message: `The element ${tstate[0]} have been successfully changed from ${formerState} to ${value}.`})
                     }
                     return JSON.stringify({ code: 404, verbose: "Not Found", message: "The state provided does'nt corresponds to any valid element state. Here is a list of valid states.", reponse: errResponse2})
@@ -158,7 +178,7 @@ exports.triggerSpecialAction=(element, id, event, args)=>{
                         pccApi.emCalls.push({ caller: args.caller, ctn: ctn.cid, trid: pccApi.trains[train].tid, active: 2})
                         console.log(exports.changeElementState('train', pccApi.trains[train].tid, 'trainSOS', 2, true))
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
-                        writter.simple('DÉCLANCHÉ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`)
+                        writter.simple('DÉCLANCHÉ.','PCC', `APPEL DÉTRESSE DE ${pccApi.emCalls[0].trid} PAR ${pccApi.emCalls[0].caller} A ${pccApi.emCalls[0].ctn}`,3)
                         ws.apiSave()
                         return JSON.stringify({ code: 200, verbose: "OK", message: `Event ${event} started for ${element} ${id}.`})
                     } else return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The event type provided is invalid. Please refer to the documentation." })
@@ -172,9 +192,9 @@ exports.triggerSpecialAction=(element, id, event, args)=>{
 }
 
 /**
-* @description Déclanche un évenement spécial sur un élement
+* @description Permet de gérer les trains
 * @param mode (spawn ou remove) L'opération a effectuer
-* @param id (identifiant d'élement) L'identifiant "littéral" de l'élement (nom de la station, n° du train...)
+* @param id (identifiant d'élement) L'identifiant du train
 * @param args Les arguments annexes de la fonction
 * @returns { code: "HTTP Code", verbose: "HTTP Message", message: "Action response", response: array or boolean }
 * @type {object}
@@ -192,7 +212,7 @@ exports.manageTrains=(mode, id, args)=>{
                     if(availableCtn.includes(ctn.cid)&&ctn.trains.length===0){
                         let train = new Train(ctn, args.owner, args.initial, args.type, id)
                         train.spawn()
-                        writter.simple(`${id}, ${ctn.cid}`,'GAME', `SPAWN`)
+                        writter.simple(`${id}, ${ctn.cid}`,'GAME', `SPAWN`,2)
                         return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully on the map.`})
                     }
                 }
@@ -211,7 +231,7 @@ exports.manageTrains=(mode, id, args)=>{
                         ctn.trains.shift()
                         fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
                         ws.apiSave()
-                        writter.simple(`${id}, ${ctn.cid}`,'GAME', `DELETE`)
+                        writter.simple(`${id}, ${ctn.cid}`,'GAME', `DELETE`,2)
                         return JSON.stringify({ code: 200, verbose: "OK", message: `The train ${id} is successfully deleted from the map.`})
                     } else return JSON.stringify({ code: 403, verbose: "Forbidden", message: "You tried to delete a train without it beeing in a garage zone. Here is a list a valid cantons.", reponse: availableCtn})
                 }

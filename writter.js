@@ -5,8 +5,9 @@
 
 const fs = require('fs')
 const logger = require('./logger')
+const pccApi = require('./server.json')
 
-exports.simple = (text,elem,organne) => {
+exports.simple = (text,elem,organne,prio) => {
     function dayOfWeekAsString(dayIndex) {
         return ["Sunday", "Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dayIndex] || '';
     }
@@ -18,6 +19,13 @@ exports.simple = (text,elem,organne) => {
             throw err;
         }
     })
+    let alarm = { 
+        timestamp: actualTime.getTime(),
+        content: data,
+        priority: prio||1
+    }
+    pccApi.logs.push(alarm)
+    fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
 }
 
 exports.clean = ()=>{
@@ -26,4 +34,6 @@ exports.clean = ()=>{
             throw err;
         }
     });
+    pccApi.logs=[]
+    fs.writeFileSync('./server.json', JSON.stringify(pccApi, null, 2));
 }

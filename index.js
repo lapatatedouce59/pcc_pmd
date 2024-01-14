@@ -752,6 +752,19 @@ async function isWsRunning(){
                         }
                     }
                     waitABit()
+                    document.getElementById('listLogs').innerHTML=''
+                    for(let logs of data.logs){
+                        console.log(logs)
+                        let masterDiv = document.createElement('div')
+                        if(logs.priority===1) masterDiv.classList.add('stateBase')
+                        if(logs.priority===2) masterDiv.classList.add('stateMedium')
+                        if(logs.priority===3) masterDiv.classList.add('stateHigh')
+
+                        masterDiv.innerText=`${logs.content}`
+
+                        document.getElementById('listLogs').appendChild(masterDiv)
+                    }
+                    document.getElementById('listLogs').scrollTop = document.getElementById('listLogs').scrollHeight;
                 }
                 
             }

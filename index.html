@@ -614,6 +614,19 @@ header #cont1 div span{
     display: none;
     transition: 250ms all;
 }
+.stateBase{
+    color: #00EF35;
+}
+.stateMedium{
+    color: #efbb00;
+}
+.stateHigh{
+    color: #f73434;
+}
+
+#listLogs::-webkit-scrollbar {
+    display: none;
+}
 
     </style>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -701,11 +714,18 @@ header #cont1 div span{
     </div>
     <script src="./connexion.js"></script>
     <button id="btnAdminAccess" style="display: none;">ACCEDER AU PANNEL ADMIN</button>
-    <fieldset>
-        <legend style="font-family: 'Courier New', Courier, monospace; color: white;">Vue rapide des anomalies</legend>
-        <div id="listDef" style="height: 200px; overflow-y:auto; color: white;">
-        </div>
-    </fieldset>
+    <div style="display: flex; flex-direction: row;">
+        <fieldset style="width: 50%;">
+            <legend style="font-family: 'Courier New', Courier, monospace; color: white;">Vue rapide des anomalies</legend>
+            <div id="listDef" style="height: 200px; overflow-y:auto; color: white;">
+            </div>
+        </fieldset>
+        <fieldset style="width: 50%; background-color: #0a0a0a; font-family: monospace; color: white;">
+            <legend style="font-family: 'Courier New', Courier, monospace; color: white;">Enregistrements d'états</legend>
+            <div id="listLogs" style="height: 200px; overflow-y:auto; color: white;white-space: pre-wrap;">
+            </div>
+        </fieldset>
+    </div>
     <!--<object data="./src/pltp/img/all.svg" type="" id="pltp" style="width: 100%;"></object>-->
     <fieldset style="overflow-x:auto;">
         <legend style="font-family: 'Courier New', Courier, monospace; color: white;">Tableau de Contrôle Optique</legend>

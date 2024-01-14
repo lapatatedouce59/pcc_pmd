@@ -224,8 +224,8 @@ function detectLDI(){
             if(selectedIti.length===0){
                 // aucun itinéraire n'est admis pour l'aiguille et aucun itinéraire n'est sélectionné pour remplacer.
                 //! Coupure de la FS sur le canton
-                writter.simple(`${itiGroup.id}.`,'UCA','COUPURE FS')
-                writter.simple(`${itiGroup.id}.`,'PA','ABSENCE ITI')
+                writter.simple(`${itiGroup.id}.`,'UCA','COUPURE FS',3)
+                writter.simple(`${itiGroup.id}.`,'PA','ABSENCE ITI',3)
                 for(let trueCtn of itiGroup.aigCtn){
                     let actualCtn = exports.returnCtnIteration(trueCtn)
                     actualCtn.states.coupFs = 2
@@ -247,7 +247,7 @@ function detectLDI(){
                                         let actualCtn = exports.returnCtnIteration(trueCtn)
                                         actualCtn.states.ldi = 2
                                     }
-                                    writter.simple(`${itiGroup.id} (DIV)`,'PA','LDI')
+                                    writter.simple(`${itiGroup.id} (DIV)`,'PA','LDI',3)
                                     defUca.push(itiGroup.id)
                                     UCA.newAlarm('ldi', `${itiGroup.id}`, ["fs"])
                                     UCA.alarmInventory.ldi=true
@@ -263,7 +263,7 @@ function detectLDI(){
                                                 let actualCtn = exports.returnCtnIteration(trueCtn)
                                                 actualCtn.states.ldi = 2
                                             }
-                                            writter.simple(`${itiGroup.id} (${iti.code})`,'PA','LDI')
+                                            writter.simple(`${itiGroup.id} (${iti.code})`,'PA','LDI',3)
                                             defUca.push(itiGroup.id)
                                             UCA.newAlarm('ldi', `${itiGroup.id}`, ["fs"])
                                             UCA.alarmInventory.ldi=true
@@ -273,7 +273,7 @@ function detectLDI(){
                             } else {
                                 // l'itinéraire est en ligne...mais n'est pas appliqué à l'aiguille.
                                 //! Anomalie
-                                writter.simple(`${itiGroup.id} > ${iti.code}`,'PA','DISCORDANCE')
+                                writter.simple(`${itiGroup.id} > ${iti.code}`,'PA','DISCORDANCE',3)
                                 sec.states[`discord${itiGroup.aigCtn[0].slice(-1)}`]=2
                                 defUca.push(itiGroup.id)
                                 UCA.newAlarm('ldi', `${itiGroup.id}`, ["fs"])
@@ -290,7 +290,7 @@ function detectLDI(){
                         let ctn2 = exports.returnCtnIteration(`c${itiParts[1]}`)
                         ctn1.states.ldi=2
                         ctn2.states.ldi=2
-                        writter.simple(`${ctn1.cid}-${ctn2.cid}.`,'PA','LDI')
+                        writter.simple(`${ctn1.cid}-${ctn2.cid}.`,'PA','LDI',3)
                         defUca.push(iti.code)
                         UCA.newAlarm('ldi', `${iti.code}`, ["fs"])
                         UCA.alarmInventory.ldi=true
@@ -310,7 +310,7 @@ function detectPZO(){
         for(let ctn of sec.cantons){
             if(ctn.trains.length>1){
                 ctn.states.pzo=2
-                writter.simple(`${ctn.cid} (trains ${ctn.trains[0].tid} et ${ctn.trains[1].tid}).`,'PA','PZO')
+                writter.simple(`${ctn.cid} (trains ${ctn.trains[0].tid} et ${ctn.trains[1].tid}).`,'PA','PZO',3)
             }
         }
     }
@@ -390,7 +390,7 @@ function detectAZM(){
                 defUCA.push(aigGroup.id)
                 UCA.newAlarm('azm', `${aigGroup.id}`, ["fs","ht"])
                 UCA.alarmInventory.azm=true
-                writter.simple(`${secIdNum} (${aigGroup.id})`,'PA','AZM')
+                writter.simple(`${secIdNum} (${aigGroup.id})`,'PA','AZM',3)
             }
         }
     }
@@ -419,7 +419,7 @@ function detectPDP(){
     for(let trainInd of trainList){
         if(typeof foundMap.get(trainInd)==='undefined'){
             console.log(`PDP de train ${trainInd} sur ${exports.lastCtn}`)
-            writter.simple(`${exports.lastCtn} > ${trainInd}`,'PA','PDP')
+            writter.simple(`${exports.lastCtn} > ${trainInd}`,'PA','PDP',3)
             defUCA2.push(trainInd)
             UCA.alarmInventory.pdp=true
             UCA.newAlarm('pdp', `${exports.lastCtn}`, ["fs","ht"])
@@ -450,7 +450,7 @@ function detectALCD(){
                 }
                 if(itiCompris.length===0){
                     //console.log(`ALDC train ${trainItiLog[0]} sur MANOEUVRE ${ctnToIti[0]} A ${ctnToIti[1]}`)
-                    writter.simple(`${ctnToIti[0]}-${ctnToIti[1]} > ${trainItiLog[0]}`,'UCA','ALDC')
+                    writter.simple(`${ctnToIti[0]}-${ctnToIti[1]} > ${trainItiLog[0]}`,'UCA','ALDC',3)
                     defUCA2.push(trainItiLog[0])
                     UCA.alarmInventory.pdp=true
                     UCA.newAlarm('alc', `${trainItiLog[0]}`, ["fs","ht"])
@@ -458,7 +458,7 @@ function detectALCD(){
             } else {
                 if(!(isItiActive(`${ctnToIti[0]}_${ctnToIti[1]}`))){  //Si le mouvement ne correspond pas à un iti online.
                     //console.log(`ALDC train ${trainItiLog[0]} sur ${ctnToIti[0]} et ${ctnToIti[1]}`)
-                    writter.simple(`${ctnToIti[0]}-${ctnToIti[1]} > ${trainItiLog[0]}`,'UCA','ALDC')
+                    writter.simple(`${ctnToIti[0]}-${ctnToIti[1]} > ${trainItiLog[0]}`,'UCA','ALDC',3)
                     defUCA2.push(trainItiLog[0])
                     UCA.alarmInventory.pdp=true
                     UCA.newAlarm('alc', `${trainItiLog[0]}`, ["fs","ht"])
