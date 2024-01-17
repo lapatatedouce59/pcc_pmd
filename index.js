@@ -123,17 +123,55 @@ window.notyf = new Notyf({
 })*/
 
 //? LOAD FORMAT SELECT
-let formatSelect = document.getElementById('formatSelect')
 let groupFormatPA = document.getElementById('groupFormatPA')
 let fstation = document.getElementById('fstation')
 let ftrain = document.getElementById('ftrain')
+let btnselectTrain = document.getElementById('selectTrain')
+let btnselectQuai = document.getElementById('selectQuai')
+let btnselectPAITI = document.getElementById('selectPAITI')
 let zebiTaRienSelectionne = document.getElementById('zebiTaRienSelectionne')
 
 groupFormatPA.style.display='none'
 fstation.style.display='none'
 ftrain.style.display='none'
 
-formatSelect.addEventListener('input', ()=>{
+btnselectTrain.addEventListener('click',()=>{
+    zebiTaRienSelectionne.style.display='none'
+    fstation.style.display='none'
+    groupFormatPA.style.display='none'
+    ftrain.style.display='inline'
+    btnselectTrain.style.backgroundColor='#E9E700'
+    btnselectQuai.style.backgroundColor='#0296A1'
+    btnselectPAITI.style.backgroundColor='#0296A1'
+    btnselectTrain.style.color='black'
+    btnselectQuai.style.color='white'
+    btnselectPAITI.style.color='white'
+})
+btnselectQuai.addEventListener('click',()=>{
+    zebiTaRienSelectionne.style.display='none'
+    fstation.style.display='inline'
+    groupFormatPA.style.display='none'
+    ftrain.style.display='none'
+    btnselectQuai.style.backgroundColor='#E9E700'
+    btnselectTrain.style.backgroundColor='#0296A1'
+    btnselectPAITI.style.backgroundColor='#0296A1'
+    btnselectTrain.style.color='white'
+    btnselectQuai.style.color='black'
+    btnselectPAITI.style.color='white'
+})
+btnselectPAITI.addEventListener('click',()=>{
+    zebiTaRienSelectionne.style.display='none'
+    fstation.style.display='none'
+    groupFormatPA.style.display='inline'
+    ftrain.style.display='none'
+    btnselectTrain.style.color='white'
+    btnselectQuai.style.color='white'
+    btnselectPAITI.style.color='black'
+    btnselectPAITI.style.backgroundColor='#E9E700'
+    btnselectTrain.style.backgroundColor='#0296A1'
+    btnselectQuai.style.backgroundColor='#0296A1'
+})
+/*formatSelect.addEventListener('input', ()=>{
     zebiTaRienSelectionne.style.display='none'
     if(formatSelect.value==='groupFormatPA'){
         fstation.style.display='none'
@@ -151,7 +189,7 @@ formatSelect.addEventListener('input', ()=>{
         fstation.style.display='none'
     }
 
-})
+})*/
 
 
 let toast= document.getElementById('snackbar')
@@ -1041,60 +1079,6 @@ comCoupFSSS05.addEventListener('input', ()=>{
 
 
 
-btnForward.addEventListener('click', () => {
-    let trainAffectTxt = trainAffect.value;
-
-    if (!isDigit(trainAffectTxt)) return;
-
-    let TTARGET = parseInt(trainAffectTxt)
-
-
-    if (verifyExistingTrain(TTARGET)) {
-        console.log('bon bah on ordonne au serveur d\'avancer')
-        actualRequest = JSON.stringify({
-            op: 400,
-            sens: 1,
-            train: TTARGET,
-            uuid: window.uuid
-        })
-        window.WebSocket.send(actualRequest)
-        window.actualRequest = actualRequest
-        console.log('Ordre 400 pour le train ' + TTARGET)
-    }
-})
-btnDownward.addEventListener('click', () => {
-    let trainAffectTxt = trainAffect.value;
-
-    if (!isDigit(trainAffectTxt)) return;
-
-    let TTARGET = parseInt(trainAffectTxt)
-
-
-    if (verifyExistingTrain(TTARGET)) {
-        console.log('bon bah on ordonne au serveur de reculer')
-        actualRequest = JSON.stringify({
-            op: 400,
-            sens: 2,
-            train: TTARGET,
-            uuid: window.uuid
-        })
-        window.WebSocket.send(actualRequest)
-        window.actualRequest = actualRequest
-        console.log('Ordre 400 pour le train ' + TTARGET)
-    }
-})
-
-btnSend.addEventListener('click', () => {
-    let args = commandInput.value.split(" ")
-    if (!(args[0] === 'SET' || 'REM')) return;
-    actualRequest = JSON.stringify({
-        op: 500,
-        cmd: args,
-        uuid: window.uuid
-    })
-    window.actualRequest = actualRequest
-    window.WebSocket.send(actualRequest)
-})
 
 btnReload.addEventListener('click', () => {
     refreshTCO()

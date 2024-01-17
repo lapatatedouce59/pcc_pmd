@@ -1,14 +1,107 @@
-[Monday    00h32:10] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Monday    00h32:12] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
-[Monday    00h32:12] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Monday    00h32:13] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
-[Monday    00h32:17] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
-[Monday    00h32:17] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    00h32:22] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
-[Monday    00h32:24] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
-[Monday    00h32:26] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
-[Monday    00h32:28] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
-[Monday    00h32:28] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    00h32:36] PCC   -> ACQ ; REÇU. 
-[Monday    00h32:36] UCA   -> ALDC ; 2201-2101 > 2 
-[Monday    00h32:38] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
+[Wednesday 23h14:24] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h15:47] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h15:48] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h16:23] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h16:24] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h17:07] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h17:08] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h17:24] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h17:24] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h17:45] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h17:46] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h18:24] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h18:24] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h18:27] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h18:27] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h19:11] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h19:12] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h19:29] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h19:29] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h19:37] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h19:38] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h21:18] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h21:18] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h21:35] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h21:36] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h22:01] TRAIN -> ACQUITTEMENT T3 ; COMMANDÉ. 
+[Wednesday 23h24:33] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h24:34] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h24:36] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h24:36] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h25:12] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h25:12] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h25:46] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h25:46] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h26:03] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h26:04] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h28:39] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h28:39] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h28:41] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h28:42] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h29:49] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h29:50] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h29:52] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h29:52] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h30:23] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h30:24] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h31:24] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h31:25] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h31:27] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h31:27] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h32:13] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h32:13] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h32:15] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h32:16] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h33:30] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h33:31] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h33:33] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h33:34] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h33:50] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h33:51] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h35:16] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h35:17] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h35:19] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h35:19] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h35:54] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h35:55] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h35:57] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h35:57] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h37:09] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h37:10] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h37:13] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h37:13] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h37:32] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h37:33] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h38:38] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h38:38] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h38:47] PA    -> ICI ; ITINÉRAIRE 2201_2401 : DES ANNULÉE. 
+[Wednesday 23h38:47] PA    -> DISCORDANCE ; C1 > 2201_2401 
+[Wednesday 23h38:47] PA    -> ICI ; ITINÉRAIRE 2201_2401 SÉLECTIONNÉ. 
+[Wednesday 23h38:48] PA    -> ICI ; ITINÉRAIRE 2201_2401 FORMÉ. 
+[Wednesday 23h38:50] PA    -> ICI ; ITINÉRAIRE 2201_2401 EN DESTRUCTION. 
+[Wednesday 23h38:57] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h39:00] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> ACTIVE 
+[Wednesday 23h39:00] UCA   -> ALDC ; 2201-2101 > 2 
+[Wednesday 23h39:01] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> INACTIVE 
+[Wednesday 23h39:01] PA    -> ICI ; ITINÉRAIRE 2201_2401 DÉTRUIT. 
+[Wednesday 23h39:03] PA    -> DP ; BOUCLE 2201 TRAIN 2 -> ACTIVE 
+[Wednesday 23h39:03] PA    -> DP ; BOUCLE 2101 TRAIN 2 -> INACTIVE 
+[Wednesday 23h39:05] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Wednesday 23h41:15] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h41:16] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h41:18] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h41:18] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h41:48] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h41:49] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h41:58] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h41:58] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h42:14] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h42:14] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h43:28] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h43:28] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h43:30] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h43:31] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h43:36] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
+[Wednesday 23h43:52] GAME  -> USER ; - Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h43:53] GAME  -> USER ; + Utilisateur patatedouce.dev (chef) 
+[Wednesday 23h44:54] PCC   -> ACQUITTEMENT S1 ; COMMANDÉ. 
