@@ -426,7 +426,8 @@ S2.addEventListener('load', () => {
                 'sso': s2svgDoc.getElementById('ssoSTOV2'),
                 'voy': s2svgDoc.getElementById('voySTOV2')
             }
-        ]
+        ],
+        spSTOV2: s2svgDoc.getElementById('spSTOV2')
 
     }
     tco2Loaded=true
@@ -1415,6 +1416,9 @@ function refreshTCO(){
         }
         if(data.SEC[1].states.spsto===true){
             dictS2.voys['SP'].setAttribute('href', '../ON.png')
+            dictS2.spSTOV2.setAttribute('href', '../logoSp.png')
+        } else {
+            dictS2.spSTOV2.setAttribute('href', '../logoSpOff.png')
         }
 
         for(let ctn of sec.cantons){

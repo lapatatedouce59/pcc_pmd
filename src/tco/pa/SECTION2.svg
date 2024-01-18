@@ -88,6 +88,7 @@
 <image x= "279.75" y="89.25" href="../SSO_OFF.png" height="21.5" width="21.5" id="ssoSTOV1"/>
 <rect x="305.25" y="89.25" width="21.5" height="21.5" fill="#6B6B6B" stroke="#4A4A4A" stroke-width="1.5" id="voySTOV1"/>
 
+<image x= "228.75" y="26" href="../logoSpOff.png" height="21.5" width="21.5" id="spSTOV2"/>
 <image x= "254.25" y="26" href="../DSO_OFF.png" height="21.5" width="21.5" id="dsoSTOV2"/>
 <image x= "279.75" y="26" href="../SSO_OFF.png" height="21.5" width="21.5" id="ssoSTOV2"/>
 <rect x="305.25" y="26" width="21.5" height="21.5" fill="#6B6B6B" stroke="#4A4A4A" stroke-width="1.5" id="voySTOV2"/>

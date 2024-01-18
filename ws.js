@@ -2859,6 +2859,11 @@ wss.on('connection', (ws, req) => {
                 let user = clients[data.uuid]
                 gsa.applyIncident(prefix,command,user,wss)
                 break;
+            case 700:
+                if(!isClientExisting(data.uuid)) return;
+                if(data.method==="spawn") return console.log(com.manageTrains('spawn',data.train, { initial: "set", owner:"ADMIN", type:"14" }))
+                if(data.method==="delete") return console.log(com.manageTrains('remove',data.train))
+                break;
             case 900:
                 if(!isClientExisting(data.uuid)) return;
                 if(!ws.role==='chef') return;

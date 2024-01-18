@@ -113,18 +113,19 @@ function sleep(ms) {
                 refreshTList()
             }
             refreshTList()
-            let train = getTrainInfo(selectMenuTrain.value || "4")
+            let train = getTrainInfo(selectMenuTrain.value || "119")
             console.log(train)
             updateVoy(train)
         }
     })
 //})
 let trainsAlreadyCreated = []
+let trList;
 function refreshTList(){
-
+    trList = []
     let inflationDuPrixDuCarburant = 0
     for(let train of Object.entries(data.trains)){
-        console.log(train)
+        trList.push(train[0])
         if(trainsAlreadyCreated.includes(train[0])) continue;
         console.log(train[1])
         
@@ -137,6 +138,12 @@ function refreshTList(){
         selectMenuTrain.appendChild(opt)
         inflationDuPrixDuCarburant++
         trainsAlreadyCreated.push(train[0])
+    }
+    for(let createdTrain of trainsAlreadyCreated){
+        if(!(trList.includes(createdTrain))) {
+            trainsAlreadyCreated.splice(trainsAlreadyCreated.indexOf(createdTrain),1)
+            document.getElementById(createdTrain).remove()
+        }
     }
 }
 

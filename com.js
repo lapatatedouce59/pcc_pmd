@@ -211,8 +211,9 @@ let whereIsTrain = (tid)=>{
 
 let manageTrains=(mode, id, args)=>{
     if(!(mode)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The function mode have'nt been specified. Please refer to the documentation." })
-    if(!(typeof args === 'object')) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The args parametter is not an Object. Please refer to the documentation." })
+    
     if(mode==='spawn'){
+        if(!(typeof args === 'object')) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The args parametter is not an Object. Please refer to the documentation." })
         if(!(args.initial)||!(id)||!(args.owner)||!(args.type)) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "At least one of the function args is not provided. Please refer to the documentation." })
         if(pccApi.trains[id]) return JSON.stringify({ code: 400, verbose: "Bad Request", message: "The train you are trying to spawn already exist on the map. Did you mean to remove it instead?" })
         for(let sec of pccApi.SEC){

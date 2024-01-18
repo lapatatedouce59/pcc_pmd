@@ -147,6 +147,29 @@
         <label for="inputTrainID">ID du train en modification:  </label><span><input type="radio" name="radioTrains" value="2"> 2</span><span><input type="radio" name="radioTrains" value="3"> 3</span>
         <button id="reloadBtn">RELOAD</button>
     </fieldset>
+    <fieldset style="width: 90%">
+        <legend>Etats train</legend>
+        <i>Sélectionnez l'état du train, le train correspondant et la nouvelle valeur</i>
+        <div>
+
+        </div>
+        <label for="inputTrainIDStates">ID du train en modification:  </label><span><input type="radio" name="radioTrainsState" value="2"> 2</span><span><input type="radio" name="radioTrainsState" value="3"> 3</span> <br>
+        <label for="inputTrainStateValue">Valeur de l'état:  </label><span><input type="radio" name="radioTrainsStateValue" value="2"> DEFAUT</span><span><input type="radio" name="radioTrainsStateValue" value="false"> FAUX</span><span><input type="radio" name="radioTrainsStateValue" value="true"> VRAI</span>
+    </fieldset>
+    <fieldset style="width: 90%">
+        <legend>Gérer les trains</legend>
+        <i>Sélectionner l'opération avec ses arguments</i>
+        <div style="display: flex; flex-direction: row;">
+            <div>
+                <input type="text" id="trainSpawnNum" placeholder="Numéro du train">
+                <button id="spawnTrain">Spawn train</button>
+            </div>
+            <div>
+                <input type="text" id="trainDeleteNum" placeholder="Numéro du train">
+                <button id="deleteTrain">Delete train</button>
+            </div>
+        </div>
+    </fieldset>
 </div>
 
 <script src="experiment.js"></script>

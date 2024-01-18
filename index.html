@@ -1247,7 +1247,7 @@ header #cont1 div span{
                             <div style="width: 100%;">
                                 <div id="trainState" style="width: 100%;">
                                     <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
-                                        <legend>Alarmes</legend>
+                                        <legend>ALARMES</legend>
                                         <table style="width: 100%; height: 100%;">
                                             <tr><td class="voyTrainState" id="TMSActive"><span id="TMSActive" class="voyTrainState">TMS</span></td></tr>
                                             <tr><td class="voyTrainState" id="EVACActive"><span id="EVACActive" class="voyTrainState">ÉVACUATION</span></td></tr>
@@ -1275,7 +1275,7 @@ header #cont1 div span{
                                         </table>
                                     </fieldset></span>
                                     <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
-                                        <legend>Energie</legend>
+                                        <legend>ENERGIE</legend>
                                         <table style="width: 100%; height: 100%;">
                                             <tr><td class="voyTrainState" id="defCvs"><span id="defCvs" class="voyTrainState">DÉFAUT CVS</span></td></tr>
                                             <tr><td class="voyTrainState" id="trainBattery"><span id="trainBattery" class="voyTrainState">TRAIN EN BATTERIE</span></td></tr>
@@ -1287,7 +1287,7 @@ header #cont1 div span{
                                         </table>
                                     </fieldset></span>
                                     <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
-                                        <legend>Echange</legend>
+                                        <legend>ECHANGE</legend>
                                         <table style="width: 100%; height: 100%;">
                                             <tr><td class="voyTrainState" id="defPartOuvPV" colspan="3"><span id="defPartOuvPV" class="voyTrainState">DEF. PARTIEL OUV. PV</span></td></tr>
                                             <tr><td class="voyTrainState" id="defTotOuvPV" colspan="3"><span id="defTotOuvPV" class="voyTrainState">DEF. TOTAL OUV. PV</span></td></tr>
@@ -1393,7 +1393,7 @@ header #cont1 div span{
                                         </table>
                                     </fieldset></span>
                                     <span><fieldset style="width: 10%; display: inline-table; text-align: center;">
-                                        <legend>EXPLOITATION</legend>
+                                        <legend>MOBILITE</legend>
                                         <table style="width: 100%; height: 100%;">
                                             <tr><td class="voyTrainState" id="tractionS1" colspan="2"><span id="tractionS1" class="voyTrainState">TRACTION SENS 1</span></td></tr>
                                             <tr><td class="voyTrainState" id="tractionS2" colspan="2"><span id="tractionS2" class="voyTrainState">TRACTION SENS 2</span></td></tr>
@@ -1447,192 +1447,213 @@ header #cont1 div span{
                     <br>
                 </div>
                 <div id="groupFormatPA">
-                    <div class="format">
+                    <div class="format" style="width: 100%;">
                         <div style="background-color: #44C1DC;">
-                            <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des itinéraires et cycles</span><span><select id="selectMenuPa"></select></span>
+                            <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des itinéraires et cycles</span>
                         </div>
-                        <div class="part1PA" style="display: inline-flex; width: fit-content;">
-                            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                                <legend>RAZ SEQUENCE</legend>
-                                <input type="button" class="btnControl" id="btnRazSeqPA" value="   " style="width: 10%;" disabled>
-                                <table style="width: 90%;">
-                                    <tr><td class="voyPaState" id="ongoingseq"><span id="ongoingseq" class="voyPaState">SEQUENCE EN COURS</span></td></tr>
-                                </table>
-                            </fieldset>
-                            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                                <legend>APPLICATION SEQUENCE</legend>
-                                <table style="width: 100%;">
-                                    <tr><td class="voyPaState" id="echecSeq"><span id="echecSeq" class="voyPaState">ECHEC SEQUENCE</span></td></tr>
-                                </table>
-                            </fieldset>
-                            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                                <legend>DES URGENCE ITIS</legend>
-                                <input type="button" class="btnControl" id="btnDesUrgIti" value="   " style="width: 10%;">
-                                <table style="width: 90%;">
-                                    <tr><td class="voyPaState" id="itiOngoing"><span id="itiOngoing" class="voyPaState">ITINERAIRES EN COURS</span></td></tr>
-                                </table>
-                            </fieldset>
-                            <fieldset style="width: 250px; text-align: center; display: inline-flex;">
-                                <legend>ANNULATION TOUT CYCLE</legend>
-                                <input type="button" class="btnControl" id="btnCancelCycles" value="   " style="width: 10%;">
-                                <table style="width: 90%;">
-                                    <tr><td class="voyPaState" id="cycleOngoing"><span id="cycleOngoing" class="voyPaState">CYCLE EN COURS</span></td></tr>
-                                </table>
-                            </fieldset>
-                            
-                        </div>
-                        <div class="itiFormatAmovible" id="itiFormatAmovible1">
-                            
-                            <div id="manualItiTop1" style="display: inline-flex; width: 100%; align-items: center;">
-                            
-                            </div>
-                            <div style="display: inline-flex;">
-                                <div style="padding: 10px;">
-                                    <fieldset>
-                                        <legend>GESTION GARAGES VOIE 2</legend>
-                                        <table style="width: 100%; text-align: center;">
-                                            <tr><td id="retDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV201">RET DISPONIBLE</span></td></tr>
-                                            <tr><td><input type="button" class="btnControl" id="btnRetV201" value="RETRAIT"></td></tr>
-                                            <tr><td id="injDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV201">INJ DISPONIBLE</span></td></tr>
-                                            <tr><td><input type="button" class="btnControl" id="btnInjV201" value="INJECTION"></td></tr>
-                                        </table>
-                                    </fieldset>
-                                    <fieldset style="margin-top: 20px;">
-                                        <legend>GESTION GARAGES VOIE 1</legend>
-                                        <table style="width: 100%; text-align: center;">
-                                            <tr><td id="retDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV101">RET DISPONIBLE</span></td></tr>
-                                            <tr><td><input type="button" class="btnControl" id="btnRetV101" value="RETRAIT"></td></tr>
-                                            <tr><td id="injDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV101">INJ DISPONIBLE</span></td></tr>
-                                            <tr><td><input type="button" class="btnControl" id="btnInjV101" value="INJECTION"></td></tr>
-                                        </table>
-                                    </fieldset>
-                                </div>
-                                <div id="tcoItiPa1">
-                                    <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
-                                </div>
-                                <div style="padding: 10px;">
-                                    <fieldset>
-                                        <legend>Demandes de cycles</legend>
-                                        <table style="width: 100%; text-align: center;" id="masterTableCycles1">
-                                            
-                                        </table>
-                                    </fieldset>
-                                </div>
-                            </div>
-                            <div id="manualItiBot1" style="display: inline-flex; width: 100%; align-items: center;">
+                        <div style="display: flex; flex-direction: row; width: 100%;">
+                            <fieldset style="display: inline-block; width: 10%;">
+                                <legend>Sectionner une section</legend>
+                                <select id="selectMenuPa" multiple size="10" style="width: 100%; height: 300px;"></select>
                                 
-                            </div>
-                        </div>
-                        <div class="itiFormatAmovible" id="itiFormatAmovible2">
-                            <div id="manualItiTop2" style="display: inline-flex; width: 100%; align-items: center;">
-                            
-                            </div>
-                            <div style="display: inline-flex;">
-                                <div style="padding: 10px;">
-                                    <fieldset style="margin-top: 20px;">
-                                        <legend>GESTION GLARNER</legend>
-                                        <table style="width: 100%; text-align: center;">
-                                            <tr><td id="sortieDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="sortieDispoGla">SORTIE DISPO</span></td></tr>
-                                            <tr><td><input type="button" class="btnControl" id="btnSortieGla" value="SORTIE"></td></tr>
-                                            <tr><td id="entreeDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="entreeDispoGla">ENTRÉE DISPO</span></td></tr>
-                                            <tr><td><input type="button" class="btnControl" id="btnEntreeGla" value="ENTRÉE"></td></tr>
+                            </fieldset>
+                            <div style="width: 100%;">
+                                <div class="part1PA" style="display: inline-flex; width: fit-content;">
+                                    <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                                        <legend>RAZ SEQUENCE</legend>
+                                        <input type="button" class="btnControl" id="btnRazSeqPA" value="   " style="width: 10%;" disabled>
+                                        <table style="width: 90%;">
+                                            <tr><td class="voyPaState" id="ongoingseq"><span id="ongoingseq" class="voyPaState">SEQUENCE EN COURS</span></td></tr>
                                         </table>
                                     </fieldset>
-                                    <fieldset style="margin-top: 20px;">
-                                        <legend>SP STO</legend>
-                                        <table style="width: 100%; text-align: center;">
-                                            <tr><td><input type="button" class="btnControl" id="btnSPSTO" value="SP STO"></td></tr>
-                                            <tr><td id="spsto" class="voyGestionItiState"><span class="voyGestionItiState" id="spsto">SERVICE PARTIEL</span></td></tr>
-                                            <tr><td><input type="button" class="btnControl" id="btnRAZSPSTO" value="RAZ SP"></td></tr>
+                                    <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                                        <legend>APPLICATION SEQUENCE</legend>
+                                        <table style="width: 100%;">
+                                            <tr><td class="voyPaState" id="echecSeq"><span id="echecSeq" class="voyPaState">ECHEC SEQUENCE</span></td></tr>
                                         </table>
                                     </fieldset>
-                                </div>
-                                <div id="tcoItiPa2">
+                                    <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                                        <legend>DES URGENCE ITIS</legend>
+                                        <input type="button" class="btnControl" id="btnDesUrgIti" value="   " style="width: 10%;">
+                                        <table style="width: 90%;">
+                                            <tr><td class="voyPaState" id="itiOngoing"><span id="itiOngoing" class="voyPaState">ITINERAIRES EN COURS</span></td></tr>
+                                        </table>
+                                    </fieldset>
+                                    <fieldset style="width: 250px; text-align: center; display: inline-flex;">
+                                        <legend>ANNULATION TOUT CYCLE</legend>
+                                        <input type="button" class="btnControl" id="btnCancelCycles" value="   " style="width: 10%;">
+                                        <table style="width: 90%;">
+                                            <tr><td class="voyPaState" id="cycleOngoing"><span id="cycleOngoing" class="voyPaState">CYCLE EN COURS</span></td></tr>
+                                        </table>
+                                    </fieldset>
                                     
                                 </div>
-                                <div style="padding: 10px;">
-                                    <fieldset>
-                                        <legend>Demandes de cycles</legend>
-                                        <table style="width: 100%; text-align: center;" id="masterTableCycles2">
+                                <div class="itiFormatAmovible" id="itiFormatAmovible1">
+                                    
+                                    <div id="manualItiTop1" style="display: inline-flex; width: 100%; align-items: center;">
+                                    
+                                    </div>
+                                    <div style="display: inline-flex;">
+                                        <div style="padding: 10px;">
+                                            <fieldset>
+                                                <legend>GESTION GARAGES VOIE 2</legend>
+                                                <table style="width: 100%; text-align: center;">
+                                                    <tr><td id="retDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV201">RET DISPONIBLE</span></td></tr>
+                                                    <tr><td><input type="button" class="btnControl" id="btnRetV201" value="RETRAIT"></td></tr>
+                                                    <tr><td id="injDispoV201" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV201">INJ DISPONIBLE</span></td></tr>
+                                                    <tr><td><input type="button" class="btnControl" id="btnInjV201" value="INJECTION"></td></tr>
+                                                </table>
+                                            </fieldset>
+                                            <fieldset style="margin-top: 20px;">
+                                                <legend>GESTION GARAGES VOIE 1</legend>
+                                                <table style="width: 100%; text-align: center;">
+                                                    <tr><td id="retDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="retDispoV101">RET DISPONIBLE</span></td></tr>
+                                                    <tr><td><input type="button" class="btnControl" id="btnRetV101" value="RETRAIT"></td></tr>
+                                                    <tr><td id="injDispoV101" class="voyGestionItiState"><span class="voyGestionItiState" id="injDispoV101">INJ DISPONIBLE</span></td></tr>
+                                                    <tr><td><input type="button" class="btnControl" id="btnInjV101" value="INJECTION"></td></tr>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                        <div id="tcoItiPa1">
+                                            <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                                        </div>
+                                        <div style="padding: 10px;">
+                                            <fieldset>
+                                                <legend>Demandes de cycles</legend>
+                                                <table style="width: 100%; text-align: center;" id="masterTableCycles1">
+                                                    
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div id="manualItiBot1" style="display: inline-flex; width: 100%; align-items: center;">
+                                        
+                                    </div>
+                                </div>
+                                <div class="itiFormatAmovible" id="itiFormatAmovible2">
+                                    <div id="manualItiTop2" style="display: inline-flex; width: 100%; align-items: center;">
+                                    
+                                    </div>
+                                    <div style="display: inline-flex;">
+                                        <div style="padding: 10px;">
+                                            <fieldset style="margin-top: 20px;">
+                                                <legend>GESTION GLARNER</legend>
+                                                <table style="width: 100%; text-align: center;">
+                                                    <tr><td id="sortieDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="sortieDispoGla">SORTIE DISPO</span></td></tr>
+                                                    <tr><td><input type="button" class="btnControl" id="btnSortieGla" value="SORTIE"></td></tr>
+                                                    <tr><td id="entreeDispoGla" class="voyGestionItiState"><span class="voyGestionItiState" id="entreeDispoGla">ENTRÉE DISPO</span></td></tr>
+                                                    <tr><td><input type="button" class="btnControl" id="btnEntreeGla" value="ENTRÉE"></td></tr>
+                                                </table>
+                                            </fieldset>
+                                            <fieldset style="margin-top: 20px;">
+                                                <legend>SP STO</legend>
+                                                <table style="width: 100%; text-align: center;">
+                                                    <tr><td><input type="button" class="btnControl" id="btnSPSTO" value="SP STO"></td></tr>
+                                                    <tr><td id="spsto" class="voyGestionItiState"><span class="voyGestionItiState" id="spsto">SERVICE PARTIEL</span></td></tr>
+                                                    <tr><td><input type="button" class="btnControl" id="btnRAZSPSTO" value="RAZ SP"></td></tr>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                        <div id="tcoItiPa2">
                                             
-                                        </table>
-                                    </fieldset>
+                                        </div>
+                                        <div style="padding: 10px;">
+                                            <fieldset>
+                                                <legend>Demandes de cycles</legend>
+                                                <table style="width: 100%; text-align: center;" id="masterTableCycles2">
+                                                    
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div id="manualItiBot2" style="display: inline-flex; width: 100%; align-items: center;">
+                                        
+                                    </div>
                                 </div>
                             </div>
-                            <div id="manualItiBot2" style="display: inline-flex; width: 100%; align-items: center;">
-                                
-                            </div>
                         </div>
+                        
                     </div>
                     <div class="format">
                         <div style="background-color: #5E5E5E;">
-                            <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des PA</span><span><select id="selectMenuPaFormat"></select></span><button id="paFormAcq" style="background-color: #0296A1; color: white; height: 20px;">ACQUITTER</button><input type="checkbox" id="checkMuteGong"><span style="color: white;">Inhiber avertisseur</span>
+                            <span style="font-size: 20px; font-weight: bold; color: white;">Gestion des PA</span><input type="checkbox" id="checkMuteGong"><span style="color: white;">Inhiber avertisseur</span>
                         </div>
-                        <div class="paFormatAmovible" id="paFormatAmovible1">
-                            
-                            <div id="ctnStateTop1" style="display: inline; width: 100%; align-items: center;">
+                        <div style="display: flex; flex-direction: row; width: 100%;">
+                            <fieldset style="display: inline-block; width: 10%;">
+                                <legend>Sectionner une section</legend>
+                                <select id="selectMenuPaFormat" multiple size="10" style="width: 100%; height: 300px;"></select>
+                                <input type="button" value="ACQUITTER" id="paFormAcq" style="width: 100%; background-color: #0296A1; color: white; height: 40px;">
+                            </fieldset>
+                            <div style="width: 100%;">
+                                <div class="paFormatAmovible" id="paFormatAmovible1">
                                 
-                            </div>
-                            <div style="display: inline-flex;">
-                                <div style="padding: 10px;">
-                                    <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
-                                        <legend>UCA</legend>
-                                        <table style="width: 100%; text-align: center;">
-                                            <tr>
-                                                <td class="voyPaFormat" id="zoneManoeuvre1"><span class="voyPaFormat" id="zoneManoeuvre1">ZONE MANOEUVRE</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="voyPaFormat" id="tnitne1"><span class="voyPaFormat" id="tnitne1">TNI/TNE</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="voyPaFormat" id="lstpas1"><span class="voyPaFormat" id="lstpas1">LTPAS</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="voyPaFormat" id="discord1"><span class="voyPaFormat" id="discord1">DISCORDANCE</span></td>
-                                            </tr>
-                                        </table>
-                                    </fieldset>
+                                    <div id="ctnStateTop1" style="display: inline; width: 100%; align-items: center;">
+                                        
+                                    </div>
+                                    <div style="display: inline-flex;">
+                                        <div style="padding: 10px;">
+                                            <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
+                                                <legend>UCA</legend>
+                                                <table style="width: 100%; text-align: center;">
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="zoneManoeuvre1"><span class="voyPaFormat" id="zoneManoeuvre1">ZONE MANOEUVRE</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="tnitne1"><span class="voyPaFormat" id="tnitne1">TNI/TNE</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="lstpas1"><span class="voyPaFormat" id="lstpas1">LTPAS</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="discord1"><span class="voyPaFormat" id="discord1">DISCORDANCE</span></td>
+                                                    </tr>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                        <div id="tcoFormPa1">
+                                            <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                                        </div>
+                                    </div>
+                                    <div id="ctnStateBot1" style="display: inline-flex; width: 100%; align-items: center;">
+                                        
+                                    </div>
                                 </div>
-                                <div id="tcoFormPa1">
-                                    <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                                <div class="paFormatAmovible" id="paFormatAmovible2">
+                                    <div id="ctnStateTop2" style="display: inline; width: 100%; align-items: center;">
+                                        
+                                    </div>
+                                    <div style="display: inline-flex;">
+                                        <div style="padding: 10px;">
+                                            <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
+                                                <legend>UCA</legend>
+                                                <table style="width: 100%; text-align: center;">
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="zoneManoeuvre2"><span class="voyPaFormat" id="zoneManoeuvre2">ZONE MANOEUVRE</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="tnitne2"><span class="voyPaFormat" id="tnitne2">TNI/TNE</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="lstpas2"><span class="voyPaFormat" id="lstpas2">LTPAS</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="discord2"><span class="voyPaFormat" id="discord2">DISCORDANCE</span></td>
+                                                    </tr>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                        <div id="tcoFormPa2">
+                                            <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                                        </div>
+                                    </div>
+                                    <div id="ctnStateBot2" style="display: inline-flex; width: 100%; align-items: center;">
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                            <div id="ctnStateBot1" style="display: inline-flex; width: 100%; align-items: center;">
-                                
                             </div>
                         </div>
-                        <div class="paFormatAmovible" id="paFormatAmovible2">
-                            <div id="ctnStateTop2" style="display: inline; width: 100%; align-items: center;">
-                                
-                            </div>
-                            <div style="display: inline-flex;">
-                                <div style="padding: 10px;">
-                                    <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
-                                        <legend>UCA</legend>
-                                        <table style="width: 100%; text-align: center;">
-                                            <tr>
-                                                <td class="voyPaFormat" id="zoneManoeuvre2"><span class="voyPaFormat" id="zoneManoeuvre2">ZONE MANOEUVRE</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="voyPaFormat" id="tnitne2"><span class="voyPaFormat" id="tnitne2">TNI/TNE</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="voyPaFormat" id="lstpas2"><span class="voyPaFormat" id="lstpas2">LTPAS</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="voyPaFormat" id="discord2"><span class="voyPaFormat" id="discord2">DISCORDANCE</span></td>
-                                            </tr>
-                                        </table>
-                                    </fieldset>
-                                </div>
-                                <div id="tcoFormPa2">
-                                    <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
-                                </div>
-                            </div>
-                            <div id="ctnStateBot2" style="display: inline-flex; width: 100%; align-items: center;">
-                                
-                            </div>
-                        </div>
+                        
+                        
                     </div>
                 </div>
             </div>

@@ -71,3 +71,25 @@ document.getElementById('reloadBtn').addEventListener('click',()=>{
     console.log(data)
     constructCtn()
 })
+
+document.getElementById('spawnTrain').addEventListener('click',()=>{
+    actualRequest = JSON.stringify({
+        op: 700,
+        uuid: window.uuid,
+        method:`spawn`,
+        train: document.getElementById('trainSpawnNum').value,
+    })
+    window.actualRequest = actualRequest
+    window.WebSocket.send(actualRequest)
+})
+
+document.getElementById('deleteTrain').addEventListener('click',()=>{
+    actualRequest = JSON.stringify({
+        op: 700,
+        uuid: window.uuid,
+        method:`delete`,
+        train: document.getElementById('trainDeleteNum').value,
+    })
+    window.actualRequest = actualRequest
+    window.WebSocket.send(actualRequest)
+})
