@@ -79,7 +79,7 @@
 <image x= "101" y="93" href="../V2S2_RED.png" height="25" width="25" id="S5C2"/>
 <image x= "108" y="73" href="../S5C2.png" height="25" width="18" id="eS5C2"/>
 <image x= "331" y="140" href="../V1S1_GREEN.png" height="25" width="25" id="S1C3"/>
-<image x= "331" y="160" href="../S1C2.png" height="25" width="18" id="eS1C3"/>
+<image x= "331" y="160" href="../S1C3.png" height="25" width="18" id="eS1C3"/>
 
 <image x= "75" y="55" href="../C2.png" height="25" width="18" id="eC2"/>
 <image x= "202" y="175" href="../C2B.png" height="25" width="18" id="eC2B"/>
@@ -87,6 +87,7 @@
 <image x= "254.25" y="89.25" href="../DSO_OFF.png" height="21.5" width="21.5" id="dsoSTOV1"/>
 <image x= "279.75" y="89.25" href="../SSO_OFF.png" height="21.5" width="21.5" id="ssoSTOV1"/>
 <rect x="305.25" y="89.25" width="21.5" height="21.5" fill="#6B6B6B" stroke="#4A4A4A" stroke-width="1.5" id="voySTOV1"/>
+<image x= "330.75" y="89.25" href="../logoSpOff.png" height="21.5" width="21.5" id="spPTCLYV1"/>
 
 <image x= "228.75" y="26" href="../logoSpOff.png" height="21.5" width="21.5" id="spSTOV2"/>
 <image x= "254.25" y="26" href="../DSO_OFF.png" height="21.5" width="21.5" id="dsoSTOV2"/>

@@ -270,7 +270,7 @@ exports.DES=async(code)=>{
                             if(ctnPart==='PAG1'){ctnList.push(`cGPAG1`); continue;}
                             ctnList.push(`c${ctnPart}`)
                         }
-                        ctnList.pop()
+                        ctnList.splice(ctnList.indexOf(modifiedCtn[1]),1)
                         let desselInter = setInterval(()=>{
                             let liste_des_cantons = []
                             for(let ctn of ctnList){

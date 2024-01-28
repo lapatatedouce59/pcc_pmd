@@ -49,6 +49,7 @@ selectMenuPa.addEventListener('input', ()=>{
 })
 let pa1dictionnary = false
 let pa2dictionnary = false
+let pa3dictionnary = false
 
 let defaultSoundInter=false
 
@@ -263,6 +264,7 @@ function PaInfo(id){
 }
 let pa1svgDoc = Object
 let pa2svgDoc = Object
+let pa3svgDoc = Object
 async function initFormat(pa){
     //gerardMontreMoiLesDefautsDuPaStp()
     for(let divs of document.getElementsByClassName('paFormatAmovible')){
@@ -358,6 +360,49 @@ async function initFormat(pa){
                 }
             }
             console.log('MAJ 2')
+            loadItiTco(pa)
+        })
+    } else if (pa.id==='3'){
+        let tcoItiPa = document.getElementById('tcoFormPa3')
+        tcoItiPa.innerHTML=''
+        let tcoobj = document.createElement('object')
+        tcoobj.data="src/formats/TCOPA3FORM.svg"
+        tcoobj.id="paForm3svg"
+        tcoobj.type="image/svg+xml"
+        tcoItiPa.appendChild(tcoobj)
+        tcoobj.addEventListener('load', () => {
+            pa3svgDoc = tcoobj.contentDocument;
+            pa3dictionnary = {
+                cantons: {
+                    'c1103': pa3svgDoc.getElementById('c1103'),
+                    'c1203': pa3svgDoc.getElementById('c1203'),
+                    'c1303': pa3svgDoc.getElementById('c1303'),
+                    'c1403': pa3svgDoc.getElementById('c1403'),
+                    'c1503': pa3svgDoc.getElementById('c1503'),
+                    'c1603': pa3svgDoc.getElementById('c1603'),
+                    'c2103': pa3svgDoc.getElementById('c2103'),
+                    'c2203': pa3svgDoc.getElementById('c2203'),
+                    'c2303': pa3svgDoc.getElementById('c2303'),
+                    'c2403': pa3svgDoc.getElementById('c2403'),
+                    'c2503': pa3svgDoc.getElementById('c2503'),
+                    'c2603': pa3svgDoc.getElementById('c2603')
+                },
+                aiguilles: {
+                    'c3': {
+                        tracks:{
+                            'a1': pa3svgDoc.getElementById('c3a1'),
+                            'a2': pa3svgDoc.getElementById('c3a2'),
+                            'c1103n': pa3svgDoc.getElementById('c1103n'),
+                            'c2603n': pa3svgDoc.getElementById('c2603n')
+                        },
+                        arrows:{
+                            'a1up': pa3svgDoc.getElementById('c3up'),
+                            'a1down': pa3svgDoc.getElementById('c3dw')
+                        }
+                    }
+                }
+            }
+            console.log('MAJ 3')
             loadItiTco(pa)
         })
     }
@@ -480,6 +525,59 @@ function loadItiTco(pa){
         }
         if(itiInfo('PAG1_1102')){
             pa2dictionnary.aiguilles.c2.arrows.a2up.style.fill='#148FB6'
+        }
+    } else if(pa.id==='3'){
+        if(pa3dictionnary===false) return;
+        for(let ctn of Object.entries(pa3dictionnary.cantons)){
+            ctn[1].style.fill = '#CDCDCD';
+            //console.log(ctn[0])
+            pa3svgDoc.getElementById(`${ctn[0]}tr`).textContent=``
+            for(let ctns of pa.ctns){
+                if(!(ctns.cid===ctn[0])) continue;
+                if(ctns.trains.length>0){
+                    ctn[1].style.fill = '#D9DD0E';
+                    pa3svgDoc.getElementById(`${ctn[0]}tr`).textContent=`${ctns.trains[0]}`
+                }
+                for(let states of Object.entries(ctns.states)){
+                    if(states[1]===2){
+                        if(!((states[0]==='pzo')||(states[0]==='coupFs')||(states[0]==='tcs')||(states[0]==='ldi')||(states[0]==='pdp')||(states[0]==='selAcc'))) continue;
+                        if(pa.id==='3'){
+                            pa3dictionnary.cantons[ctns.cid].style.fill='#C50000'
+                        }
+                    }
+                }
+            }
+            
+        }
+        for(let aig of Object.entries(pa3dictionnary.aiguilles.c3.tracks)){
+            aig[1].style.fill = '#CDCDCD';
+            for(let itil of Object.entries(pa.itis[0])){
+                for(let iti of Object.entries(itil[1])){
+                    if(!(iti[1].active)) continue;
+                    if((iti[1].code==='1402_1203')||(iti[1].code==='1203_1402')){
+                        if(!(aig[0]==='c1103n')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='2503_2102')||(iti[1].code==='2102_2503')){
+                        if(!(aig[0]==='c2603n')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='1402_2503')||(iti[1].code==='2503_1402')){
+                        if(!(aig[0]==='a2')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='1203_2102')||(iti[1].code==='2102_1203')){
+                        if(!(aig[0]==='a1')) continue;
+                        aig[1].style.fill='#148FB6'
+                    }
+                }
+            }
+        }
+        for(let aigArr of Object.entries(pa3dictionnary.aiguilles.c3.arrows)){
+            aigArr[1].style.fill = '#B1B1B1';
+        }
+        if(itiInfo('1402_2503')||itiInfo('1203_2102')){
+            pa3dictionnary.aiguilles.c3.arrows.a1up.style.fill='#148FB6'
+        }
+        if(itiInfo('2503_1402')||itiInfo('2102_1203')){
+            pa3dictionnary.aiguilles.c3.arrows.a1down.style.fill='#148FB6'
         }
     }
 }

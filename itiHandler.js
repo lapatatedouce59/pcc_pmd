@@ -36,6 +36,7 @@ selectMenuPa.addEventListener('input', ()=>{
 })
 let pa1dictionnary = false
 let pa2dictionnary = false
+let pa3dictionnary = false
 
 
 async function updateFormat(pa){
@@ -305,9 +306,9 @@ async function initFormat(pa){
                 arrows: {
                     '2202_2102':pa2svgDoc.getElementById('2202_2102'),
                     '2302_2202':pa2svgDoc.getElementById('2302_2202'),
-                    '2102_2603':pa2svgDoc.getElementById('2102_2603'),
+                    '2102_2503':pa2svgDoc.getElementById('2102_2603'),
                     '1302_1402':pa2svgDoc.getElementById('1302_1402'),
-                    '1402_1103':pa2svgDoc.getElementById('1402_1103'),
+                    '1402_1203':pa2svgDoc.getElementById('1402_1103'),
                     '1102_1302':pa2svgDoc.getElementById('1102_1302'),
                     '1501_1202':pa2svgDoc.getElementById('1501_1202'),
                     '2302_2101':pa2svgDoc.getElementById('2302_2101'),
@@ -316,9 +317,9 @@ async function initFormat(pa){
                     '2101_2302':pa2svgDoc.getElementById('2101_2302'),
                     '2102_2202':pa2svgDoc.getElementById('2102_2202'),
                     '2202_2302':pa2svgDoc.getElementById('2202_2302'),
-                    '2603_2102':pa2svgDoc.getElementById('2603_2102'),
+                    '2503_2102':pa2svgDoc.getElementById('2603_2102'),
                     '1402_1302':pa2svgDoc.getElementById('1402_1302'),
-                    '1103_1402':pa2svgDoc.getElementById('1103_1402'),
+                    '2103_1402':pa2svgDoc.getElementById('1103_1402'),
                     '2101_1202':pa2svgDoc.getElementById('2101_1202'),
                     '1102_PAG1':pa2svgDoc.getElementById('1102_PAG1'),
                     '1202_1501':pa2svgDoc.getElementById('1202_1501'),
@@ -326,6 +327,75 @@ async function initFormat(pa){
                 }
             }
             console.log('MAJ 2')
+            loadItiTco(pa)
+        })
+    } else if (pa.id==='3'){
+        let tcoItiPa = document.getElementById('tcoItiPa3')
+        tcoItiPa.innerHTML=''
+        let tcoobj = document.createElement('object')
+        tcoobj.data="src/formats/TCOPA3.svg"
+        tcoobj.id="pa1svg"
+        tcoobj.type="image/svg+xml"
+        tcoItiPa.appendChild(tcoobj)
+        tcoobj.addEventListener('load', () => {
+            let pa3svgDoc = tcoobj.contentDocument;
+            pa3dictionnary = {
+                cantons: {
+                    'c1103': pa3svgDoc.getElementById('c1103'),
+                    'c1203': pa3svgDoc.getElementById('c1203'),
+                    'c1303': pa3svgDoc.getElementById('c1303'),
+                    'c1403': pa3svgDoc.getElementById('c1403'),
+                    'c1503': pa3svgDoc.getElementById('c1503'),
+                    'c1603': pa3svgDoc.getElementById('c1603'),
+                    'c2103': pa3svgDoc.getElementById('c2103'),
+                    'c2203': pa3svgDoc.getElementById('c2203'),
+                    'c2303': pa3svgDoc.getElementById('c2303'),
+                    'c2403': pa3svgDoc.getElementById('c2403'),
+                    'c2503': pa3svgDoc.getElementById('c2503'),
+                    'c2603': pa3svgDoc.getElementById('c2603')
+                },
+                aiguilles: {
+                    'c3': {
+                        tracks:{
+                            'a1': pa3svgDoc.getElementById('c3a1'),
+                            'a2': pa3svgDoc.getElementById('c3a2'),
+                            'c1103n': pa3svgDoc.getElementById('c1103n'),
+                            'c2603n': pa3svgDoc.getElementById('c2603n')
+                        },
+                        arrows:{
+                            'a1up': pa3svgDoc.getElementById('c3up'),
+                            'a1down': pa3svgDoc.getElementById('c3dw')
+                        }
+                    }
+                },
+                arrows: {
+                    '2303_2203':pa3svgDoc.getElementById('2303_2203'),
+                    '2203_2103':pa3svgDoc.getElementById('2203_2103'),
+                    '2503_2403':pa3svgDoc.getElementById('2503_2403'),
+                    '2403_2303':pa3svgDoc.getElementById('2403_2303'),
+                    '1403_1503':pa3svgDoc.getElementById('1403_1503'),
+                    '1503_1603':pa3svgDoc.getElementById('1503_1603'),
+                    '1203_1303':pa3svgDoc.getElementById('1203_1303'),
+                    '1303_1403':pa3svgDoc.getElementById('1303_1403'),
+                    '1402_1203':pa3svgDoc.getElementById('1402_1203'),
+                    '2503_2102':pa3svgDoc.getElementById('2503_2102'),
+                    '1203_2402':pa3svgDoc.getElementById('1203_2402'),
+                    '2102_2503':pa3svgDoc.getElementById('2102_2503'),
+                    '2203_2303':pa3svgDoc.getElementById('2203_2303'),
+                    '2103_2203':pa3svgDoc.getElementById('2103_2203'),
+                    '2403_2503':pa3svgDoc.getElementById('2403_2503'),
+                    '2303_2403':pa3svgDoc.getElementById('2303_2403'),
+                    '1503_1403':pa3svgDoc.getElementById('1503_1403'),
+                    '1603_1503':pa3svgDoc.getElementById('1603_1503'),
+                    '1303_1203':pa3svgDoc.getElementById('1303_1203'),
+                    '1403_1303':pa3svgDoc.getElementById('1403_1303'),
+                    '1402_2503':pa3svgDoc.getElementById('1402_2503'),
+                    '2503_1402':pa3svgDoc.getElementById('2503_1402'),
+                    '2102_1203':pa3svgDoc.getElementById('2102_1203'),
+                    '1203_2102':pa3svgDoc.getElementById('1203_2102')
+                }
+            }
+            console.log('MAJ 3')
             loadItiTco(pa)
         })
     }
@@ -726,6 +796,7 @@ function loadItiTco(pa){
         }
         for(let aigArr of Object.entries(pa2dictionnary.aiguilles.c2.arrows)){
             aigArr[1].style.fill = '#B1B1B1';
+            
         }
         if(itiInfo('2101_1202')){
             pa2dictionnary.aiguilles.c2.arrows.a1down.style.fill='#148FB6'
@@ -740,6 +811,66 @@ function loadItiTco(pa){
             pa2dictionnary.aiguilles.c2.arrows.a2up.style.fill='#148FB6'
         }
         for(let arrows of Object.entries(pa2dictionnary.arrows)){
+            arrows[1].style.fill = '#9F9F9F'
+            if(["1402_1203","1203_1402","2102_2503","2503_2102"].includes(arrows[0])){
+                if(itiInf(arrows[0]).active===true){
+                    arrows[1].style.fill = '#00FF19';
+                } else arrows[1].style.fill = '#9F9F9F';
+            }
+            for(let itil of Object.entries(pa.itis[0])){
+                for(let iti of Object.entries(itil[1])){
+                    if(!(iti[1].code===arrows[0])) continue;
+                    //console.log(iti[1])
+                    if(iti[1].active===true){
+                        arrows[1].style.fill = '#00FF19';
+                    } else if (iti[1].active===false){
+                        arrows[1].style.fill = '#9F9F9F';
+                    }
+                }
+            }
+        }
+    } else if(pa.id==='3'){
+        if(pa3dictionnary===false) return;
+        for(let ctn of Object.entries(pa3dictionnary.cantons)){
+            ctn[1].style.fill = '#CDCDCD';
+            for(let ctns of pa.ctns){
+                if(!(ctns.cid===ctn[0])) continue;
+                if(ctns.trains.length>0){
+                    ctn[1].style.fill = '#D9DD0E';
+                }
+            }
+        }
+        for(let aig of Object.entries(pa3dictionnary.aiguilles.c3.tracks)){
+            aig[1].style.fill = '#CDCDCD';
+            for(let itil of Object.entries(pa.itis[0])){
+                for(let iti of Object.entries(itil[1])){
+                    if(!(iti[1].active)) continue;
+                    if((iti[1].code==='1402_1203')||(iti[1].code==='1203_1402')){
+                        if(!(aig[0]==='c1103n')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='2503_2102')||(iti[1].code==='2102_2503')){
+                        if(!(aig[0]==='c2603n')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='1402_2503')||(iti[1].code==='2503_1402')){
+                        if(!(aig[0]==='a2')) continue;
+                        aig[1].style.fill='#148FB6'
+                    } else if((iti[1].code==='1203_2102')||(iti[1].code==='2102_1203')){
+                        if(!(aig[0]==='a1')) continue;
+                        aig[1].style.fill='#148FB6'
+                    }
+                }
+            }
+        }
+        for(let aigArr of Object.entries(pa3dictionnary.aiguilles.c3.arrows)){
+            aigArr[1].style.fill = '#B1B1B1';
+        }
+        if(itiInfo('1402_2503')||itiInfo('1203_2102')){
+            pa3dictionnary.aiguilles.c3.arrows.a1up.style.fill='#148FB6'
+        }
+        if(itiInfo('2503_1402')||itiInfo('2102_1203')){
+            pa3dictionnary.aiguilles.c3.arrows.a1down.style.fill='#148FB6'
+        }
+        for(let arrows of Object.entries(pa3dictionnary.arrows)){
             arrows[1].style.fill = '#9F9F9F'
             for(let itil of Object.entries(pa.itis[0])){
                 for(let iti of Object.entries(itil[1])){
@@ -776,7 +907,6 @@ function itiInf(code){
         for(let itilist of Object.entries(sec.ITI[0])){
             for(let iti of itilist[1]){
                 if(iti.code===code){
-                    console.log(iti)
                     return iti
                 } else continue;
             }
@@ -796,6 +926,10 @@ let btnSortieGla = document.getElementById('btnSortieGla')
 let btnEntreeGla = document.getElementById('btnEntreeGla')
 let btnSPSTO = document.getElementById('btnSPSTO')
 let btnRAZSPSTO = document.getElementById('btnRAZSPSTO')
+let btnSPPCLV2 = document.getElementById('btnSPPCLV2')
+let btnRAZSPPCLV2 = document.getElementById('btnRAZSPPCLYV2')
+let btnSPPCLV1 = document.getElementById('btnSPPCLV1')
+let btnRAZSPPCLV1 = document.getElementById('btnRAZSPPCLYV1')
 
 let btnDesUrgIti = document.getElementById('btnDesUrgIti')
 let btnCancelCycles = document.getElementById('btnCancelCycles')
@@ -880,7 +1014,46 @@ btnRAZSPSTO.addEventListener('click', ()=>{
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
 })
-
+btnSPPCLV1.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "SP-ON",
+        target: "PCLYV1",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnRAZSPPCLV1.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "SP-RAZ",
+        target: "PCLYV1",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnSPPCLV2.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "SP-ON",
+        target: "PCLYV2",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+btnRAZSPPCLV2.addEventListener('click', ()=>{
+    actualRequest = JSON.stringify({
+        op: 221,
+        execute: "SP-RAZ",
+        target: "PCLYV2",
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
 
 
 btnDesUrgIti.addEventListener('click', ()=>{

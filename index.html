@@ -297,6 +297,20 @@
             width: 50px;
             background-size: cover;
         }
+        .com:checked + #lcomAutHTSS06{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
+        .com:checked + #lcomCoupFSSS06{
+            display: inline-block;
+            background: url("src/pltp/img/com_on.png");
+            height: 50px;
+            width: 50px;
+            background-size: cover;
+        }
         mark{
             background-color: #EF0000;
             color: white;
@@ -744,7 +758,7 @@ header #cont1 div span{
         <legend style="font-family: 'Courier New', Courier, monospace; color: white;">Tableau de Contrôle Optique</legend>
         <div class="tco" style="height: 100%; width: 200%; ">
             <div class="ligne" style="height: 500px; position: relative; pointer-events: none;">
-                <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg" class="svgobj"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep" class="svgobj"></object><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg" class="svgobj"></object>
+                <object data="src/tco/pa/SECTION1.svg" type="image/svg+xml" id="s1svg" class="svgobj"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep" class="svgobj"></object><object data="src/tco/pa/SECTION2.svg" type="image/svg+xml" id="s2svg" class="svgobj"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep" class="svgobj"></object><object data="src/tco/pa/SECTION3.svg" type="image/svg+xml" id="s3svg" class="svgobj"></object><object data="src/tco/pa/Vector 2.svg" type="image/svg+xml" id="sep" class="svgobj"></object><object data="src/tco/pa/SECTION4.svg" type="image/svg+xml" id="s4svg" class="svgobj"></object>
             </div>
             <div class="elec" style="position: relative; top: -100px;">
                 <object data="src/tco/elec/ELEC.svg" type="image/svg+xml" id="elecSvg"></object>
@@ -843,6 +857,9 @@ header #cont1 div span{
                                 </td>
                                 <td>
                                     <span id="voyPASS05" class="voy">PA<br />02</span><br>
+                                </td>
+                                <td>
+                                    <span id="voyPASS06" class="voy">PA<br />03</span><br>
                                 </td>
                             </tr>
                         </table>
@@ -1049,7 +1066,110 @@ header #cont1 div span{
                             <td colspan="5">
                                 <img src="./src/pltp/img/next.png" alt=""><br>
                                 <span id="voyAlimSS05" class="voy">ALIM</span><br>
-                                <span>MSTO - GLARNER</span>
+                                <span>MSTO - GLARNER - PCL</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="float: left;">
+                        <tr style="position: relative; top: 30px;">
+                            <td colspan="2" style="text-align: end;">
+                                <img src="./src/pltp/img/arrow1.png" width="12px" style="position: relative; top: 10px; left: 12px;">
+                            </td>
+                            <td colspan="1"><span id="voyRUSS06" class="voy">RU</span></td>
+                            <td colspan="2" style="text-align: start;">
+                                <img src="./src/pltp/img/arrow2.png" width="12px" style="position: relative; top: 10px; right: 12px;">
+                            </td>
+                        </tr>
+                        <tr style="position: relative; top: 15px;">
+                            <td colspan="2" style="position: relative; left: 5px;">
+                                <span id="voyFSSS06" class="voy">FS</span>
+                            </td>
+                            <td colspan="1"></td>
+                            <td colspan="2">
+                                <span id="voyHTSS06" class="voy">HT</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: center; position: relative;">
+                                <img src="./src/pltp/img/link2.png" width="2px" style="position: relative; left: 7px; top: 10px;">
+                            </td>
+                            <td colspan="3" style="text-align: start; position: relative; left: 7px;">
+                                <span>NON</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: end;" colspan="2">
+                                <img src="./src/pltp/img/link1.png" width="23px" style="position: relative; bottom: 12px; left: 5px;">
+                            </td>
+                            <td>
+                                <input type="checkbox" id="comCoupFSSS06" class="com">
+                                <label for="comCoupFSSS06" id="lcomCoupFSSS06" class="comLabel"></label><br>
+                            </td>
+                            <td style="text-align: start;" colspan="2">
+                                <span>OUI</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="text-align: center; position: relative; left: 7px;">
+                                <span>COUPURE FS</span><br>
+                                <img src="./src/pltp/img/lNext.png" width="10px"><br>
+                                <span>1</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;">
+                                <span id="voyHTAutABSSS06" class="voy abs">ABS</span>
+                            </td>
+                            <td>
+                                <img src="./src/pltp/img/lNextr.png" width="10px" >
+                            </td>
+                            <td>
+                                <input type="checkbox" id="comAutHTSS06" class="com">
+                                <label for="comAutHTSS06" id="lcomAutHTSS06" class="comLabel"></label><br>
+                            </td>
+                            <td style="text-align: start;">
+                                <span>0</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;" colspan="5">
+                                <span>AUTOR.HT</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <span id="voyHTAutSS06" class="voy">HT</span>
+                            </td>
+                            <td colspan="3" style="text-align: start;">
+                                <img src="./src/pltp/img/lNext.png" width="10px" style="position: relative; left: 20px;"><br>
+                                <span>AUTO</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <img src="./src/pltp/img/lNext.png" width="10px"><br>
+                                <span>OUI</span>
+                            </td>
+                            <td>
+                                <input type="range" min="-1" max="1" style="width: 50px; outline: none; background: transparent; color: white; appearance: none;"><br>
+                                <label for="comStateSS05" style="display: none; width: 50px; height: 50px;"></label>
+                                <span>SS06</span>
+                            </td>
+                            <td colspan="2">
+                                <span>NON</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" style="text-align: center;">
+                                <span id="voyDHTSS06" class="voy">DHT</span>
+                                <span id="voyDISS06" class="voy">DI</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <img src="./src/pltp/img/next.png" alt=""><br>
+                                <span id="voyAlimSS06" class="voy">ALIM</span><br>
+                                <span>PCL - PCAR</span>
                             </td>
                         </tr>
                     </table>
@@ -1570,6 +1690,45 @@ header #cont1 div span{
                                         
                                     </div>
                                 </div>
+                                <div class="itiFormatAmovible" id="itiFormatAmovible3">
+                                    <div id="manualItiTop3" style="display: inline-flex; width: 100%; align-items: center;">
+                                    
+                                    </div>
+                                    <div style="display: inline-flex;">
+                                        <div style="padding: 10px;">
+                                            <fieldset style="margin-top: 20px;">
+                                                <legend>SP PCL V2</legend>
+                                                <table style="width: 100%; text-align: center;">
+                                                    <tr><td><input type="button" class="btnControl" id="btnSPPCLV2" value="SP PCL V2"></td></tr>
+                                                    <tr><td id="sppclv2" class="voyGestionItiState"><span class="voyGestionItiState" id="sppclv2">SERVICE PARTIEL</span></td></tr>
+                                                    <tr><td><input type="button" class="btnControl" id="btnRAZSPPCLYV2" value="RAZ SP"></td></tr>
+                                                </table>
+                                            </fieldset>
+                                            <fieldset style="margin-top: 20px;">
+                                                <legend>SP PCL V1</legend>
+                                                <table style="width: 100%; text-align: center;">
+                                                    <tr><td><input type="button" class="btnControl" id="btnSPPCLV1" value="SP PCL V1"></td></tr>
+                                                    <tr><td id="sppclv1" class="voyGestionItiState"><span class="voyGestionItiState" id="sppclv1">SERVICE PARTIEL</span></td></tr>
+                                                    <tr><td><input type="button" class="btnControl" id="btnRAZSPPCLYV1" value="RAZ SP"></td></tr>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                        <div id="tcoItiPa3">
+                                            
+                                        </div>
+                                        <div style="padding: 10px;">
+                                            <fieldset>
+                                                <legend>Demandes de cycles</legend>
+                                                <table style="width: 100%; text-align: center;" id="masterTableCycles3">
+                                                    
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                    <div id="manualItiBot3" style="display: inline-flex; width: 100%; align-items: center;">
+                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         
@@ -1650,10 +1809,40 @@ header #cont1 div span{
                                         
                                     </div>
                                 </div>
+                                <div class="paFormatAmovible" id="paFormatAmovible3">
+                                    <div id="ctnStateTop3" style="display: inline; width: 100%; align-items: center;">
+                                        
+                                    </div>
+                                    <div style="display: inline-flex;">
+                                        <div style="padding: 10px;">
+                                            <fieldset style="align-self: center; margin: auto; margin-top: 20px; text-align: center; width: 206px;">
+                                                <legend>UCA</legend>
+                                                <table style="width: 100%; text-align: center;">
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="zoneManoeuvre3"><span class="voyPaFormat" id="zoneManoeuvre3">ZONE MANOEUVRE</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="tnitne3"><span class="voyPaFormat" id="tnitne3">TNI/TNE</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="lstpas3"><span class="voyPaFormat" id="lstpas3">LTPAS</span></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="voyPaFormat" id="discord3"><span class="voyPaFormat" id="discord3">DISCORDANCE</span></td>
+                                                    </tr>
+                                                </table>
+                                            </fieldset>
+                                        </div>
+                                        <div id="tcoFormPa3">
+                                            <!--<object data="src/formats/TCOPA1.svg" type="image/svg+xml" id="pa1svg"></object>-->
+                                        </div>
+                                    </div>
+                                    <div id="ctnStateBot3" style="display: inline-flex; width: 100%; align-items: center;">
+                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        
-                        
                     </div>
                 </div>
             </div>

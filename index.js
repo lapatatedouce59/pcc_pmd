@@ -8,6 +8,7 @@ let electricLoaded = false
 let dataLoaded = false
 let tco1Loaded = false
 let tco2Loaded = false
+let tco3Loaded = false
 
 let fileIntervals=[]
 
@@ -214,8 +215,10 @@ let comIDPOTPAS = document.getElementById('comIDPOTPAS')
 
 let comAutHTSS04 = document.getElementById('comAutHTSS04')
 let comAutHTSS05 = document.getElementById('comAutHTSS05')
+let comAutHTSS06 = document.getElementById('comAutHTSS06')
 let comCoupFSSS04 = document.getElementById('comCoupFSSS04')
 let comCoupFSSS05 = document.getElementById('comCoupFSSS05')
+let comCoupFSSS06 = document.getElementById('comCoupFSSS06')
 
 let trainAffect = document.getElementById('trainAffect')
 let btnForward = document.getElementById('forward')
@@ -393,6 +396,7 @@ S2.addEventListener('load', () => {
         ],
         lights: {
             'S2C2': s2svgDoc.getElementById('S2C2'),
+            'S1C3': s2svgDoc.getElementById('S1C3'),
             'S4C2': s2svgDoc.getElementById('S4C2'),
             'S5C2': s2svgDoc.getElementById('S5C2'),
             'S6C2': s2svgDoc.getElementById('S6C2'),
@@ -427,10 +431,98 @@ S2.addEventListener('load', () => {
                 'voy': s2svgDoc.getElementById('voySTOV2')
             }
         ],
-        spSTOV2: s2svgDoc.getElementById('spSTOV2')
+        spSTOV2: s2svgDoc.getElementById('spSTOV2'),
+        spPCLYV1: s2svgDoc.getElementById('spPTCLYV1')
 
     }
     tco2Loaded=true
+})
+
+let dictS3 = false
+
+let S3 = document.getElementById('s3svg')
+S3.addEventListener('load', () => {
+    let s3svgDoc = S3.contentDocument;
+    dictS3 = {
+        cantons: {
+            'c1103': [s3svgDoc.getElementById('c1103A'), s3svgDoc.getElementById('c1103B'), s3svgDoc.getElementById('c1103C')],
+            'c1203': s3svgDoc.getElementById('c1203'),
+            'c1303': s3svgDoc.getElementById('c1303'),
+            'c1403': s3svgDoc.getElementById('c1403'),
+            'c1503': s3svgDoc.getElementById('c1503'),
+            'c1603': s3svgDoc.getElementById('c1603'),
+            'c2103': s3svgDoc.getElementById('c2103'),
+            'c2203': s3svgDoc.getElementById('c2203'),
+            'c2303': s3svgDoc.getElementById('c2303'),
+            'c2403': s3svgDoc.getElementById('c2403'),
+            'c2503': s3svgDoc.getElementById('c2503'),
+            'c2603': [s3svgDoc.getElementById('c2603A'), s3svgDoc.getElementById('c2603B'), s3svgDoc.getElementById('c2603C')],
+        },
+        aiguilles: [
+            {
+                id: 'C3',
+                a1c1103: [s3svgDoc.getElementById('1103A1'), s3svgDoc.getElementById('A1BOT')],
+                a1c2603: [s3svgDoc.getElementById('2603A1'), s3svgDoc.getElementById('A1TOP')],
+                a2c1103: [s3svgDoc.getElementById('1103A2'), s3svgDoc.getElementById('A1BOT')],
+                a2c2603: [s3svgDoc.getElementById('2603A2'), s3svgDoc.getElementById('A1TOP')]
+            }
+        ],
+        arrows: [
+            [s3svgDoc.getElementById('A1MA'), s3svgDoc.getElementById('A1MB')], //haute A1
+            [s3svgDoc.getElementById('A1DA'), s3svgDoc.getElementById('A1DB')], //basse A1
+        ],
+        lights: {
+            'S2C3': s3svgDoc.getElementById('S2C3'),
+            'S4C3': s3svgDoc.getElementById('S4C3'),
+            'S3C3': s3svgDoc.getElementById('S3C3'),
+            'S1C4': s3svgDoc.getElementById('S1C4')
+        },
+        screens: {
+            '1203': [s3svgDoc.getElementById('sc2503'), s3svgDoc.getElementById('txtSc2503')],
+            '1403': [s3svgDoc.getElementById('sc1403'), s3svgDoc.getElementById('txtSc1403')],
+            '1603': [s3svgDoc.getElementById('sc1603'), s3svgDoc.getElementById('txtSc1603')],
+            '2103': [s3svgDoc.getElementById('sc2103'), s3svgDoc.getElementById('txtSc2103')],
+            '2303': [s3svgDoc.getElementById('sc2303'), s3svgDoc.getElementById('txtSc2303')],
+            '2503': [s3svgDoc.getElementById('sc1203'), s3svgDoc.getElementById('txtSc1203')]
+        },
+        voys: {
+            'NOR': s3svgDoc.getElementById('voyC3Nor'),
+            'A1Dev': s3svgDoc.getElementById('voyC3A1Dev'),
+            'A2Dev': s3svgDoc.getElementById('voyC3A2Dev'),
+            'AUTO': s3svgDoc.getElementById('voyC3Auto'),
+            'SP': s3svgDoc.getElementById('voyC3SP')
+        },
+        stationVoy:[
+            {
+                'name': "c1403",
+                'dso': s3svgDoc.getElementById('dsoPTCARV1'),
+                'sso': s3svgDoc.getElementById('ssoPTCARV1'),
+                'voy': s3svgDoc.getElementById('voyPTCARV1')
+            },
+            {
+                'name': "c2303",
+                'dso': s3svgDoc.getElementById('dsoPTCARV2'),
+                'sso': s3svgDoc.getElementById('ssoPTCARV2'),
+                'voy': s3svgDoc.getElementById('voyPTCARV2')
+            },
+            {
+                'name': "c1203",
+                'dso': s3svgDoc.getElementById('dsoPTCLYV1'),
+                'sso': s3svgDoc.getElementById('ssoPTCLYV1'),
+                'voy': s3svgDoc.getElementById('voyPTCLYV1')
+            }
+            ,
+            {
+                'name': "c2503",
+                'dso': s3svgDoc.getElementById('dsoPTCLYV2'),
+                'sso': s3svgDoc.getElementById('ssoPTCLYV2'),
+                'voy': s3svgDoc.getElementById('voyPTCLYV2')
+            }
+        ],
+        spPTCLYV2: s3svgDoc.getElementById('spPTCLYV2')
+
+    }
+    tco3Loaded=true
 })
 
 let elecInfo = false
@@ -447,7 +539,13 @@ ELEC.addEventListener('load', () => {
             '102':[elecSvgDoc.getElementById('ce102a'),elecSvgDoc.getElementById('ce102b')],
             '202':[elecSvgDoc.getElementById('ce202a'),elecSvgDoc.getElementById('ce202b')],
             '302':[elecSvgDoc.getElementById('ce302a'),elecSvgDoc.getElementById('ce302b')],
-            '402':[elecSvgDoc.getElementById('ce402a'),elecSvgDoc.getElementById('ce402b')]
+            '402':[elecSvgDoc.getElementById('ce402a'),elecSvgDoc.getElementById('ce402b')],
+            '103':[elecSvgDoc.getElementById('ce103a'),elecSvgDoc.getElementById('ce103b')],
+            '203':[elecSvgDoc.getElementById('ce203a'),elecSvgDoc.getElementById('ce203b')],
+            '303':[elecSvgDoc.getElementById('ce303a'),elecSvgDoc.getElementById('ce303b')],
+            '403':[elecSvgDoc.getElementById('ce403a'),elecSvgDoc.getElementById('ce403b')],
+            '503':[elecSvgDoc.getElementById('ce503a'),elecSvgDoc.getElementById('ce503b')],
+            '603':[elecSvgDoc.getElementById('ce603a'),elecSvgDoc.getElementById('ce603b')]
         },
         ru: {
             '101': elecSvgDoc.getElementById('r101'),
@@ -458,11 +556,18 @@ ELEC.addEventListener('load', () => {
             '102': elecSvgDoc.getElementById('r102'),
             '202': elecSvgDoc.getElementById('r202'),
             '302': elecSvgDoc.getElementById('r302'),
-            '402': elecSvgDoc.getElementById('r402')
+            '402': elecSvgDoc.getElementById('r402'),
+            '103': elecSvgDoc.getElementById('r103'),
+            '203': elecSvgDoc.getElementById('r203'),
+            '303': elecSvgDoc.getElementById('r303'),
+            '403': elecSvgDoc.getElementById('r403'),
+            '503': elecSvgDoc.getElementById('r503'),
+            '603': elecSvgDoc.getElementById('r603')
         },
         ss: {
             'ss04': [elecSvgDoc.getElementById('ss04'), elecSvgDoc.getElementById('ss04a'),elecSvgDoc.getElementById('ss04b'), elecSvgDoc.getElementById('ss04c'), elecSvgDoc.getElementById('ss04d'), elecSvgDoc.getElementById('ss04e')],
-            'ss05': [elecSvgDoc.getElementById('ss05'), elecSvgDoc.getElementById('ss05a'),elecSvgDoc.getElementById('ss05b'), elecSvgDoc.getElementById('ss05c'), elecSvgDoc.getElementById('ss05d')]
+            'ss05': [elecSvgDoc.getElementById('ss05'), elecSvgDoc.getElementById('ss05a'),elecSvgDoc.getElementById('ss05b'), elecSvgDoc.getElementById('ss05c'), elecSvgDoc.getElementById('ss05d')],
+            'ss06': [elecSvgDoc.getElementById('ss06'), elecSvgDoc.getElementById('ss06a'),elecSvgDoc.getElementById('ss06b'), elecSvgDoc.getElementById('ss06c'), elecSvgDoc.getElementById('ss06d'), elecSvgDoc.getElementById('ss06e'), elecSvgDoc.getElementById('ss06f')]
         },
         pr: {
             'MSTO': {
@@ -473,6 +578,11 @@ ELEC.addEventListener('load', () => {
             'GLARNER':{
                 "DHTGLARNER": elecSvgDoc.getElementById('dhtGLA'),
                 "DJVSS05GLANER": elecSvgDoc.getElementById('dvGLASS05')
+            },
+            'PCL':{
+                "DHTPCLY": elecSvgDoc.getElementById('dhtPCLY'),
+                "DJVSS05PCL": elecSvgDoc.getElementById('dvPCLYSS05'),
+                "DJVSS06PCL": elecSvgDoc.getElementById('dvPCLYSS06')
             }
         }
     }
@@ -1047,6 +1157,16 @@ comAutHTSS05.addEventListener('input', ()=>{
     window.WebSocket.send(actualRequest);
     window.actualRequest = actualRequest
 })
+comAutHTSS06.addEventListener('input', ()=>{
+    actualRequest = JSON.stringify({
+        op: 202,
+        execute: "AUTHTSS06-COM",
+        state: comAutHTSS06.checked,
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
 
 comCoupFSSS04.addEventListener('input', ()=>{
     actualRequest = JSON.stringify({
@@ -1063,6 +1183,16 @@ comCoupFSSS05.addEventListener('input', ()=>{
         op: 202,
         execute: "COUPFSSS05-COM",
         state: comCoupFSSS05.checked,
+        uuid: window.uuid
+    })
+    window.WebSocket.send(actualRequest);
+    window.actualRequest = actualRequest
+})
+comCoupFSSS06.addEventListener('input', ()=>{
+    actualRequest = JSON.stringify({
+        op: 202,
+        execute: "COUPFSSS06-COM",
+        state: comCoupFSSS06.checked,
         uuid: window.uuid
     })
     window.WebSocket.send(actualRequest);
@@ -1137,6 +1267,9 @@ function refreshTCO(){
     for(let voys of Object.entries(dictS2.voys)){
         voys[1].setAttribute('href', '../OFF.png')
     }
+    for(let voys of Object.entries(dictS3.voys)){
+        voys[1].setAttribute('href', '../OFF.png')
+    }
     for(let sta of dictS1.stationVoy){
         for(let sec of data.SEC){
             if(!(sec.id==='1')) continue;
@@ -1205,6 +1338,93 @@ function refreshTCO(){
                 } else {
                     sta.sso.setAttribute('href', '../SSO_OFF.png')
                 }
+                if(ctn.states.status===false){
+                    sta.voy.style.fill='#6B6B6B'
+                } else if(ctn.states.status==='valid'){
+                    sta.voy.style.fill='#377BFF'
+                } else if(ctn.states.status==='inscrit'){
+                    sta.voy.style.fill='#37DBFF'
+                } else if(ctn.states.status==='sharing'){
+                    sta.voy.style.fill='#FFFFFF'
+                } else if(ctn.states.status==='departure'){
+                    sta.voy.style.fill='#FFE500'
+                } else if(ctn.states.status==='def'){
+                    let cnt = 0
+                    let intervalId = setInterval(async()=>{
+                        sta.voy.style.fill='#FF0000'
+                        await sleep(200)
+                        sta.voy.style.fill='#6B6B6B'
+                        await sleep(200)
+                        cnt++
+                        if(cnt===30){
+                            clearInterval(intervalId)
+                            if(ctn.states.status===false){
+                                sta.voy.style.fill='#6B6B6B'
+                            } else if(ctn.states.status==='valid'){
+                                sta.voy.style.fill='#377BFF'
+                            } else if(ctn.states.status==='inscrit'){
+                                sta.voy.style.fill='#37DBFF'
+                            } else if(ctn.states.status==='sharing'){
+                                sta.voy.style.fill='#FFFFFF'
+                            } else if(ctn.states.status==='departure'){
+                                sta.voy.style.fill='#FFE500'
+                            }
+                        }
+                    },400)
+                }
+            }
+        }
+    }
+
+    for(let sta of dictS3.stationVoy){
+        for(let sec of data.SEC){
+            if(!(sec.id==='3')) continue;
+            for(let ctn of sec.cantons){
+                if(!(ctn.cid===sta.name)) continue;
+                if(ctn.states.DSO===true){
+                    sta.dso.setAttribute('href', '../DSO_ON.png')
+                } else {
+                    sta.dso.setAttribute('href', '../DSO_OFF.png')
+                }
+                if(ctn.states.SSO===true){
+                    sta.sso.setAttribute('href', '../SSO_ON.png')
+                } else {
+                    sta.sso.setAttribute('href', '../SSO_OFF.png')
+                }
+                if(ctn.states.status===false){
+                    sta.voy.style.fill='#6B6B6B'
+                } else if(ctn.states.status==='valid'){
+                    sta.voy.style.fill='#377BFF'
+                } else if(ctn.states.status==='inscrit'){
+                    sta.voy.style.fill='#37DBFF'
+                } else if(ctn.states.status==='sharing'){
+                    sta.voy.style.fill='#FFFFFF'
+                } else if(ctn.states.status==='departure'){
+                    sta.voy.style.fill='#FFE500'
+                } else if(ctn.states.status==='def'){
+                    let cnt = 0
+                    let intervalId = setInterval(async()=>{
+                        sta.voy.style.fill='#FF0000'
+                        await sleep(200)
+                        sta.voy.style.fill='#6B6B6B'
+                        await sleep(200)
+                        cnt++
+                        if(cnt===30){
+                            clearInterval(intervalId)
+                            if(ctn.states.status===false){
+                                sta.voy.style.fill='#6B6B6B'
+                            } else if(ctn.states.status==='valid'){
+                                sta.voy.style.fill='#377BFF'
+                            } else if(ctn.states.status==='inscrit'){
+                                sta.voy.style.fill='#37DBFF'
+                            } else if(ctn.states.status==='sharing'){
+                                sta.voy.style.fill='#FFFFFF'
+                            } else if(ctn.states.status==='departure'){
+                                sta.voy.style.fill='#FFE500'
+                            }
+                        }
+                    },400)
+                }
             }
         }
     }
@@ -1216,6 +1436,13 @@ function refreshTCO(){
         } else ctn[1].style.fill='#707070'
     }
     for(let ctn of Object.entries(dictS2.cantons)){
+        if(ctn[1].length===3){
+            for(let part of ctn[1]){
+                part.style.fill='#707070'
+            }
+        } else ctn[1].style.fill='#707070'
+    }
+    for(let ctn of Object.entries(dictS3.cantons)){
         if(ctn[1].length===3){
             for(let part of ctn[1]){
                 part.style.fill='#707070'
@@ -1234,12 +1461,23 @@ function refreshTCO(){
             part.style.fill='#707070'
         }
     }
+    for(let aig of Object.entries(dictS3.aiguilles[0])){
+        if(aig[0]==='id') continue;
+        for(let part of aig[1]){
+            part.style.fill='#707070'
+        }
+    }
     for(let arrlist of dictS1.arrows){
         for(let arr of arrlist){
             arr.style.fill='#707070'
         }
     }
     for(let arrlist of dictS2.arrows){
+        for(let arr of arrlist){
+            arr.style.fill='#707070'
+        }
+    }
+    for(let arrlist of dictS3.arrows){
         for(let arr of arrlist){
             arr.style.fill='#707070'
         }
@@ -1251,6 +1489,9 @@ function refreshTCO(){
             lights[1].setAttribute('href', '../signals/SM-RNT.png');
         }
         for(let lights of Object.entries(dictS2.lights)){
+            lights[1].setAttribute('href', '../signals/SM-RNT.png');
+        }
+        for(let lights of Object.entries(dictS3.lights)){
             lights[1].setAttribute('href', '../signals/SM-RNT.png');
         }
         if(itiInfo('2201_2401')){
@@ -1378,6 +1619,75 @@ function refreshTCO(){
             }
         }
 
+        //? Gestion feux S3
+
+        if(itiInfo('1402_1203')){
+            if(isOccupied('c1103')||isOccupied('c1203')){
+                dictS2.lights['S1C3'].setAttribute('href', '../signals/SM-RT.png');
+                dictS3.lights['S3C3'].setAttribute('href', '../signals/SM-RNT.png');
+            } else {
+                dictS2.lights['S1C3'].setAttribute('href', '../signals/SM-VT.png');
+                dictS3.lights['S3C3'].setAttribute('href', '../signals/SM-RNT.png');
+            }
+        }
+        if(itiInfo('1203_1402')){
+            if(isOccupied('c1103')||isOccupied('c1402')){
+                dictS2.lights['S1C3'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS3.lights['S3C3'].setAttribute('href', '../signals/SM-RT.png');
+            } else {
+                dictS2.lights['S1C3'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS3.lights['S3C3'].setAttribute('href', '../signals/SM-VT.png');
+            }
+        }
+
+        if(itiInfo('2503_2102')){
+            if(isOccupied('c2603')||isOccupied('c2102')){
+                dictS3.lights['S2C3'].setAttribute('href', '../signals/SM-RT.png');
+                dictS3.lights['S4C3'].setAttribute('href', '../signals/SM-RNT.png');
+            } else {
+                dictS3.lights['S2C3'].setAttribute('href', '../signals/SM-VT.png');
+                dictS3.lights['S4C3'].setAttribute('href', '../signals/SM-RNT.png');
+            }
+        }
+        if(itiInfo('2102_2503')){
+            if(isOccupied('c2603')||isOccupied('c2503')){
+                dictS3.lights['S4C3'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS3.lights['S2C3'].setAttribute('href', '../signals/SM-RT.png');
+            } else {
+                dictS3.lights['S4C3'].setAttribute('href', '../signals/SM-RNT.png');
+                dictS3.lights['S2C3'].setAttribute('href', '../signals/SM-VT.png');
+            }
+        }
+
+        if(itiInfo('1402_2503')){
+            if(isOccupied('c1103')||isOccupied('c2603')||isOccupied('c2503')){
+                dictS2.lights['S1C3'].setAttribute('href', '../signals/SM-RT.png');
+            } else {
+                dictS2.lights['S1C3'].setAttribute('href', '../signals/SM-JT.png');
+            }
+        }
+        if(itiInfo('2503_1402')){
+            if(isOccupied('c1103')||isOccupied('c2603')||isOccupied('c1402')){
+                dictS3.lights['S2C3'].setAttribute('href', '../signals/SM-RT.png');
+            } else {
+                dictS3.lights['S2C3'].setAttribute('href', '../signals/SM-JT.png');
+            }
+        }
+        if(itiInfo('2102_1203')){
+            if(isOccupied('c1103')||isOccupied('c2603')||isOccupied('c1203')){
+                dictS3.lights['S4C3'].setAttribute('href', '../signals/SM-RT.png');
+            } else {
+                dictS3.lights['S4C3'].setAttribute('href', '../signals/SM-JT.png');
+            }
+        }
+        if(itiInfo('1203_2102')){
+            if(isOccupied('c1103')||isOccupied('c2603')||isOccupied('c2102')){
+                dictS3.lights['S3C3'].setAttribute('href', '../signals/SM-RT.png');
+            } else {
+                dictS3.lights['S3C3'].setAttribute('href', '../signals/SM-JT.png');
+            }
+        }
+
         //? Gestion voyants
 
         if(itiInfo('2201_2401')||itiInfo('1201_1401')){
@@ -1420,10 +1730,32 @@ function refreshTCO(){
         } else {
             dictS2.spSTOV2.setAttribute('href', '../logoSpOff.png')
         }
+        if(data.SEC[2].states.sppclv1===true){
+            dictS2.voys['SP'].setAttribute('href', '../ON.png')
+            dictS2.spPCLYV1.setAttribute('href', '../logoSp.png')
+        } else {
+            dictS2.spPCLYV1.setAttribute('href', '../logoSpOff.png')
+        }
+
+        if(itiInfo('1402_1203')||itiInfo('2503_2102')){
+            dictS3.voys['NOR'].setAttribute('href', '../ON.png')
+        }
+        if(itiInfo('1402_2503')||itiInfo('2503_1402')){
+            dictS3.voys['A2Dev'].setAttribute('href', '../ON.png')
+        }
+        if(itiInfo('2102_1203')||itiInfo('1203_2102')){
+            dictS3.voys['A1Dev'].setAttribute('href', '../ON.png')
+        }
+        if(data.SEC[2].states.sppclv2===true){
+            dictS3.voys['SP'].setAttribute('href', '../ON.png')
+            dictS3.spPTCLYV2.setAttribute('href', '../logoSp.png')
+        } else {
+            dictS3.spPTCLYV2.setAttribute('href', '../logoSpOff.png')
+        }
 
         for(let ctn of sec.cantons){
             let ctninfo = getCantonsInfo(ctn.cid)
-            if((ctninfo.cid==='c1401')||(ctninfo.cid==='c2201')||(ctninfo.cid==='cGPAG1')||(ctninfo.cid==='c2202')||(ctninfo.cid==='c1302')||(ctninfo.cid==='c1101')||(ctninfo.cid==='c1201')||(ctninfo.cid==='c2401')||(ctninfo.cid==='c2501')){
+            if(true){
                 if(ctn.cid==='c1401'){
                     if(ctn.trains.length>0){
                         dictS1.screens['1401'][0].style.fill = '#3C0A0A'
@@ -1504,6 +1836,60 @@ function refreshTCO(){
                     } else {
                         dictS1.screens['1201'][0].style.fill = '#000'
                         dictS1.screens['1201'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c1203'){
+                    if(ctn.trains.length>0){
+                        dictS3.screens['1203'][0].style.fill = '#3C0A0A'
+                        dictS3.screens['1203'][1].textContent=ctninfo.trains[0].tid
+                    } else {
+                        dictS3.screens['1203'][0].style.fill = '#000'
+                        dictS3.screens['1203'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c1403'){
+                    if(ctn.trains.length>0){
+                        dictS3.screens['1403'][0].style.fill = '#3C0A0A'
+                        dictS3.screens['1403'][1].textContent=ctninfo.trains[0].tid
+                    } else {
+                        dictS3.screens['1403'][0].style.fill = '#000'
+                        dictS3.screens['1403'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c1603'){
+                    if(ctn.trains.length>0){
+                        dictS3.screens['1603'][0].style.fill = '#3C0A0A'
+                        dictS3.screens['1603'][1].textContent=ctninfo.trains[0].tid
+                    } else {
+                        dictS3.screens['1603'][0].style.fill = '#000'
+                        dictS3.screens['1603'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c2103'){
+                    if(ctn.trains.length>0){
+                        dictS3.screens['2103'][0].style.fill = '#3C0A0A'
+                        dictS3.screens['2103'][1].textContent=ctninfo.trains[0].tid
+                    } else {
+                        dictS3.screens['2103'][0].style.fill = '#000'
+                        dictS3.screens['2103'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c2303'){
+                    if(ctn.trains.length>0){
+                        dictS3.screens['2303'][0].style.fill = '#3C0A0A'
+                        dictS3.screens['2303'][1].textContent=ctninfo.trains[0].tid
+                    } else {
+                        dictS3.screens['2303'][0].style.fill = '#000'
+                        dictS3.screens['2303'][1].textContent=''
+                    }
+                }
+                if(ctn.cid==='c2503'){
+                    if(ctn.trains.length>0){
+                        dictS3.screens['2503'][0].style.fill = '#3C0A0A'
+                        dictS3.screens['2503'][1].textContent=ctninfo.trains[0].tid
+                    } else {
+                        dictS3.screens['2503'][0].style.fill = '#000'
+                        dictS3.screens['2503'][1].textContent=''
                     }
                 }
             }
@@ -1726,6 +2112,109 @@ function refreshTCO(){
                             } else continue;
                         }
                     }
+                } //? S3
+            } else if((ctninfo.cid==='c1103')||(ctninfo.cid==='c2603')){
+                for(let itil of Object.entries(sec.ITI)){
+                    for(let vitil of Object.entries(itil[1])){
+                        for(let iti of vitil[1]){
+                            //console.log(iti)
+                            if(((iti.code==='1402_1203')&&(iti.active))||((iti.code==='1203_1402')&&(iti.active))){
+                                if(ctn.cid==='c1103'){
+                                    if(ctn.trains.length>0){
+                                        for(let parts of dictS3.cantons.c1103){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    } else {
+                                        for(let parts of dictS3.cantons.c1103){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    }
+                                }
+                            } 
+                            if(((iti.code==='2503_2102')&&(iti.active))||((iti.code==='2102_2503')&&(iti.active))){
+                                if(ctn.cid==='c2603'){
+                                    if(ctn.trains.length>0){
+                                        for(let parts of dictS3.cantons.c2603){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    } else {
+                                        for(let parts of dictS3.cantons.c2603){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    }
+                                }
+                            } 
+                            
+                            else if(((iti.code==='1402_2503')&&(iti.active))||((iti.code==='2503_1402')&&(iti.active))){
+                                //? Gestion fleches
+                                if((iti.code==='1402_2503')&&(iti.active)){
+                                    for(let arr of dictS3.arrows[0]){
+                                        arr.style.fill='#66D264'
+                                    }
+                                } else if((iti.code==='2503_1402')&&(iti.active)){
+                                    for(let arr of dictS3.arrows[1]){
+                                        arr.style.fill='#66D264'
+                                    }
+                                }
+                                //? Gestion colorimétrie des cantons et aiguilles
+                                if(ctn.trains.length>0){
+                                    if(ctn.cid==='c1103'){
+                                        for(let parts of dictS3.aiguilles[0].a2c1103){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    } else if(ctn.cid==='c2603'){
+                                        for(let parts of dictS3.aiguilles[0].a2c2603){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    }
+                                } else {
+                                    if(ctn.cid==='c1103'){
+                                        for(let parts of dictS3.aiguilles[0].a2c1103){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    } else if(ctn.cid==='c2603'){
+                                        for(let parts of dictS3.aiguilles[0].a2c2603){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    }
+                                }
+                            } else if(((iti.code==='2102_1203')&&(iti.active))||((iti.code==='1203_2102')&&(iti.active))){
+                                //? Gestion fleches
+                                if((iti.code==='2102_1203')&&(iti.active)){
+                                    for(let arr of dictS3.arrows[0]){
+                                        arr.style.fill='#66D264'
+                                    }
+                                } else if((iti.code==='1203_2102')&&(iti.active)){
+                                    for(let arr of dictS3.arrows[1]){
+                                        arr.style.fill='#66D264'
+                                    }
+                                }
+                                //? Gestion colorimétrie des cantons et aiguilles
+                                if(ctn.trains.length>0){
+                                    if(ctn.cid==='c1103'){
+                                        for(let parts of dictS1.aiguilles[0].a1c1103){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    } else if(ctn.cid==='c2603'){
+                                        for(let parts of dictS1.aiguilles[0].a1c2603){
+                                            parts.style.fill='#E1A712'
+                                        }
+                                    }
+                                } else {
+                                    if(ctn.cid==='c1301'){
+                                        for(let parts of dictS1.aiguilles[0].a1c1103){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    } else if(ctn.cid==='c2301'){
+                                        for(let parts of dictS1.aiguilles[0].a1c2603){
+                                            parts.style.fill='#66D264'
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
                 }
             } else {
                 if(ctn.trains.length>0){
@@ -1734,6 +2223,8 @@ function refreshTCO(){
                         dictS1.cantons[ctn.cid].style.fill='#E1A712'
                     } else if(dictS2.cantons[ctn.cid]){
                         dictS2.cantons[ctn.cid].style.fill='#E1A712'
+                    } else if(dictS3.cantons[ctn.cid]){
+                        dictS3.cantons[ctn.cid].style.fill='#E1A712'
                     }
                 }
             }
@@ -1847,12 +2338,13 @@ function refreshComPlat(){
 function loadElectricalInfos(){
     console.log('LOADING ELECTRICAL CANTONS')
     for(let ectns of Object.entries(elecInfo.ctns)){
-        console.log(data.ectns)
+        console.log(ectns)
         let ctnsStatus = data.ectns[ectns[0]]
         console.log(ctnsStatus)
         switch(ctnsStatus){
             case true:
                 for(let sectns of ectns[1]){
+                    console.log(sectns)
                     sectns.style.stroke = '#FFDF35';
                 }
             break;
@@ -2014,7 +2506,7 @@ let verifFunc = ()=>{
             localStorage.setItem('reloadLoadCnt',0)
         } else document.location.reload()
     }
-    if(dataLoaded&&electricLoaded&&tco1Loaded&&tco2Loaded){
+    if(dataLoaded&&electricLoaded&&tco1Loaded&&tco2Loaded&&tco3Loaded){
         clearInterval(verifLoadInter)
         loadElectricalInfos()
         refreshTCO()

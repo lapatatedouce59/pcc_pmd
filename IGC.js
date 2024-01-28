@@ -309,6 +309,178 @@ exports.startCycle = function (code, wss, cycleTrigger) {
                 INTERVALS.push(initPhaseInter)
                 INTERMAP.set(code, initPhaseInter)
             }
+
+            if(code==='c1p3'){
+                cycle.active=true
+                writter.simple(`CYCLE ${cycle.code} EN ACTIVITÉ.`,'PA', `IGC`)
+                let initPhaseInter = setInterval(async ()=>{ //? PREPARATION PHASE 1
+                    if(cycle.active===false) {
+                        clearCorrespondingInterval(code)
+                        INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
+                        return;
+                    }
+                    if(ctnInf('c2503').trains.length>0){   //? Canton trigger du cycle
+                        clearCorrespondingInterval(code)
+                        INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
+                        let itiDes1 = ["2102_2503","2102_1203","1203_2102","2503_1402","1402_2503","1402_1203","1203_1402"]  //? itis à détruire
+                        for(let iti1 of itiDes1){
+                            if(itiInf(iti1).active===true&&itiInf(iti1).mode==='SEL') itineraire.DES(iti1)
+                        }
+                        if(itiInf('2503_2102').active===false) itineraire.SEL('2503_2102') //? itis à construire
+                        writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 1.`,'PA', `IGC`)
+                        let phase1Inter = setInterval(async ()=>{
+                            for(let aig of pccApi.aiguilles){
+                                if(!(aig.id==='C3')) continue;
+                                if(cycle.active===false) {
+                                    clearCorrespondingInterval(code)
+                                    INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
+                                    return;
+                                }
+                                if(aig.actualIti.length===1 && aig.actualIti.includes('2503_2102')){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
+                                    clearCorrespondingInterval(code)
+                                    INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
+                                    writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 1.`,'PA', `IGC`)
+                                    itineraire.DES('2503_2102')
+                                    itineraire.SEL('2102_1203')
+                                    writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 2.`,'PA', `IGC`)
+                                    let phase2inter = setInterval(async ()=>{
+                                        for(let aig of pccApi.aiguilles){
+                                            if(!(aig.id==='C3')) continue;
+                                            if(cycle.active===false) {
+                                                clearCorrespondingInterval(code)
+                                                INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
+                                                return;
+                                            }
+                                            if(ctnInf('c2102').trains.length>0 && itiInf('2102_1203').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
+                                                clearCorrespondingInterval(code)
+                                                INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
+                                                writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 2.`,'PA', `IGC`)
+                                                itineraire.SEL('2503_2102')
+                                                itineraire.DES('2102_1203')
+                                                if(cycleTrigger===true){
+                                                    writter.simple(`CYCLE ${cycle.code} EN ATTENTE DE RESET.`,'PA', `IGC`)
+                                                    let recursiveInter = setInterval(async ()=>{
+                                                        if(cycle.active===false) {
+                                                            clearCorrespondingInterval(code)
+                                                            INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
+                                                            return;
+                                                        }
+                                                        for(let aig of pccApi.aiguilles){
+                                                            if(!(aig.id==='C3')) continue;
+                                                            if(ctnInf('c1203').trains.length>0 && itiInf('2503_2102').active===false){//? ATTENTE DESTRUCTION PHASE 2 POUR RECURSIVITÉ
+                                                                clearCorrespondingInterval(code)
+                                                                INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
+                                                                return exports.startCycle(code, wss, cycleTrigger);
+                                                            } 
+                                                        }
+                                                    },100)
+                                                    INTERVALS.push(recursiveInter)
+                                                    INTERMAP.set(code, recursiveInter)
+                                                } else {
+                                                    cycle.active=false
+                                                    cycle.sel=false
+                                                }
+                                            }
+                                        }
+                                    },100)
+                                    INTERVALS.push(phase2inter)
+                                    INTERMAP.set(code, phase2inter)
+                                }
+                            }
+                        },100)
+                        INTERVALS.push(phase1Inter)
+                        INTERMAP.set(code, phase1Inter)
+                    }
+                },100)
+                INTERVALS.push(initPhaseInter)
+                INTERMAP.set(code, initPhaseInter)
+            }
+
+            if(code==='c2p3'){
+                cycle.active=true
+                writter.simple(`CYCLE ${cycle.code} EN ACTIVITÉ.`,'PA', `IGC`)
+                let initPhaseInter = setInterval(async ()=>{ //? PREPARATION PHASE 1
+                    if(cycle.active===false) {
+                        clearCorrespondingInterval(code)
+                        INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
+                        return;
+                    }
+                    if(ctnInf('c1402').trains.length>0){   //? Canton trigger du cycle
+                        clearCorrespondingInterval(code)
+                        INTERVALS.splice(INTERVALS.indexOf(initPhaseInter),1)
+                        let itiDes1 = ["2102_1203","1203_1402","1203_2102","2503_1402","1402_2503","2102_2503","2503_2102"]  //? itis à détruire
+                        for(let iti1 of itiDes1){
+                            if(itiInf(iti1).active===true&&itiInf(iti1).mode==='SEL') itineraire.DES(iti1)
+                        }
+                        if(itiInf('1402_1203').active===false) itineraire.SEL('1402_1203') //? itis à construire
+                        writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 1.`,'PA', `IGC`)
+                        let phase1Inter = setInterval(async ()=>{
+                            for(let aig of pccApi.aiguilles){
+                                if(!(aig.id==='C3')) continue;
+                                if(cycle.active===false) {
+                                    clearCorrespondingInterval(code)
+                                    INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
+                                    return;
+                                }
+                                if(aig.actualIti.length===1 && aig.actualIti.includes('1402_1203')){//? VERIFICATION CONFORMITÉ PHASE 1 ET CONSTRUCTION
+                                    clearCorrespondingInterval(code)
+                                    INTERVALS.splice(INTERVALS.indexOf(phase1Inter),1)
+                                    writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 1.`,'PA', `IGC`)
+                                    itineraire.DES('1402_1203')
+                                    itineraire.SEL('1203_2102')
+                                    writter.simple(`CYCLE ${cycle.code} EN CONSTRUCTION PHASE 2.`,'PA', `IGC`)
+                                    let phase2inter = setInterval(async ()=>{
+                                        for(let aig of pccApi.aiguilles){
+                                            if(!(aig.id==='C3')) continue;
+                                            if(cycle.active===false) {
+                                                clearCorrespondingInterval(code)
+                                                INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
+                                                return;
+                                            }
+                                            if(ctnInf('c1203').trains.length>0 && itiInf('1203_2102').active===true){//? ATTENTE CONSTRUCTION AUTOMATIQUE PHASE 2
+                                                clearCorrespondingInterval(code)
+                                                INTERVALS.splice(INTERVALS.indexOf(phase2inter),1)
+                                                writter.simple(`CYCLE ${cycle.code} CONSTRUIT PHASE 2.`,'PA', `IGC`)
+                                                itineraire.SEL('1402_1203')
+                                                itineraire.DES('1203_2102')
+                                                if(cycleTrigger===true){
+                                                    writter.simple(`CYCLE ${cycle.code} EN ATTENTE DE RESET.`,'PA', `IGC`)
+                                                    let recursiveInter = setInterval(async ()=>{
+                                                        if(cycle.active===false) {
+                                                            clearCorrespondingInterval(code)
+                                                            INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
+                                                            return;
+                                                        }
+                                                        for(let aig of pccApi.aiguilles){
+                                                            if(!(aig.id==='C3')) continue;
+                                                            if(ctnInf('c2102').trains.length>0 && itiInf('1402_1203').active===false){//? ATTENTE DESTRUCTION PHASE 2 POUR RECURSIVITÉ
+                                                                clearCorrespondingInterval(code)
+                                                                INTERVALS.splice(INTERVALS.indexOf(recursiveInter),1)
+                                                                return exports.startCycle(code, wss, cycleTrigger);
+                                                            } 
+                                                        }
+                                                    },100)
+                                                    INTERVALS.push(recursiveInter)
+                                                    INTERMAP.set(code, recursiveInter)
+                                                } else {
+                                                    cycle.active=false
+                                                    cycle.sel=false
+                                                }
+                                            }
+                                        }
+                                    },100)
+                                    INTERVALS.push(phase2inter)
+                                    INTERMAP.set(code, phase2inter)
+                                }
+                            }
+                        },100)
+                        INTERVALS.push(phase1Inter)
+                        INTERMAP.set(code, phase1Inter)
+                    }
+                },100)
+                INTERVALS.push(initPhaseInter)
+                INTERMAP.set(code, initPhaseInter)
+            }
         }
     }
 }

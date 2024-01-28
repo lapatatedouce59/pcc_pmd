@@ -1,4 +1,25 @@
-<svg width="254" height="138" viewBox="0 0 254 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="254" height="500" viewBox="0 -75 254 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+    .station {
+        font-family: "Inter", sans-serif;
+        src: url('../Inter-Medium.ttf') format("truetype");
+        font-size: 12.5px;
+        fill: #FEFFC1;
+    }
+    .rame {
+        font-family: "Inter", sans-serif;
+        src: url('../Inter-Medium.ttf') format("truetype");
+        font-size: 19px;
+        fill: #FF5353;
+    }
+    .voy {
+        font-family: "Inter", sans-serif;
+        font-weight: bold;
+        src: url('../Inter-Medium.ttf') format("truetype");
+        font-size: 8px;
+        fill: #000000;
+    }
+</style>
 <rect x="127" width="75" height="18" fill="#707070"/>
 <rect x="204" width="50" height="18" fill="#707070"/>
 <rect x="204" y="120" width="50" height="18" fill="#707070"/>
